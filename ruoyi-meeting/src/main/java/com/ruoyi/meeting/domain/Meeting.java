@@ -28,7 +28,7 @@ public class Meeting extends BaseEntity
 	/** 会议室id */
 	private Integer meetroomId;
 	/** 会议室id */
-	private Integer meetroomName;
+	private String meetroomName;
 	/** 创建时间 */
 	private Date createdTime;
 	/** 修改人 */
@@ -40,11 +40,11 @@ public class Meeting extends BaseEntity
 	/** 备注 */
 	private String remarks;
 
-	public Integer getMeetroomName() {
+	public String getMeetroomName() {
 		return meetroomName;
 	}
 
-	public void setMeetroomName(Integer meetroomName) {
+	public void setMeetroomName(String meetroomName) {
 		this.meetroomName = meetroomName;
 	}
 

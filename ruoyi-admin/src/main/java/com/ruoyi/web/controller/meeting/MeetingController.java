@@ -65,7 +65,7 @@ public class MeetingController extends BaseController
 			Meeting m = iterator.next();
 			Integer meetroomId = m.getMeetroomId();
 			Meetroom meetroom = meetroomService.selectMeetroomById(meetroomId);
-			m.setMeetingName(meetroom.getMeetroomName());
+			m.setMeetroomName(meetroom.getMeetroomName());
 		}
 
 		return getDataTable(list);
