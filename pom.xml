@@ -192,6 +192,13 @@
 	            <artifactId>ruoyi-common</artifactId>
 	            <version>${ruoyi.version}</version>
 	        </dependency>
+			<dependency>
+				<groupId>com.ruoyi</groupId>
+				<artifactId>ruoyi-meeting</artifactId>
+				<version>${ruoyi.version}</version>
+			</dependency>
+
+
 	        
         </dependencies>
     </dependencyManagement>

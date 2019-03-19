@@ -59,7 +59,17 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
-        
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-meeting</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-meeting</artifactId>
+            <version>3.2</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

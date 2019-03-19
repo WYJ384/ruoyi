@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.meeting.mapper.MeetingMapper">
+    
+    <resultMap type="Meeting" id="MeetingResult">
+        <result property="id"    column="id"    />
+        <result property="meetingName"    column="meeting_name"    />
+        <result property="meetingSubject"    column="meeting_subject"    />
+        <result property="meetingBeginTime"    column="meeting_begin_time"    />
+        <result property="meetingEndTime"    column="meeting_end_time"    />
+        <result property="meetroomId"    column="meetroom_id"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updatedTime"    column="updated_time"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+	
+	<sql id="selectMeetingVo">
+        select id, meeting_name, meeting_subject, meeting_begin_time, meeting_end_time, meetroom_id, created_time, update_by, updated_time, created_by, remarks from meeting
+    </sql>
+	
+    <select id="selectMeetingList" parameterType="Meeting" resultMap="MeetingResult">
+        <include refid="selectMeetingVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="meetingName != null  and meetingName != '' "> and meeting_name = #{meetingName}</if>
+             <if test="meetingSubject != null  and meetingSubject != '' "> and meeting_subject = #{meetingSubject}</if>
+             <if test="meetingBeginTime != null "> and meeting_begin_time = #{meetingBeginTime}</if>
+             <if test="meetingEndTime != null "> and meeting_end_time = #{meetingEndTime}</if>
+             <if test="meetroomId != null "> and meetroom_id = #{meetroomId}</if>
+             <if test="createdTime != null "> and created_time = #{createdTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updatedTime != null "> and updated_time = #{updatedTime}</if>
+             <if test="createdBy != null  and createdBy != '' "> and created_by = #{createdBy}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+         </where>
+    </select>
+    
+    <select id="selectMeetingById" parameterType="Integer" resultMap="MeetingResult">
+        <include refid="selectMeetingVo"/>
+        where id = #{id}
+    </select>
+    <select id="getMeetingCountByRoomId" parameterType="Meeting" resultType="Integer">
+                SELECT count(*)  FROM meeting c  WHERE  ( c.meeting_begin_time BETWEEN #{meetingBeginTime}
+                AND #{meetingEndTime}  OR c.meeting_end_time BETWEEN #{meetingBeginTime}  AND #{meetingEndTime} )
+               AND meetroom_id = #{meetroomId}
+    </select>
+
+    <insert id="insertMeeting" parameterType="Meeting" useGeneratedKeys="true" keyProperty="id">
+        insert into meeting
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="meetingName != null  and meetingName != ''  ">meeting_name,</if>
+			<if test="meetingSubject != null  and meetingSubject != ''  ">meeting_subject,</if>
+			<if test="meetingBeginTime != null  ">meeting_begin_time,</if>
+			<if test="meetingEndTime != null  ">meeting_end_time,</if>
+			<if test="meetroomId != null  ">meetroom_id,</if>
+			<if test="createdTime != null  ">created_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updatedTime != null  ">updated_time,</if>
+			<if test="createdBy != null  and createdBy != ''  ">created_by,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="meetingName != null  and meetingName != ''  ">#{meetingName},</if>
+			<if test="meetingSubject != null  and meetingSubject != ''  ">#{meetingSubject},</if>
+			<if test="meetingBeginTime != null  ">#{meetingBeginTime},</if>
+			<if test="meetingEndTime != null  ">#{meetingEndTime},</if>
+			<if test="meetroomId != null  ">#{meetroomId},</if>
+			<if test="createdTime != null  ">#{createdTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updatedTime != null  ">#{updatedTime},</if>
+			<if test="createdBy != null  and createdBy != ''  ">#{createdBy},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMeeting" parameterType="Meeting">
+        update meeting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="meetingName != null  and meetingName != ''  ">meeting_name = #{meetingName},</if>
+            <if test="meetingSubject != null  and meetingSubject != ''  ">meeting_subject = #{meetingSubject},</if>
+            <if test="meetingBeginTime != null  ">meeting_begin_time = #{meetingBeginTime},</if>
+            <if test="meetingEndTime != null  ">meeting_end_time = #{meetingEndTime},</if>
+            <if test="meetroomId != null  ">meetroom_id = #{meetroomId},</if>
+            <if test="createdTime != null  ">created_time = #{createdTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updatedTime != null  ">updated_time = #{updatedTime},</if>
+            <if test="createdBy != null  and createdBy != ''  ">created_by = #{createdBy},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteMeetingById" parameterType="Integer">
+        delete from meeting where id = #{id}
+    </delete>
+	
+    <delete id="deleteMeetingByIds" parameterType="String">
+        delete from meeting where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -53,7 +53,7 @@
                     sortOrder: options.sortOrder,                       // 排序方式  asc 或者 desc
                     pagination: options.pagination,                     // 是否显示分页（*）
                     pageNumber: 1,                                      // 初始化加载第一页，默认第一页
-                    pageSize: options.pageSize,                         // 每页的记录行数（*） 
+                    pageSize: options.pageSize,                         // 每页的记录行数（*）
                     pageList: [10, 25, 50],                             // 可供选择的每页的行数（*）
                     escape: options.escape,                             // 转义HTML字符串
                     showFooter: options.showFooter,                     // 是否显示表尾
@@ -87,7 +87,7 @@
                     searchValue:    params.search,
                     orderByColumn:  params.sort,
                     isAsc:          params.order
-        		}; 
+        		};
             },
             // 请求获取数据后处理回调函数
             responseHandler: function(res) {
@@ -495,9 +495,9 @@
             },
             // 弹出层指定参数选项
             openOptions: function (options) {
-            	var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url; 
-            	var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title; 
-                var _width = $.common.isEmpty(options.width) ? "800" : options.width; 
+            	var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
+            	var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
+                var _width = $.common.isEmpty(options.width) ? "800" : options.width;
                 var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
                 layer.open({
                     type: 2,
@@ -615,7 +615,7 @@
             // 详细信息
             detail: function(id, width, height) {
             	var _url = $.common.isEmpty(id) ? $.table._option.detailUrl : $.table._option.detailUrl.replace("{id}", id);
-                var _width = $.common.isEmpty(width) ? "800" : width; 
+                var _width = $.common.isEmpty(width) ? "800" : width;
                 var _height = $.common.isEmpty(height) ? ($(window).height() - 50) : height;
             	//如果是移动端，就使用自适应大小弹窗
             	if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
@@ -650,7 +650,7 @@
 	            	    $.operate.submit(url, "post", "json", data);
 	                }
             	});
-            	
+
             },
             // 批量删除信息
             removeAll: function() {
