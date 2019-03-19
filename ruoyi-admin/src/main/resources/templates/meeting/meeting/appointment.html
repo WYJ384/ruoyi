@@ -3,14 +3,15 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <link th:href="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
-
-<link th:href='@{/fullcalendar/fullcalendar.min.css}' rel='stylesheet'/>
+<link th:href='@{/fullcalendar-4.0.1/packages/core/main.css}' rel='stylesheet' />
+<link th:href='@{/fullcalendar-4.0.1/packages/daygrid/main.css}' rel='stylesheet' />
+<link th:href='@{/fullcalendar-4.0.1/packages/timegrid/main.css}' rel='stylesheet' />
 <body class="white-bg">
 <div class="form-horizontal m">
     <label class="col-sm-3 control-label">会议室：</label>
     <div class="col-sm-4">
         <select class="form-control" name="meetroomId" id="meetroomId">
-            <option th:each="room: ${meetrooms}" th:text="${room.meetroomName}" th:value="${room.id}" ></option>
+            <option th:each="room: ${meetrooms}" th:text="${room.meetroomName}" th:value="${room.id}"></option>
         </select>
     </div>
     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -28,7 +29,7 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                   预约会议
+                    预约会议
                 </h4>
             </div>
             <div class="modal-body">
@@ -60,8 +61,9 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">会议室</label>
                         <div class="col-sm-8">
-                            <select class="form-control" name="meetroomId">
-                                <option th:each="room: ${meetrooms}" th:text="${room.meetroomName}" th:value="${room.id}" ></option>
+                            <select class="form-control" name="meetroomId" id="meetroomIdForm">
+                                <option th:each="room: ${meetrooms}" th:text="${room.meetroomName}"
+                                        th:value="${room.id}"></option>
                             </select>
                         </div>
                     </div>
@@ -88,10 +90,10 @@
 <div id='calendar'></div>
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
-<script th:src='@{/fullcalendar/lib/moment.min.js}'></script>
-<!--<script th:src='@{/fullcalendar/lib/jquery.min.js}'></script>-->
-<script th:src='@{/fullcalendar/fullcalendar.min.js}'></script>
-<script th:src='@{/fullcalendar/locale-all.js}'></script>
+<script th:src='@{/fullcalendar-4.0.1/packages/core/main.js}'></script>
+<script th:src='@{/fullcalendar-4.0.1/packages/interaction/main.js}'></script>
+<script th:src='@{/fullcalendar-4.0.1/packages/daygrid/main.js}'></script>
+<script th:src='@{/fullcalendar-4.0.1/packages/timegrid/main.js}'></script>
 <script type="text/javascript">
 
     var prefix = ctx + "meeting/meeting"
@@ -141,7 +143,8 @@
                         $.modal.alertError(result.msg);
                     }
                     $.modal.closeLoading();
-                    $('#calendar').fullCalendar( 'refetchEvents')
+                    initCalendar();
+                    $("#myModal").modal('hide')
                 }
             };
             $.ajax(config)
@@ -150,67 +153,43 @@
     $('#save').click(function () {
         submitHandler();
     });
-    $(document).ready(function () {
-
-        initFullCalendar();
-        function  initFullCalendar(){
-            var initialLocaleCode = 'zh-cn';
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay,listMonth'
-                },
-                defaultDate: new Date(),
-                defaultView:'agendaWeek',
-                locale: initialLocaleCode,
-                buttonIcons: true, // show the prev/next text
-                weekNumbers: true,
-                navLinks: true, // can click day/week names to navigate views
-                editable: false,
-                selectable:true,
-                eventLimit: true, // allow "more" link when too many events
-                events: function(start,end,timezone, callback){
-                    var config = {
-                        url: prefix + "/findList",
-                        type: "post",
-                        dataType: "json",
-                        data: {meetroomId:$("#meetroomId").val()},
-                        beforeSend: function () {
-                            $.modal.loading("正在处理中，请稍后...");
-                            $.modal.disable();
-                        },
-                        success: function (result) {
-                            $.modal.closeLoading();
-                            callback(result);
-                        }
-                    };
-                    $.ajax(config)
-                },
-            });
-
-            // build the locale selector's options
-            $.each($.fullCalendar.locales, function (localeCode) {
-                $('#locale-selector').append(
-                        $('<option/>')
-                                .attr('value', localeCode)
-                                .prop('selected', localeCode == initialLocaleCode)
-                                .text(localeCode)
-                );
-            });
-        }
-
-
-        // when the selected option changes, dynamically change the calendar option
-        $('#locale-selector').on('change', function () {
-            if (this.value) {
-                $('#calendar').fullCalendar('option', 'locale', this.value);
+    document.addEventListener('DOMContentLoaded', function() {
+        initCalendar();
+    });
+    function initCalendar(){
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['interaction', 'dayGrid', 'timeGrid'],
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'timeGridWeek,timeGridDay'
+            },
+            defaultView: 'timeGridWeek',
+            defaultDate: new Date(),
+            locale: 'zh-cn',
+            navLinks: false, // can click day/week names to navigate views
+            selectable: true,
+            selectMirror: true,
+            select: function(info) {
+                var startStr = info.startStr.replace('T', ' ').replace('+08:00', '');
+                var endStr = info.endStr.replace('T', ' ').replace('+08:00', '');
+                $("#meetingBeginTime").val(startStr);
+                $("#meetingEndTime").val(endStr);
+                $("#myModal").modal('show')
+            },
+            editable: false,
+            eventLimit: false, // allow "more" link when too many events
+            events: {
+                url: prefix + "/findList?meetroomId="+$("#meetroomId").val()
             }
         });
-        $('#meetroomId').on('change', function () {
-            $('#calendar').fullCalendar( 'refetchEvents')
-        });
 
+        calendar.render();
+    }
+    $('#meetroomId').on('change', function () {
+        $("#meetroomIdForm").val($(this).val());
+        initCalendar();
     });
 
 </script>

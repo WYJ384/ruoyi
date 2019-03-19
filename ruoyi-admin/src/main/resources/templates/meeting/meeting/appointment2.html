@@ -1,197 +1,224 @@
-<!DOCTYPE html>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset='utf-8' />
-    <link th:href='@{/fullcalendar/fullcalendar.min.css}' rel='stylesheet' />
-    <link th:href='@{/fullcalendar/fullcalendar.print.min.css}' rel='stylesheet' media='print' />
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <script th:src='@{/fullcalendar/lib/moment.min.js}'></script>
-    <script th:src='@{/fullcalendar/lib/jquery.min.js}'></script>
-    <script th:src='@{/fullcalendar/fullcalendar.min.js}'></script>
-    <script th:src='@{/fullcalendar/locale-all.js}'></script>
-    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
-    <script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
-    <style>
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-            font-size: 14px;
-        }
-
-        #top {
-            background: #eee;
-            border-bottom: 1px solid #ddd;
-            padding: 0 10px;
-            line-height: 40px;
-            font-size: 12px;
-        }
-
-        #calendar {
-            margin: 10px auto;
-            padding: 0 10px;
-        }
-        .layui-layer-page .layui-layer-content {
-            position: relative;
-            overflow: hidden;
-        }
-    </style>
-</head>
-<body>
-
-
-<div class="container" style="text-align: center">
-    <div class="col-md-4" style="margin-top: 10px;">
-        <div class="form-group">
-            <label class="col-sm-3 col-xs-3 col-md-3 control-label">会议室：</label>
-            <div class="col-sm-6 col-xs-6 col-md6">
-                <select class="form-control" name="1">
-                    <option value="1">1号会议室</option>
-                    <option value="2">2号会议室</option>
-                    <option value="3">3号会议室</option>
-                    <option value="4">4号会议室</option>
-                    <option value="5">5号会议室</option>
-                </select>
-            </div>
-            <button type="button" class="btn" id="addMeeting">添加会议</button>
-        </div>
+<link th:href='@{/fullcalendar/fullcalendar.min.css}' rel='stylesheet'/>
+<body class="white-bg">
+<div class="form-horizontal m">
+    <label class="col-sm-3 control-label">会议室：</label>
+    <div class="col-sm-4">
+        <select class="form-control" name="meetroomId" id="meetroomId">
+            <option th:each="room: ${meetrooms}" th:text="${room.meetroomName}" th:value="${room.id}"></option>
+        </select>
     </div>
-
-
-    <div id='calendar'></div>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        添加会议
+    </button>
 </div>
-<form class="form-horizontal m" id="form-meeting-add" style="display: none">
-    <div class="form-group">
-        <label class="col-sm-3 control-label">会议名称：</label>
-        <div class="col-sm-8">
-            <input id="meetingName" name="meetingName" class="form-control" type="text">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">会议主题：</label>
-        <div class="col-sm-8">
-            <textarea id="meetingSubject" name="meetingSubject" class="form-control"></textarea>
-        </div>
-    </div>
-    <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label">会议开始时间：</label>-->
-        <!--<div class="col-sm-8">-->
-            <!--<input  class="form-control" type="text">-->
-        <!--</div>-->
-    <!--</div>-->
-    <div class="form-group">
-        <label class="col-sm-3 control-label">会议开始时间：</label>
-        <div class="col-sm-8">
-            <div class="form-group">
-                <div class="input-group date"> <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" id="meetingBeginTime" name="meetingBeginTime" class="form-control" value="2018-04-20">
-                </div>
+<!-- 按钮触发模态框 -->
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    预约会议
+                </h4>
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">会议结束时间：</label>
-        <div class="col-sm-8">
-            <input id="meetingEndTime" name="meetingEndTime" class="form-control" type="text">
-        </div>
-    </div>
+            <div class="modal-body">
+                <form class="form-horizontal m" id="form-meeting-add">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会议名称：</label>
+                        <div class="col-sm-8">
+                            <input id="meetingName" name="meetingName" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会议主题：</label>
+                        <div class="col-sm-8">
+                            <textarea id="meetingSubject" name="meetingSubject" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会议开始时间：</label>
+                        <div class="col-sm-8">
+                            <input id="meetingBeginTime" name="meetingBeginTime" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会议结束时间：</label>
+                        <div class="col-sm-8">
+                            <input id="meetingEndTime" name="meetingEndTime" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会议室</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="meetroomId" id="meetroomIdForm">
+                                <option th:each="room: ${meetrooms}" th:text="${room.meetroomName}"
+                                        th:value="${room.id}"></option>
+                            </select>
+                        </div>
+                    </div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">会议室</label>
-        <div class="col-sm-8">
-            <select class="form-control" name="meetroomId">
-                <option value="1">1号会议室</option>
-                <option value="2">2号会议室</option>
-                <option value="3">3号会议室</option>
-                <option value="4">4号会议室</option>
-                <option value="5">5号会议室</option>
-            </select>
-        </div>
-    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                        </div>
+                    </div>
 
-    <div class="form-group">
-        <label class="col-sm-3 control-label">备注：</label>
-        <div class="col-sm-8">
-            <textarea id="remarks" name="remarks" class="form-control"></textarea>
-        </div>
-    </div>
-</form>
-<script>
-    $(document).ready(function() {
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="save">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div id='calendar'></div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
+<script th:src='@{/fullcalendar/lib/moment.min.js}'></script>
+<!--<script th:src='@{/fullcalendar/lib/jquery.min.js}'></script>-->
+<script th:src='@{/fullcalendar/fullcalendar.min.js}'></script>
+<script th:src='@{/fullcalendar/locale-all.js}'></script>
+<script type="text/javascript">
 
-        var initialLocaleCode = 'zh-cn';
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay,listMonth'
+    var prefix = ctx + "meeting/meeting"
+    $("#form-meeting-add").validate({
+        rules: {
+            meetingName: {
+                required: true,
             },
-            defaultDate: new Date(),
-            locale: initialLocaleCode,
-            buttonIcons: true, // show the prev/next text
-            weekNumbers: true,
-            navLinks: true, // can click day/week names to navigate views
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: [
+            meetingBeginTime: {
+                required: true,
+            },
+            meetingEndTime: {
+                required: true,
+            },
 
-                {
-                    title: '测试会议',
-                    start: '2019-03-14 10:30',
-                    end: '2019-03-14 12:30'
+        },
+        focusCleanup: true
+    });
+    $("#meetingBeginTime").datetimepicker({//选择年月日
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        language: 'zh-CN',
+        minuteStep: 1
+    });
+    $("#meetingEndTime").datetimepicker({//选择年月日
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        language: 'zh-CN',
+        minuteStep: 1
+    });
+    function submitHandler() {
+
+        if ($.validate.form()) {
+            var config = {
+                url: prefix + "/add",
+                type: "post",
+                dataType: "json",
+                data: $('#form-meeting-add').serialize(),
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                    $.modal.disable();
                 },
-                {
-                    title: '测试会议3',
-                    start: '2019-03-14 13:30',
-                    end: '2019-03-14 14:30'
+                success: function (result) {
+                    if (result.code == web_status.SUCCESS) {
+                        $.modal.msgSuccess(result.msg);
+                    } else {
+                        $.modal.alertError(result.msg);
+                    }
+                    $.modal.closeLoading();
+                    $('#calendar').fullCalendar('refetchEvents')
                 }
-            ]
-        });
-        var prefix = "/meeting/meeting";
-        var index="";
-        $("#addMeeting").click(function(){
-            layer.open({
-                type: 1,
-                skin: 'layui-layer-demo', //样式类名
-                area: [600 + 'px', 500 + 'px'],
-                title:'添加会议',
-                closeBtn: 0, //不显示关闭按钮
-                anim: 2,
-                shadeClose: true, //开启遮罩关闭
-                content: $('#form-meeting-add')
-                ,btn: ['确定', '关闭'],
-                // 弹层外区域关闭
-                shadeClose: true,
-                yes: function(index) {
+            };
+            $.ajax(config)
+        }
+    }
+    $('#save').click(function () {
+        submitHandler();
+    });
+    $(document).ready(function () {
+
+        initFullCalendar();
+        function initFullCalendar() {
+            var initialLocaleCode = 'zh-cn';
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay,listMonth'
+                },
+                defaultDate: new Date(),
+                defaultView: 'agendaWeek',
+                locale: initialLocaleCode,
+                buttonIcons: true, // show the prev/next text
+                weekNumbers: true,
+                navLinks: true, // can click day/week names to navigate views
+                editable: false,
+                selectable: true,
+                //允许用户拖动
+                select: function (startDate, endDate, allDay, jsEvent, view) {
+
+                },
+                eventLimit: true, // allow "more" link when too many events
+                events: function (start, end, timezone, callback) {
                     var config = {
-                        url: prefix + "/add",
+                        url: prefix + "/findList",
                         type: "post",
                         dataType: "json",
-                        data: $('#form-meeting-add').serialize(),
+                        data: {meetroomId: $("#meetroomId").val()},
                         beforeSend: function () {
-                            //loading层
-
-                             index = layer.load(1, {
-                                shade: [0.1,'#fff'] //0.1透明度的白色背景
-                            });
-
+                            $.modal.loading("正在处理中，请稍后...");
+                            $.modal.disable();
                         },
-                        success: function(result) {
-                            layer.closeAll();
-                            layer.msg('成功')
+                        success: function (result) {
+                            $.modal.closeLoading();
+                            callback(result);
                         }
                     };
                     $.ajax(config)
                 },
-                cancel: function(index) {
-                    return true;
-                }
             });
+
+            // build the locale selector's options
+            $.each($.fullCalendar.locales, function (localeCode) {
+                $('#locale-selector').append(
+                        $('<option/>')
+                                .attr('value', localeCode)
+                                .prop('selected', localeCode == initialLocaleCode)
+                                .text(localeCode)
+                );
+            });
+        }
+
+
+        // when the selected option changes, dynamically change the calendar option
+        $('#locale-selector').on('change', function () {
+            if (this.value) {
+                $('#calendar').fullCalendar('option', 'locale', this.value);
+            }
         });
+        $('#meetroomId').on('change', function () {
+            $('#calendar').fullCalendar('refetchEvents');
+            $("#meetroomIdForm").val($(this).val())
+        });
+
     });
 
 </script>
-
 </body>
 </html>
