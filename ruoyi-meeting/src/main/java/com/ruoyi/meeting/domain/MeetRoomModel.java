@@ -1,7 +1,5 @@
 package com.ruoyi.meeting.domain;
 
-import java.util.Date;
-
 /**
  * 会议表 meeting
  * 

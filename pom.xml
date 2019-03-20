@@ -197,6 +197,11 @@
 				<artifactId>ruoyi-meeting</artifactId>
 				<version>${ruoyi.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.ruoyi</groupId>
+				<artifactId>ruoyi-worktask</artifactId>
+				<version>${ruoyi.version}</version>
+			</dependency>
 
 
 	        
@@ -211,6 +216,7 @@
 		<module>ruoyi-generator</module>
         <module>ruoyi-meeting</module>
 		<module>ruoyi-common</module>
+		<module>ruoyi-worktask</module>
     </modules>
     <packaging>pom</packaging>
 

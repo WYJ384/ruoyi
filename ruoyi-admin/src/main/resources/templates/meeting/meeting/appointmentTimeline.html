@@ -9,11 +9,11 @@
 
 
 <body class="white-bg">
-<div class="form-horizontal m" style="text-align: center">
-    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        添加会议
-    </button>
-</div>
+<!--<div class="form-horizontal m" style="text-align: center">-->
+    <!--<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+        <!--添加会议-->
+    <!--</button>-->
+<!--</div>-->
 <!-- 按钮触发模态框 -->
 
 <!-- 模态框（Modal） -->
@@ -171,6 +171,9 @@
             locale: 'zh-cn',
             selectable: true,
             eventOverlap: false,
+            minTime:'07:00:00',//开始时间早上七点
+            maxTime:'19:00:00',//终止时间晚上19点
+            slotDuration: '00:20', // 间隔20分钟
             eventLimit: true, // allow "more" link when too many events
             header: {
                 left: 'prev,next today',
