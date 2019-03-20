@@ -165,25 +165,41 @@
             plugins: ['interaction', 'resourceDayGrid', 'resourceTimeGrid'],
             defaultView: 'resourceTimeGridDay',
             defaultDate: new Date(),
-            editable: false,
+            editable: true,
             navLinks: true, // can click day/week names to navigate views
-            selectable: true,
             selectMirror: true,
             locale: 'zh-cn',
             selectable: true,
+            eventOverlap: false,
             eventLimit: true, // allow "more" link when too many events
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'resourceTimeGridDay,resourceTimeGridTwoDay'
+                right: 'resourceTimeGridDay,resourceTimeGridTwoDay,resourceTimeGridThreeDay'
             },
+
             views: {
                 resourceTimeGridTwoDay: {
                     type: 'resourceTimeGrid',
                     duration: {
                         days: 2
                     },
-                    buttonText: '2 days',
+                    buttonText: '两天',
+                },
+                resourceTimeGridDay: {
+                    type: 'resourceTimeGrid',
+                    duration: {
+                        days: 1
+                    },
+                    buttonText: '一天',
+                }
+                ,
+                resourceTimeGridThreeDay: {
+                    type: 'resourceTimeGrid',
+                    duration: {
+                        days: 3
+                    },
+                    buttonText: '三天',
                 }
             },
 

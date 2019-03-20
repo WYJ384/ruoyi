@@ -53,7 +53,7 @@
                  <li class="active">
                     <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">主页</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a class="menuItem" th:href="@{/system/main}">会议预约</a></li>
+                        <li class="active"><a class="menuItem" th:href="@{/meeting/meeting/appointmentTimeline}">会议预约</a></li>
                     </ul>
                 </li>
                 <li th:each="menu : ${menus}">
@@ -142,8 +142,8 @@
         <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
                     
         <div class="row mainContent" id="content-main">
-            <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" data-id="/meeting/meeting/appointment"
-                    th:src="@{/meeting/meeting/appointment}" frameborder="0" seamless></iframe>
+            <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" data-id="/meeting/meeting/appointmentTimeline"
+                    th:src="@{/meeting/meeting/appointmentTimeline}" frameborder="0" seamless></iframe>
         </div>
         <div class="footer">
             <div class="pull-right">© [[${copyrightYear}]] RuoYi Copyright </div>
