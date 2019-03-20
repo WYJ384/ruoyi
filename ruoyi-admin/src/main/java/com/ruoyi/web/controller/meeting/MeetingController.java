@@ -104,6 +104,18 @@ public class MeetingController extends BaseController
 		mmap.put("meetrooms", meetrooms);
 		return prefix + "/appointment";
 	}
+
+	/**
+	 * 预约-timeline的
+	 * @return
+	 */
+	@GetMapping("/appointmentTimeline")
+	public String appointmentTimeline(ModelMap mmap)
+	{
+		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(new Meetroom());
+		mmap.put("meetrooms", meetrooms);
+		return prefix + "/appointmentTimeline";
+	}
 	@GetMapping("/findList")
 	@ResponseBody
 	public List<MeetingModel> findList(Meeting meeting)
@@ -117,6 +129,8 @@ public class MeetingController extends BaseController
 			meetingModel.setStart(m.getMeetingBeginTime());
 			meetingModel.setEnd(m.getMeetingEndTime());
 			meetingModel.setTitle(m.getMeetingName());
+			meetingModel.setResourceId(m.getMeetroomId()+"");
+			meetingModel.setId(m.getId()+"");
 			meetingModels.add(meetingModel);
 		}
 		return  meetingModels;

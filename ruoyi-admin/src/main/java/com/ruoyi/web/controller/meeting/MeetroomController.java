@@ -7,6 +7,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.meeting.domain.MeetRoomModel;
 import com.ruoyi.meeting.domain.Meetroom;
 import com.ruoyi.meeting.service.IMeetroomService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -52,8 +55,27 @@ public class MeetroomController extends BaseController
         List<Meetroom> list = meetroomService.selectMeetroomList(meetroom);
 		return getDataTable(list);
 	}
-	
-	
+
+	@GetMapping("/selectMeetroomList")
+	@ResponseBody
+	public List<MeetRoomModel> selectMeetroomList(Meetroom meetroom)
+	{
+
+
+		List<MeetRoomModel> meetrooms=new ArrayList<MeetRoomModel>();
+		List<Meetroom> list = meetroomService.selectMeetroomList(meetroom);
+		Iterator<Meetroom> iterator = list.iterator();
+		while (iterator.hasNext()){
+			Meetroom m = iterator.next();
+			MeetRoomModel meetRoomModel=new MeetRoomModel();
+			meetRoomModel.setTitle(m.getMeetroomName());
+			meetRoomModel.setId(m.getId()+"");
+			meetRoomModel.setEventColor(m.getRemarks());
+			meetrooms.add(meetRoomModel);
+		}
+		return meetrooms;
+	}
+
 	/**
 	 * 导出会议室列表
 	 */

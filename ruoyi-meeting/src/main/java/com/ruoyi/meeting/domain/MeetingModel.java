@@ -17,8 +17,26 @@ public class MeetingModel
 	private static final long serialVersionUID = 1L;
 	
 	private String title;
+	private String resourceId;
+	private String id;
 	private Date start;
 	private Date end;
+
+	public String getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getTitle() {
 		return title;
