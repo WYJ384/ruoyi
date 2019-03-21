@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.worktask.mapper.WorkTaskMapper">
+    
+    <resultMap type="WorkTask" id="WorkTaskResult">
+        <result property="id"    column="id"    />
+        <result property="pid"    column="pid"    />
+        <result property="workName"    column="work_name"    />
+        <result property="rateProgress"    column="rate_progress"    />
+        <result property="description"    column="description"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="userIds"    column="user_ids"    />
+        <result property="openQuestion"    column="open_question"    />
+        <result property="workType"    column="work_type"    />
+        <result property="result"    column="result"    />
+        <result property="workTime"    column="work_time"    />
+        <result property="workStatus"    column="work_status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectWorkTaskVo">
+        select id, pid, work_name, rate_progress, description, begin_time, end_time, user_ids, open_question, work_type, result, work_time, work_status, create_by, create_time, update_by, update_time, del_flag, remark from work_task
+    </sql>
+	
+    <select id="selectWorkTaskList" parameterType="WorkTask" resultMap="WorkTaskResult">
+        <include refid="selectWorkTaskVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="pid != null "> and pid = #{pid}</if>
+             <if test="workName != null  and workName != '' "> and work_name = #{workName}</if>
+             <if test="rateProgress != null "> and rate_progress = #{rateProgress}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+             <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+             <if test="endTime != null "> and end_time = #{endTime}</if>
+             <if test="userIds != null  and userIds != '' "> and user_ids = #{userIds}</if>
+             <if test="openQuestion != null  and openQuestion != '' "> and open_question = #{openQuestion}</if>
+             <if test="workType != null  and workType != '' "> and work_type = #{workType}</if>
+             <if test="result != null  and result != '' "> and result = #{result}</if>
+             <if test="workTime != null "> and work_time = #{workTime}</if>
+             <if test="workStatus != null  and workStatus != '' "> and work_status = #{workStatus}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectWorkTaskById" parameterType="Integer" resultMap="WorkTaskResult">
+        <include refid="selectWorkTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWorkTask" parameterType="WorkTask" useGeneratedKeys="true" keyProperty="id">
+        insert into work_task
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pid != null  ">pid,</if>
+			<if test="workName != null  and workName != ''  ">work_name,</if>
+			<if test="rateProgress != null  ">rate_progress,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+			<if test="beginTime != null  ">begin_time,</if>
+			<if test="endTime != null  ">end_time,</if>
+			<if test="userIds != null  and userIds != ''  ">user_ids,</if>
+			<if test="openQuestion != null  and openQuestion != ''  ">open_question,</if>
+			<if test="workType != null  and workType != ''  ">work_type,</if>
+			<if test="result != null  and result != ''  ">result,</if>
+			<if test="workTime != null  ">work_time,</if>
+			<if test="workStatus != null  and workStatus != ''  ">work_status,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pid != null  ">#{pid},</if>
+			<if test="workName != null  and workName != ''  ">#{workName},</if>
+			<if test="rateProgress != null  ">#{rateProgress},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+			<if test="beginTime != null  ">#{beginTime},</if>
+			<if test="endTime != null  ">#{endTime},</if>
+			<if test="userIds != null  and userIds != ''  ">#{userIds},</if>
+			<if test="openQuestion != null  and openQuestion != ''  ">#{openQuestion},</if>
+			<if test="workType != null  and workType != ''  ">#{workType},</if>
+			<if test="result != null  and result != ''  ">#{result},</if>
+			<if test="workTime != null  ">#{workTime},</if>
+			<if test="workStatus != null  and workStatus != ''  ">#{workStatus},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateWorkTask" parameterType="WorkTask">
+        update work_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null  ">pid = #{pid},</if>
+            <if test="workName != null  and workName != ''  ">work_name = #{workName},</if>
+            <if test="rateProgress != null  ">rate_progress = #{rateProgress},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+            <if test="beginTime != null  ">begin_time = #{beginTime},</if>
+            <if test="endTime != null  ">end_time = #{endTime},</if>
+            <if test="userIds != null  and userIds != ''  ">user_ids = #{userIds},</if>
+            <if test="openQuestion != null  and openQuestion != ''  ">open_question = #{openQuestion},</if>
+            <if test="workType != null  and workType != ''  ">work_type = #{workType},</if>
+            <if test="result != null  and result != ''  ">result = #{result},</if>
+            <if test="workTime != null  ">work_time = #{workTime},</if>
+            <if test="workStatus != null  and workStatus != ''  ">work_status = #{workStatus},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteWorkTaskById" parameterType="Integer">
+        delete from work_task where id = #{id}
+    </delete>
+	
+    <delete id="deleteWorkTaskByIds" parameterType="String">
+        delete from work_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <!--<li>-->
+                        <!--上级任务的id：<input type="text" name="pid"/>-->
+                        <!--</li>-->
+
+                        <li>
+                            工作任务名称：<input type="text" name="workName"/>
+                        </li>
+
+                        <!--<li>-->
+                        <!--进度：<input type="text" name="rateProgress"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--任务描述：<input type="text" name="description"/>-->
+                        <!--</li>-->
+
+                        <li>
+                            任务开始时间：<input type="text" name="beginTime"/>
+                        </li>
+
+                        <li>
+                            任务结束时间：<input type="text" name="endTime"/>
+                        </li>
+
+                        <li>
+                            执行人：<input type="text" name="userIds"/>
+                        </li>
+
+                        <!--<li>-->
+                        <!--存在的问题：<input type="text" name="openQuestion"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--1重点工作 2班组 3个人任务：<input type="text" name="workType"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--1红灯2绿灯 3黄灯：<input type="text" name="result"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--任务完成工时：<input type="text" name="workTime"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--1进行中 2已完成 3 已归档：<input type="text" name="workStatus"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--创建人：<input type="text" name="createBy"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--创建时间：<input type="text" name="createTime"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--更新者：<input type="text" name="updateBy"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--更新时间：<input type="text" name="updateTime"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--删除标志（0代表存在 2代表删除）,默认0：<input type="text" name="delFlag"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--备注：<input type="text" name="remark"/>-->
+                        <!--</li>-->
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="worktask:workTask:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="worktask:workTask:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="worktask:workTask:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="worktask:workTask:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('worktask:workTask:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('worktask:workTask:remove')}]];
+    var prefix = ctx + "worktask/workTask";
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "工作任务",
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '主键',
+                    visible: false
+                },
+                {
+                    field: 'pid',
+                    title: '上级任务的id',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'workName',
+                    title: '任务名称',
+                    sortable: true
+                },
+                {
+                    field: 'rateProgress',
+                    title: '进度',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return row.rateProgress+"%"
+
+                    }
+                },
+                {
+                    field: 'description',
+                    title: '任务描述',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'beginTime',
+                    title: '任务开始时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'endTime',
+                    title: '任务结束时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'userIds',
+                    title: '执行人',
+                    sortable: true,
+                    visible: false
+                }
+                ,
+                {
+                    field: 'workType',
+                    title: '1重点工作 2班组 3个人任务',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'result',
+                    title: '督办情况',//1 红灯 2 绿灯 3 黄灯
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if (row.workStatus) {
+                            if (row.result == '1') {
+                                return "<span class='badge badge-danger'>红灯</span>";
+                            } else if (row.result == '2') {
+                                return "<span class='badge badge-primary'>绿灯</span>";
+                            } else if (row.result == '3') {
+                                return "<span class='badge badge-warning'>黄灯</span>";
+                            } else {
+                                return row.result
+                            }
+                        }
+
+                    }
+                },
+                {
+                    field: 'workTime',
+                    title: '任务完成工时',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'workStatus',
+                    title: '任务状态',//1 进行中 2 已完成 3 已归档
+                    sortable: true,
+                    visible: true,
+                    formatter: function (value, row, index) {
+                        if (row.workStatus) {
+                            if (row.workStatus == '1') {
+                                return "进行中";
+                            } else if (row.workStatus == '2') {
+                                return "已完成";
+                            } else if (row.workStatus == '3') {
+                                return "已归档";
+                            } else {
+                                return row.workStatus
+                            }
+                        }
+
+                    }
+                },
+                {
+                    field: 'openQuestion',
+                    title: '存在的问题',
+                    sortable: true,
+                    visible: true
+                }
+                ,
+                {
+                    field: 'createBy',
+                    title: '创建人',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'updateBy',
+                    title: '更新者',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'delFlag',
+                    title: '删除标志（0代表存在 2代表删除）,默认0',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    field: 'remark',
+                    title: '备注',
+                    sortable: true,
+                    visible: false
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

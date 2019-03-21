@@ -89,8 +89,10 @@ public class MeetingController extends BaseController
 	 * 新增会议
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap mmap)
 	{
+		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(new Meetroom());
+		mmap.put("meetrooms", meetrooms);
 	    return prefix + "/add";
 	}
 	/**
