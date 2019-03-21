@@ -123,7 +123,7 @@ public class MeetingController extends BaseController
 	public List<MeetingModel> findList(Meeting meeting)
 	{
 		List<MeetingModel> meetingModels=new ArrayList<MeetingModel>();
-		List<Meeting> meetings = meetingService.selectMeetingList(meeting);
+		List<Meeting> meetings = meetingService.findAll(meeting);
 		Iterator<Meeting> iterator = meetings.iterator();
 		while (iterator.hasNext()){
 			Meeting m = iterator.next();

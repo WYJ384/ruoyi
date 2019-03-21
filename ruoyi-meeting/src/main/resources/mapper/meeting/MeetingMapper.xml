@@ -36,6 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updatedTime != null "> and updated_time = #{updatedTime}</if>
              <if test="createdBy != null  and createdBy != '' "> and created_by = #{createdBy}</if>
              <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+            <!--  数据过滤  -->
+            ${params.filterSql}
          </where>
     </select>
     

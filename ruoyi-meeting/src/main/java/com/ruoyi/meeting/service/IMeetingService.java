@@ -26,6 +26,15 @@ public interface IMeetingService
      * @return 会议集合
      */
 	public List<Meeting> selectMeetingList(Meeting meeting);
+
+
+	/**
+	 * 查询会议列表
+	 *
+	 * @param meeting 会议信息
+	 * @return 会议集合
+	 */
+	public List<Meeting> findAll(Meeting meeting);
 	
 	/**
      * 新增会议

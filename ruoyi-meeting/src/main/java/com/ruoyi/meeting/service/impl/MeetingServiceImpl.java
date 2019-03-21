@@ -1,6 +1,8 @@
 package com.ruoyi.meeting.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.annotation.DataFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.meeting.mapper.MeetingMapper;
@@ -38,13 +40,18 @@ public class MeetingServiceImpl implements IMeetingService
      * @param meeting 会议信息
      * @return 会议集合
      */
+	@DataFilter(userAlias = "meeting.created_by")
 	@Override
 	public List<Meeting> selectMeetingList(Meeting meeting)
 	{
 	    return meetingMapper.selectMeetingList(meeting);
 	}
-	
-    /**
+	@Override
+	public List<Meeting> findAll(Meeting meeting) {
+		return meetingMapper.selectMeetingList(meeting);
+	}
+
+	/**
      * 新增会议
      * 
      * @param meeting 会议信息
