@@ -708,6 +708,9 @@
             editTab: function(id) {
             	$.modal.openTab("修改" + $.table._option.modalName, $.operate.editUrl(id));
             },
+			addSubTab: function(title,url) {
+				$.modal.openTab(title, url);
+			},
             // 修改信息 全屏
             editFull: function(id) {
             	var url = "/404.html";

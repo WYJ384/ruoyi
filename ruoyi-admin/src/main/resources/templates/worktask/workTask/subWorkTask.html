@@ -5,6 +5,7 @@
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
+        <input type="hidden" id="pid"  th:value="${pid}" >
         <div class="col-sm-12 search-collapse">
             <form id="formId">
                 <div class="select-list">
@@ -123,7 +124,7 @@
 
     $(function () {
         var options = {
-            url: prefix + "/list?workType=1",
+            url: prefix + "/list?pid="+$("#pid").val(),
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
@@ -154,7 +155,8 @@
                     title: '进度',
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.rateProgress + '%</a>';
+                        return "<a href='#'>"+row.rateProgress+"%"+"</a>"
+
                     }
                 },
                 {
@@ -292,8 +294,8 @@
 
     });
     /*重点工作-子任务*/
-    function detail(id) {
-        var url = prefix + '/subTaskList/' + id;
+    function detail(dictId) {
+        var url = prefix + '/detail/' + dictId;
         createMenuItem(url, "子任务");
     }
 </script>

@@ -9,13 +9,14 @@
 </style>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal" id="form-workTask-add" th:object="${workTask}">
-        <div class="form-group" style="display: none">
-            <label class="col-sm-3 control-label">上级任务的：</label>
-            <div class="col-sm-8">
-                <input id="pid" name="pid" class="form-control"  th:field="*{id}" type="text">
-            </div>
-        </div>
+    <form class="form-horizontal" id="form-workTask-add"  th:object="${workTask}">
+        <input id="pid" name="pid" th:field="*{id}" class="form-control" type="hidden">
+        <!--<div class="form-group" style="display: none">-->
+            <!--<label class="col-sm-3 control-label">上级任务的：</label>-->
+            <!--<div class="col-sm-8">-->
+              <!---->
+            <!--</div>-->
+        <!--</div>-->
 
         <div class="row">
             <div class="col-sm-6">
@@ -123,7 +124,7 @@
                 </label>
                 <label class="radio-box">
                     <div class="iradio-blue">
-                        <input type="radio" value="2" checked="" id="workType2" name="workType">
+                        <input type="radio" checked="" value="2" id="workType2" name="workType">
                     </div>
                     班组
                 </label>
@@ -244,6 +245,7 @@
             var data = $("#form-workTask-add").serializeArray();
             var userIds = $.form.selectSelects("userIds");
             data.push({"name": "userIds", "value": userIds});
+            data.push({"name": "pid", "value": $("#pid").val()});
             $.operate.saveTab(prefix + "/add", data);
         }
     }

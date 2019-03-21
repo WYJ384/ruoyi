@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,9 @@ public class WorkTaskController extends BaseController
 	
 	@Autowired
 	private IWorkTaskService workTaskService;
-	
+
+	@Autowired
+	private ISysUserService userService;
 	@RequiresPermissions("worktask:workTask:view")
 	@GetMapping()
 	public String workTask()
@@ -56,7 +60,13 @@ public class WorkTaskController extends BaseController
         List<WorkTask> list = workTaskService.selectWorkTaskList(workTask);
 		return getDataTable(list);
 	}
-	
+	@RequiresPermissions("worktask:workTask:list")
+	@GetMapping("/subTaskList/{id}")
+	public String subTaskList(@PathVariable("id") Integer id, ModelMap mmap)
+	{
+		mmap.put("pid",id);
+		return prefix + "/subWorkTask";
+	}
 	
 	/**
 	 * 导出工作任务列表
@@ -75,8 +85,9 @@ public class WorkTaskController extends BaseController
 	 * 新增工作任务
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add( ModelMap mmap)
 	{
+		mmap.put("users",userService.selectUserList(new SysUser()));
 	    return prefix + "/add";
 	}
 	
@@ -87,7 +98,7 @@ public class WorkTaskController extends BaseController
 	@Log(title = "工作任务", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(WorkTask workTask)
+	public AjaxResult addSave(WorkTask workTask, ModelMap mmap)
 	{
 		workTask.setCreateBy(ShiroUtils.getLoginName());
 		workTask.setCreateTime(new Date());
@@ -102,9 +113,22 @@ public class WorkTaskController extends BaseController
 	{
 		WorkTask workTask = workTaskService.selectWorkTaskById(id);
 		mmap.put("workTask", workTask);
+		mmap.put("users",userService.selectUserList(new SysUser()));
 	    return prefix + "/edit";
 	}
-	
+	/**
+	 * 添加子任务
+	 */
+	@GetMapping("/addSubTask")
+	public String addSubTask(Integer id, ModelMap mmap)
+	{
+		WorkTask workTask = workTaskService.selectWorkTaskById(id);
+		mmap.put("workTask", workTask);
+		mmap.put("users",userService.selectUserList(new SysUser()));
+		return prefix + "/subAdd";
+	}
+
+
 	/**
 	 * 修改保存工作任务
 	 */
