@@ -166,6 +166,8 @@ public class MeetingController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
+		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(new Meetroom());
+		mmap.put("meetrooms", meetrooms);
 		Meeting meeting = meetingService.selectMeetingById(id);
 		mmap.put("meeting", meeting);
 	    return prefix + "/edit";
@@ -178,8 +180,9 @@ public class MeetingController extends BaseController
 	@Log(title = "会议", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(Meeting meeting)
+	public AjaxResult editSave(Meeting meeting, ModelMap mmap)
 	{
+
 		meeting.setUpdatedTime(new Date());
 		meeting.setUpdateBy(ShiroUtils.getLoginName());
 		return toAjax(meetingService.updateMeeting(meeting));

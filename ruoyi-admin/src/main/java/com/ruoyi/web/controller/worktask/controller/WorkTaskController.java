@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.worktask.controller;
 
+import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +88,9 @@ public class WorkTaskController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(WorkTask workTask)
-	{		
+	{
+		workTask.setCreateBy(ShiroUtils.getLoginName());
+		workTask.setCreateTime(new Date());
 		return toAjax(workTaskService.insertWorkTask(workTask));
 	}
 
@@ -108,7 +113,9 @@ public class WorkTaskController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(WorkTask workTask)
-	{		
+	{
+		workTask.setUpdateTime(new Date());
+		workTask.setUpdateBy(ShiroUtils.getLoginName());
 		return toAjax(workTaskService.updateWorkTask(workTask));
 	}
 	

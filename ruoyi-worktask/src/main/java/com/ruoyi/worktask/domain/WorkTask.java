@@ -41,20 +41,23 @@ public class WorkTask extends BaseEntity
 	private Integer workTime;
 	/** 1进行中 2已完成 3 已归档 */
 	private String workStatus;
-	/** 创建人 */
-	private String createBy;
-	/** 创建时间 */
-	private Date createTime;
-	/** 更新者 */
-	private String updateBy;
-	/** 更新时间 */
-	private Date updateTime;
+
 	/** 删除标志（0代表存在 2代表删除）,默认0 */
 	private String delFlag;
-	/** 备注 */
-	private String remark;
 
-	public void setId(Integer id) 
+
+	/** 祖级列表 */
+	private String ancestors;
+
+	public String getAncestors() {
+		return ancestors;
+	}
+
+	public void setAncestors(String ancestors) {
+		this.ancestors = ancestors;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -171,43 +174,7 @@ public class WorkTask extends BaseEntity
 	{
 		return workStatus;
 	}
-	public void setCreateBy(String createBy) 
-	{
-		this.createBy = createBy;
-	}
-
-	public String getCreateBy() 
-	{
-		return createBy;
-	}
-	public void setCreateTime(Date createTime) 
-	{
-		this.createTime = createTime;
-	}
-
-	public Date getCreateTime() 
-	{
-		return createTime;
-	}
-	public void setUpdateBy(String updateBy) 
-	{
-		this.updateBy = updateBy;
-	}
-
-	public String getUpdateBy() 
-	{
-		return updateBy;
-	}
-	public void setUpdateTime(Date updateTime) 
-	{
-		this.updateTime = updateTime;
-	}
-
-	public Date getUpdateTime() 
-	{
-		return updateTime;
-	}
-	public void setDelFlag(String delFlag) 
+	public void setDelFlag(String delFlag)
 	{
 		this.delFlag = delFlag;
 	}
@@ -216,15 +183,7 @@ public class WorkTask extends BaseEntity
 	{
 		return delFlag;
 	}
-	public void setRemark(String remark) 
-	{
-		this.remark = remark;
-	}
 
-	public String getRemark() 
-	{
-		return remark;
-	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)

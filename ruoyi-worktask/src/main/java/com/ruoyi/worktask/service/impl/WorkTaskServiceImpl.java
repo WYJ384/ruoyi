@@ -53,6 +53,12 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 	@Override
 	public int insertWorkTask(WorkTask workTask)
 	{
+		if(workTask.getWorkType().equals("1")){
+			workTask.setAncestors("0");
+			workTask.setPid(0);
+		}else{
+
+		}
 	    return workTaskMapper.insertWorkTask(workTask);
 	}
 	
