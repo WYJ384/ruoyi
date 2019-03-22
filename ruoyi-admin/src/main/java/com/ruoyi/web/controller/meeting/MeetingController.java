@@ -180,9 +180,16 @@ public class MeetingController extends BaseController
 	@Log(title = "会议", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(Meeting meeting, ModelMap mmap)
+	public AjaxResult editSave(Meeting meeting)
 	{
 
+		Integer meetingCount = meetingService.getMeetingCountByRoomId(meeting);
+		if(meetingCount!=0){
+			AjaxResult ajaxResult=new AjaxResult();
+			ajaxResult.put("msg", "该时间的已有会议");
+			ajaxResult.put("code", 500);
+			return ajaxResult;
+		}
 		meeting.setUpdatedTime(new Date());
 		meeting.setUpdateBy(ShiroUtils.getLoginName());
 		return toAjax(meetingService.updateMeeting(meeting));

@@ -46,6 +46,15 @@ public class WorkTask extends BaseEntity
 	private String delFlag;
 
 	private Integer userId;
+	private boolean hasChild;
+
+	public boolean isHasChild() {
+		return hasChild;
+	}
+
+	public void setHasChild(boolean hasChild) {
+		this.hasChild = hasChild;
+	}
 
 	public Integer getUserId() {
 		return userId;

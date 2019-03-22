@@ -1,6 +1,9 @@
 package com.ruoyi.worktask.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.worktask.mapper.WorkTaskMapper;
@@ -53,11 +56,14 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 	@Override
 	public int insertWorkTask(WorkTask workTask)
 	{
+
+
 		if(workTask.getWorkType().equals("1")){
 			workTask.setAncestors("0");
 			workTask.setPid(0);
 		}else{
-
+			WorkTask task = workTaskMapper.selectWorkTaskById(workTask.getPid());
+			workTask.setAncestors(task.getAncestors() + "," + workTask.getPid());
 		}
 	    return workTaskMapper.insertWorkTask(workTask);
 	}

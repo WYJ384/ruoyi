@@ -25,7 +25,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label">任务进度：</label>
 						<div class="col-sm-8">
-							<input id="rateProgress" th:field="*{rateProgress}" name="rateProgress" value="0" class="form-control" type="number" min="0">
+							<input id="rateProgress" th:field="*{rateProgress}" th:readonly="*{hasChild}" name="rateProgress" value="0" class="form-control" type="number" min="0">
 						</div>
 					</div>
 				</div>
@@ -56,7 +56,7 @@
 						<label class="col-sm-4 control-label">执行人：</label>
 						<div class="col-sm-8">
 							<select id="userIds" class="form-control select2-hidden-accessible" multiple="">
-								<option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask.userIds.contains(user.userId.toString())}" ></option>
+								<option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>
 							</select>
 						</div>
 					</div>

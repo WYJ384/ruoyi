@@ -87,7 +87,9 @@ public class WorkTaskController extends BaseController
 	@GetMapping("/add")
 	public String add( ModelMap mmap)
 	{
-		mmap.put("users",userService.selectUserList(new SysUser()));
+		SysUser sysUser = new SysUser();
+		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
+		mmap.put("users",userService.selectUserList(sysUser));
 	    return prefix + "/add";
 	}
 	/**
@@ -133,10 +135,23 @@ public class WorkTaskController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
+		SysUser sysUser = new SysUser();
+		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
 		WorkTask workTask = workTaskService.selectWorkTaskById(id);
+
+		WorkTask task = new WorkTask();
+		task.setPid(id);
+		List<WorkTask> workTasks = workTaskService.selectWorkTaskList(task);
+		if(workTasks!=null&&workTasks.size()>0){
+			workTask.setHasChild(true);
+		}else{
+			workTask.setHasChild(false);
+		}
 		mmap.put("workTask", workTask);
-		mmap.put("users",userService.selectUserList(new SysUser()));
-	    return prefix + "/edit";
+		mmap.put("users",userService.selectUserList(sysUser));
+
+
+		return prefix + "/edit";
 	}
 	/**
 	 * 添加子任务
@@ -144,9 +159,11 @@ public class WorkTaskController extends BaseController
 	@GetMapping("/addSubTask")
 	public String addSubTask(Integer id, ModelMap mmap)
 	{
+		SysUser sysUser = new SysUser();
+		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
 		WorkTask workTask = workTaskService.selectWorkTaskById(id);
 		mmap.put("workTask", workTask);
-		mmap.put("users",userService.selectUserList(new SysUser()));
+		mmap.put("users",userService.selectUserList(sysUser));
 		return prefix + "/subAdd";
 	}
 
