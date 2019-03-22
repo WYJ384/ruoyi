@@ -58,5 +58,15 @@ public interface WorkTaskMapper
      * @return 结果
      */
 	public int deleteWorkTaskByIds(String[] ids);
+
+
+
+	/**
+	 * 查询我的工作任务列表
+	 *
+	 * @param workTask 工作任务信息
+	 * @return 工作任务集合
+	 */
+	public List<WorkTask> selectWorkTaskListByUserId(WorkTask workTask);
 	
 }

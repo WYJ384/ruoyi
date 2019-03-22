@@ -31,7 +31,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectWorkTaskVo">
         select id, pid, work_name, rate_progress, description, begin_time, end_time, user_ids, open_question, work_type, result, work_time, work_status, create_by, create_time, update_by, update_time, del_flag, remark,ancestors from work_task
     </sql>
-	
+
+    <select id="selectWorkTaskListByUserId" parameterType="WorkTask" resultMap="WorkTaskResult">
+        <include refid="selectWorkTaskVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="workName != null  and workName != '' "> and work_name = #{workName}</if>
+            <if test="rateProgress != null "> and rate_progress = #{rateProgress}</if>
+            <if test="description != null  and description != '' "> and description = #{description}</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="userIds != null  and userIds != '' "> and user_ids = #{userIds}</if>
+            <if test="openQuestion != null  and openQuestion != '' "> and open_question = #{openQuestion}</if>
+            <if test="workType != null  and workType != '' "> and work_type = #{workType}</if>
+            <if test="result != null  and result != '' "> and result = #{result}</if>
+            <if test="workTime != null "> and work_time = #{workTime}</if>
+            <if test="workStatus != null  and workStatus != '' "> and work_status = #{workStatus}</if>
+            <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+            <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+            <if test="ancestors != null  and ancestors != '' "> and ancestors = #{ancestors}</if>
+            <if test="userId != null  and userId != '' ">AND find_in_set(#{userId},work_task.user_ids)</if>
+
+        </where>
+    </select>
     <select id="selectWorkTaskList" parameterType="WorkTask" resultMap="WorkTaskResult">
         <include refid="selectWorkTaskVo"/>
         <where>  
@@ -42,7 +69,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="description != null  and description != '' "> and description = #{description}</if>
              <if test="beginTime != null "> and begin_time = #{beginTime}</if>
              <if test="endTime != null "> and end_time = #{endTime}</if>
-             <if test="userIds != null  and userIds != '' "> and user_ids = #{userIds}</if>
              <if test="openQuestion != null  and openQuestion != '' "> and open_question = #{openQuestion}</if>
              <if test="workType != null  and workType != '' "> and work_type = #{workType}</if>
              <if test="result != null  and result != '' "> and result = #{result}</if>
@@ -55,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
             <if test="ancestors != null  and ancestors != '' "> and ancestors = #{ancestors}</if>
-
+            <if test="userIds != null  and userIds != '' "> and user_ids = #{userIds}</if>
          </where>
     </select>
     

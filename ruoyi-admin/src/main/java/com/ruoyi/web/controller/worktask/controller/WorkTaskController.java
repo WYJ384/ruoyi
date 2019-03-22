@@ -90,7 +90,29 @@ public class WorkTaskController extends BaseController
 		mmap.put("users",userService.selectUserList(new SysUser()));
 	    return prefix + "/add";
 	}
-	
+	/**
+	 * 查询我的工作任务列表
+	 */
+	@RequiresPermissions("worktask:workTask:myTask")
+	@PostMapping("/selectWorkTaskListByUserId")
+	@ResponseBody
+	public TableDataInfo selectWorkTaskListByUserId(WorkTask workTask)
+	{
+		workTask.setUserId(ShiroUtils.getUserId().intValue());
+		startPage();
+		List<WorkTask> list = workTaskService.selectWorkTaskListByUserId(workTask);
+		return getDataTable(list);
+	}
+	/**
+	 * 新增工作任务
+	 */
+	@GetMapping("/toMyTask")
+	public String toMyTask( ModelMap mmap)
+	{
+		//selectWorkTaskListByUserId
+		return prefix + "/myTask";
+	}
+
 	/**
 	 * 新增保存工作任务
 	 */

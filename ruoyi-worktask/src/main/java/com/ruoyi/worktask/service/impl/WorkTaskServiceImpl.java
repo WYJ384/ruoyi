@@ -85,5 +85,11 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 	{
 		return workTaskMapper.deleteWorkTaskByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<WorkTask> selectWorkTaskListByUserId(WorkTask workTask) {
+
+		return workTaskMapper.selectWorkTaskListByUserId(workTask);
+	}
+
 }

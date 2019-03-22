@@ -45,6 +45,15 @@ public class WorkTask extends BaseEntity
 	/** 删除标志（0代表存在 2代表删除）,默认0 */
 	private String delFlag;
 
+	private Integer userId;
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	/** 祖级列表 */
 	private String ancestors;

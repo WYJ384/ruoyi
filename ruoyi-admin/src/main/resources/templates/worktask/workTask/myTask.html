@@ -5,7 +5,6 @@
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
-        <input type="hidden" id="pid"  th:value="${pid}" >
         <div class="col-sm-12 search-collapse">
             <form id="formId">
                 <div class="select-list">
@@ -124,7 +123,7 @@
 
     $(function () {
         var options = {
-            url: prefix + "/list?pid="+$("#pid").val(),
+            url: prefix + "/selectWorkTaskListByUserId",
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
@@ -156,7 +155,6 @@
                     sortable: true,
                     formatter: function (value, row, index) {
                         return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.rateProgress + '%</a>';
-
                     }
                 },
                 {
@@ -186,16 +184,30 @@
                 ,
                 {
                     field: 'workType',
-                    title: '1重点工作 2班组 3个人任务',
+                    title: '任务类型',
                     sortable: true,
-                    visible: false
+                    visible: true,
+                    formatter: function (value, row, index) {
+                        if (row.workType) {
+                            if (row.workType == '1') {
+                                return "<span class='badge badge-danger'>重点工作</span>";
+                            } else if (row.workType == '2') {
+                                return "<span class='badge badge-primary'>班组任务</span>";
+                            } else if (row.workType == '3') {
+                                return "<span class='badge badge-warning'>个人任务</span>";
+                            } else {
+                                return row.workType
+                            }
+                        }
+
+                    }
                 },
                 {
                     field: 'result',
                     title: '督办情况',//1 红灯 2 绿灯 3 黄灯
                     sortable: true,
                     formatter: function (value, row, index) {
-                        if (row.workStatus) {
+                        if (row.result) {
                             if (row.result == '1') {
                                 return "<span class='badge badge-danger'>红灯</span>";
                             } else if (row.result == '2') {
