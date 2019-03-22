@@ -63,6 +63,7 @@ public class MeetroomController extends BaseController
 
 
 		List<MeetRoomModel> meetrooms=new ArrayList<MeetRoomModel>();
+		meetroom.setMeetroomClosed("否");
 		List<Meetroom> list = meetroomService.selectMeetroomList(meetroom);
 		Iterator<Meetroom> iterator = list.iterator();
 		while (iterator.hasNext()){

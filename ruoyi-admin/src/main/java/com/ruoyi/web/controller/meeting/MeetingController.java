@@ -91,7 +91,9 @@ public class MeetingController extends BaseController
 	@GetMapping("/add")
 	public String add(ModelMap mmap)
 	{
-		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(new Meetroom());
+		Meetroom meetroom = new Meetroom();
+		meetroom.setMeetroomClosed("否");
+		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(meetroom);
 		mmap.put("meetrooms", meetrooms);
 	    return prefix + "/add";
 	}
@@ -102,7 +104,9 @@ public class MeetingController extends BaseController
 	@GetMapping("/appointment")
 	public String appointment(ModelMap mmap)
 	{
-		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(new Meetroom());
+		Meetroom meetroom = new Meetroom();
+		meetroom.setMeetroomClosed("否");
+		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(meetroom);
 		mmap.put("meetrooms", meetrooms);
 		return prefix + "/appointment";
 	}
@@ -114,7 +118,10 @@ public class MeetingController extends BaseController
 	@GetMapping("/appointmentTimeline")
 	public String appointmentTimeline(ModelMap mmap)
 	{
-		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(new Meetroom());
+		Meetroom meetroom = new Meetroom();
+		meetroom.setMeetroomClosed("否");
+		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(meetroom);
+
 		mmap.put("meetrooms", meetrooms);
 		return prefix + "/appointmentTimeline";
 	}
@@ -146,6 +153,13 @@ public class MeetingController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(Meeting meeting)
 	{
+		Meetroom meetroom = meetroomService.selectMeetroomById(meeting.getMeetroomId());
+		if(meetroom.getMeetroomClosed().equals("是")){
+			AjaxResult ajaxResult=new AjaxResult();
+			ajaxResult.put("msg", "此会议室暂停预约");
+			ajaxResult.put("code", 500);
+			return ajaxResult;
+		}
 		Integer meetingCount = meetingService.getMeetingCountByRoomId(meeting);
 		if(meetingCount!=0){
 			AjaxResult ajaxResult=new AjaxResult();
@@ -166,7 +180,9 @@ public class MeetingController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
-		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(new Meetroom());
+		Meetroom meetroom = new Meetroom();
+		meetroom.setMeetroomClosed("否");
+		List<Meetroom> meetrooms = meetroomService.selectMeetroomList(meetroom);
 		mmap.put("meetrooms", meetrooms);
 		Meeting meeting = meetingService.selectMeetingById(id);
 		mmap.put("meeting", meeting);
@@ -182,7 +198,13 @@ public class MeetingController extends BaseController
 	@ResponseBody
 	public AjaxResult editSave(Meeting meeting)
 	{
-
+		Meetroom meetroom = meetroomService.selectMeetroomById(meeting.getMeetroomId());
+		if(meetroom.getMeetroomClosed().equals("是")){
+			AjaxResult ajaxResult=new AjaxResult();
+			ajaxResult.put("msg", "此会议室暂停预约");
+			ajaxResult.put("code", 500);
+			return ajaxResult;
+		}
 		Integer meetingCount = meetingService.getMeetingCountByRoomId(meeting);
 		if(meetingCount!=0){
 			AjaxResult ajaxResult=new AjaxResult();

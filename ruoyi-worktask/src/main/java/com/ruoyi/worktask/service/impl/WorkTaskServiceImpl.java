@@ -1,5 +1,6 @@
 package com.ruoyi.worktask.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import com.ruoyi.common.constant.UserConstants;
@@ -77,7 +78,27 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 	@Override
 	public int updateWorkTask(WorkTask workTask)
 	{
-	    return workTaskMapper.updateWorkTask(workTask);
+		WorkTask task = new WorkTask();
+		//查询当前任务的父任务有多少子任务
+		task.setPid(workTask.getPid());
+		List<WorkTask> workTasks = workTaskMapper.selectWorkTaskList(task);
+		int size = workTasks.size();
+		Iterator<WorkTask> iterator = workTasks.iterator();
+		Double parentRateProgess=0D;
+		while (iterator.hasNext()){
+			WorkTask task1 = iterator.next();
+			if(task1.getId()!=workTask.getId()){
+				parentRateProgess+=(1.0/size) *task1.getRateProgress().intValue();
+			}
+		}
+		parentRateProgess += (1.0/size) * workTask.getRateProgress();
+		//更新父任务进度
+		WorkTask parentTask = workTaskMapper.selectWorkTaskById(workTask.getPid());
+		if(parentTask!=null){
+			parentTask.setRateProgress(parentRateProgess.intValue());
+			workTaskMapper.updateWorkTask(parentTask);
+		}
+		return workTaskMapper.updateWorkTask(workTask);
 	}
 
 	/**
