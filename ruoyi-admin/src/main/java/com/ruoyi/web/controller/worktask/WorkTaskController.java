@@ -146,6 +146,8 @@ public class WorkTaskController extends BaseController
 				// 上传并返回新文件名称
 				String fileName = FileUploadUtils.upload(filePath, file,extension);
 				WorkTaskFile workTaskFile=new WorkTaskFile();
+				workTaskFile.setUpdateBy(ShiroUtils.getLoginName());
+				workTaskFile.setUpdateTime(new Date());
 				workTaskFile.setCreateBy(ShiroUtils.getLoginName());
 				workTaskFile.setCreateTime(new Date());
 				workTaskFile.setExtension(extension);
@@ -227,6 +229,8 @@ public class WorkTaskController extends BaseController
 				WorkTaskFile workTaskFile=new WorkTaskFile();
 				workTaskFile.setUpdateBy(ShiroUtils.getLoginName());
 				workTaskFile.setUpdateTime(new Date());
+				workTaskFile.setCreateBy(ShiroUtils.getLoginName());
+				workTaskFile.setCreateTime(new Date());
 				workTaskFile.setExtension(extension);
 				workTaskFile.setFileName(originalFilename);
 				workTaskFile.setFilePath(fileName);
