@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="fileName != null  and fileName != '' "> and file_name = #{fileName}</if>
+             <if test="fileName != null  and fileName != '' "> and  file_name like concat('%', #{fileName}, '%')</if>
              <if test="extension != null  and extension != '' "> and extension = #{extension}</if>
          </where>
     </select>
