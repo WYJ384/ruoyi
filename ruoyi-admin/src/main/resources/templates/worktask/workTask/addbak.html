@@ -10,7 +10,6 @@
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal" id="form-workTask-add" enctype="multipart/form-data">
-
         <div class="form-group" style="display: none">
             <label class="col-sm-3 control-label">上级任务的：</label>
             <div class="col-sm-8">
@@ -39,63 +38,63 @@
         </div>
 
         <!--<div class="row">-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>开始时间：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input id="beginTime" name="beginTime" class="form-control" value="2019-03-25 09:11" readonly type="text">-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>结束时间：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input id="endTime" name="endTime" class="form-control" value="2019-03-25 09:11" readonly type="text">-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+            <!--<div class="col-sm-6">-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>开始时间：</label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<input id="beginTime" name="beginTime" class="form-control" value="2019-03-25 09:11" readonly type="text">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-sm-6">-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>结束时间：</label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<input id="endTime" name="endTime" class="form-control" value="2019-03-25 09:11" readonly type="text">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         <!--</div>-->
 
 
         <!--<div class="row">-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">执行人：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<select id="userIds" class="form-control select2-hidden-accessible" multiple="">-->
-        <!--<option th:each="user:${users}" th:value="${user.userId}"-->
-        <!--th:text="${user.userName}"></option>-->
-        <!--</select>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">督办情况：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<label class="radio-box" style="margin-top: 8px;">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" checked="" value="2" id="result2" name="result">-->
-        <!--</div>-->
-        <!--绿灯-->
-        <!--</label>-->
-        <!--<label class="radio-box">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" value="3" id="result3" name="result">-->
-        <!--</div>-->
-        <!--黄灯-->
-        <!--</label>-->
-        <!--<label class="radio-box">-->
-        <!--<div class="iradio-blue ">-->
-        <!--<input type="radio" value="1" id="result1" name="result">-->
-        <!--</div>-->
-        <!--红灯-->
-        <!--</label>-->
+            <!--<div class="col-sm-6">-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-sm-4 control-label">执行人：</label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<select id="userIds" class="form-control select2-hidden-accessible" multiple="">-->
+                            <!--<option th:each="user:${users}" th:value="${user.userId}"-->
+                                    <!--th:text="${user.userName}"></option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-sm-6">-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-sm-4 control-label">督办情况：</label>-->
+                    <!--<div class="col-sm-8">-->
+                        <!--<label class="radio-box" style="margin-top: 8px;">-->
+                            <!--<div class="iradio-blue">-->
+                                <!--<input type="radio" checked="" value="2" id="result2" name="result">-->
+                            <!--</div>-->
+                            <!--绿灯-->
+                        <!--</label>-->
+                        <!--<label class="radio-box">-->
+                            <!--<div class="iradio-blue">-->
+                                <!--<input type="radio" value="3" id="result3" name="result">-->
+                            <!--</div>-->
+                            <!--黄灯-->
+                        <!--</label>-->
+                        <!--<label class="radio-box">-->
+                            <!--<div class="iradio-blue ">-->
+                                <!--<input type="radio" value="1" id="result1" name="result">-->
+                            <!--</div>-->
+                            <!--红灯-->
+                        <!--</label>-->
 
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         <!--</div>-->
         <div class="row">
 
@@ -104,9 +103,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">牵头部门：</label>
                     <div class="col-sm-8">
-                        <input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
-                               placeholder="请选择归牵头部门" class="form-control" required>
-                        <input name="leadDeptId" type="hidden" id="leadDeptId"/>
+                        <input id="leadDeptId" name="leadDeptId" class="form-control" type="text">
                     </div>
                 </div>
             </div>
@@ -114,11 +111,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">配合部门：</label>
                     <div class="col-sm-8">
-                        <!--<input id="cooperateDeptId" name="cooperateDeptId" class="form-control" type="text">-->
-                        <input  onclick="selectCooperateDeptTree()" id="cooperateDeptName" type="text"
-                               placeholder="请选择归牵头部门" class="form-control" required>
-                        <input name="cooperateDeptId" type="hidden" id="cooperateDeptId"/>
-
+                        <input id="cooperateDeptId" name="cooperateDeptId" class="form-control" type="text">
                     </div>
                 </div>
             </div>
@@ -139,14 +132,12 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">分管领导：</label>
                     <div class="col-sm-8">
-                        <select id="leaderId" class="form-control select2-hidden-accessible" >
-                            <option th:each="user:${users}" th:value="${user.userId}"
-                                    th:text="${user.userName}"></option>
-                        </select>
+                        <input id="leaderId" name="leaderId" class="form-control" type="text">
                     </div>
                 </div>
             </div>
         </div>
+
 
 
         <div class="row">
@@ -192,14 +183,14 @@
 
 
         <!--<div class="row">-->
-        <!--<div class="col-sm-12">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-xs-2 control-label">工时：</label>-->
-        <!--<div class="col-xs-10">-->
-        <!--<input id="workTime" name="workTime" class="form-control" type="text">-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+            <!--<div class="col-sm-12">-->
+                <!--<div class="form-group">-->
+                    <!--<label class="col-xs-2 control-label">工时：</label>-->
+                    <!--<div class="col-xs-10">-->
+                        <!--<input id="workTime" name="workTime" class="form-control" type="text">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         <!--</div>-->
 
 
@@ -278,40 +269,40 @@
 <script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
 
 <script type="text/javascript">
-    //    $("#beginTime").datetimepicker({//选择年月日
-    //        format: 'yyyy-mm-dd hh:ii',
-    //        autoclose: true,
-    //        language: 'zh-CN',
-    //        minuteStep: 1
-    //    });
-    //    $("#endTime").datetimepicker({//选择年月日
-    //        format: 'yyyy-mm-dd hh:ii',
-    //        autoclose: true,
-    //        language: 'zh-CN',
-    //        minuteStep: 1
-    //    });
+    $("#beginTime").datetimepicker({//选择年月日
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        language: 'zh-CN',
+        minuteStep: 1
+    });
+    $("#endTime").datetimepicker({//选择年月日
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        language: 'zh-CN',
+        minuteStep: 1
+    });
 
     var prefix = ctx + "worktask/workTask"
     $("#form-workTask-add").validate({
         rules: {
             workName: {
                 required: true,
-            }
-//            beginTime: {
-//                required: true,
-//            },
-//            endTime: {
-//                required: true,
-//            },
+            },
+            beginTime: {
+                required: true,
+            },
+            endTime: {
+                required: true,
+            },
         },
         focusCleanup: true
     });
 
     function submitHandler() {
         if ($.validate.form()) {
-            var leaderId = $.form.selectSelects("leaderId");
+            var userIds = $.form.selectSelects("userIds");
             var formData = new FormData($("#form-workTask-add")[0]);
-            formData.append('leaderId', leaderId);
+            formData.append('userIds', userIds);
             formData.append('file', $('#file')[0].files[0]);
             $.ajax({
                 url: prefix + "/add",
@@ -328,50 +319,6 @@
                     $.operate.successTabCallback(result);
                 }
             });
-        }
-    }
-    /*用户管理-新增-选择部门树*/
-    function selectLeadDeptTree() {
-        var leadDeptId = $("#leadDeptId").val();
-        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
-        var url = ctx + "system/dept/selectDeptTree/" + deptId;
-        var options = {
-            title: '选择部门',
-            width: "380",
-            url: ctx + "system/dept/selectDeptTree/" + deptId,
-            callBack: doSubmitLeadDept
-        };
-        $.modal.openOptions(options);
-    }
-
-    function doSubmitLeadDept(index, layero){
-        var tree = layero.find("iframe")[0].contentWindow.$._tree;
-        if ($.tree.notAllowParents(tree)) {
-            var body = layer.getChildFrame('body', index);
-            $("#leadDeptId").val(body.find('#treeId').val());
-            $("#leadDeptName").val(body.find('#treeName').val());
-            layer.close(index);
-        }
-    }
-    function selectCooperateDeptTree(){
-        var leadDeptId = $("#cooperateDeptId").val();
-        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#cooperateDeptId").val();
-        var url = ctx + "system/dept/selectDeptTree/" + deptId;
-        var options = {
-            title: '选择部门',
-            width: "380",
-            url: ctx + "system/dept/selectDeptTree/" + deptId,
-            callBack: doSubmitCooperateDept
-        };
-        $.modal.openOptions(options);
-    }
-    function doSubmitCooperateDept(index, layero){
-        var tree = layero.find("iframe")[0].contentWindow.$._tree;
-        if ($.tree.notAllowParents(tree)) {
-            var body = layer.getChildFrame('body', index);
-            $("#cooperateDeptId").val(body.find('#treeId').val());
-            $("#cooperateDeptName").val(body.find('#treeName').val());
-            layer.close(index);
         }
     }
 </script>

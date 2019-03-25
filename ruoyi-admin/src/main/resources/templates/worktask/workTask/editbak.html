@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}"  enctype="multipart/form-data">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<input id="pid" name="pid" th:field="*{pid}"  type="hidden">
+			<!--<div class="form-group">	-->
+				<!--<label class="col-sm-3 control-label">上级任务的id：</label>-->
+				<!--<div class="col-sm-8">-->
+					<!--<input id="pid" name="pid" th:field="*{pid}" class="form-control" type="text">-->
+				<!--</div>-->
+			<!--</div>-->
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color: red; ">*</span>任务名称：</label>
+						<div class="col-sm-8">
+							<input id="workName"  th:field="*{workName}" name="workName" class="form-control" type="text">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">任务进度：</label>
+						<div class="col-sm-8">
+							<input id="rateProgress" th:field="*{rateProgress}" th:readonly="*{hasChild}" name="rateProgress" value="0" class="form-control" type="number" min="0">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color: red; ">*</span>开始时间：</label>
+						<div class="col-sm-8">
+							<input id="beginTime"  th:value="${#dates.format(workTask.beginTime, 'yyyy-MM-dd HH:mm')}" name="beginTime" class="form-control" readonly type="text" >
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color: red; ">*</span>结束时间：</label>
+						<div class="col-sm-8">
+							<input id="endTime"  th:value="${#dates.format(workTask.endTime, 'yyyy-MM-dd HH:mm')}" name="endTime" class="form-control" readonly type="text" >
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">执行人：</label>
+						<div class="col-sm-8">
+							<select id="userIds" class="form-control select2-hidden-accessible" multiple="">
+								<option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">督办情况：</label>
+						<div class="col-sm-8">
+							<label class="radio-box" style="margin-top: 8px;">
+								<div class="iradio-blue">
+									<input type="radio" value="2" th:field="*{result}" id="result2" name="result">
+								</div>
+								绿灯
+							</label>
+							<label class="radio-box">
+								<div class="iradio-blue">
+									<input type="radio" value="3"  th:field="*{result}" id="result3" name="result">
+								</div>
+								黄灯
+							</label>
+							<label class="radio-box" >
+								<div class="iradio-blue ">
+									<input type="radio" checked="" th:field="*{result}"  value="1" id="result1" name="result">
+								</div>
+								红灯
+							</label>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="form-group" style="display: none">
+				<label class="col-sm-3 control-label">工作类型：</label>
+				<div class="col-sm-8">
+					<label class="radio-box" style="margin-top: 8px;">
+						<div class="iradio-blue ">
+							<input type="radio" checked="" value="1" th:field="*{workType}" id="workType1" name="workType">
+						</div>
+						重点工作
+					</label>
+					<label class="radio-box">
+						<div class="iradio-blue">
+							<input type="radio" value="2" th:field="*{workType}" id="workType2" name="workType">
+						</div>
+						班组
+					</label>
+					<label class="radio-box">
+						<div class="iradio-blue">
+							<input type="radio" value="3" th:field="*{workType}" id="workType3" name="workType">
+						</div>
+						个人任务
+					</label>
+				</div>
+			</div>
+
+
+
+
+
+
+
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">任务完成工时：</label>
+						<div class="col-sm-8">
+							<input id="workTime" name="workTime" th:field="*{workTime}" class="form-control" type="text">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">任务状态：</label>
+						<div class="col-sm-8">
+							<label class="radio-box" style="margin-top: 8px;">
+								<div class="iradio-blue ">
+									<input type="radio" checked="" th:field="*{workStatus}" value="1" id="workStatus1" name="workStatus">
+								</div>
+								进行中
+							</label>
+							<label class="radio-box">
+								<div class="iradio-blue">
+									<input type="radio" value="2" th:field="*{workStatus}" id="workStatus2" name="workStatus">
+								</div>
+								已完成
+							</label>
+							<label class="radio-box">
+								<div class="iradio-blue">
+									<input type="radio" value="3" th:field="*{workStatus}" id="workStatus3" name="workStatus">
+								</div>
+								已归档
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-xs-2 control-label">任务描述：</label>
+						<div class="col-xs-10">
+							<textarea name="description" th:field="*{description}" autocomplete="off" maxlength="500" class="form-control" rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-xs-2 control-label">存在的问题：</label>
+						<div class="col-xs-10">
+							<textarea name="openQuestion" th:field="*{openQuestion}" autocomplete="off" maxlength="500" class="form-control" rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<h4 class="form-header h4">其他信息</h4>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-xs-2 control-label">附件：</label>
+						<div class="col-xs-10">
+							<input type="file" id="file" name="file">
+							<p th:each="taskfile:${workTaskFiles}">
+								<a   th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'" th:text="${taskfile.fileName}"></a>
+							</p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-xs-2 control-label">备注：</label>
+						<div class="col-xs-10">
+							<textarea name="remark" autocomplete="off" th:field="*{remark}" maxlength="500" class="form-control" rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+    </div>
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+		</div>
+	</div>
+    <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+	<script type="text/javascript">
+		var prefix = ctx + "worktask/workTask";
+		$("#form-workTask-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+//	        if ($.validate.form()) {
+//				var data = $("#form-workTask-edit").serializeArray();
+//				var userIds = $.form.selectSelects("userIds");
+//				data.push({"name": "userIds", "value": userIds});
+//
+//	            $.operate.saveTab(prefix + "/edit",data);
+//	        }
+
+
+			if ($.validate.form()) {
+				var userIds = $.form.selectSelects("userIds");
+				var formData = new FormData($("#form-workTask-edit")[0]);
+				formData.append('userIds', userIds);
+				formData.append('file', $('#file')[0].files[0]);
+				$.ajax({
+					url: prefix + "/edit",
+					type: 'post',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false,
+					dataType: "json",
+					beforeSend: function () {
+						$.modal.loading("正在处理中，请稍后...");
+					},
+					success: function (result) {
+						$.operate.successTabCallback(result);
+					}
+				});
+			}
+	    }
+		function downloadFile(fileId){
+			window.location.href = ctx + "worktask/workTaskFile/downloadFile/" + fileId;
+		}
+	</script>
+</body>
+</html>

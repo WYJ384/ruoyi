@@ -10,7 +10,9 @@ import com.ruoyi.common.config.Global;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
@@ -48,7 +50,8 @@ public class WorkTaskController extends BaseController
 	private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private IWorkTaskService workTaskService;
-
+	@Autowired
+	private ISysDeptService deptService;
 	@Autowired
 	private ISysUserService userService;
 	@RequiresPermissions("worktask:workTask:view")
@@ -68,6 +71,20 @@ public class WorkTaskController extends BaseController
 	{
 		startPage();
         List<WorkTask> list = workTaskService.selectWorkTaskList(workTask);
+		Iterator<WorkTask> taskIterator = list.iterator();
+		while (taskIterator.hasNext()){
+			WorkTask task = taskIterator.next();
+			SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(task.getCooperateDeptId()));
+			if(cooperateDept!=null){
+				task.setCooperateDeptName(cooperateDept.getDeptName());
+			}
+			SysDept leadDept = deptService.selectDeptById(Long.valueOf(task.getLeadDeptId()));
+
+			if(leadDept!=null){
+				task.setLeadDeptName(leadDept.getDeptName());
+			}
+
+		}
 		return getDataTable(list);
 	}
 	@RequiresPermissions("worktask:workTask:list")

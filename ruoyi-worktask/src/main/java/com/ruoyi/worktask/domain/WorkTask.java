@@ -48,6 +48,69 @@ public class WorkTask extends BaseEntity
 	private Integer userId;
 	private boolean hasChild;
 
+	/** 评分 */
+	private Double workScore;
+	/** 牵头部门 */
+	private Integer leadDeptId;
+	/** 配合部门 */
+	private Integer cooperateDeptId;
+	/** 分管领导 */
+	private String leaderId;
+
+
+	/** 牵头部门 */
+	private String leadDeptName;
+	/** 配合部门 */
+	private String cooperateDeptName;
+
+	public String getLeadDeptName() {
+		return leadDeptName;
+	}
+
+	public void setLeadDeptName(String leadDeptName) {
+		this.leadDeptName = leadDeptName;
+	}
+
+	public String getCooperateDeptName() {
+		return cooperateDeptName;
+	}
+
+	public void setCooperateDeptName(String cooperateDeptName) {
+		this.cooperateDeptName = cooperateDeptName;
+	}
+
+	public Double getWorkScore() {
+		return workScore;
+	}
+
+	public void setWorkScore(Double workScore) {
+		this.workScore = workScore;
+	}
+
+	public Integer getLeadDeptId() {
+		return leadDeptId;
+	}
+
+	public void setLeadDeptId(Integer leadDeptId) {
+		this.leadDeptId = leadDeptId;
+	}
+
+	public Integer getCooperateDeptId() {
+		return cooperateDeptId;
+	}
+
+	public void setCooperateDeptId(Integer cooperateDeptId) {
+		this.cooperateDeptId = cooperateDeptId;
+	}
+
+	public String getLeaderId() {
+		return leaderId;
+	}
+
+	public void setLeaderId(String leaderId) {
+		this.leaderId = leaderId;
+	}
+
 	public boolean isHasChild() {
 		return hasChild;
 	}

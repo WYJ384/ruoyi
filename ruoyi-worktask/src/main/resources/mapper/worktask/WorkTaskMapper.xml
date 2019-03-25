@@ -25,13 +25,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="delFlag"    column="del_flag"    />
         <result property="remark"    column="remark"    />
         <result property="ancestors"    column="ancestors"    />
-
+        <result property="workScore"    column="work_score"    />
+        <result property="leadDeptId"    column="lead_dept_id"    />
+        <result property="cooperateDeptId"    column="cooperate_dept_id"    />
+        <result property="leaderId"    column="leader_id"    />
+        <result property="leadDeptName"    column="leadDeptName"    />
+        <result property="cooperateDeptName"    column="cooperateDeptName"    />
     </resultMap>
 	
 	<sql id="selectWorkTaskVo">
-        select id, pid, work_name, rate_progress, description, begin_time, end_time, user_ids, open_question, work_type, result, work_time, work_status, create_by, create_time, update_by, update_time, del_flag, remark,ancestors from work_task
+        SELECT
+            id,
+            pid,
+            work_name,
+            rate_progress,
+            description,
+            begin_time,
+            end_time,
+            user_ids,
+            open_question,
+            work_type,
+            result,
+            work_time,
+            work_status,
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+            del_flag,
+            remark,
+            ancestors,
+            work_score,
+            lead_dept_id,
+            cooperate_dept_id,
+            leader_id
+        FROM
+        work_task
     </sql>
 
+    <sql id="selectWorkTaskVoDept">
+        SELECT
+            id,
+            pid,
+            work_name,
+            rate_progress,
+            description,
+            begin_time,
+            end_time,
+            user_ids,
+            open_question,
+            work_type,
+            result,
+            work_time,
+            work_status,
+            work_task.create_by,
+            work_task.create_time,
+            work_task.update_by,
+            work_task.update_time,
+            work_task.del_flag,
+            remark,
+            work_task.ancestors,
+            work_score,
+            lead_dept_id,
+            cooperate_dept_id,
+            leader_id,
+            leaddept.dept_name   leadDeptName,
+            cooperdept.dept_name   cooperateDeptName
+        FROM
+        work_task
+        inner JOIN sys_dept leaddept on work_task.lead_dept_id=leaddept.dept_id
+        inner JOIN sys_dept cooperdept on work_task.cooperate_dept_id=cooperdept.dept_id
+    </sql>
     <select id="selectWorkTaskListByUserId" parameterType="WorkTask" resultMap="WorkTaskResult">
         <include refid="selectWorkTaskVo"/>
         <where>
@@ -56,6 +120,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
             <if test="ancestors != null  and ancestors != '' "> and ancestors = #{ancestors}</if>
             <if test="userId != null  and userId != '' ">AND find_in_set(#{userId},work_task.user_ids)</if>
+            <if test="workScore != null "> and work_score = #{workScore}</if>
+            <if test="leadDeptId != null "> and lead_dept_id = #{leadDeptId}</if>
+            <if test="cooperateDeptId != null "> and cooperate_dept_id = #{cooperateDeptId}</if>
+            <if test="leaderId != null  and leaderId != '' "> and leader_id = #{leaderId}</if>
 
         </where>
     </select>
@@ -82,6 +150,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
             <if test="ancestors != null  and ancestors != '' "> and ancestors = #{ancestors}</if>
             <if test="userIds != null  and userIds != '' "> and user_ids = #{userIds}</if>
+            <if test="workScore != null "> and work_score = #{workScore}</if>
+            <if test="leadDeptId != null "> and lead_dept_id = #{leadDeptId}</if>
+            <if test="cooperateDeptId != null "> and cooperate_dept_id = #{cooperateDeptId}</if>
+            <if test="leaderId != null  and leaderId != '' "> and leader_id = #{leaderId}</if>
          </where>
     </select>
     
@@ -113,6 +185,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
             <if test="ancestors != null  and ancestors != '' "> ancestors,</if>
+            <if test="workScore != null  ">work_score,</if>
+            <if test="leadDeptId != null  ">lead_dept_id,</if>
+            <if test="cooperateDeptId != null  ">cooperate_dept_id,</if>
+            <if test="leaderId != null  and leaderId != ''  ">leader_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  ">#{id},</if>
@@ -135,6 +211,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
             <if test="ancestors != null  and ancestors != ''  ">#{ancestors},</if>
+            <if test="workScore != null  ">#{workScore},</if>
+            <if test="leadDeptId != null  ">#{leadDeptId},</if>
+            <if test="cooperateDeptId != null  ">#{cooperateDeptId},</if>
+            <if test="leaderId != null  and leaderId != ''  ">#{leaderId},</if>
          </trim>
     </insert>
 	 
@@ -160,7 +240,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="ancestors != null  and ancestors != ''  ">ancestors = #{ancestors},</if>
-
+            <if test="workScore != null  ">work_score = #{workScore},</if>
+            <if test="leadDeptId != null  ">lead_dept_id = #{leadDeptId},</if>
+            <if test="cooperateDeptId != null  ">cooperate_dept_id = #{cooperateDeptId},</if>
+            <if test="leaderId != null  and leaderId != ''  ">leader_id = #{leaderId},</if>
         </trim>
         where id = #{id}
     </update>

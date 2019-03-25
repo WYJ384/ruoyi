@@ -49,10 +49,17 @@ public class SysUserController extends BaseController
     private SysPasswordService passwordService;
 
     @RequiresPermissions("system:user:view")
-    @GetMapping()
+    @GetMapping("")
     public String user()
     {
         return prefix + "/user";
+    }
+
+    @RequiresPermissions("system:user:addressList")
+    @GetMapping("/addressList")
+    public String addressList()
+    {
+        return prefix + "/addressList";
     }
 
     @RequiresPermissions("system:user:list")
