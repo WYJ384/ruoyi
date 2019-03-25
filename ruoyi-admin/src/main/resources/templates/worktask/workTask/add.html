@@ -9,11 +9,11 @@
 </style>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal" id="form-workTask-add">
+    <form class="form-horizontal" id="form-workTask-add" enctype="multipart/form-data">
         <div class="form-group" style="display: none">
             <label class="col-sm-3 control-label">上级任务的：</label>
             <div class="col-sm-8">
-                <input id="pid" name="pid" class="form-control"   type="text">
+                <input id="pid" name="pid" class="form-control" type="text">
             </div>
         </div>
 
@@ -30,7 +30,8 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">任务进度：</label>
                     <div class="col-sm-8">
-                        <input id="rateProgress" name="rateProgress" value="0" class="form-control" type="number" min="0">
+                        <input id="rateProgress" name="rateProgress" value="0" class="form-control" type="number"
+                               min="0">
                     </div>
                 </div>
             </div>
@@ -41,7 +42,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label"><span style="color: red; ">*</span>开始时间：</label>
                     <div class="col-sm-8">
-                        <input id="beginTime" name="beginTime" class="form-control" readonly type="text" >
+                        <input id="beginTime" name="beginTime" class="form-control" value="2019-03-25 09:11" readonly type="text">
                     </div>
                 </div>
             </div>
@@ -49,12 +50,11 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label"><span style="color: red; ">*</span>结束时间：</label>
                     <div class="col-sm-8">
-                        <input id="endTime" name="endTime" class="form-control" readonly type="text" >
+                        <input id="endTime" name="endTime" class="form-control" value="2019-03-25 09:11" readonly type="text">
                     </div>
                 </div>
             </div>
         </div>
-
 
 
         <div class="row">
@@ -63,7 +63,8 @@
                     <label class="col-sm-4 control-label">执行人：</label>
                     <div class="col-sm-8">
                         <select id="userIds" class="form-control select2-hidden-accessible" multiple="">
-                            <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}" ></option>
+                            <option th:each="user:${users}" th:value="${user.userId}"
+                                    th:text="${user.userName}"></option>
                         </select>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
                     <div class="col-sm-8">
                         <label class="radio-box" style="margin-top: 8px;">
                             <div class="iradio-blue">
-                                <input type="radio" checked=""  value="2" id="result2" name="result">
+                                <input type="radio" checked="" value="2" id="result2" name="result">
                             </div>
                             绿灯
                         </label>
@@ -84,7 +85,7 @@
                             </div>
                             黄灯
                         </label>
-                        <label class="radio-box" >
+                        <label class="radio-box">
                             <div class="iradio-blue ">
                                 <input type="radio" value="1" id="result1" name="result">
                             </div>
@@ -106,7 +107,7 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">存在问题：</label>
                     <div class="col-xs-10">
-                        <textarea id="openQuestion" name="openQuestion" class="form-control"  ></textarea>
+                        <textarea id="openQuestion" name="openQuestion" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -117,13 +118,13 @@
             <div class="col-sm-8">
                 <label class="radio-box" style="margin-top: 8px;">
                     <div class="iradio-blue ">
-                        <input type="radio"  value="1" checked="" id="workType1" name="workType">
+                        <input type="radio" value="1" checked="" id="workType1" name="workType">
                     </div>
                     重点工作
                 </label>
                 <label class="radio-box">
                     <div class="iradio-blue">
-                        <input type="radio" value="2"  id="workType2" name="workType">
+                        <input type="radio" value="2" id="workType2" name="workType">
                     </div>
                     班组
                 </label>
@@ -147,7 +148,6 @@
                 </div>
             </div>
         </div>
-
 
 
         <div class="form-group" style="display: none">
@@ -179,7 +179,8 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">任务描述：</label>
                     <div class="col-xs-10">
-                        <textarea name="description" autocomplete="off" maxlength="500" class="form-control" rows="3"></textarea>
+                        <textarea name="description" autocomplete="off" maxlength="500" class="form-control"
+                                  rows="3"></textarea>
                     </div>
                 </div>
             </div>
@@ -189,9 +190,20 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
+                    <label class="col-xs-2 control-label">附件：</label>
+                    <div class="col-xs-10">
+                        <input type="file" id="file" name="file">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
                     <label class="col-xs-2 control-label">备注：</label>
                     <div class="col-xs-10">
-                        <textarea name="remark" autocomplete="off" maxlength="500" class="form-control" rows="3"></textarea>
+                        <textarea name="remark" autocomplete="off" maxlength="500" class="form-control"
+                                  rows="3"></textarea>
                     </div>
                 </div>
             </div>
@@ -200,8 +212,11 @@
 </div>
 <div class="row">
     <div class="col-sm-offset-5 col-sm-10">
-        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+        </button>
     </div>
 </div>
 <div th:include="include::footer"></div>
@@ -241,10 +256,25 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            var data = $("#form-workTask-add").serializeArray();
             var userIds = $.form.selectSelects("userIds");
-            data.push({"name": "userIds", "value": userIds});
-            $.operate.saveTab(prefix + "/add", data);
+            var formData = new FormData($("#form-workTask-add")[0]);
+            formData.append('userIds', userIds);
+            formData.append('file', $('#file')[0].files[0]);
+            $.ajax({
+                url: prefix + "/add",
+                type: 'post',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function (result) {
+                    $.operate.successTabCallback(result);
+                }
+            });
         }
     }
 </script>

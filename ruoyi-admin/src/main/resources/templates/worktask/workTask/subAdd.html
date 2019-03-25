@@ -9,7 +9,7 @@
 </style>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal" id="form-workTask-add"  th:object="${workTask}">
+    <form class="form-horizontal" id="form-workTask-add"  th:object="${workTask}" enctype="multipart/form-data">
         <input id="pid" name="pid" th:field="*{id}" class="form-control" type="hidden">
         <!--<div class="form-group" style="display: none">-->
             <!--<label class="col-sm-3 control-label">上级任务的：</label>-->
@@ -190,6 +190,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
+                    <label class="col-xs-2 control-label">附件：</label>
+                    <div class="col-xs-10">
+                        <input type="file" id="file" name="file">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
                     <label class="col-xs-2 control-label">备注：</label>
                     <div class="col-xs-10">
                         <textarea name="remark" autocomplete="off" maxlength="500" class="form-control" rows="3"></textarea>
@@ -241,12 +251,34 @@
     });
 
     function submitHandler() {
+//        if ($.validate.form()) {
+//            var data = $("#form-workTask-add").serializeArray();
+//            var userIds = $.form.selectSelects("userIds");
+//            data.push({"name": "userIds", "value": userIds});
+//            data.push({"name": "pid", "value": $("#pid").val()});
+//            $.operate.saveTab(prefix + "/add", data);
+//        }
         if ($.validate.form()) {
-            var data = $("#form-workTask-add").serializeArray();
             var userIds = $.form.selectSelects("userIds");
-            data.push({"name": "userIds", "value": userIds});
-            data.push({"name": "pid", "value": $("#pid").val()});
-            $.operate.saveTab(prefix + "/add", data);
+            var formData = new FormData($("#form-workTask-add")[0]);
+            formData.append('userIds', userIds);
+            formData.append('pid', $("#pid").val());
+            formData.append('file', $('#file')[0].files[0]);
+            $.ajax({
+                url: prefix + "/add",
+                type: 'post',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function (result) {
+                    $.operate.successTabCallback(result);
+                }
+            });
         }
     }
 </script>

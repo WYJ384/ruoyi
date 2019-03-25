@@ -17,7 +17,7 @@ public interface WorkTaskMapper
      * @param id 工作任务ID
      * @return 工作任务信息
      */
-	public WorkTask selectWorkTaskById(Integer id);
+	public WorkTask selectWorkTaskById(String id);
 	
 	/**
      * 查询工作任务列表

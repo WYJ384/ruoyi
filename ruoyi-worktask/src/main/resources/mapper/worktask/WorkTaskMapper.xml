@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     
-    <select id="selectWorkTaskById" parameterType="Integer" resultMap="WorkTaskResult">
+    <select id="selectWorkTaskById" parameterType="String" resultMap="WorkTaskResult">
         <include refid="selectWorkTaskVo"/>
         where id = #{id}
     </select>
@@ -93,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertWorkTask" parameterType="WorkTask" useGeneratedKeys="true" keyProperty="id">
         insert into work_task
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">id,</if>
 			<if test="pid != null  ">pid,</if>
 			<if test="workName != null  and workName != ''  ">work_name,</if>
 			<if test="rateProgress != null  ">rate_progress,</if>
@@ -114,6 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ancestors != null  and ancestors != '' "> ancestors,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">#{id},</if>
 			<if test="pid != null  ">#{pid},</if>
 			<if test="workName != null  and workName != ''  ">#{workName},</if>
 			<if test="rateProgress != null  ">#{rateProgress},</if>
@@ -163,7 +165,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-	<delete id="deleteWorkTaskById" parameterType="Integer">
+	<delete id="deleteWorkTaskById" parameterType="String">
         delete from work_task where id = #{id}
     </delete>
 	

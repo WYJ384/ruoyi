@@ -16,9 +16,9 @@ public class WorkTask extends BaseEntity
 	private static final long serialVersionUID = 1L;
 	
 	/** 主键 */
-	private Integer id;
+	private String id;
 	/** 上级任务的id */
-	private Integer pid;
+	private String pid;
 	/** 工作任务名称 */
 	private String workName;
 	/** 进度 */
@@ -75,21 +75,21 @@ public class WorkTask extends BaseEntity
 		this.ancestors = ancestors;
 	}
 
-	public void setId(Integer id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}
 
-	public Integer getId() 
+	public String getId()
 	{
 		return id;
 	}
-	public void setPid(Integer pid) 
+	public void setPid(String pid)
 	{
 		this.pid = pid;
 	}
 
-	public Integer getPid() 
+	public String getPid()
 	{
 		return pid;
 	}

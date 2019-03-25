@@ -79,6 +79,7 @@ public class FileUploadUtils
     {
         try
         {
+
             return upload(baseDir, file, FileUploadUtils.IMAGE_JPG_EXTENSION);
         }
         catch (Exception e)

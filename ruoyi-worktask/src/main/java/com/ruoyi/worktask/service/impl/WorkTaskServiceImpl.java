@@ -31,7 +31,7 @@ public class WorkTaskServiceImpl implements IWorkTaskService
      * @return 工作任务信息
      */
     @Override
-	public WorkTask selectWorkTaskById(Integer id)
+	public WorkTask selectWorkTaskById(String id)
 	{
 	    return workTaskMapper.selectWorkTaskById(id);
 	}
@@ -61,7 +61,7 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 
 		if(workTask.getWorkType().equals("1")){
 			workTask.setAncestors("0");
-			workTask.setPid(0);
+			workTask.setPid("0");
 		}else{
 			WorkTask task = workTaskMapper.selectWorkTaskById(workTask.getPid());
 			workTask.setAncestors(task.getAncestors() + "," + workTask.getPid());

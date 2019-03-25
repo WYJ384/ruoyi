@@ -4,7 +4,7 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}">
+        <form class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}"  enctype="multipart/form-data">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
 			<input id="pid" name="pid" th:field="*{pid}"  type="hidden">
 			<!--<div class="form-group">	-->
@@ -190,6 +190,20 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="form-group">
+						<label class="col-xs-2 control-label">附件：</label>
+						<div class="col-xs-10">
+							<input type="file" id="file" name="file">
+							<p th:each="taskfile:${workTaskFiles}">
+								<a   th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'" th:text="${taskfile.fileName}"></a>
+							</p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
 						<label class="col-xs-2 control-label">备注：</label>
 						<div class="col-xs-10">
 							<textarea name="remark" autocomplete="off" th:field="*{remark}" maxlength="500" class="form-control" rows="3"></textarea>
@@ -220,14 +234,40 @@
 		});
 		
 		function submitHandler() {
-	        if ($.validate.form()) {
-				var data = $("#form-workTask-edit").serializeArray();
-				var userIds = $.form.selectSelects("userIds");
-				data.push({"name": "userIds", "value": userIds});
+//	        if ($.validate.form()) {
+//				var data = $("#form-workTask-edit").serializeArray();
+//				var userIds = $.form.selectSelects("userIds");
+//				data.push({"name": "userIds", "value": userIds});
+//
+//	            $.operate.saveTab(prefix + "/edit",data);
+//	        }
 
-	            $.operate.saveTab(prefix + "/edit",data);
-	        }
+
+			if ($.validate.form()) {
+				var userIds = $.form.selectSelects("userIds");
+				var formData = new FormData($("#form-workTask-edit")[0]);
+				formData.append('userIds', userIds);
+				formData.append('file', $('#file')[0].files[0]);
+				$.ajax({
+					url: prefix + "/edit",
+					type: 'post',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false,
+					dataType: "json",
+					beforeSend: function () {
+						$.modal.loading("正在处理中，请稍后...");
+					},
+					success: function (result) {
+						$.operate.successTabCallback(result);
+					}
+				});
+			}
 	    }
+		function downloadFile(fileId){
+			window.location.href = ctx + "worktask/workTaskFile/downloadFile/" + fileId;
+		}
 	</script>
 </body>
 </html>

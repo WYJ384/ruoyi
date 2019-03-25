@@ -1,12 +1,19 @@
-package com.ruoyi.web.controller.worktask.controller;
+package com.ruoyi.web.controller.worktask;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
+import com.ruoyi.common.config.Global;
+import com.ruoyi.common.utils.file.FileUploadUtils;
+import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +31,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 工作任务 信息操作处理
@@ -36,7 +44,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 public class WorkTaskController extends BaseController
 {
     private String prefix = "worktask/workTask";
-	
+	@Autowired
+	private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private IWorkTaskService workTaskService;
 
@@ -63,7 +72,7 @@ public class WorkTaskController extends BaseController
 	}
 	@RequiresPermissions("worktask:workTask:list")
 	@GetMapping("/subTaskList/{id}")
-	public String subTaskList(@PathVariable("id") Integer id, ModelMap mmap)
+	public String subTaskList(@PathVariable("id") String id, ModelMap mmap)
 	{
 		mmap.put("pid",id);
 		return prefix + "/subWorkTask";
@@ -123,8 +132,31 @@ public class WorkTaskController extends BaseController
 	@Log(title = "工作任务", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(WorkTask workTask, ModelMap mmap)
+	public AjaxResult addSave(MultipartFile file, WorkTask workTask)
 	{
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		workTask.setId(uuid);
+		if(!file.isEmpty()){
+			try {
+				// 上传文件路径
+				String filePath = Global.getUploadPath();
+				String originalFilename = file.getOriginalFilename();
+				int lastIndexOf = originalFilename.lastIndexOf(".");
+				String extension = originalFilename.substring(lastIndexOf);
+				// 上传并返回新文件名称
+				String fileName = FileUploadUtils.upload(filePath, file,extension);
+				WorkTaskFile workTaskFile=new WorkTaskFile();
+				workTaskFile.setCreateBy(ShiroUtils.getLoginName());
+				workTaskFile.setCreateTime(new Date());
+				workTaskFile.setExtension(extension);
+				workTaskFile.setFileName(originalFilename);
+				workTaskFile.setFilePath(fileName);
+				workTaskFile.setWorkTaskId(uuid);
+				workTaskFileService.insertWorkTaskFile(workTaskFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		workTask.setCreateBy(ShiroUtils.getLoginName());
 		workTask.setCreateTime(new Date());
 		return toAjax(workTaskService.insertWorkTask(workTask));
@@ -134,7 +166,7 @@ public class WorkTaskController extends BaseController
 	 * 修改工作任务
 	 */
 	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
+	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
 		SysUser sysUser = new SysUser();
 		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
@@ -148,7 +180,11 @@ public class WorkTaskController extends BaseController
 		}else{
 			workTask.setHasChild(false);
 		}
+		WorkTaskFile workTaskFile=new WorkTaskFile();
+		workTaskFile.setWorkTaskId(id);
+		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
 		mmap.put("workTask", workTask);
+		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));
 
 
@@ -158,7 +194,7 @@ public class WorkTaskController extends BaseController
 	 * 添加子任务
 	 */
 	@GetMapping("/addSubTask")
-	public String addSubTask(Integer id, ModelMap mmap)
+	public String addSubTask(String id, ModelMap mmap)
 	{
 		SysUser sysUser = new SysUser();
 		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
@@ -176,9 +212,30 @@ public class WorkTaskController extends BaseController
 	@Log(title = "工作任务", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(WorkTask workTask)
+	public AjaxResult editSave(MultipartFile file, WorkTask workTask)
 	{
 
+		if(!file.isEmpty()){
+			try {
+				// 上传文件路径
+				String filePath = Global.getUploadPath();
+				String originalFilename = file.getOriginalFilename();
+				int lastIndexOf = originalFilename.lastIndexOf(".");
+				String extension = originalFilename.substring(lastIndexOf);
+				// 上传并返回新文件名称
+				String fileName = FileUploadUtils.upload(filePath, file,extension);
+				WorkTaskFile workTaskFile=new WorkTaskFile();
+				workTaskFile.setUpdateBy(ShiroUtils.getLoginName());
+				workTaskFile.setUpdateTime(new Date());
+				workTaskFile.setExtension(extension);
+				workTaskFile.setFileName(originalFilename);
+				workTaskFile.setFilePath(fileName);
+				workTaskFile.setWorkTaskId(workTask.getId());
+				workTaskFileService.insertWorkTaskFile(workTaskFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		workTask.setUpdateTime(new Date());
 		workTask.setUpdateBy(ShiroUtils.getLoginName());
 		return toAjax(workTaskService.updateWorkTask(workTask));
