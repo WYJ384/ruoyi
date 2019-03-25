@@ -202,6 +202,17 @@ public class WorkTaskController extends BaseController
 		WorkTaskFile workTaskFile=new WorkTaskFile();
 		workTaskFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
+
+		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
+		if(cooperateDept!=null){
+			workTask.setCooperateDeptName(cooperateDept.getDeptName());
+		}
+		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
+
+		if(leadDept!=null){
+			workTask.setLeadDeptName(leadDept.getDeptName());
+		}
+
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));

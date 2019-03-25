@@ -31,64 +31,114 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="row">
+
 				<div class="col-sm-6">
+
 					<div class="form-group">
-						<label class="col-sm-4 control-label"><span style="color: red; ">*</span>开始时间：</label>
+						<label class="col-sm-4 control-label">牵头部门：</label>
 						<div class="col-sm-8">
-							<input id="beginTime"  th:value="${#dates.format(workTask.beginTime, 'yyyy-MM-dd HH:mm')}" name="beginTime" class="form-control" readonly type="text" >
+							<input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
+									placeholder="请选择归牵头部门" class="form-control" required  th:field="*{leadDeptName}">
+							<input name="leadDeptId" type="hidden" id="leadDeptId" th:field="*{leadDeptId}"/>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label class="col-sm-4 control-label"><span style="color: red; ">*</span>结束时间：</label>
+						<label class="col-sm-4 control-label">配合部门：</label>
 						<div class="col-sm-8">
-							<input id="endTime"  th:value="${#dates.format(workTask.endTime, 'yyyy-MM-dd HH:mm')}" name="endTime" class="form-control" readonly type="text" >
+							<!--<input id="cooperateDeptId" name="cooperateDeptId" class="form-control" type="text">-->
+							<input  onclick="selectCooperateDeptTree()" id="cooperateDeptName" type="text"
+									placeholder="请选择归牵头部门" class="form-control" required  th:field="*{cooperateDeptName}">
+							<input name="cooperateDeptId" type="hidden" id="cooperateDeptId" th:field="*{cooperateDeptId}"/>
+
 						</div>
 					</div>
 				</div>
 			</div>
 
+
 			<div class="row">
+
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label class="col-sm-4 control-label">执行人：</label>
+						<label class="col-sm-4 control-label">评分：</label>
 						<div class="col-sm-8">
-							<select id="userIds" class="form-control select2-hidden-accessible" multiple="">
-								<option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>
+							<input id="workScore" name="workScore" class="form-control" type="text">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">分管领导：</label>
+						<div class="col-sm-8">
+							<select id="leaderId" class="form-control select2-hidden-accessible" >
+								<option th:each="user:${users}" th:value="${user.userId}"
+										th:text="${user.userName}"></option>
 							</select>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label class="col-sm-4 control-label">督办情况：</label>
-						<div class="col-sm-8">
-							<label class="radio-box" style="margin-top: 8px;">
-								<div class="iradio-blue">
-									<input type="radio" value="2" th:field="*{result}" id="result2" name="result">
-								</div>
-								绿灯
-							</label>
-							<label class="radio-box">
-								<div class="iradio-blue">
-									<input type="radio" value="3"  th:field="*{result}" id="result3" name="result">
-								</div>
-								黄灯
-							</label>
-							<label class="radio-box" >
-								<div class="iradio-blue ">
-									<input type="radio" checked="" th:field="*{result}"  value="1" id="result1" name="result">
-								</div>
-								红灯
-							</label>
-
-						</div>
-					</div>
-				</div>
 			</div>
+
+			<!--<div class="row">-->
+				<!--<div class="col-sm-6">-->
+					<!--<div class="form-group">-->
+						<!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>开始时间：</label>-->
+						<!--<div class="col-sm-8">-->
+							<!--<input id="beginTime"  th:value="${#dates.format(workTask.beginTime, 'yyyy-MM-dd HH:mm')}" name="beginTime" class="form-control" readonly type="text" >-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="col-sm-6">-->
+					<!--<div class="form-group">-->
+						<!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>结束时间：</label>-->
+						<!--<div class="col-sm-8">-->
+							<!--<input id="endTime"  th:value="${#dates.format(workTask.endTime, 'yyyy-MM-dd HH:mm')}" name="endTime" class="form-control" readonly type="text" >-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+
+			<!--<div class="row">-->
+				<!--<div class="col-sm-6">-->
+					<!--<div class="form-group">-->
+						<!--<label class="col-sm-4 control-label">执行人：</label>-->
+						<!--<div class="col-sm-8">-->
+							<!--<select id="userIds" class="form-control select2-hidden-accessible" multiple="">-->
+								<!--<option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>-->
+							<!--</select>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="col-sm-6">-->
+					<!--<div class="form-group">-->
+						<!--<label class="col-sm-4 control-label">督办情况：</label>-->
+						<!--<div class="col-sm-8">-->
+							<!--<label class="radio-box" style="margin-top: 8px;">-->
+								<!--<div class="iradio-blue">-->
+									<!--<input type="radio" value="2" th:field="*{result}" id="result2" name="result">-->
+								<!--</div>-->
+								<!--绿灯-->
+							<!--</label>-->
+							<!--<label class="radio-box">-->
+								<!--<div class="iradio-blue">-->
+									<!--<input type="radio" value="3"  th:field="*{result}" id="result3" name="result">-->
+								<!--</div>-->
+								<!--黄灯-->
+							<!--</label>-->
+							<!--<label class="radio-box" >-->
+								<!--<div class="iradio-blue ">-->
+									<!--<input type="radio" checked="" th:field="*{result}"  value="1" id="result1" name="result">-->
+								<!--</div>-->
+								<!--红灯-->
+							<!--</label>-->
+
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
 
 
 
@@ -123,41 +173,41 @@
 
 
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label class="col-sm-4 control-label">任务完成工时：</label>
-						<div class="col-sm-8">
-							<input id="workTime" name="workTime" th:field="*{workTime}" class="form-control" type="text">
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label class="col-sm-4 control-label">任务状态：</label>
-						<div class="col-sm-8">
-							<label class="radio-box" style="margin-top: 8px;">
-								<div class="iradio-blue ">
-									<input type="radio" checked="" th:field="*{workStatus}" value="1" id="workStatus1" name="workStatus">
-								</div>
-								进行中
-							</label>
-							<label class="radio-box">
-								<div class="iradio-blue">
-									<input type="radio" value="2" th:field="*{workStatus}" id="workStatus2" name="workStatus">
-								</div>
-								已完成
-							</label>
-							<label class="radio-box">
-								<div class="iradio-blue">
-									<input type="radio" value="3" th:field="*{workStatus}" id="workStatus3" name="workStatus">
-								</div>
-								已归档
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
+			<!--<div class="row">-->
+				<!--<div class="col-sm-6">-->
+					<!--<div class="form-group">-->
+						<!--<label class="col-sm-4 control-label">任务完成工时：</label>-->
+						<!--<div class="col-sm-8">-->
+							<!--<input id="workTime" name="workTime" th:field="*{workTime}" class="form-control" type="text">-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="col-sm-6">-->
+					<!--<div class="form-group">-->
+						<!--<label class="col-sm-4 control-label">任务状态：</label>-->
+						<!--<div class="col-sm-8">-->
+							<!--<label class="radio-box" style="margin-top: 8px;">-->
+								<!--<div class="iradio-blue ">-->
+									<!--<input type="radio" checked="" th:field="*{workStatus}" value="1" id="workStatus1" name="workStatus">-->
+								<!--</div>-->
+								<!--进行中-->
+							<!--</label>-->
+							<!--<label class="radio-box">-->
+								<!--<div class="iradio-blue">-->
+									<!--<input type="radio" value="2" th:field="*{workStatus}" id="workStatus2" name="workStatus">-->
+								<!--</div>-->
+								<!--已完成-->
+							<!--</label>-->
+							<!--<label class="radio-box">-->
+								<!--<div class="iradio-blue">-->
+									<!--<input type="radio" value="3" th:field="*{workStatus}" id="workStatus3" name="workStatus">-->
+								<!--</div>-->
+								<!--已归档-->
+							<!--</label>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
 
 
 
@@ -267,6 +317,51 @@
 	    }
 		function downloadFile(fileId){
 			window.location.href = ctx + "worktask/workTaskFile/downloadFile/" + fileId;
+		}
+
+		/*用户管理-新增-选择部门树*/
+		function selectLeadDeptTree() {
+			var leadDeptId = $("#leadDeptId").val();
+			var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
+			var url = ctx + "system/dept/selectDeptTree/" + deptId;
+			var options = {
+				title: '选择部门',
+				width: "380",
+				url: ctx + "system/dept/selectDeptTree/" + deptId,
+				callBack: doSubmitLeadDept
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmitLeadDept(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+			if ($.tree.notAllowParents(tree)) {
+				var body = layer.getChildFrame('body', index);
+				$("#leadDeptId").val(body.find('#treeId').val());
+				$("#leadDeptName").val(body.find('#treeName').val());
+				layer.close(index);
+			}
+		}
+		function selectCooperateDeptTree(){
+			var leadDeptId = $("#cooperateDeptId").val();
+			var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#cooperateDeptId").val();
+			var url = ctx + "system/dept/selectDeptTree/" + deptId;
+			var options = {
+				title: '选择部门',
+				width: "380",
+				url: ctx + "system/dept/selectDeptTree/" + deptId,
+				callBack: doSubmitCooperateDept
+			};
+			$.modal.openOptions(options);
+		}
+		function doSubmitCooperateDept(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+			if ($.tree.notAllowParents(tree)) {
+				var body = layer.getChildFrame('body', index);
+				$("#cooperateDeptId").val(body.find('#treeId').val());
+				$("#cooperateDeptName").val(body.find('#treeName').val());
+				layer.close(index);
+			}
 		}
 	</script>
 </body>
