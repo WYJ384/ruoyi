@@ -25,6 +25,7 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
+    basedir: ${ruoyi.profile}/deployer/tomcat
 fileServer:
   domain: http://127.0.0.1:8080
 files:

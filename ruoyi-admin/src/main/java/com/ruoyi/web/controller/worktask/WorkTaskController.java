@@ -15,7 +15,9 @@ import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.worktask.domain.WorkTaskActivity;
 import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.service.IWorkTaskActivityService;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +58,8 @@ public class WorkTaskController extends BaseController
 	private ISysDeptService deptService;
 	@Autowired
 	private ISysUserService userService;
+	@Autowired
+	private IWorkTaskActivityService workTaskActivityService;
 	@RequiresPermissions("worktask:workTask:view")
 	@GetMapping()
 	public String workTask()
@@ -140,18 +144,16 @@ public class WorkTaskController extends BaseController
 	 * 我的任务
 	 */
 	@GetMapping("/toMyTask")
-	public String toMyTask( ModelMap mmap)
+	public String toMyTask()
 	{
-		//selectWorkTaskListByUserId
 		return prefix + "/myTask";
 	}
 	/**
 	 * 部门专项工作
 	 */
 	@GetMapping("/toDeptTask")
-	public String toDeptTask( ModelMap mmap)
+	public String toDeptTask()
 	{
-		//selectWorkTaskListByUserId
 		return prefix + "/deptTask";
 	}
 	/**
@@ -259,6 +261,34 @@ public class WorkTaskController extends BaseController
 
 
 		return prefix + "/edit";
+	}
+	@GetMapping("/query/{id}")
+	public String query(@PathVariable("id") String id, ModelMap mmap)
+	{
+		SysUser sysUser = new SysUser();
+		WorkTask workTask = workTaskService.selectWorkTaskById(id);
+		//附件
+		WorkTaskFile workTaskFile=new WorkTaskFile();
+		workTaskFile.setWorkTaskId(id);
+		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
+		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
+		if(cooperateDept!=null){
+			workTask.setCooperateDeptName(cooperateDept.getDeptName());
+		}
+		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
+		if(leadDept!=null){
+			workTask.setLeadDeptName(leadDept.getDeptName());
+		}
+
+		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
+		workTaskActivity.setWorkTaskId(id);
+		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
+		mmap.put("workTask", workTask);
+		mmap.put("workTaskFiles", workTaskFiles);
+		mmap.put("users",userService.selectUserList(sysUser));
+		mmap.put("workTaskActivities", workTaskActivities);
+
+		return prefix + "/query";
 	}
 	/**
 	 * 添加子任务

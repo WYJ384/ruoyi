@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.worktask.mapper.WorkTaskActivityMapper">
+    
+    <resultMap type="WorkTaskActivity" id="WorkTaskActivityResult">
+        <result property="id"    column="id"    />
+        <result property="workTaskId"    column="work_task_id"    />
+        <result property="content"    column="content"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="repContent"    column="rep_content"    />
+    </resultMap>
+	
+	<sql id="selectWorkTaskActivityVo">
+        select id, work_task_id, content, create_by, create_time, update_by, update_time, del_flag, remark, rep_content from work_task_activity
+    </sql>
+	
+    <select id="selectWorkTaskActivityList" parameterType="WorkTaskActivity" resultMap="WorkTaskActivityResult">
+        <include refid="selectWorkTaskActivityVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="workTaskId != null  and workTaskId != '' "> and work_task_id = #{workTaskId}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="repContent != null  and repContent != '' "> and rep_content = #{repContent}</if>
+         </where>
+        ORDER BY  create_time DESC
+    </select>
+    
+    <select id="selectWorkTaskActivityById" parameterType="String" resultMap="WorkTaskActivityResult">
+        <include refid="selectWorkTaskActivityVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWorkTaskActivity" parameterType="WorkTaskActivity">
+        insert into work_task_activity
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="workTaskId != null  and workTaskId != ''  ">work_task_id,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="repContent != null  and repContent != ''  ">rep_content,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="workTaskId != null  and workTaskId != ''  ">#{workTaskId},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="repContent != null  and repContent != ''  ">#{repContent},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateWorkTaskActivity" parameterType="WorkTaskActivity">
+        update work_task_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="workTaskId != null  and workTaskId != ''  ">work_task_id = #{workTaskId},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="repContent != null  and repContent != ''  ">rep_content = #{repContent},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteWorkTaskActivityById" parameterType="String">
+        delete from work_task_activity where id = #{id}
+    </delete>
+	
+    <delete id="deleteWorkTaskActivityByIds" parameterType="String">
+        delete from work_task_activity where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
