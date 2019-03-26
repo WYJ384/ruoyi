@@ -1,0 +1,61 @@
+<!doctype html>
+<html data-ng-app="FileManagerApp">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>文件管理</title>
+
+    <!-- 第三方插件 -->
+    <script src="/webjars/angularjs/1.5.0/angular.min.js"></script>
+    <script src="/webjars/angular-translate/2.9.1/angular-translate.min.js"></script>
+    <script src="/webjars/ng-file-upload/12.0.1/ng-file-upload.min.js"></script>
+    <script src="/webjars/jquery/2.2.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootswatch-paper/3.3.5+4/css/bootstrap.min.css"/>
+
+    <link href="/ajax/libs/angular-filemanager/angular-filemanager.min.css" rel="stylesheet">
+    <script src="/ajax/libs/angular-filemanager/angular-filemanager.min.js"></script>
+
+    <script type="text/javascript">
+        // 重写默认Config配置
+        angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+            var defaults = config.$get();
+            config.set({
+                appName: '在线文件管理',
+                defaultLang: 'zh',
+                listUrl: '/commonFileManagerController/list/',
+                uploadUrl: '/commonFileManagerController/upload/',
+                downloadFileUrl: '/commonFileManagerController/preview/',
+                createFolderUrl: '/commonFileManagerController/createFolder/',
+                permissionsUrl: '/commonFileManagerController/changePermissions/',
+                copyUrl: '/commonFileManagerController/copy/',
+                moveUrl: '/commonFileManagerController/move/',
+                removeUrl: '/commonFileManagerController/remove/',
+                renameUrl: '/commonFileManagerController/rename/',
+                getContentUrl: '/commonFileManagerController/getContent/',
+                editUrl: '/commonFileManagerController/edit/',
+                compressUrl: '/commonFileManagerController/compress/',
+                extractUrl: '/commonFileManagerController/extract/',
+                documentViewUrl: '/office/',
+                pickCallback: function (item) {
+                    var msg = 'Picked %s "%s" for external use'
+                            .replace('%s', item.type)
+                            .replace('%s', item.fullPath());
+                    window.alert(msg);
+                },
+
+                allowedActions: angular.extend(defaults.allowedActions, {
+                    pickFiles: false,
+                    pickFolders: false,
+                    downloadMultiple: false
+                }),
+                tplPath: '/app/templates'
+            });
+        }]);
+    </script>
+</head>
+
+<body class="ng-cloak">
+<angular-filemanager></angular-filemanager>
+</body>
+</html>

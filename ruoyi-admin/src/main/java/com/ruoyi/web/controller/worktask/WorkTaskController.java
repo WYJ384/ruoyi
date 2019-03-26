@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.worktask;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +62,9 @@ public class WorkTaskController extends BaseController
 	{
 	    return prefix + "/workTask";
 	}
-	
+
+
+
 	/**
 	 * 查询工作任务列表
 	 */

@@ -202,7 +202,11 @@
 				<artifactId>ruoyi-worktask</artifactId>
 				<version>${ruoyi.version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>com.ruoyi</groupId>
+				<artifactId>ruoyi-filemanager</artifactId>
+				<version>${ruoyi.version}</version>
+			</dependency>
 
 	        
         </dependencies>
@@ -217,6 +221,7 @@
         <module>ruoyi-meeting</module>
 		<module>ruoyi-common</module>
 		<module>ruoyi-worktask</module>
+		<module>ruoyi-filemanager</module>
     </modules>
     <packaging>pom</packaging>
 
