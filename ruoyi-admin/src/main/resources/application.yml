@@ -25,7 +25,11 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
- 
+fileServer:
+  domain: http://127.0.0.1:8080
+files:
+  docservice.url.api: http://127.0.0.1/web-apps/apps/api/documents/api.js
+
 # 日志配置
 logging:
   level:

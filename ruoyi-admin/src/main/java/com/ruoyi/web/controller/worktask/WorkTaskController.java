@@ -119,7 +119,7 @@ public class WorkTaskController extends BaseController
 	public String add( ModelMap mmap)
 	{
 		SysUser sysUser = new SysUser();
-		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
+//		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
 		mmap.put("users",userService.selectUserList(sysUser));
 	    return prefix + "/add";
 	}
@@ -137,13 +137,48 @@ public class WorkTaskController extends BaseController
 		return getDataTable(list);
 	}
 	/**
-	 * 新增工作任务
+	 * 我的任务
 	 */
 	@GetMapping("/toMyTask")
 	public String toMyTask( ModelMap mmap)
 	{
 		//selectWorkTaskListByUserId
 		return prefix + "/myTask";
+	}
+	/**
+	 * 部门专项工作
+	 */
+	@GetMapping("/toDeptTask")
+	public String toDeptTask( ModelMap mmap)
+	{
+		//selectWorkTaskListByUserId
+		return prefix + "/deptTask";
+	}
+	/**
+	 * 查询部门专项工作
+	 */
+	@PostMapping("/selectWorkTaskListByDept")
+	@ResponseBody
+	public TableDataInfo selectWorkTaskListByDept(WorkTask workTask)
+	{
+		workTask.setLeadDeptId(ShiroUtils.getSysUser().getDeptId().intValue());
+		startPage();
+		List<WorkTask> list = workTaskService.selectWorkTaskList(workTask);
+		Iterator<WorkTask> taskIterator = list.iterator();
+		while (taskIterator.hasNext()){
+			WorkTask task = taskIterator.next();
+			SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(task.getCooperateDeptId()));
+			if(cooperateDept!=null){
+				task.setCooperateDeptName(cooperateDept.getDeptName());
+			}
+			SysDept leadDept = deptService.selectDeptById(Long.valueOf(task.getLeadDeptId()));
+
+			if(leadDept!=null){
+				task.setLeadDeptName(leadDept.getDeptName());
+			}
+
+		}
+		return getDataTable(list);
 	}
 
 	/**
@@ -192,17 +227,18 @@ public class WorkTaskController extends BaseController
 	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
 		SysUser sysUser = new SysUser();
-		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
+//		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
 		WorkTask workTask = workTaskService.selectWorkTaskById(id);
 
-		WorkTask task = new WorkTask();
-		task.setPid(id);
-		List<WorkTask> workTasks = workTaskService.selectWorkTaskList(task);
-		if(workTasks!=null&&workTasks.size()>0){
-			workTask.setHasChild(true);
-		}else{
-			workTask.setHasChild(false);
-		}
+//		WorkTask task = new WorkTask();
+//		task.setPid(id);
+//		List<WorkTask> workTasks = workTaskService.selectWorkTaskList(task);
+//		if(workTasks!=null&&workTasks.size()>0){
+//			workTask.setHasChild(true);
+//		}else{
+//			workTask.setHasChild(false);
+//		}
+		//附件
 		WorkTaskFile workTaskFile=new WorkTaskFile();
 		workTaskFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);

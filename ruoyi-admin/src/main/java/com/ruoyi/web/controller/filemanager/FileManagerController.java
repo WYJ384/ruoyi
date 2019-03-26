@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.filemanager;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ruoyi.common.annotation.Log;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.web.core.config.RuoYiProfile;
 import org.apache.commons.io.FileUtils;
@@ -102,6 +103,7 @@ public class FileManagerController {
     /**
      * 文件上传
      */
+    @Log(title = "个人网盘")
     @RequestMapping("upload")
     public Object upload(@RequestParam("destination") String destination, HttpServletRequest request) {
        
@@ -128,6 +130,7 @@ public class FileManagerController {
     /**
      * 文件下载/预览
      */
+    @Log(title = "个人网盘")
     @RequestMapping("preview")
     public void preview(HttpServletResponse response, String path) throws IOException {
        
@@ -157,6 +160,7 @@ public class FileManagerController {
     /**
      * 创建目录
      */
+    @Log(title = "个人网盘")
     @RequestMapping("createFolder")
     public Object createFolder(@RequestBody JSONObject json) {
         try {
@@ -175,6 +179,7 @@ public class FileManagerController {
     /**
      * 修改文件或目录权限
      */
+    @Log(title = "个人网盘")
     @RequestMapping("changePermissions")
     public Object changePermissions(@RequestBody JSONObject json) {
         try {
@@ -197,6 +202,7 @@ public class FileManagerController {
     /**
      * 复制文件或目录
      */
+    @Log(title = "个人网盘")
     @RequestMapping("copy")
     public Object copy(@RequestBody JSONObject json, HttpServletRequest request) {
         try {
@@ -221,6 +227,7 @@ public class FileManagerController {
     /**
      * 移动文件或目录
      */
+    @Log(title = "个人网盘")
     @RequestMapping("move")
     public Object move(@RequestBody JSONObject json) {
         try {
@@ -249,6 +256,7 @@ public class FileManagerController {
     /**
      * 删除文件或目录
      */
+    @Log(title = "个人网盘")
     @RequestMapping("remove")
     public Object remove(@RequestBody JSONObject json) {
         try {
@@ -270,6 +278,7 @@ public class FileManagerController {
     /**
      * 重命名文件或目录
      */
+    @Log(title = "个人网盘")
     @RequestMapping("rename")
     public Object rename(@RequestBody JSONObject json) {
         try {
@@ -293,6 +302,7 @@ public class FileManagerController {
     /**
      * 查看文件内容,针对html、txt等可编辑文件
      */
+    @Log(title = "个人网盘")
     @RequestMapping("getContent")
     public Object getContent(@RequestBody JSONObject json) {
         try {
@@ -313,6 +323,7 @@ public class FileManagerController {
     /**
      * 修改文件内容,针对html、txt等可编辑文件
      */
+    @Log(title = "个人网盘")
     @RequestMapping("edit")
     public Object edit(@RequestBody JSONObject json) {
         try {
@@ -332,6 +343,7 @@ public class FileManagerController {
     /**
      * 文件压缩
      */
+    @Log(title = "个人网盘")
     @RequestMapping("compress")
     public Object compress(@RequestBody JSONObject json) {
         try {
@@ -359,6 +371,7 @@ public class FileManagerController {
     /**
      * 文件解压
      */
+    @Log(title = "个人网盘")
     @RequestMapping("extract")
     public Object extract(@RequestBody JSONObject json) {
         try {
