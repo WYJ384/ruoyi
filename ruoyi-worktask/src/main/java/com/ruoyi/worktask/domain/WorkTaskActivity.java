@@ -36,7 +36,70 @@ public class WorkTaskActivity extends BaseEntity
 	private String remark;
 	/** 存在问题内容 */
 	private String repContent;
+
+
+	/** 目标 */
+	private String target;
+	/** 目标得分 */
+	private Double targetScore;
+	/** 目标月份 */
+	private String targetMonth;
+	/** 任务状态 1进行中 2已完成 */
+	private String workStatus;
+	/** 显示顺序 */
+	private Integer orderNum;
+	/** 是否是进行中任务 */
+	private boolean isCurrent=false;
+
+	public boolean isCurrent() {
+		return isCurrent;
+	}
+
+	public void setCurrent(boolean current) {
+		isCurrent = current;
+	}
+
+	public String getWorkStatus() {
+		return workStatus;
+	}
+
+	public void setWorkStatus(String workStatus) {
+		this.workStatus = workStatus;
+	}
+
+	public Integer getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
+	}
+
 	List<WorkTaskFile> workTaskFiles;
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public Double getTargetScore() {
+		return targetScore;
+	}
+
+	public void setTargetScore(Double targetScore) {
+		this.targetScore = targetScore;
+	}
+
+	public String getTargetMonth() {
+		return targetMonth;
+	}
+
+	public void setTargetMonth(String targetMonth) {
+		this.targetMonth = targetMonth;
+	}
 
 	public List<WorkTaskFile> getWorkTaskFiles() {
 		return workTaskFiles;

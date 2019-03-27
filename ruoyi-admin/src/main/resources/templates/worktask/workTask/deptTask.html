@@ -148,7 +148,11 @@
                 {
                     field: 'workName',
                     title: '任务名称',
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+//                        return '<a href="#" >' + row.rateProgress + '%</a>';
+                        return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.workName + '</a>';
+                    }
                 },
 
                 {
@@ -260,7 +264,7 @@
                     field: 'openQuestion',
                     title: '存在的问题',
                     sortable: true,
-                    visible: true
+                    visible: false
                 }
                 ,
                 {
@@ -299,25 +303,26 @@
                     sortable: true,
                     visible: false
                 },
-                {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function (value, row, index) {
-                        var actions = [];
-//                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看</a> ');
-//                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        actions.push('<a class="btn btn-primary  btn-xs ' + addSubFlag + '" href="#" onclick="$.operate.addSubTab(\'汇报\',\'' + query+'/'+row.id + '\')"><i class="fa fa-edit"></i>汇报</a>');
-//                        actions.push('<a class="btn btn-primary  btn-xs ' + addSubFlag + '" href="#" onclick="$.operate.addSubTab(\'查看\',\'' + query+'/'+row.id + '\')"><i class="fa fa-edit"></i>查看</a>');
-                        return actions.join('');
-                    }
-                }]
+//                {
+//                    title: '操作',
+//                    align: 'center',
+//                    formatter: function (value, row, index) {
+//                        var actions = [];
+////                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看</a> ');
+////                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+//                        actions.push('<a class="btn btn-primary  btn-xs ' + addSubFlag + '" href="#" onclick="$.operate.addSubTab(\'汇报\',\'' + query+'/'+row.id + '\')"><i class="fa fa-edit"></i>汇报</a>');
+////                        actions.push('<a class="btn btn-primary  btn-xs ' + addSubFlag + '" href="#" onclick="$.operate.addSubTab(\'查看\',\'' + query+'/'+row.id + '\')"><i class="fa fa-edit"></i>查看</a>');
+//                        return actions.join('');
+//                    }
+//                }
+            ]
         };
         $.table.init(options);
 
     });
     /*重点工作-子任务*/
     function detail(id) {
-        var url = prefix + '/subTaskList/' + id;
+        var url = prefix + '/query/' + id;
         createMenuItem(url, "子任务");
     }
 </script>

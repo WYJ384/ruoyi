@@ -95,12 +95,12 @@ public class WorkTaskActivityController extends BaseController
 	@Log(title = "专项工作汇报内容", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(MultipartFile file, WorkTaskActivity workTaskActivity)
+	public AjaxResult addSave(WorkTaskActivity workTaskActivity)
 	{
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-		if(!file.isEmpty()){
-			workTaskFileService.insertWorkTaskFile(file,ShiroUtils.getLoginName(),uuid);
-		}
+//		if(!file.isEmpty()){
+//			workTaskFileService.insertWorkTaskFile(file,ShiroUtils.getLoginName(),uuid);
+//		}
 		workTaskActivity.setId(uuid);
 		workTaskActivity.setCreateBy(ShiroUtils.getLoginName());
 		workTaskActivity.setCreateTime(new Date());

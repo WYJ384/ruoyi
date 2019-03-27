@@ -19,6 +19,7 @@ import com.ruoyi.worktask.domain.WorkTaskActivity;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskActivityService;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -282,13 +283,20 @@ public class WorkTaskController extends BaseController
 
 		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
 		workTaskActivity.setWorkTaskId(id);
+		//workTaskActivity.setTargetMonth(DateFormatUtils.format(new Date(),"MM"));
 		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
 		Iterator<WorkTaskActivity> activityIterator = workTaskActivities.iterator();
 		while (activityIterator.hasNext()){
 			WorkTaskActivity activity = activityIterator.next();
+			String currentMonth = DateFormatUtils.format(new Date(), "MM");
+			if(currentMonth.equals(activity.getTargetMonth())){
+				activity.setCurrent(true);
+			}
 			String activityId = activity.getId();
 			WorkTaskFile activityFile=new WorkTaskFile();
 			activityFile.setWorkTaskId(activityId);
+
+
 			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
 		}
 		mmap.put("workTask", workTask);

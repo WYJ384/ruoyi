@@ -15,10 +15,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="delFlag"    column="del_flag"    />
         <result property="remark"    column="remark"    />
         <result property="repContent"    column="rep_content"    />
+        <result property="target"    column="target"    />
+        <result property="targetScore"    column="target_score"    />
+        <result property="targetMonth"    column="target_month"    />
+        <result property="workStatus"    column="work_status"    />
+        <result property="orderNum"    column="order_num"    />
     </resultMap>
 	
 	<sql id="selectWorkTaskActivityVo">
-        select id, work_task_id, content, create_by, create_time, update_by, update_time, del_flag, remark, rep_content from work_task_activity
+        select id, work_task_id, content, create_by, create_time, update_by, update_time, del_flag, remark, rep_content, target, target_score, target_month, work_status, order_num from work_task_activity
     </sql>
 	
     <select id="selectWorkTaskActivityList" parameterType="WorkTaskActivity" resultMap="WorkTaskActivityResult">
@@ -34,8 +39,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
              <if test="repContent != null  and repContent != '' "> and rep_content = #{repContent}</if>
+             <if test="target != null  and target != '' "> and target = #{target}</if>
+             <if test="targetScore != null "> and target_score = #{targetScore}</if>
+             <if test="targetMonth != null  and targetMonth != '' "> and target_month = #{targetMonth}</if>
+             <if test="workStatus != null  and workStatus != '' "> and work_status = #{workStatus}</if>
+             <if test="orderNum != null "> and order_num = #{orderNum}</if>
          </where>
-        ORDER BY  create_time DESC
+        ORDER BY  order_num ASC, create_time ASC
     </select>
     
     <select id="selectWorkTaskActivityById" parameterType="String" resultMap="WorkTaskActivityResult">
@@ -56,6 +66,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="repContent != null  and repContent != ''  ">rep_content,</if>
+			<if test="target != null  and target != ''  ">target,</if>
+			<if test="targetScore != null  ">target_score,</if>
+			<if test="targetMonth != null  and targetMonth != ''  ">target_month,</if>
+			<if test="workStatus != null  and workStatus != ''  ">work_status,</if>
+			<if test="orderNum != null  ">order_num,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
@@ -68,6 +83,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="repContent != null  and repContent != ''  ">#{repContent},</if>
+			<if test="target != null  and target != ''  ">#{target},</if>
+			<if test="targetScore != null  ">#{targetScore},</if>
+			<if test="targetMonth != null  and targetMonth != ''  ">#{targetMonth},</if>
+			<if test="workStatus != null  and workStatus != ''  ">#{workStatus},</if>
+			<if test="orderNum != null  ">#{orderNum},</if>
          </trim>
     </insert>
 	 
@@ -83,6 +103,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="repContent != null  and repContent != ''  ">rep_content = #{repContent},</if>
+            <if test="target != null  and target != ''  ">target = #{target},</if>
+            <if test="targetScore != null  ">target_score = #{targetScore},</if>
+            <if test="targetMonth != null  and targetMonth != ''  ">target_month = #{targetMonth},</if>
+            <if test="workStatus != null  and workStatus != ''  ">work_status = #{workStatus},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
         </trim>
         where id = #{id}
     </update>
