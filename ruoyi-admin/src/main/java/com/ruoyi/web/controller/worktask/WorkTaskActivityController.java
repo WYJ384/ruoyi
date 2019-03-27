@@ -1,10 +1,15 @@
 package com.ruoyi.web.controller.worktask;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.ruoyi.common.config.Global;
+import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +27,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 专项工作汇报内容 信息操作处理
@@ -37,7 +43,8 @@ public class WorkTaskActivityController extends BaseController
 	
 	@Autowired
 	private IWorkTaskActivityService workTaskActivityService;
-	
+	@Autowired
+	private IWorkTaskFileService workTaskFileService;
 	@RequiresPermissions("worktask:workTaskActivity:view")
 	@GetMapping()
 	public String workTaskActivity()
@@ -88,9 +95,12 @@ public class WorkTaskActivityController extends BaseController
 	@Log(title = "专项工作汇报内容", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(WorkTaskActivity workTaskActivity)
+	public AjaxResult addSave(MultipartFile file, WorkTaskActivity workTaskActivity)
 	{
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		if(!file.isEmpty()){
+			workTaskFileService.insertWorkTaskFile(file,ShiroUtils.getLoginName(),uuid);
+		}
 		workTaskActivity.setId(uuid);
 		workTaskActivity.setCreateBy(ShiroUtils.getLoginName());
 		workTaskActivity.setCreateTime(new Date());

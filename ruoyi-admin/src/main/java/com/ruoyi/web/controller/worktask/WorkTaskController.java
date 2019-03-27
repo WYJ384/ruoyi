@@ -283,6 +283,14 @@ public class WorkTaskController extends BaseController
 		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
 		workTaskActivity.setWorkTaskId(id);
 		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
+		Iterator<WorkTaskActivity> activityIterator = workTaskActivities.iterator();
+		while (activityIterator.hasNext()){
+			WorkTaskActivity activity = activityIterator.next();
+			String activityId = activity.getId();
+			WorkTaskFile activityFile=new WorkTaskFile();
+			activityFile.setWorkTaskId(activityId);
+			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+		}
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));

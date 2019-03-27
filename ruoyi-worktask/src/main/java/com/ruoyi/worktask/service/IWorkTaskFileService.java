@@ -1,6 +1,8 @@
 package com.ruoyi.worktask.service;
 
 import com.ruoyi.worktask.domain.WorkTaskFile;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 /**
@@ -50,5 +52,6 @@ public interface IWorkTaskFileService
      * @return 结果
      */
 	public int deleteWorkTaskFileByIds(String ids);
-	
+
+	int insertWorkTaskFile( MultipartFile file,String loginName,String uuid);
 }

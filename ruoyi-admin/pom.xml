@@ -10,13 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
     <artifactId>ruoyi-admin</artifactId>
-	
+
 	<description>
 	    web服务入口
 	</description>
 
     <dependencies>
-    
+
         <!-- SpringBoot集成thymeleaf模板 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -35,7 +35,7 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 		</dependency>
-		
+
 		<!-- swagger2-UI-->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -47,13 +47,13 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-framework</artifactId>
         </dependency>
-        
+
         <!-- 定时任务-->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-quartz</artifactId>
         </dependency>
-        
+
         <!-- 代码生成-->
         <dependency>
             <groupId>com.ruoyi</groupId>
@@ -189,5 +189,5 @@
         </plugins>
         <finalName>${artifactId}</finalName>
     </build>
-	
+
 </project>

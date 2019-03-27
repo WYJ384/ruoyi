@@ -1,12 +1,18 @@
 package com.ruoyi.worktask.service.impl;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.common.config.Global;
+import com.ruoyi.common.utils.file.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.worktask.mapper.WorkTaskFileMapper;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import com.ruoyi.common.core.text.Convert;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 附件 服务层实现
@@ -79,5 +85,33 @@ public class WorkTaskFileServiceImpl implements IWorkTaskFileService
 	{
 		return workTaskFileMapper.deleteWorkTaskFileByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public int insertWorkTaskFile(MultipartFile file,String loginName,String uuid) {
+		// 上传文件路径
+		String filePath = Global.getUploadPath();
+		String originalFilename = file.getOriginalFilename();
+		int lastIndexOf = originalFilename.lastIndexOf(".");
+		String extension = originalFilename.substring(lastIndexOf);
+		// 上传并返回新文件名称
+		String fileName = null;
+		try {
+			fileName = FileUploadUtils.upload(filePath, file,extension);
+			WorkTaskFile workTaskFile=new WorkTaskFile();
+			workTaskFile.setUpdateBy(loginName);
+			workTaskFile.setUpdateTime(new Date());
+			workTaskFile.setCreateBy(loginName);
+			workTaskFile.setCreateTime(new Date());
+			workTaskFile.setExtension(extension);
+			workTaskFile.setFileName(originalFilename);
+			workTaskFile.setFilePath(fileName);
+			workTaskFile.setWorkTaskId(uuid);
+			workTaskFileMapper.insertWorkTaskFile(workTaskFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
 }

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 专项工作汇报内容表 work_task_activity
@@ -35,8 +36,17 @@ public class WorkTaskActivity extends BaseEntity
 	private String remark;
 	/** 存在问题内容 */
 	private String repContent;
+	List<WorkTaskFile> workTaskFiles;
 
-	public void setId(String id) 
+	public List<WorkTaskFile> getWorkTaskFiles() {
+		return workTaskFiles;
+	}
+
+	public void setWorkTaskFiles(List<WorkTaskFile> workTaskFiles) {
+		this.workTaskFiles = workTaskFiles;
+	}
+
+	public void setId(String id)
 	{
 		this.id = id;
 	}
