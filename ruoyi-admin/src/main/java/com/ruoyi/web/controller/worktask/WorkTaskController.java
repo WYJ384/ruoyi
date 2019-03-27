@@ -286,12 +286,15 @@ public class WorkTaskController extends BaseController
 		//workTaskActivity.setTargetMonth(DateFormatUtils.format(new Date(),"MM"));
 		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
 		Iterator<WorkTaskActivity> activityIterator = workTaskActivities.iterator();
+		WorkTaskActivity currentWorkTaskActivity=new WorkTaskActivity();
 		while (activityIterator.hasNext()){
 			WorkTaskActivity activity = activityIterator.next();
 			String currentMonth = DateFormatUtils.format(new Date(), "MM");
 			if(currentMonth.equals(activity.getTargetMonth())){
 				activity.setCurrent(true);
+				currentWorkTaskActivity=activity;
 			}
+
 			String activityId = activity.getId();
 			WorkTaskFile activityFile=new WorkTaskFile();
 			activityFile.setWorkTaskId(activityId);
@@ -299,6 +302,7 @@ public class WorkTaskController extends BaseController
 
 			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
 		}
+		mmap.put("currentWorkTaskActivity", currentWorkTaskActivity);
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));

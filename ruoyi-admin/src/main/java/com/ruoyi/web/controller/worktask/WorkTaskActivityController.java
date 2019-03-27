@@ -121,12 +121,35 @@ public class WorkTaskActivityController extends BaseController
 	/**
 	 * 修改保存专项工作汇报内容
 	 */
-	@RequiresPermissions("worktask:workTaskActivity:edit")
+//	@RequiresPermissions("worktask:workTaskActivity:edit")
 	@Log(title = "专项工作汇报内容", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(WorkTaskActivity workTaskActivity)
-	{		
+	public AjaxResult editSave(MultipartFile file,WorkTaskActivity workTaskActivity)
+	{
+		if(file!=null&&!file.isEmpty()){
+			try {
+				// 上传文件路径
+				String filePath = Global.getUploadPath();
+				String originalFilename = file.getOriginalFilename();
+				int lastIndexOf = originalFilename.lastIndexOf(".");
+				String extension = originalFilename.substring(lastIndexOf);
+				// 上传并返回新文件名称
+				String fileName = FileUploadUtils.upload(filePath, file,extension);
+				WorkTaskFile workTaskFile=new WorkTaskFile();
+				workTaskFile.setUpdateBy(ShiroUtils.getLoginName());
+				workTaskFile.setUpdateTime(new Date());
+				workTaskFile.setCreateBy(ShiroUtils.getLoginName());
+				workTaskFile.setCreateTime(new Date());
+				workTaskFile.setExtension(extension);
+				workTaskFile.setFileName(originalFilename);
+				workTaskFile.setFilePath(fileName);
+				workTaskFile.setWorkTaskId(workTaskActivity.getId());
+				workTaskFileService.insertWorkTaskFile(workTaskFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return toAjax(workTaskActivityService.updateWorkTaskActivity(workTaskActivity));
 	}
 	

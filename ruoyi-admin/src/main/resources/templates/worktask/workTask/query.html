@@ -7,7 +7,7 @@
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
 
-   <!--专项工作开始-->
+    <!--专项工作开始-->
     <div class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}" enctype="multipart/form-data">
         <input id="id" name="id" th:field="*{id}" type="hidden">
         <input id="pid" name="pid" th:field="*{pid}" type="hidden">
@@ -121,127 +121,153 @@
 
     </div>
     <!--专项工作结束-->
+    <shiro:lacksRole name="dubanzhuren">
 
-    <form class="form-horizontal m" id="form-workTaskActivity-add" enctype="multipart/form-data">
-        <h4 class="form-header h4">任务目标添加</h4>
-        <div class="form-group">
-            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务目标：</label>
-            <div class="col-sm-8">
-                <textarea id="target" name="target" class="form-control"></textarea>
+        <form class="form-horizontal m" id="form-workTaskActivity-add" enctype="multipart/form-data">
+            <h4 class="form-header h4">任务目标添加</h4>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务目标：</label>
+                <div class="col-sm-8">
+                    <textarea id="target" name="target" class="form-control"></textarea>
+                </div>
             </div>
-        </div>
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label">目标得分：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input id="targetScore" name="targetScore" class="form-control" type="text">-->
-        <!--</div>-->
-        <!--</div>-->
-        <div class="form-group">
-            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>目标月份：</label>
-            <div class="col-sm-8">
-                <input id="targetMonth" name="targetMonth" class="form-control" type="text">
-            </div>
-        </div>
-        <input id="workTaskId" name="workTaskId" th:value="${workTask.id}" class="form-control" type="hidden">
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>汇报内容：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<textarea id="content" name="content" class="form-control"></textarea>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>附件：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input type="file" id="file" name="file">-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <div class="form-group">
-            <label class="col-sm-3 control-label">备注：</label>
-            <div class="col-sm-8">
-                <textarea id="remark" name="remark" class="form-control"></textarea>
-            </div>
-        </div>
-
-    </form>
-
-
-    <div class="row">
-        <div class="col-sm-offset-5 col-sm-10">
-            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保存</button>
-            &nbsp;
-            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
-        </div>
-    </div>
-    <!--当前目标-->
-    <form class="form-horizontal m"  id="form-workTaskActivity-edit" enctype="multipart/form-data">
-        <div th:each="workActivity: ${workTaskActivities}" th:hidden="${!workActivity.current}">
-            <h4 class="form-header h4">目标月份：<span th:text="${workActivity.targetMonth}"></span>月 &nbsp;任务得分：<span th:text="${workActivity.targetScore}"></span></h4>
             <!--<div class="form-group">-->
-                <!--<label class="col-sm-3 control-label">目标月份：</label>-->
-                <!--<div class="col-sm-8">-->
-                    <!--<input  name="targetMonth" class="form-control" readonly th:value="${workActivity.targetMonth}" type="text">-->
-                <!--</div>-->
+            <!--<label class="col-sm-3 control-label">目标得分：</label>-->
+            <!--<div class="col-sm-8">-->
+            <!--<input id="targetScore" name="targetScore" class="form-control" type="text">-->
+            <!--</div>-->
             <!--</div>-->
             <div class="form-group">
-                <label class="col-sm-3 control-label">任务目标：</label>
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>目标月份：</label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" rows="5" disabled th:text="${workActivity.target}"></textarea>
+                    <input id="targetMonth" name="targetMonth" class="form-control" type="text">
                 </div>
             </div>
-            <shiro:hasRole name="dubanzhuren">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">任务得分：</label>
-                    <div class="col-sm-8">
-                        <input name="targetScore"  th:value="${workActivity.targetScore}" class="form-control" type="text">
-                    </div>
-                </div>
-            </shiro:hasRole>
+            <input id="workTaskId" name="workTaskId" th:value="${workTask.id}" class="form-control" type="hidden">
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>汇报内容：</label>-->
+            <!--<div class="col-sm-8">-->
+            <!--<textarea id="content" name="content" class="form-control"></textarea>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>附件：</label>-->
+            <!--<div class="col-sm-8">-->
+            <!--<input type="file" id="file" name="file">-->
+            <!--</div>-->
+            <!--</div>-->
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">附件：</label>
+                <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
-                    <p th:each="taskfile:${workActivity.workTaskFiles}">
-                        <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"
-                           th:text="${taskfile.fileName}"></a>
-                    </p>
-                </div>
-            </div>
-            <div class="row" >
-                <div class="col-sm-offset-5 col-sm-10">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="submitActivityEditHandler()"><i class="fa fa-check"></i>保存</button>
-                    &nbsp;
-                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                    <textarea id="remark" name="remark" class="form-control"></textarea>
                 </div>
             </div>
 
+        </form>
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                        class="fa fa-check"></i>保存
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                        class="fa fa-reply-all"></i>关 闭
+                </button>
+            </div>
         </div>
+    </shiro:lacksRole>
+
+    <!--当前目标-->
+    <form class="form-horizontal m" id="form-workTaskActivity-edit" enctype="multipart/form-data"
+          th:object="${currentWorkTaskActivity}">
+        <h4 class="form-header h4">目标月份：<span th:text="${currentWorkTaskActivity.targetMonth}"></span>月 &nbsp;任务得分：<span
+                th:text="${currentWorkTaskActivity.targetScore}"></span></h4>
+        <!--<div class="form-group">-->
+        <!--<label class="col-sm-3 control-label">目标月份：</label>-->
+        <!--<div class="col-sm-8">-->
+        <!--<input  name="targetMonth" class="form-control" readonly th:value="${workActivity.targetMonth}" type="text">-->
+        <!--</div>-->
+        <!--</div>-->
+        <input name="id" th:value="${currentWorkTaskActivity.id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务目标：</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="5" readonly name="target"
+                          th:text="${currentWorkTaskActivity.target}"></textarea>
+            </div>
+        </div>
+        <shiro:hasRole name="dubanzhuren">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">任务得分：</label>
+                <div class="col-sm-8">
+                    <input name="targetScore" th:value="${currentWorkTaskActivity.targetScore}" class="form-control"
+                           type="text">
+                </div>
+            </div>
+        </shiro:hasRole>
+        <shiro:lacksRole name="dubanzhuren">
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>附件：</label>
+                <div class="col-sm-8">
+                    <input type="file" id="file" name="file">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>汇报内容：</label>
+                <div class="col-sm-8">
+                    <textarea th:text="${currentWorkTaskActivity.content}" rows="6" name="content" class="form-control"></textarea>
+                </div>
+            </div>
+        </shiro:lacksRole>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">附件：</label>
+            <div class="col-sm-8">
+                <p th:each="taskfile:${currentWorkTaskActivity.workTaskFiles}">
+                    <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"
+                       th:text="${taskfile.fileName}"></a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitActivityEditHandler()"><i
+                        class="fa fa-check"></i>保存
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                        class="fa fa-reply-all"></i>关 闭
+                </button>
+            </div>
+        </div>
+
     </form>
     <!--非当前目标-->
     <div class="form-horizontal m">
         <div th:each="workActivity: ${workTaskActivities}" th:hidden="${workActivity.current}">
-            <h4 class="form-header h4">目标月份：<span th:text="${workActivity.targetMonth}"></span>月 &nbsp;任务得分：<span th:text="${workActivity.targetScore}"></span></h4>
+            <h4 class="form-header h4">目标月份：<span th:text="${workActivity.targetMonth}"></span>月 &nbsp;任务得分：<span
+                    th:text="${workActivity.targetScore}"></span></h4>
             <!--<div class="form-group">-->
             <!--<label class="col-sm-3 control-label">目标月份：</label>-->
             <!--<div class="col-sm-8">-->
             <!--<input  name="targetMonth" class="form-control" readonly th:value="${workActivity.targetMonth}" type="text">-->
             <!--</div>-->
             <!--</div>-->
+
             <div class="form-group">
                 <label class="col-sm-3 control-label">任务目标：</label>
                 <div class="col-sm-8">
                     <textarea class="form-control" rows="5" disabled th:text="${workActivity.target}"></textarea>
                 </div>
             </div>
-            <shiro:hasRole name="dubanzhuren">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">任务得分：</label>
-                    <div class="col-sm-8">
-                        <input name="targetScore"  th:value="${workActivity.targetScore}" class="form-control" type="text">
-                    </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">任务得分：</label>
+                <div class="col-sm-8">
+                    <input name="targetScore" readonly th:value="${workActivity.targetScore}" class="form-control"
+                           type="text">
                 </div>
-            </shiro:hasRole>
+            </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">附件：</label>
@@ -255,9 +281,13 @@
             </div>
             <div class="row" th:hidden="${!workActivity.current}">
                 <div class="col-sm-offset-5 col-sm-10">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保存</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                            class="fa fa-check"></i>保存
+                    </button>
                     &nbsp;
-                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                            class="fa fa-reply-all"></i>关 闭
+                    </button>
                 </div>
             </div>
 
@@ -270,19 +300,19 @@
 <script th:src="@{/ajax/libs/select/select2.js}"></script>
 <script type="text/javascript">
 
-    layui.use('laydate', function() {
+    layui.use('laydate', function () {
         var laydate = layui.laydate;
         var startDate = laydate.render({
             elem: '#targetMonth',
             theme: 'molv',
-            type:'month',
-            format:'MM'
+            type: 'month',
+            format: 'MM'
         });
     });
     var prefix = ctx + "worktask/workTaskActivity";
     //添加任务目标
     $("#form-workTaskActivity-add").validate({
-        submitHandler:function(form){
+        submitHandler: function (form) {
             $.operate.saveTab(prefix + "/add", $('#form-workTaskActivity-add').serialize());
         },
         rules: {
@@ -297,9 +327,12 @@
     });
     //评分、提交任务附件
     $("#form-workTaskActivity-edit").validate({
-        submitHandler:function(form){
-            var formData = new FormData($("#form-workTask-edit")[0]);
-            formData.append('file', $('#file')[0].files[0]);
+        submitHandler: function (form) {
+            var formData = new FormData($("#form-workTaskActivity-edit")[0]);
+            if ($('#file')[0]) {
+                formData.append('file', $('#file')[0].files[0]);
+            }
+
             $.ajax({
                 url: prefix + "/edit",
                 type: 'post',
@@ -330,10 +363,11 @@
         $("#form-workTaskActivity-add").submit();
     }
     function submitActivityEditHandler() {
+
         $("#form-workTaskActivity-edit").submit();
     }
 
-    function downloadFile(fileId){
+    function downloadFile(fileId) {
         window.location.href = ctx + "worktask/workTaskFile/downloadFile/" + fileId;
     }
 </script>
