@@ -165,6 +165,8 @@ public class WorkTaskController extends BaseController
 	public TableDataInfo selectWorkTaskListByDept(WorkTask workTask)
 	{
 		workTask.setLeadDeptId(ShiroUtils.getSysUser().getDeptId().intValue());
+		workTask.setCooperateDeptId(ShiroUtils.getSysUser().getDeptId().intValue());
+		workTask.setLeaderId(ShiroUtils.getSysUser().getUserId()+"");
 		startPage();
 		List<WorkTask> list = workTaskService.selectWorkTaskList(workTask);
 		Iterator<WorkTask> taskIterator = list.iterator();
@@ -294,12 +296,9 @@ public class WorkTaskController extends BaseController
 				activity.setCurrent(true);
 				currentWorkTaskActivity=activity;
 			}
-
 			String activityId = activity.getId();
 			WorkTaskFile activityFile=new WorkTaskFile();
 			activityFile.setWorkTaskId(activityId);
-
-
 			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
 		}
 		mmap.put("currentWorkTaskActivity", currentWorkTaskActivity);
@@ -307,7 +306,7 @@ public class WorkTaskController extends BaseController
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));
 		mmap.put("workTaskActivities", workTaskActivities);
-
+		mmap.put("sysUser",ShiroUtils.getSysUser());
 		return prefix + "/query";
 	}
 	/**

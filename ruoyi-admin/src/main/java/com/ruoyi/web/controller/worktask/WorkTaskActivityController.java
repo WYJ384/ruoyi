@@ -127,7 +127,7 @@ public class WorkTaskActivityController extends BaseController
 	@ResponseBody
 	public AjaxResult editSave(MultipartFile file,WorkTaskActivity workTaskActivity)
 	{
-		if(file!=null&&!file.isEmpty()){
+		if(file!=null&&(!file.isEmpty())){
 			try {
 				// 上传文件路径
 				String filePath = Global.getUploadPath();

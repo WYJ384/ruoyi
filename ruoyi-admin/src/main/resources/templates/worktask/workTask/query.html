@@ -7,6 +7,7 @@
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
 
+
     <!--专项工作开始-->
     <div class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}" enctype="multipart/form-data">
         <input id="id" name="id" th:field="*{id}" type="hidden">
@@ -39,7 +40,7 @@
                     <label class="col-sm-4 control-label">牵头部门：</label>
                     <div class="col-sm-8">
                         <input readonly onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
-                               placeholder="请选择归牵头部门" class="form-control" required th:field="*{leadDeptName}">
+                               placeholder="请选牵头部门" class="form-control" required th:field="*{leadDeptName}">
                         <input name="leadDeptId" type="hidden" id="leadDeptId" th:field="*{leadDeptId}"/>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                     <div class="col-sm-8">
                         <!--<input id="cooperateDeptId" name="cooperateDeptId" class="form-control" type="text">-->
                         <input readonly onclick="selectCooperateDeptTree()" id="cooperateDeptName" type="text"
-                               placeholder="请选择归牵头部门" class="form-control" required th:field="*{cooperateDeptName}">
+                               placeholder="请选择配合部门" class="form-control" required th:field="*{cooperateDeptName}">
                         <input name="cooperateDeptId" type="hidden" id="cooperateDeptId" th:field="*{cooperateDeptId}"/>
 
                     </div>
@@ -73,7 +74,8 @@
                     <div class="col-sm-8">
                         <select id="leaderId" readonly class="form-control select2-hidden-accessible">
                             <option th:each="user:${users}" th:value="${user.userId}"
-                                    th:text="${user.userName}"></option>
+                                    th:text="${user.userName}"
+                                    th:selected="${workTask?.leaderId?.contains(user.userId.toString())}"></option>
                         </select>
                     </div>
                 </div>
@@ -121,8 +123,8 @@
 
     </div>
     <!--专项工作结束-->
-    <shiro:lacksRole name="dubanzhuren">
 
+    <div th:if="${sysUser.loginName eq workTask.createBy}">
         <form class="form-horizontal m" id="form-workTaskActivity-add" enctype="multipart/form-data">
             <h4 class="form-header h4">任务目标添加</h4>
             <div class="form-group">
@@ -131,12 +133,6 @@
                     <textarea id="target" name="target" class="form-control"></textarea>
                 </div>
             </div>
-            <!--<div class="form-group">-->
-            <!--<label class="col-sm-3 control-label">目标得分：</label>-->
-            <!--<div class="col-sm-8">-->
-            <!--<input id="targetScore" name="targetScore" class="form-control" type="text">-->
-            <!--</div>-->
-            <!--</div>-->
             <div class="form-group">
                 <label class="col-sm-3 control-label"><span style="color: red; ">*</span>目标月份：</label>
                 <div class="col-sm-8">
@@ -144,19 +140,6 @@
                 </div>
             </div>
             <input id="workTaskId" name="workTaskId" th:value="${workTask.id}" class="form-control" type="hidden">
-            <!--<div class="form-group">-->
-            <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>汇报内容：</label>-->
-            <!--<div class="col-sm-8">-->
-            <!--<textarea id="content" name="content" class="form-control"></textarea>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="form-group">-->
-            <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>附件：</label>-->
-            <!--<div class="col-sm-8">-->
-            <!--<input type="file" id="file" name="file">-->
-            <!--</div>-->
-            <!--</div>-->
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">备注：</label>
@@ -177,19 +160,13 @@
                 </button>
             </div>
         </div>
-    </shiro:lacksRole>
+    </div>
 
     <!--当前目标-->
     <form class="form-horizontal m" id="form-workTaskActivity-edit" enctype="multipart/form-data"
           th:object="${currentWorkTaskActivity}">
         <h4 class="form-header h4">目标月份：<span th:text="${currentWorkTaskActivity.targetMonth}"></span>月 &nbsp;任务得分：<span
                 th:text="${currentWorkTaskActivity.targetScore}"></span></h4>
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label">目标月份：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input  name="targetMonth" class="form-control" readonly th:value="${workActivity.targetMonth}" type="text">-->
-        <!--</div>-->
-        <!--</div>-->
         <input name="id" th:value="${currentWorkTaskActivity.id}" type="hidden">
         <div class="form-group">
             <label class="col-sm-3 control-label">任务目标：</label>
@@ -198,16 +175,15 @@
                           th:text="${currentWorkTaskActivity.target}"></textarea>
             </div>
         </div>
-        <shiro:hasRole name="dubanzhuren">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">任务得分：</label>
-                <div class="col-sm-8">
-                    <input name="targetScore" th:value="${currentWorkTaskActivity.targetScore}" class="form-control"
-                           type="text">
-                </div>
+        <div class="form-group" th:if="${sysUser.userId.toString() eq workTask.leaderId.toString()}">
+            <label class="col-sm-3 control-label">任务得分：</label>
+            <div class="col-sm-8">
+                <input name="targetScore" th:value="${currentWorkTaskActivity.targetScore}" class="form-control"
+                       type="text">
             </div>
-        </shiro:hasRole>
-        <shiro:lacksRole name="dubanzhuren">
+        </div>
+        <!--登陆部门为牵头部门或者配合部门-->
+        <div th:if="${(sysUser.deptId eq workTask.leadDeptId) or (workTask.cooperateDeptId.toString().contains(sysUser.deptId.toString()))}">
             <div class="form-group">
                 <label class="col-sm-3 control-label"><span style="color: red; ">*</span>附件：</label>
                 <div class="col-sm-8">
@@ -217,10 +193,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label"><span style="color: red; ">*</span>汇报内容：</label>
                 <div class="col-sm-8">
-                    <textarea th:text="${currentWorkTaskActivity.content}" rows="6" name="content" class="form-control"></textarea>
+                    <textarea th:text="${currentWorkTaskActivity.content}" rows="6" name="content"
+                              class="form-control"></textarea>
                 </div>
             </div>
-        </shiro:lacksRole>
+        </div>
+        <!--登陆部门为牵头部门或者配合部门  end-->
         <div class="form-group">
             <label class="col-sm-3 control-label">附件：</label>
             <div class="col-sm-8">

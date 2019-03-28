@@ -151,9 +151,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ancestors != null  and ancestors != '' "> and ancestors = #{ancestors}</if>
             <if test="userIds != null  and userIds != '' "> and user_ids = #{userIds}</if>
             <if test="workScore != null "> and work_score = #{workScore}</if>
-            <if test="leadDeptId != null "> and lead_dept_id = #{leadDeptId}</if>
-            <if test="cooperateDeptId != null "> and cooperate_dept_id = #{cooperateDeptId}</if>
-            <if test="leaderId != null  and leaderId != '' "> and leader_id = #{leaderId}</if>
+            <if test="leadDeptId != null "> or lead_dept_id = #{leadDeptId}</if>
+            <if test="cooperateDeptId != null "> or cooperate_dept_id = #{cooperateDeptId}</if>
+            <if test="leaderId != null  and leaderId != '' "> or leader_id = #{leaderId}</if>
          </where>
     </select>
     
