@@ -1,14 +1,13 @@
 package com.ruoyi.web.controller.meeting;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.meeting.domain.MeetingModel;
 import com.ruoyi.meeting.domain.Meetroom;
 import com.ruoyi.meeting.service.IMeetroomService;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +41,8 @@ public class MeetingController extends BaseController
 	private IMeetroomService meetroomService;
 	@Autowired
 	private IMeetingService meetingService;
-	
+	@Autowired
+	private ISysUserService userService;
 	@RequiresPermissions("meeting:meeting:view")
 	@GetMapping()
 	public String meeting()
@@ -70,7 +70,20 @@ public class MeetingController extends BaseController
 
 		return getDataTable(list);
 	}
-	
+	@PostMapping("/get")
+	@ResponseBody
+	public Map get(Meeting meeting)
+	{
+		Meeting m = meetingService.selectMeetingById(meeting.getId());
+		SysUser sysUser = userService.selectUserByLoginName(m.getCreatedBy());
+		sysUser.setPassword("");
+		Map map=new HashMap<>();
+		map.put("meeting",m);
+		map.put("sysUser",sysUser);
+
+
+		return map;
+	}
 	
 	/**
 	 * 导出会议列表

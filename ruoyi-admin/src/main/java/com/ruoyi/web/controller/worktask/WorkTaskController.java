@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ruoyi.common.config.Global;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.framework.util.ShiroUtils;
@@ -217,6 +218,9 @@ public class WorkTaskController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(MultipartFile file, WorkTask workTask)
 	{
+		if(StringUtils.isEmpty(workTask.getCooperateDeptId())){
+			workTask.setCooperateDeptId(workTask.getLeadDeptId()+"");
+		}
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 		workTask.setId(uuid);
 		if(!file.isEmpty()){
@@ -379,6 +383,9 @@ public class WorkTaskController extends BaseController
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		if(StringUtils.isEmpty(workTask.getCooperateDeptId())){
+			workTask.setCooperateDeptId(workTask.getLeadDeptId()+"");
 		}
 		workTask.setUpdateTime(new Date());
 		workTask.setUpdateBy(ShiroUtils.getLoginName());
