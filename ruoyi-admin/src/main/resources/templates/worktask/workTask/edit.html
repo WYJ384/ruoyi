@@ -49,10 +49,13 @@
 						<label class="col-sm-4 control-label">配合部门：</label>
 						<div class="col-sm-8">
 							<!--<input id="cooperateDeptId" name="cooperateDeptId" class="form-control" type="text">-->
-							<input  onclick="selectCooperateDeptTree()" id="cooperateDeptName" type="text"
-									placeholder="请选择归牵头部门" class="form-control" required  th:field="*{cooperateDeptName}">
-							<input name="cooperateDeptId" type="hidden" id="cooperateDeptId" th:field="*{cooperateDeptId}"/>
-
+							<!--<input  onclick="selectCooperateDeptTree()" id="cooperateDeptName" type="text"-->
+									<!--placeholder="请选择归牵头部门" class="form-control" required  th:field="*{cooperateDeptName}">-->
+							<!--<input name="cooperateDeptId" type="hidden" id="cooperateDeptId" th:field="*{cooperateDeptId}"/>-->
+							<select id="cooperateDeptId" class="form-control select2-hidden-accessible" multiple required>
+								<option th:each="dept:${depts}" th:value="${dept.deptId}"
+										th:text="${dept.deptName}" th:selected="${workTask?.cooperateDeptId?.contains(dept.deptId.toString())}"></option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -296,9 +299,11 @@
 			if ($.validate.form()) {
 				var userIds = $.form.selectSelects("userIds");
 				var leaderId = $.form.selectSelects("leaderId");
+				var cooperateDeptId = $.form.selectSelects("cooperateDeptId");
 				var formData = new FormData($("#form-workTask-edit")[0]);
 				formData.append('userIds', userIds);
 				formData.append('leaderId', leaderId);
+				formData.append('cooperateDeptId', cooperateDeptId);
 				formData.append('file', $('#file')[0].files[0]);
 				$.ajax({
 					url: prefix + "/edit",
@@ -346,6 +351,7 @@
 		}
 		function selectCooperateDeptTree(){
 			var leadDeptId = $("#cooperateDeptId").val();
+
 			var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#cooperateDeptId").val();
 			var url = ctx + "system/dept/selectDeptTree/" + deptId;
 			var options = {

@@ -102,7 +102,7 @@
             <div class="col-sm-6">
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">牵头部门：</label>
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>牵头部门：</label>
                     <div class="col-sm-8">
                         <input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
                                placeholder="请选择归牵头部门" class="form-control" required>
@@ -112,12 +112,17 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">配合部门：</label>
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>配合部门：</label>
                     <div class="col-sm-8">
                         <!--<input id="cooperateDeptId" name="cooperateDeptId" class="form-control" type="text">-->
-                        <input  onclick="selectCooperateDeptTree()" id="cooperateDeptName" type="text"
-                               placeholder="请选择归牵头部门" class="form-control" required>
-                        <input name="cooperateDeptId" type="hidden" id="cooperateDeptId"/>
+                        <!--<input  onclick="selectCooperateDeptTree()" id="cooperateDeptName" type="text"-->
+                               <!--placeholder="请选择归牵头部门" class="form-control" required>-->
+                        <!--<input name="cooperateDeptId" type="hidden" id="cooperateDeptId"/>-->
+
+                        <select id="cooperateDeptId" class="form-control select2-hidden-accessible" multiple required>
+                            <option th:each="dept:${depts}" th:value="${dept.deptId}"
+                                    th:text="${dept.deptName}"></option>
+                        </select>
 
                     </div>
                 </div>
@@ -296,6 +301,9 @@
         rules: {
             workName: {
                 required: true,
+            },
+            cooperateDeptId:{
+                required: true,
             }
 //            beginTime: {
 //                required: true,
@@ -310,8 +318,10 @@
     function submitHandler() {
         if ($.validate.form()) {
             var leaderId = $.form.selectSelects("leaderId");
+            var cooperateDeptId = $.form.selectSelects("cooperateDeptId");
             var formData = new FormData($("#form-workTask-add")[0]);
             formData.append('leaderId', leaderId);
+            formData.append('cooperateDeptId', cooperateDeptId);
             formData.append('file', $('#file')[0].files[0]);
             $.ajax({
                 url: prefix + "/add",

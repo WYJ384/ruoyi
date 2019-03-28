@@ -53,7 +53,7 @@ public class WorkTask extends BaseEntity
 	/** 牵头部门 */
 	private Integer leadDeptId;
 	/** 配合部门 */
-	private Integer cooperateDeptId;
+	private String cooperateDeptId;
 	/** 分管领导 */
 	private String leaderId;
 
@@ -95,11 +95,11 @@ public class WorkTask extends BaseEntity
 		this.leadDeptId = leadDeptId;
 	}
 
-	public Integer getCooperateDeptId() {
+	public String getCooperateDeptId() {
 		return cooperateDeptId;
 	}
 
-	public void setCooperateDeptId(Integer cooperateDeptId) {
+	public void setCooperateDeptId(String cooperateDeptId) {
 		this.cooperateDeptId = cooperateDeptId;
 	}
 

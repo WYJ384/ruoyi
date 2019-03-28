@@ -61,6 +61,7 @@ public class WorkTaskController extends BaseController
 	private ISysUserService userService;
 	@Autowired
 	private IWorkTaskActivityService workTaskActivityService;
+
 	@RequiresPermissions("worktask:workTask:view")
 	@GetMapping()
 	public String workTask()
@@ -83,9 +84,17 @@ public class WorkTaskController extends BaseController
 		Iterator<WorkTask> taskIterator = list.iterator();
 		while (taskIterator.hasNext()){
 			WorkTask task = taskIterator.next();
-			SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(task.getCooperateDeptId()));
-			if(cooperateDept!=null){
-				task.setCooperateDeptName(cooperateDept.getDeptName());
+			String[] cooperateDeptIds =task.getCooperateDeptId().split(",");
+			for (String deptId:cooperateDeptIds) {
+				SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(deptId));
+				if(cooperateDept!=null){
+					if(task.getCooperateDeptName()!=null){
+						task.setCooperateDeptName(task.getCooperateDeptName()+","+cooperateDept.getDeptName());
+					}else{
+						task.setCooperateDeptName(cooperateDept.getDeptName());
+					}
+
+				}
 			}
 			SysDept leadDept = deptService.selectDeptById(Long.valueOf(task.getLeadDeptId()));
 
@@ -126,6 +135,8 @@ public class WorkTaskController extends BaseController
 		SysUser sysUser = new SysUser();
 //		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
 		mmap.put("users",userService.selectUserList(sysUser));
+		mmap.put("depts",deptService.selectDeptList(new SysDept()));
+
 	    return prefix + "/add";
 	}
 	/**
@@ -162,20 +173,30 @@ public class WorkTaskController extends BaseController
 	 */
 	@PostMapping("/selectWorkTaskListByDept")
 	@ResponseBody
-	public TableDataInfo selectWorkTaskListByDept(WorkTask workTask)
+	public TableDataInfo selectWorkTaskListByDept(WorkTask workTask,ModelMap mmap)
 	{
 		workTask.setLeadDeptId(ShiroUtils.getSysUser().getDeptId().intValue());
-		workTask.setCooperateDeptId(ShiroUtils.getSysUser().getDeptId().intValue());
+//		workTask.setCooperateDeptId(ShiroUtils.getSysUser().getDeptId().intValue());
 		workTask.setLeaderId(ShiroUtils.getSysUser().getUserId()+"");
 		startPage();
 		List<WorkTask> list = workTaskService.selectWorkTaskList(workTask);
 		Iterator<WorkTask> taskIterator = list.iterator();
 		while (taskIterator.hasNext()){
 			WorkTask task = taskIterator.next();
-			SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(task.getCooperateDeptId()));
-			if(cooperateDept!=null){
-				task.setCooperateDeptName(cooperateDept.getDeptName());
+			String[] cooperateDeptIds =task.getCooperateDeptId().split(",");
+			for (String deptId:cooperateDeptIds) {
+				SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(deptId));
+				if(cooperateDept!=null){
+					if(task.getCooperateDeptName()!=null){
+						task.setCooperateDeptName(task.getCooperateDeptName()+","+cooperateDept.getDeptName());
+					}else{
+						task.setCooperateDeptName(cooperateDept.getDeptName());
+					}
+
+				}
 			}
+
+
 			SysDept leadDept = deptService.selectDeptById(Long.valueOf(task.getLeadDeptId()));
 
 			if(leadDept!=null){
@@ -183,6 +204,7 @@ public class WorkTaskController extends BaseController
 			}
 
 		}
+		mmap.put("depts",deptService.selectDeptList(new SysDept()));
 		return getDataTable(list);
 	}
 
@@ -248,10 +270,10 @@ public class WorkTaskController extends BaseController
 		workTaskFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
 
-		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
-		if(cooperateDept!=null){
-			workTask.setCooperateDeptName(cooperateDept.getDeptName());
-		}
+//		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
+//		if(cooperateDept!=null){
+//			workTask.setCooperateDeptName(cooperateDept.getDeptName());
+//		}
 		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
 
 		if(leadDept!=null){
@@ -261,7 +283,7 @@ public class WorkTaskController extends BaseController
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));
-
+		mmap.put("depts",deptService.selectDeptList(new SysDept()));
 
 		return prefix + "/edit";
 	}
@@ -274,10 +296,10 @@ public class WorkTaskController extends BaseController
 		WorkTaskFile workTaskFile=new WorkTaskFile();
 		workTaskFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
-		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
-		if(cooperateDept!=null){
-			workTask.setCooperateDeptName(cooperateDept.getDeptName());
-		}
+//		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
+//		if(cooperateDept!=null){
+//			workTask.setCooperateDeptName(cooperateDept.getDeptName());
+//		}
 		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
 		if(leadDept!=null){
 			workTask.setLeadDeptName(leadDept.getDeptName());
@@ -307,6 +329,7 @@ public class WorkTaskController extends BaseController
 		mmap.put("users",userService.selectUserList(sysUser));
 		mmap.put("workTaskActivities", workTaskActivities);
 		mmap.put("sysUser",ShiroUtils.getSysUser());
+		mmap.put("depts",deptService.selectDeptList(new SysDept()));
 		return prefix + "/query";
 	}
 	/**
