@@ -1,5 +1,8 @@
 # 数据源配置
 spring:
+    activiti:
+        check-process-definitions: false
+        database-schema-update: true
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.cj.jdbc.Driver
