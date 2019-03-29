@@ -2,13 +2,15 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1523330736616" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <process id="demo2" isClosed="false" isExecutable="true" name="My process" processType="None">
     <startEvent id="startevent1" name="Start"/>
-    <userTask  activiti:candidateGroups="主任" activiti:exclusive="true" id="usertask1" name="主任审核"/>
-    <userTask  activiti:candidateGroups="副主任" activiti:exclusive="true" id="usertask2" name="副主任分配"/>
+    <userTask activiti:assignee="马忠义"  activiti:candidateUsers="${activityDemoServiceImpl.findUsersForSL(execution)}" activiti:exclusive="true" id="usertask1" name="主任审核"/>
+    <userTask activiti:assignee="马斌" activiti:exclusive="true" id="usertask2" name="副主任分配"/>
     <endEvent id="endevent1" name="End"/>
     <sequenceFlow id="flow1" sourceRef="usertask2" targetRef="endevent1"/>
     <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="usertask2"/>
     <sequenceFlow id="flow3" sourceRef="startevent1" targetRef="usertask1"/>
   </process>
+  <!-- 生成流程图的字体 -->
+
   <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="demo2">
       <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
