@@ -106,7 +106,7 @@ public class LeaveController {
     @GetMapping("/viewImage")
     //查看bpmn 资源图片
     public void viewImage() throws Exception{
-        String deploymentId="12501";
+        String deploymentId="10001";
         String imageName=null;
         //取得某个部署的资源的名称  deploymentId
         List<String> resourceNames = processEngine.getRepositoryService().getDeploymentResourceNames(deploymentId);
@@ -124,7 +124,7 @@ public class LeaveController {
 
     @GetMapping("/queryHistoryTask")
     public void queryHistoryTask(){
-        String processInstanceId="12501";
+        String processInstanceId="10001";
         List<HistoricTaskInstance> list = processEngine.getHistoryService()
                 .createHistoricTaskInstanceQuery()
                 .processInstanceId(processInstanceId)

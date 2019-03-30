@@ -1,4 +1,5 @@
 package com.ruoyi;
+import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 import org.activiti.spring.boot.SecurityAutoConfiguration;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -12,7 +13,12 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * 
  * @author ruoyi
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, SecurityAutoConfiguration.class})
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, SecurityAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
+        org.activiti.spring.boot.SecurityAutoConfiguration.class,
+        //org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration.class
+        PageHelperAutoConfiguration.class,}
+)
 @MapperScan("com.ruoyi.*.mapper")
 public class RuoYiApplication
 {

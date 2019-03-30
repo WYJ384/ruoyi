@@ -14,7 +14,9 @@
     <description>
 	    事务督办模块
 	</description>
-
+    <properties>
+        <activiti.version>5.22.0</activiti.version>
+    </properties>
     <dependencies>
 
     	 <!-- Mysql驱动包 -->
@@ -28,17 +30,7 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-spring-boot-starter-basic</artifactId>
-            <version>5.22.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
     </dependencies>
 
 </project>

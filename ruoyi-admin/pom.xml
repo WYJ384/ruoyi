@@ -71,9 +71,10 @@
             <artifactId>commons-compress</artifactId>
             <version>1.12</version>
         </dependency>
+
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-filemanager</artifactId>
+            <artifactId>ruoyi-activiti</artifactId>
         </dependency>
 
 
