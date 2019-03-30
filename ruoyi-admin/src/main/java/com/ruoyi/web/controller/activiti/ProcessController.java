@@ -123,6 +123,7 @@ public class ProcessController extends BaseController {
 
     @RequiresPermissions("activiti:process:remove")
     @PostMapping("/remove")
+    @ResponseBody
     public AjaxResult remove(String ids) {
         int i = actProcessService.deleteDeployments(ids);
         return success();
