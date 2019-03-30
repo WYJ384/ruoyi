@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /***
  * 代办任务
@@ -57,9 +59,10 @@ public class TaskController extends BaseController {
         Integer pageSize = pageDomain.getPageSize();
         taskVO.paging()[0]=pageNum;
         taskVO.paging()[1]=pageSize;
+        //taskVO.setAssignee("admin");
         if ("admin".equalsIgnoreCase(ShiroUtils.getLoginName())) {
-            List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
-            return getDataTable(taskVOS);
+           // List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+            //return getDataTable(taskVOS);
         }
         taskVO.setAssignee(String.valueOf(ShiroUtils.getUserId()));
         List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
@@ -145,6 +148,7 @@ public class TaskController extends BaseController {
 
     @Log(title = "查询完成的任务", businessType = BusinessType.OTHER)
     @RequiresPermissions("activiti:task:view")
+    @ResponseBody
     @PostMapping("/finishedTask")
     public TableDataInfo finishedTask(TaskVO task, ModelMap map) {
         PageDomain pageDomain = TableSupport.buildPageRequest();
@@ -153,6 +157,7 @@ public class TaskController extends BaseController {
         task.paging()[0]=pageNum;
         task.paging()[1]=pageSize;
         task.setOwner(ShiroUtils.getLoginName());
+//        task.setAssignee(ShiroUtils.getLoginName());
         List<TaskVO> taskVOs = actTaskService.selectFinishedTask(task);
         TableDataInfo dataTable = getDataTable(taskVOs);
         dataTable.setTotal(task.getCount());
@@ -170,7 +175,10 @@ public class TaskController extends BaseController {
     public void form(@PathVariable("procDefId") String procDefId, @PathVariable("taskId") String taskId, HttpServletResponse response) throws IOException {
         // 获取流程XML上的表单KEY
         String formKey = actTaskService.getFormKey(procDefId, taskId);
-
+        System.out.println("完成任务");
+        Map<String, Object> vars=new HashMap<String, Object>();
+        vars.put("chengyuan_users","admin,15693120282,18919818967");
+        actTaskService.completeTask(taskId,vars);
         response.sendRedirect(formKey + "/" + taskId);
     }
 
