@@ -80,9 +80,5 @@ public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 		return workTaskActivityMapper.deleteWorkTaskActivityByIds(Convert.toStrArray(ids));
 	}
 
-	@Override
-	public List<String> selectPostByDept(Long deptId) {
-		return workTaskActivityMapper.selectPostByDept(deptId);
-	}
 
 }

@@ -331,10 +331,20 @@
                     </p>
                 </div>
             </div>
-
-
+            <div class="row">
+                <div class="col-sm-offset-5 col-md-10">
+                    <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary" onclick="startWork(this.getAttribute('data-id'))" ><i
+                            class="fa fa-check"></i>开始督办
+                    </button>
+                    &nbsp;
+                    <button th:data-id="${workActivity.id}" type="button"   onclick="deleteWorkActiviti(this.getAttribute('data-id'))"  class="btn btn-sm btn-danger" ><i
+                            class="fa fa-reply-all"></i>删除目标
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
 
 <div th:include="include::footer"></div>
@@ -450,6 +460,19 @@
     }
     function submitWorkTaskActivityAddHandler() {
         $("#form-workTaskActivity-add").submit();
+    }
+
+    function startWork(id) {
+        var url = ctx + "worktask/workTaskActivity/startTask";
+        $.operate.submit(url, "post", "json", {id:id});
+    }
+
+    function deleteWorkActiviti(id) {
+        $.modal.confirm("确定删除该条信息吗？", function() {
+            var url = ctx + "worktask/workTaskActivity/remove";
+            $.operate.submit(url, "post", "json", {ids:id});
+        });
+
     }
 </script>
 </body>

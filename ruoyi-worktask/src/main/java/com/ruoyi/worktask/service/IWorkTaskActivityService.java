@@ -56,6 +56,6 @@ public interface IWorkTaskActivityService
 	 * @param deptId
 	 * @return
 	 */
-	List<String> selectPostByDept(Long deptId);
+
 
 }

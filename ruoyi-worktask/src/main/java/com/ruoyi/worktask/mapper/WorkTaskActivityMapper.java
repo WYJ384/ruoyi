@@ -59,11 +59,6 @@ public interface WorkTaskActivityMapper
      */
 	public int deleteWorkTaskActivityByIds(String[] ids);
 
-	/**
-	 * 查询部门下的主任
-	 * @param deptId
-	 * @return
-	 */
-	List<String> selectPostByDept(Long deptId);
+
 
 }

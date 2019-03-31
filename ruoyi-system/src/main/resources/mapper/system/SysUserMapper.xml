@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
 		<collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
 	</resultMap>
-	
+
 	<resultMap id="deptResult" type="SysDept">
 		<id     property="deptId"   column="dept_id"     />
 		<result property="parentId" column="parent_id"   />
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="orderNum" column="order_num"   />
 		<result property="status"   column="dept_status" />
 	</resultMap>
-	
+
 	<resultMap id="RoleResult" type="SysRole">
 		<id     property="roleId"       column="role_id"        />
 		<result property="roleName"     column="role_name"      />
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="dataScope"     column="data_scope"    />
 		<result property="status"       column="role_status"    />
 	</resultMap>
-	
+
 	<sql id="selectUserVo">
         select  u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.sex, u.avatar, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
        		    d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status,
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 left join sys_user_role ur on u.user_id = ur.user_id
 			 left join sys_role r on r.role_id = ur.role_id
     </sql>
-	
+
 	<select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
 		select u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.password, u.sex, u.avatar, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name from sys_user u
 		left join sys_dept d on u.dept_id = d.dept_id
@@ -83,50 +83,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 数据范围过滤 -->
 		${params.dataScope}
 	</select>
-	
+
 	<select id="selectUserByLoginName" parameterType="String" resultMap="SysUserResult">
 	    <include refid="selectUserVo"/>
 		where u.login_name = #{userName}
 	</select>
-	
+
 	<select id="selectUserByPhoneNumber" parameterType="String" resultMap="SysUserResult">
 		<include refid="selectUserVo"/>
 		where u.phonenumber = #{phonenumber}
 	</select>
-	
+
 	<select id="selectUserByEmail" parameterType="String" resultMap="SysUserResult">
 	    <include refid="selectUserVo"/>
 		where u.email = #{email}
 	</select>
-	
+
 	<select id="checkLoginNameUnique" parameterType="String" resultType="int">
 		select count(1) from sys_user where login_name=#{loginName}
 	</select>
-	
+
 	<select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
 		select user_id, phonenumber from sys_user where phonenumber=#{phonenumber}
 	</select>
-	
+
 	<select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
 		select user_id, email from sys_user where email=#{email}
 	</select>
-	
+
 	<select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
 		<include refid="selectUserVo"/>
 		where u.user_id = #{userId}
 	</select>
-	
+
 	<delete id="deleteUserById" parameterType="Long">
  		delete from sys_user where user_id = #{userId}
  	</delete>
- 	
+
  	<delete id="deleteUserByIds" parameterType="Long">
  		update sys_user set del_flag = '2' where user_id in
  		<foreach collection="array" item="userId" open="(" separator="," close=")">
  			#{userId}
-        </foreach> 
+        </foreach>
  	</delete>
- 	
+
  	<update id="updateUser" parameterType="SysUser">
  		update sys_user
  		<set>
@@ -148,7 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		</set>
  		where user_id = #{userId}
 	</update>
- 	
+
  	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
  		insert into sys_user(
  			<if test="userId != null and userId != 0">user_id,</if>
@@ -180,5 +180,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			sysdate()
  		)
 	</insert>
-	
-</mapper> 
+	<select id="selectPostByDept" parameterType="java.lang.Long" resultMap="SysUserResult">
+        SELECT sys_user.login_name FROM sys_user_post
+        INNER JOIN sys_user on sys_user_post.user_id=sys_user.user_id
+        INNER JOIN sys_post on sys_user_post.post_id=sys_post.post_id
+        where dept_id=112 AND sys_post.post_name LIKE '%主任'
+    </select>
+</mapper>

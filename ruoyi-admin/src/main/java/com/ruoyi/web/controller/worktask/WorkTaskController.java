@@ -43,7 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 工作任务 信息操作处理
- * 
+ *
  * @author ruoyi
  * @date 2019-03-20
  */
@@ -113,7 +113,7 @@ public class WorkTaskController extends BaseController
 		mmap.put("pid",id);
 		return prefix + "/subWorkTask";
 	}
-	
+
 	/**
 	 * 导出工作任务列表
 	 */
@@ -126,7 +126,7 @@ public class WorkTaskController extends BaseController
         ExcelUtil<WorkTask> util = new ExcelUtil<WorkTask>(WorkTask.class);
         return util.exportExcel(list, "workTask");
     }
-	
+
 	/**
 	 * 新增工作任务
 	 */
@@ -258,37 +258,38 @@ public class WorkTaskController extends BaseController
 	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
 		SysUser sysUser = new SysUser();
-//		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
 		WorkTask workTask = workTaskService.selectWorkTaskById(id);
 
-//		WorkTask task = new WorkTask();
-//		task.setPid(id);
-//		List<WorkTask> workTasks = workTaskService.selectWorkTaskList(task);
-//		if(workTasks!=null&&workTasks.size()>0){
-//			workTask.setHasChild(true);
-//		}else{
-//			workTask.setHasChild(false);
-//		}
 		//附件
 		WorkTaskFile workTaskFile=new WorkTaskFile();
 		workTaskFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
 
-//		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
-//		if(cooperateDept!=null){
-//			workTask.setCooperateDeptName(cooperateDept.getDeptName());
-//		}
+
 		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
 
 		if(leadDept!=null){
 			workTask.setLeadDeptName(leadDept.getDeptName());
 		}
 
+		//查询当前专项工作下的目标任务
+		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
+		workTaskActivity.setWorkTaskId(id);
+		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
+		Iterator<WorkTaskActivity> activityIterator = workTaskActivities.iterator();
+		while (activityIterator.hasNext()){
+			WorkTaskActivity activity = activityIterator.next();
+			String activityId = activity.getId();
+			WorkTaskFile activityFile=new WorkTaskFile();
+			activityFile.setWorkTaskId(activityId);
+			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+		}
+
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));
 		mmap.put("depts",deptService.selectDeptList(new SysDept()));
-
+		mmap.put("workTaskActivities", workTaskActivities);
 		return prefix + "/edit";
 	}
 	@GetMapping("/query/{id}")
@@ -391,7 +392,7 @@ public class WorkTaskController extends BaseController
 		workTask.setUpdateBy(ShiroUtils.getLoginName());
 		return toAjax(workTaskService.updateWorkTask(workTask));
 	}
-	
+
 	/**
 	 * 删除工作任务
 	 */
@@ -400,8 +401,8 @@ public class WorkTaskController extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
+	{
 		return toAjax(workTaskService.deleteWorkTaskByIds(ids));
 	}
-	
+
 }
