@@ -10,19 +10,19 @@ import com.ruoyi.common.core.text.Convert;
 
 /**
  * 专项工作汇报内容 服务层实现
- * 
+ *
  * @author ruoyi
  * @date 2019-03-26
  */
 @Service
-public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService 
+public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 {
 	@Autowired
 	private WorkTaskActivityMapper workTaskActivityMapper;
 
 	/**
      * 查询专项工作汇报内容信息
-     * 
+     *
      * @param id 专项工作汇报内容ID
      * @return 专项工作汇报内容信息
      */
@@ -31,10 +31,10 @@ public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 	{
 	    return workTaskActivityMapper.selectWorkTaskActivityById(id);
 	}
-	
+
 	/**
      * 查询专项工作汇报内容列表
-     * 
+     *
      * @param workTaskActivity 专项工作汇报内容信息
      * @return 专项工作汇报内容集合
      */
@@ -43,10 +43,10 @@ public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 	{
 	    return workTaskActivityMapper.selectWorkTaskActivityList(workTaskActivity);
 	}
-	
+
     /**
      * 新增专项工作汇报内容
-     * 
+     *
      * @param workTaskActivity 专项工作汇报内容信息
      * @return 结果
      */
@@ -55,10 +55,10 @@ public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 	{
 	    return workTaskActivityMapper.insertWorkTaskActivity(workTaskActivity);
 	}
-	
+
 	/**
      * 修改专项工作汇报内容
-     * 
+     *
      * @param workTaskActivity 专项工作汇报内容信息
      * @return 结果
      */
@@ -70,7 +70,7 @@ public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 
 	/**
      * 删除专项工作汇报内容对象
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
@@ -79,5 +79,10 @@ public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 	{
 		return workTaskActivityMapper.deleteWorkTaskActivityByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<String> selectPostByDept(Long deptId) {
+		return workTaskActivityMapper.selectPostByDept(deptId);
+	}
+
 }

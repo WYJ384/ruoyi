@@ -2,6 +2,7 @@ package com.ruoyi.activiti.service;
 
 
 import com.ruoyi.activiti.domain.TaskVO;
+import org.activiti.engine.runtime.ProcessInstance;
 
 import java.io.InputStream;
 import java.util.List;
@@ -29,7 +30,7 @@ public interface ActTaskService {
     void complete(String taskId, String procInsId, String comment, String title, Map<String, Object> vars);
 
 
-    String startProcess(String procDefKey, String businessTable, String businessId, String title, String userId, Map<String, Object> vars);
+    ProcessInstance startProcess(String procDefKey, String businessTable, String businessId, String title, String userId, Map<String, Object> vars);
 
     String getFormKey(String procDefId, String taskDefKey);
 

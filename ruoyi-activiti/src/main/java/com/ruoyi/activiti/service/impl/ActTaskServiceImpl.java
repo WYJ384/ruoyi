@@ -199,7 +199,7 @@ public class ActTaskServiceImpl implements ActTaskService {
      * @return 流程实例ID
      */
     @Override
-    public String startProcess(String procDefKey, String businessTable, String businessId, String title, String userId, Map<String, Object> vars) {
+    public ProcessInstance startProcess(String procDefKey, String businessTable, String businessId, String title, String userId, Map<String, Object> vars) {
         //String userId = ShiroUtils.getUser().getUsername();//ObjectUtils.toString(UserUtils.getUser().getId())
 
         // 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
@@ -217,8 +217,7 @@ public class ActTaskServiceImpl implements ActTaskService {
 
         // 启动流程
         ProcessInstance procIns = runtimeService.startProcessInstanceByKey(procDefKey, businessId, vars);
-
-        return null;
+        return procIns;
     }
 
     /**

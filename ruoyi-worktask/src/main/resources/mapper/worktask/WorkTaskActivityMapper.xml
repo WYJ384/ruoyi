@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.worktask.mapper.WorkTaskActivityMapper">
-    
+
     <resultMap type="WorkTaskActivity" id="WorkTaskActivityResult">
         <result property="id"    column="id"    />
         <result property="workTaskId"    column="work_task_id"    />
@@ -21,14 +21,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="workStatus"    column="work_status"    />
         <result property="orderNum"    column="order_num"    />
     </resultMap>
-	
+
 	<sql id="selectWorkTaskActivityVo">
         select id, work_task_id, content, create_by, create_time, update_by, update_time, del_flag, remark, rep_content, target, target_score, target_month, work_status, order_num from work_task_activity
     </sql>
-	
+
     <select id="selectWorkTaskActivityList" parameterType="WorkTaskActivity" resultMap="WorkTaskActivityResult">
         <include refid="selectWorkTaskActivityVo"/>
-        <where>  
+        <where>
             <if test="id != null  and id != '' "> and id = #{id}</if>
              <if test="workTaskId != null  and workTaskId != '' "> and work_task_id = #{workTaskId}</if>
              <if test="content != null  and content != '' "> and content = #{content}</if>
@@ -47,12 +47,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
         ORDER BY  order_num ASC, create_time ASC
     </select>
-    
+
     <select id="selectWorkTaskActivityById" parameterType="String" resultMap="WorkTaskActivityResult">
         <include refid="selectWorkTaskActivityVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertWorkTaskActivity" parameterType="WorkTaskActivity">
         insert into work_task_activity
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -90,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="orderNum != null  ">#{orderNum},</if>
          </trim>
     </insert>
-	 
+
     <update id="updateWorkTaskActivity" parameterType="WorkTaskActivity">
         update work_task_activity
         <trim prefix="SET" suffixOverrides=",">
@@ -115,12 +115,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteWorkTaskActivityById" parameterType="String">
         delete from work_task_activity where id = #{id}
     </delete>
-	
+
     <delete id="deleteWorkTaskActivityByIds" parameterType="String">
-        delete from work_task_activity where id in 
+        delete from work_task_activity where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
+    <select id="selectPostByDept" parameterType="Long" resultType="List">
+        SELECT sys_user.login_name FROM sys_user_post
+        INNER JOIN sys_user on sys_user_post.user_id=sys_user.user_id
+        INNER JOIN sys_post on sys_user_post.post_id=sys_post.post_id
+        where dept_id=#{deptId} AND sys_post.post_name LIKE '%主任%'
+    </select>
+
 </mapper>
