@@ -18,6 +18,7 @@ public interface WorkTaskActivityMapper
      * @return 专项工作汇报内容信息
      */
 	public WorkTaskActivity selectWorkTaskActivityById(String id);
+	public WorkTaskActivity selectWorkTaskActivityByProId(String proId);
 
 	/**
      * 查询专项工作汇报内容列表

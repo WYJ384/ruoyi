@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="targetMonth"    column="target_month"    />
         <result property="workStatus"    column="work_status"    />
         <result property="orderNum"    column="order_num"    />
+        <result property="process_instance_id"    column="process_instance_id"    />
     </resultMap>
 
 	<sql id="selectWorkTaskActivityVo">
@@ -52,6 +53,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectWorkTaskActivityVo"/>
         where id = #{id}
     </select>
+    <select id="selectWorkTaskActivityByProId" parameterType="String" resultMap="WorkTaskActivityResult">
+        <include refid="selectWorkTaskActivityVo"/>
+        where process_instance_id = #{proId}
+    </select>
+
 
     <insert id="insertWorkTaskActivity" parameterType="WorkTaskActivity">
         insert into work_task_activity
@@ -108,6 +114,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="targetMonth != null  and targetMonth != ''  ">target_month = #{targetMonth},</if>
             <if test="workStatus != null  and workStatus != ''  ">work_status = #{workStatus},</if>
             <if test="orderNum != null  ">order_num = #{orderNum},</if>
+            <if test="process_instance_id != null  and process_instance_id != ''  ">process_instance_id = #{process_instance_id},</if>
+
         </trim>
         where id = #{id}
     </update>

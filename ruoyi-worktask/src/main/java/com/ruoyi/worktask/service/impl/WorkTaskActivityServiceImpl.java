@@ -32,6 +32,11 @@ public class WorkTaskActivityServiceImpl implements IWorkTaskActivityService
 	    return workTaskActivityMapper.selectWorkTaskActivityById(id);
 	}
 
+	@Override
+	public WorkTaskActivity selectWorkTaskActivityByProId(String proId) {
+		return workTaskActivityMapper.selectWorkTaskActivityByProId(proId);
+	}
+
 	/**
      * 查询专项工作汇报内容列表
      *

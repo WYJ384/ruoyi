@@ -125,7 +125,7 @@ public class WorkTaskActivityController extends BaseController {
     @Log(title = "专项工作汇报内容", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(MultipartFile file, WorkTaskActivity workTaskActivity) {
+    public AjaxResult editSave(MultipartFile file, WorkTaskActivity workTaskActivity, String userIds, String taskId, String taskKey) {
         if (file != null && (!file.isEmpty())) {
             try {
                 // 上传文件路径
@@ -149,6 +149,25 @@ public class WorkTaskActivityController extends BaseController {
                 e.printStackTrace();
             }
         }
+        if (StringUtils.isNotEmpty(taskKey)) {
+            if (taskKey.equals("zhurenduban")) {
+                Map<String, Object> vars = new HashMap<String, Object>();
+                vars.put("yuangong_users", userIds);
+                actTaskService.completeTask(taskId, vars);
+            } else if (taskKey.equals("gerentijiao")) {
+                String workTaskId = workTaskActivity.getWorkTaskId();
+                WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
+                String leaderId = workTask.getLeaderId();
+                SysUser sysUser = userService.selectUserById(Long.parseLong(leaderId));
+                Map<String, Object> vars = new HashMap<String, Object>();
+                vars.put("fenguan_users", sysUser.getLoginName());
+                actTaskService.completeTask(taskId, vars);
+            } else if (taskKey.equals("lingdaopingfen")) {
+                Map<String, Object> vars = new HashMap<String, Object>();
+                actTaskService.completeTask(taskId, vars);
+            }
+        }
+
         return toAjax(workTaskActivityService.updateWorkTaskActivity(workTaskActivity));
     }
 
@@ -192,12 +211,12 @@ public class WorkTaskActivityController extends BaseController {
         WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
         if (workTask != null) {
             List<SysUser> sysUsers = userService.selectPostByDept(Long.valueOf(workTask.getLeadDeptId()));
-            if(sysUsers==null||sysUsers.size()==0){
-                return AjaxResult.error(1,"该部门没有主人");
+            if (sysUsers == null || sysUsers.size() == 0) {
+                return AjaxResult.error(1, "该部门没有主任");
             }
             Iterator<SysUser> userIterator = sysUsers.iterator();
-            List<String> loginNames=new ArrayList<String>();
-            while (userIterator.hasNext()){
+            List<String> loginNames = new ArrayList<String>();
+            while (userIterator.hasNext()) {
                 SysUser sysUser = userIterator.next();
                 loginNames.add(sysUser.getLoginName());
             }
@@ -210,4 +229,6 @@ public class WorkTaskActivityController extends BaseController {
         }
         return AjaxResult.error();
     }
+
+
 }

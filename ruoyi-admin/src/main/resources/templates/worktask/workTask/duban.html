@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color: red; ">*</span>任务名称：</label>
+                    <div class="col-sm-10">
+                        <input id="workName" th:field="*{workName}" readonly name="workName" class="form-control"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">主要目标：</label>
+                    <div class="col-xs-10">
+                        <textarea readonly name="description" th:field="*{description}" autocomplete="off"
+                                  maxlength="500"
+                                  class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">附件：</label>
+                    <div class="col-xs-10">
+                        <p th:each="taskfile:${workTaskFiles}">
+                            <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"
+                               th:text="${taskfile.fileName}"></a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">备注：</label>
+                    <div class="col-xs-10">
+                        <textarea name="remark" readonly autocomplete="off" th:field="*{remark}" maxlength="500"
+                                  class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+    <form class="form-horizontal m" id="form-workTaskActivity-edit" th:object="${workTaskActivity}"
+          enctype="multipart/form-data">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+        <input name="taskId" th:value="${taskId}" type="hidden">
+        <input name="taskKey" id="taskKey" th:value="${taskKey}" type="hidden">
+        <input name="workTaskId" id="workTaskId" th:value="${workTaskActivity.workTaskId}" type="hidden">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">任务目标：</label>
+                    <div class="col-sm-10">
+                        <textarea name="target" class="form-control" rows="5" readonly
+                                  th:text="${workTaskActivity.target}"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:if="${taskKey=='zhurenduban'}">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">执行人：</label>
+                    <div class="col-sm-10">
+                        <select id="userIds" class="form-control select2-hidden-accessible" multiple="">
+                            <option th:each="user:${users}" th:value="${user.loginName}"
+                                    th:text="${user.userName}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:if="${taskKey=='gerentijiao'}">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color: red; ">*</span>汇报内容：</label>
+                    <div class="col-sm-10">
+                       <textarea th:text="${workTaskActivity.content}" rows="6" name="content"
+                                 class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:if="${taskKey=='gerentijiao'}">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">附件：</label>
+                    <div class="col-sm-10">
+                        <input type="file" id="file" name="file">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:if="${taskKey=='lingdaopingfen'}">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">汇报内容：</label>
+                    <div class="col-sm-10">
+                       <textarea th:text="${workTaskActivity.content}" readonly rows="6" name="content"
+                                 class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:if="${taskKey=='lingdaopingfen'}">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">任务附件：</label>
+                    <div class="col-sm-10">
+                        <p th:each="taskfile:${workTaskActivity.workTaskFiles}">
+                            <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"
+                               th:text="${taskfile.fileName}"></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" th:if="${taskKey=='lingdaopingfen'}">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span style="color: red; ">*</span>任务得分：</label>
+                    <div class="col-sm-10">
+                        <input name="targetScore" id="targetScore" th:value="${workTaskActivity.targetScore}" class="form-control"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                        class="fa fa-check"></i>保 存
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                        class="fa fa-reply-all"></i>关 闭
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+<script type="text/javascript">
+    var prefix = ctx + "worktask/workTaskActivity";
+    $("#form-workTaskActivity-edit").validate({
+        submitHandler: function (form) {
+            var formData = new FormData($("#form-workTaskActivity-edit")[0]);
+            if ($("#taskKey").val() == "zhurenduban") {
+                var userIds = $.form.selectSelects("userIds");
+                if (userIds == "") {
+                    $.modal.alert("请选择任务执行人", "error");
+                    return;
+                }
+                formData.append('userIds', userIds);
+            }
+            if ($('#file')[0]) {
+                formData.append('file', $('#file')[0].files[0]);
+            }
+            $.ajax({
+                url: prefix + "/edit",
+                type: 'post',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function (result) {
+                    $.operate.successTabCallback(result);
+                }
+            });
+
+        },
+        rules: {
+            target: {
+                required: true,
+            },
+            targetScore: {
+                required: true,
+            },
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        $("#form-workTaskActivity-edit").submit();
+    }
+
+
+</script>
+</body>
+</html>

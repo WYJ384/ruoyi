@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.worktask.mapper.WorkTaskMapper">
-    
+
     <resultMap type="WorkTask" id="WorkTaskResult">
         <result property="id"    column="id"    />
         <result property="pid"    column="pid"    />
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="leadDeptName"    column="leadDeptName"    />
         <result property="cooperateDeptName"    column="cooperateDeptName"    />
     </resultMap>
-	
+
 	<sql id="selectWorkTaskVo">
         SELECT
             id,
@@ -129,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <select id="selectWorkTaskList" parameterType="WorkTask" resultMap="WorkTaskResult">
         <include refid="selectWorkTaskVo"/>
-        <where>  
+        <where>
             <if test="id != null "> and id = #{id}</if>
              <if test="pid != null "> and pid = #{pid}</if>
              <if test="workName != null  and workName != '' "> and work_name = #{workName}</if>
@@ -158,12 +158,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="leaderId != null  and leaderId != '' "> or leader_id = #{leaderId}</if>
          </where>
     </select>
-    
+
     <select id="selectWorkTaskById" parameterType="String" resultMap="WorkTaskResult">
         <include refid="selectWorkTaskVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertWorkTask" parameterType="WorkTask" useGeneratedKeys="true" keyProperty="id">
         insert into work_task
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -219,7 +219,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="leaderId != null  and leaderId != ''  ">#{leaderId},</if>
          </trim>
     </insert>
-	 
+
     <update id="updateWorkTask" parameterType="WorkTask">
         update work_task
         <trim prefix="SET" suffixOverrides=",">
@@ -246,6 +246,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="leadDeptId != null  ">lead_dept_id = #{leadDeptId},</if>
             <if test="cooperateDeptId != null  ">cooperate_dept_id = #{cooperateDeptId},</if>
             <if test="leaderId != null  and leaderId != ''  ">leader_id = #{leaderId},</if>
+
+
         </trim>
         where id = #{id}
     </update>
@@ -253,12 +255,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteWorkTaskById" parameterType="String">
         delete from work_task where id = #{id}
     </delete>
-	
+
     <delete id="deleteWorkTaskByIds" parameterType="String">
-        delete from work_task where id in 
+        delete from work_task where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>

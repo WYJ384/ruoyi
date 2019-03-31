@@ -51,7 +51,7 @@ public class WorkTaskActivity extends BaseEntity
 	/** 是否是进行中任务 */
 	private boolean isCurrent=false;
 
-	String process_instance_id;
+	private String process_instance_id;
 
     public String getProcess_instance_id() {
         return process_instance_id;

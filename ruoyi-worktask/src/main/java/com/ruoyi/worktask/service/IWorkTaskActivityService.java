@@ -19,6 +19,9 @@ public interface IWorkTaskActivityService
      */
 	public WorkTaskActivity selectWorkTaskActivityById(String id);
 
+	public WorkTaskActivity selectWorkTaskActivityByProId(String proId);
+
+
 	/**
      * 查询专项工作汇报内容列表
      *

@@ -184,6 +184,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT sys_user.login_name FROM sys_user_post
         INNER JOIN sys_user on sys_user_post.user_id=sys_user.user_id
         INNER JOIN sys_post on sys_user_post.post_id=sys_post.post_id
-        where dept_id=112 AND sys_post.post_name LIKE '%主任'
+        where dept_id=#{deptId} AND sys_post.post_name LIKE '%主任'
     </select>
 </mapper>

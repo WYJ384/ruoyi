@@ -60,13 +60,15 @@ public class TaskController extends BaseController {
         taskVO.paging()[0]=pageNum;
         taskVO.paging()[1]=pageSize;
         //taskVO.setAssignee("admin");
-        if ("admin".equalsIgnoreCase(ShiroUtils.getLoginName())) {
-           // List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
-            //return getDataTable(taskVOS);
-        }
-        taskVO.setAssignee(String.valueOf(ShiroUtils.getUserId()));
+//        if ("admin".equalsIgnoreCase(ShiroUtils.getLoginName())) {
+//           // List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+//            //return getDataTable(taskVOS);
+//        }
+//        taskVO.setAssignee(String.valueOf(ShiroUtils.getLoginName()));
+        taskVO.setCandidateUser(String.valueOf(ShiroUtils.getLoginName()));
         List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
         TableDataInfo dataTable = getDataTable(taskVOS);
+
         dataTable.setTotal(taskVO.getCount());
         return dataTable;
     }

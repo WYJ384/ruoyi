@@ -405,4 +405,40 @@ public class WorkTaskController extends BaseController
 		return toAjax(workTaskService.deleteWorkTaskByIds(ids));
 	}
 
+
+
+	/**
+	 * 修改工作任务
+	 */
+	@GetMapping("/toDuban")
+	public String toDuban(String proId,String taskId,String taskKey , ModelMap mmap)
+	{
+
+		WorkTaskActivity workTaskActivity = workTaskActivityService.selectWorkTaskActivityByProId(proId);
+		String workTaskId = workTaskActivity.getWorkTaskId();
+		WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
+		//附件
+		WorkTaskFile workTaskFile=new WorkTaskFile();
+		workTaskFile.setWorkTaskId(workTaskId);
+		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
+		mmap.put("workTask", workTask);
+
+		String activityId = workTaskActivity.getId();
+		WorkTaskFile activityFile=new WorkTaskFile();
+		activityFile.setWorkTaskId(activityId);
+		workTaskActivity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+		mmap.put("workTaskActivity", workTaskActivity);
+		mmap.put("workTaskFiles", workTaskFiles);
+		mmap.put("taskId", taskId);
+		mmap.put("taskKey", taskKey);
+		SysUser sysUser = new SysUser();
+		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
+		mmap.put("users",userService.selectUserList(sysUser));
+
+
+
+		return prefix + "/duban";
+	}
+
+
 }
