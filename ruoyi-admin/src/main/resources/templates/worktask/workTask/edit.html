@@ -352,8 +352,15 @@
             </div>
 
             <div class="row"  th:if='${workActivity.workStatus  eq "2" }'>
-                <div class="col-md-10">
-                    <img th:src="${workActivity.taskVO.createBy}"  alt="">
+                <div class="col-sm-offset-5 col-md-10">
+                    <button th:data-processDefinitionId="${workActivity.taskVO.processDefinitionId}" th:data-instanceid="${workActivity.process_instance_id}"
+                            type="button" class="btn btn-sm btn-primary" onclick="workProcessDetail(this.getAttribute('data-processDefinitionId'),this.getAttribute('data-instanceid'))" ><i
+                            class="fa fa-check"></i>流程详情
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                            class="fa fa-reply-all"></i>关 闭
+                    </button>
                 </div>
             </div>
 
@@ -496,7 +503,10 @@
     function workDetail(process_instance_id) {
         $.modal.openTab("查看详情",ctx +"worktask/workTaskActivity/workTaskActivityDetail?process_instance_id="+process_instance_id);
     }
+    function workProcessDetail(processDefinitionId,process_instance_id){
+        $.modal.openTab("查看详情",ctx +"diagram-viewer/index.html?processDefinitionId="+processDefinitionId+"&processInstanceId="+process_instance_id);
 
+    }
 
 
 
