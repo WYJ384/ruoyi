@@ -229,6 +229,7 @@
         <module>ruoyi-worktask</module>
        <module>ruoyi-activiti</module>
         <module>ruoyi-filemanager</module>
+        <module>ruoyi-taskscore</module>
     </modules>
     <packaging>pom</packaging>
 
