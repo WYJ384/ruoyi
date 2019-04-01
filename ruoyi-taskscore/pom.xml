@@ -12,7 +12,7 @@
     <artifactId>ruoyi-taskscore</artifactId>
 
     <description>
-	    事务督办模块
+	    绩效评分模块
 	</description>
     <properties>
         <activiti.version>5.22.0</activiti.version>
