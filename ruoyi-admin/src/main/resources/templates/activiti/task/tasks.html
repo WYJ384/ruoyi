@@ -82,7 +82,7 @@
                     field: 'executionId',
                     title: '跟踪',
                     formatter: function (value, row, index) {
-                        return '<a onclick="createMenuItem(\'/activiti/task/trace/photo/' + row.processDefinitionId + '/' + row.executionId + '\',\''+row.processDefinitionId+'\')">跟踪</a>';
+                        return '<a onclick="workProcessDetail(\'' + row.processDefinitionId + '\',\'' + row.processId + '\')">跟踪</a>';
                     }
                 },
                 {
@@ -91,7 +91,7 @@
                     formatter: function (value, row, index) {
                         var actions = [];
                         if(options.url.indexOf("list")!=-1||options.url.indexOf("todo")!=-1){
-                            actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
+                            actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>处理</a> ');
                         }
                         // actions.push('<a class="btn btn-primary btn-xs ' + todoFlag + '" title="签收任务" href="#" onclick="form(\'' + row.processDefinitionId + '\',\'' + row.id + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
                         return actions.join('');
@@ -143,6 +143,11 @@
         //     area: ['100%', '100%'],
         //     content: prefix + '/form/' + proId + '/' + id
         // })
+    }
+
+    function workProcessDetail(processDefinitionId,process_instance_id){
+        $.modal.openTab("查看详情",ctx +"diagram-viewer/index.html?processDefinitionId="+processDefinitionId+"&processInstanceId="+process_instance_id);
+
     }
 </script>
 </body>
