@@ -76,6 +76,10 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-activiti</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-filemanager</artifactId>
+        </dependency>
 
 
 

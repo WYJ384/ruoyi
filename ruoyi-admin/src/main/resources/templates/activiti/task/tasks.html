@@ -62,10 +62,10 @@
                     field: 'id', // 列字段名
                     title: '任务' // 列标题
                 },
-                {
-                    field: 'key', // 列字段名
-                    title: '任务key' // 列标题
-                },
+//                {
+//                    field: 'key', // 列字段名
+//                    title: '任务key' // 列标题
+//                },
                 // {
                 //     field: 'processId', // 列字段名
                 //     title: '流程编号' // 列标题
@@ -90,9 +90,10 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
+                        if(options.url.indexOf("finishedTask")==-1){
+                            actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
 
-
-                        actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
+                        }
                         // actions.push('<a class="btn btn-primary btn-xs ' + todoFlag + '" title="签收任务" href="#" onclick="form(\'' + row.processDefinitionId + '\',\'' + row.id + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
                         return actions.join('');
                     }

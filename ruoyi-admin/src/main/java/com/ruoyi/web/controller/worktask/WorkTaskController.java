@@ -20,6 +20,7 @@ import com.ruoyi.worktask.domain.WorkTaskActivity;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskActivityService;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
+import org.activiti.engine.TaskService;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,8 @@ public class WorkTaskController extends BaseController
 	private ISysUserService userService;
 	@Autowired
 	private IWorkTaskActivityService workTaskActivityService;
-
+	@Autowired
+	private	TaskService taskService;
 	@RequiresPermissions("worktask:workTask:view")
 	@GetMapping()
 	public String workTask()
@@ -414,6 +416,10 @@ public class WorkTaskController extends BaseController
 	public String toDuban(String proId,String taskId,String taskKey , ModelMap mmap)
 	{
 
+		//拾取任务
+//		taskService.claim(taskId,ShiroUtils.getLoginName());
+		taskService.setAssignee(taskId,ShiroUtils.getLoginName());
+		taskService.setOwner(taskId,ShiroUtils.getLoginName());
 		WorkTaskActivity workTaskActivity = workTaskActivityService.selectWorkTaskActivityByProId(proId);
 		String workTaskId = workTaskActivity.getWorkTaskId();
 		WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);

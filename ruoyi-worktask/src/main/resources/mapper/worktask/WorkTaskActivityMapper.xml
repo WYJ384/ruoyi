@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 	<sql id="selectWorkTaskActivityVo">
-        select id, work_task_id, content, create_by, create_time, update_by, update_time, del_flag, remark, rep_content, target, target_score, target_month, work_status, order_num from work_task_activity
+        select id, work_task_id, content, create_by, create_time, update_by, update_time, del_flag, remark, rep_content, target, target_score, target_month, work_status, order_num,process_instance_id from work_task_activity
     </sql>
 
     <select id="selectWorkTaskActivityList" parameterType="WorkTaskActivity" resultMap="WorkTaskActivityResult">

@@ -3,19 +3,17 @@ package com.ruoyi.web.controller.activiti;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.activiti.engine.*;
-import org.activiti.engine.history.HistoricActivityInstance;
-import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.*;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @RequestMapping("/activitiController")
 @Controller
@@ -95,5 +93,28 @@ public class ActivitiController {
         }
         return list;
     }
+
+    @RequestMapping("/getfinishprocess")
+    @ResponseBody
+    public List<HistoricProcessInstance> getHistory(HttpSession session, @RequestParam("current") int current, @RequestParam("rowCount") int rowCount){
+        String userid=ShiroUtils.getLoginName();
+        HistoricProcessInstanceQuery process = historyService.createHistoricProcessInstanceQuery().processDefinitionKey("duban").startedBy(userid).finished();
+        int total= (int) process.count();
+        int firstrow=(current-1)*rowCount;
+        List<HistoricProcessInstance> info = process.listPage(firstrow, rowCount);
+
+        return info;
+    }
+    /**查询历史任务的办理人表*/
+    @RequestMapping("/findHistoryPersonTask")
+    @ResponseBody
+    public List<HistoricIdentityLink> findHistoryPersonTask(String processInstanceId){
+        //流程实例ID
+        List<HistoricIdentityLink> list = historyService
+                .getHistoricIdentityLinksForProcessInstance(processInstanceId);
+
+        return list;
+    }
+
 
 }

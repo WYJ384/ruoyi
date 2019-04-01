@@ -15,6 +15,9 @@ import com.ruoyi.worktask.domain.WorkTask;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import com.ruoyi.worktask.service.IWorkTaskService;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,13 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/worktask/workTaskActivity")
 public class WorkTaskActivityController extends BaseController {
     private String prefix = "worktask/workTaskActivity";
+    @Autowired
+    RuntimeService runtimeService;
+    @Autowired
+    HistoryService historyService;
+    @Autowired
+    TaskService taskService;
+
 
     @Autowired
     private IWorkTaskActivityService workTaskActivityService;
@@ -165,6 +175,7 @@ public class WorkTaskActivityController extends BaseController {
             } else if (taskKey.equals("lingdaopingfen")) {
                 Map<String, Object> vars = new HashMap<String, Object>();
                 actTaskService.completeTask(taskId, vars);
+                workTaskActivity.setWorkStatus("3");//任务完成
             }
         }
 
@@ -225,6 +236,7 @@ public class WorkTaskActivityController extends BaseController {
             ProcessInstance processInstance = actTaskService.startProcess("duban", businessTable, businessId, title, userId, vars);
             String instanceid = processInstance.getId();
             workTaskActivity.setProcess_instance_id(instanceid);
+            workTaskActivity.setWorkStatus("2");//任务进行中
             return toAjax(workTaskActivityService.updateWorkTaskActivity(workTaskActivity));
         }
         return AjaxResult.error();

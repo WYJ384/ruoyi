@@ -323,6 +323,13 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-3 control-label">汇报内容：</label>
+                <div class="col-sm-8">
+                    <textarea name="content" rows="5" readonly th:text="${workActivity.content}" class="form-control"
+                           ></textarea>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-3 control-label">附件：</label>
                 <div class="col-sm-8">
                     <p th:each="taskfile:${workActivity.workTaskFiles}">
@@ -331,7 +338,8 @@
                     </p>
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row"  th:if='${workActivity.workStatus  eq "1" }'>
                 <div class="col-sm-offset-5 col-md-10">
                     <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary" onclick="startWork(this.getAttribute('data-id'))" ><i
                             class="fa fa-check"></i>开始督办
@@ -339,6 +347,17 @@
                     &nbsp;
                     <button th:data-id="${workActivity.id}" type="button"   onclick="deleteWorkActiviti(this.getAttribute('data-id'))"  class="btn btn-sm btn-danger" ><i
                             class="fa fa-reply-all"></i>删除目标
+                    </button>
+                </div>
+            </div>
+            <div class="row"  th:if='${workActivity.workStatus eq "3"}'>
+                <div class="col-sm-offset-5 col-md-10">
+                    <button th:data-id="${workActivity.process_instance_id}" type="button" class="btn btn-sm btn-primary" onclick="workDetail(this.getAttribute('data-id'))" ><i
+                            class="fa fa-check"></i>查看详情
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+                            class="fa fa-reply-all"></i>关 闭
                     </button>
                 </div>
             </div>
@@ -466,6 +485,12 @@
         var url = ctx + "worktask/workTaskActivity/startTask";
         $.operate.submit(url, "post", "json", {id:id});
     }
+    function workDetail(process_instance_id) {
+       alert(process_instance_id)
+    }
+
+
+
 
     function deleteWorkActiviti(id) {
         $.modal.confirm("确定删除该条信息吗？", function() {

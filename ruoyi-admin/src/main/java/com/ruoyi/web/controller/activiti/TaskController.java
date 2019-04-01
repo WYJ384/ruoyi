@@ -158,8 +158,8 @@ public class TaskController extends BaseController {
         Integer pageSize = pageDomain.getPageSize();
         task.paging()[0]=pageNum;
         task.paging()[1]=pageSize;
-        task.setOwner(ShiroUtils.getLoginName());
 //        task.setAssignee(ShiroUtils.getLoginName());
+        task.setOwner(ShiroUtils.getLoginName());
         List<TaskVO> taskVOs = actTaskService.selectFinishedTask(task);
         TableDataInfo dataTable = getDataTable(taskVOs);
         dataTable.setTotal(task.getCount());
@@ -192,6 +192,9 @@ public class TaskController extends BaseController {
     @RequestMapping(value = "/trace/photo/{procDefId}/{execId}")
     public void traceTaskPhoto(@PathVariable("procDefId") String procDefId, @PathVariable("execId") String execId, HttpServletResponse response) throws Exception {
         InputStream imageStream = actTaskService.traceTaskPhoto(procDefId, execId);
+        if(imageStream==null){
+            return;
+        }
         // 输出资源内容到相应对象
         byte[] b = new byte[1024];
         int len;

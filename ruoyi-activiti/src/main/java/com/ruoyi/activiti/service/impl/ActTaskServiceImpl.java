@@ -318,6 +318,7 @@ public class ActTaskServiceImpl implements ActTaskService {
         List<TaskVO> taskVOS = new ArrayList<>();
         HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
         query.taskOwner(taskVO.getOwner()).finished();
+//        query.taskAssignee(taskVO.getCandidateUser()).finished();
         taskVO.setCount(query.count());
         List<HistoricTaskInstance> historicTaskInstances = query
                 .listPage(paging[0], paging[1]);
