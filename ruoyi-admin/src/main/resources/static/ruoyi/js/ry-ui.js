@@ -778,7 +778,10 @@
                 } else if (result.code == web_status.SUCCESS && $.table._option.type == table_type.bootstrapTreeTable) {
                 	$.modal.msgSuccess(result.msg);
                 	$.treeTable.refresh();
-                } else {
+                }else if (result.code == web_status.SUCCESS){
+					$.modal.msgSuccess(result.msg);
+				}
+				else {
                 	$.modal.alertError(result.msg);
                 }
             	$.modal.closeLoading();
