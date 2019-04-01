@@ -90,7 +90,7 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        if(options.url.indexOf("finishedTask")==-1){
+                        if(options.url.indexOf("myTask")!=-1){
                             actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
 
                         }

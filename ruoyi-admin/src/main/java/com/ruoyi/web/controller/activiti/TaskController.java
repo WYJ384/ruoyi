@@ -11,6 +11,10 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.worktask.domain.WorkTask;
+import com.ruoyi.worktask.domain.WorkTaskActivity;
+import com.ruoyi.worktask.service.IWorkTaskActivityService;
+import com.ruoyi.worktask.service.IWorkTaskService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +72,17 @@ public class TaskController extends BaseController {
 //        taskVO.setAssignee(String.valueOf(ShiroUtils.getLoginName()));
         taskVO.setCandidateUser(String.valueOf(ShiroUtils.getLoginName()));
         List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+        Iterator<TaskVO> taskVOIterator = taskVOS.iterator();
+        while (taskVOIterator.hasNext()){
+            TaskVO taskV = taskVOIterator.next();
+            String processId = taskV.getProcessId();
+            WorkTaskActivity workTaskActivity = workTaskActivityService.selectWorkTaskActivityByProId(processId);
+            if(workTaskActivity!=null){
+                String workTaskId = workTaskActivity.getWorkTaskId();
+                WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
+                taskV.setName(workTask.getWorkName()+"("+workTaskActivity.getTargetMonth()+"月)");
+            }
+        }
         TableDataInfo dataTable = getDataTable(taskVOS);
 
         dataTable.setTotal(taskVO.getCount());
@@ -147,7 +163,10 @@ public class TaskController extends BaseController {
         dataTable.setTotal(task.getCount());
         return dataTable;
     }
-
+    @Autowired
+    private IWorkTaskActivityService workTaskActivityService;
+    @Autowired
+    private IWorkTaskService workTaskService;
     @Log(title = "查询完成的任务", businessType = BusinessType.OTHER)
     @RequiresPermissions("activiti:task:view")
     @ResponseBody
@@ -161,6 +180,17 @@ public class TaskController extends BaseController {
 //        task.setAssignee(ShiroUtils.getLoginName());
         task.setOwner(ShiroUtils.getLoginName());
         List<TaskVO> taskVOs = actTaskService.selectFinishedTask(task);
+        Iterator<TaskVO> taskVOIterator = taskVOs.iterator();
+        while (taskVOIterator.hasNext()){
+            TaskVO taskVO = taskVOIterator.next();
+            String processId = taskVO.getProcessId();
+            WorkTaskActivity workTaskActivity = workTaskActivityService.selectWorkTaskActivityByProId(processId);
+            if(workTaskActivity!=null){
+                String workTaskId = workTaskActivity.getWorkTaskId();
+                WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
+                taskVO.setName(workTask.getWorkName()+"("+workTaskActivity.getTargetMonth()+"月)");
+            }
+        }
         TableDataInfo dataTable = getDataTable(taskVOs);
         dataTable.setTotal(task.getCount());
         return dataTable;

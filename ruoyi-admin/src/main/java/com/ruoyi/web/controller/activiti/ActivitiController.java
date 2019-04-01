@@ -52,7 +52,6 @@ public class ActivitiController {
      */
     @GetMapping("/historyActInstanceList")
     @ResponseBody
-
     public List<HistoricActivityInstance> historyActInstanceList(String processInstanceId){
         List<HistoricActivityInstance> list=historyService // 历史相关Service
                 .createHistoricActivityInstanceQuery() // 创建历史活动实例查询

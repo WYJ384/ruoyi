@@ -45,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="targetMonth != null  and targetMonth != '' "> and target_month = #{targetMonth}</if>
              <if test="workStatus != null  and workStatus != '' "> and work_status = #{workStatus}</if>
              <if test="orderNum != null "> and order_num = #{orderNum}</if>
+            <if test="process_instance_id != null "> and process_instance_id = #{process_instance_id}</if>
          </where>
         ORDER BY  order_num ASC, create_time ASC
     </select>

@@ -486,7 +486,7 @@
         $.operate.submit(url, "post", "json", {id:id});
     }
     function workDetail(process_instance_id) {
-       alert(process_instance_id)
+        $.modal.openTab("查看详情",ctx +"worktask/workTaskActivity/workTaskActivityDetail?process_instance_id="+process_instance_id);
     }
 
 

@@ -18,6 +18,7 @@ import com.ruoyi.worktask.service.IWorkTaskService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,14 @@ public class WorkTaskActivityController extends BaseController {
     @Autowired
     TaskService taskService;
 
-
+    @Autowired
+    private ActTaskService actTaskService;
+    @Autowired
+    private IWorkTaskService workTaskService;
+    @Autowired
+    private ISysPostService postService;
+    @Autowired
+    private ISysUserService userService;
     @Autowired
     private IWorkTaskActivityService workTaskActivityService;
     @Autowired
@@ -67,6 +75,11 @@ public class WorkTaskActivityController extends BaseController {
         return prefix + "/workTaskActivity";
     }
 
+    @GetMapping("/workTaskActivityDetail")
+    public String workTaskActivityDetail(String process_instance_id, ModelMap mmap) {
+        mmap.put("process_instance_id",process_instance_id);
+        return prefix + "/workTaskActivityDetail";
+    }
     /**
      * 查询专项工作汇报内容列表
      */
@@ -194,14 +207,7 @@ public class WorkTaskActivityController extends BaseController {
     }
 
 
-    @Autowired
-    private ActTaskService actTaskService;
-    @Autowired
-    private IWorkTaskService workTaskService;
-    @Autowired
-    private ISysPostService postService;
-    @Autowired
-    private ISysUserService userService;
+
 
     /**
      * 启动督办任务
@@ -241,6 +247,27 @@ public class WorkTaskActivityController extends BaseController {
         }
         return AjaxResult.error();
     }
-
+    /**
+     * 历史任务查询
+     */
+    @PostMapping("/historyTaskList")
+    @ResponseBody
+    public TableDataInfo  historyTaskList(String processInstanceId){
+        List<HistoricTaskInstance> list= historyService // 历史相关Service
+                .createHistoricTaskInstanceQuery() // 创建历史任务实例查询
+                .processInstanceId(processInstanceId) // 用流程实例id查询
+                .finished() // 查询已经完成的任务
+                .list();
+        for(HistoricTaskInstance hti:list){
+            System.out.println("任务ID:"+hti.getId());
+            System.out.println("流程实例ID:"+hti.getProcessInstanceId());
+            System.out.println("任务名称："+hti.getName());
+            System.out.println("办理人："+hti.getAssignee());
+            System.out.println("开始时间："+hti.getStartTime());
+            System.out.println("结束时间："+hti.getEndTime());
+            System.out.println("=================================");
+        }
+        return getDataTable(list);
+    }
 
 }
