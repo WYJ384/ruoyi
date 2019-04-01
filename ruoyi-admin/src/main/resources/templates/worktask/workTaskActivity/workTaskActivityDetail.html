@@ -21,11 +21,6 @@
     $(function () {
         var options = {
             url: prefix + "/historyTaskList?processInstanceId="+$("#process_instance_id").val(),
-            createUrl: prefix + "/add",
-            updateUrl: prefix + "/edit/{id}",
-            removeUrl: prefix + "/remove",
-            exportUrl: prefix + "/export",
-            modalName: "专项工作汇报内容",
             showExport: true,
             columns: [
                 {

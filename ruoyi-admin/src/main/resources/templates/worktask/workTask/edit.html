@@ -350,6 +350,14 @@
                     </button>
                 </div>
             </div>
+
+            <div class="row"  th:if='${workActivity.workStatus  eq "2" }'>
+                <div class="col-md-10">
+                    <img th:src="${workActivity.taskVO.createBy}"  alt="">
+                </div>
+            </div>
+
+
             <div class="row"  th:if='${workActivity.workStatus eq "3"}'>
                 <div class="col-sm-offset-5 col-md-10">
                     <button th:data-id="${workActivity.process_instance_id}" type="button" class="btn btn-sm btn-primary" onclick="workDetail(this.getAttribute('data-id'))" ><i

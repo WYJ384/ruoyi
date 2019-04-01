@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import com.ruoyi.activiti.domain.TaskVO;
+import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.config.Global;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
@@ -65,6 +67,8 @@ public class WorkTaskController extends BaseController
 	private IWorkTaskActivityService workTaskActivityService;
 	@Autowired
 	private	TaskService taskService;
+	@Autowired
+	ActTaskService actTaskService;
 	@RequiresPermissions("worktask:workTask:view")
 	@GetMapping()
 	public String workTask()
@@ -285,6 +289,19 @@ public class WorkTaskController extends BaseController
 			WorkTaskFile activityFile=new WorkTaskFile();
 			activityFile.setWorkTaskId(activityId);
 			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+
+			//任务流程图查询
+			if(activity.getWorkStatus().equals("2")){
+				TaskVO taskVO=new TaskVO();
+				taskVO.setProcessId(activity.getProcess_instance_id());
+				List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+				if(taskVOS!=null&&taskVOS.size()>0){
+					taskVO = taskVOS.get(taskVOS.size() - 1);
+					taskVO.setCreateBy("/activiti/task/trace/photo/"+taskVO.getProcessDefinitionId()+"/"+taskVO.getExecutionId());
+					activity.setTaskVO(taskVO);
+				}
+			}
+
 		}
 
 		mmap.put("workTask", workTask);

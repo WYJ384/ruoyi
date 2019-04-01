@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.activiti;
 
+import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
+import com.ruoyi.common.core.page.PageDomain;
+import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.activiti.engine.*;
 import org.activiti.engine.history.*;
@@ -115,5 +118,18 @@ public class ActivitiController {
         return list;
     }
 
+    /**查询历史任务的办理人表*/
+    @RequestMapping("/findTaskList")
+    @ResponseBody
+    public List<TaskVO> findTaskList(TaskVO taskVO) {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        Integer pageNum = pageDomain.getPageNum();
+        Integer pageSize = pageDomain.getPageSize();
+        taskVO.paging()[0]=1;
+        taskVO.paging()[1]=10;
+        //taskVO.setCandidateUser(String.valueOf(ShiroUtils.getLoginName()));
+        List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+        return taskVOS;
+    }
 
 }

@@ -90,9 +90,8 @@
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        if(options.url.indexOf("myTask")!=-1){
+                        if(options.url.indexOf("list")!=-1||options.url.indexOf("todo")!=-1){
                             actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
-
                         }
                         // actions.push('<a class="btn btn-primary btn-xs ' + todoFlag + '" title="签收任务" href="#" onclick="form(\'' + row.processDefinitionId + '\',\'' + row.id + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
                         return actions.join('');

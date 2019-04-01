@@ -258,15 +258,6 @@ public class WorkTaskActivityController extends BaseController {
                 .processInstanceId(processInstanceId) // 用流程实例id查询
                 .finished() // 查询已经完成的任务
                 .list();
-        for(HistoricTaskInstance hti:list){
-            System.out.println("任务ID:"+hti.getId());
-            System.out.println("流程实例ID:"+hti.getProcessInstanceId());
-            System.out.println("任务名称："+hti.getName());
-            System.out.println("办理人："+hti.getAssignee());
-            System.out.println("开始时间："+hti.getStartTime());
-            System.out.println("结束时间："+hti.getEndTime());
-            System.out.println("=================================");
-        }
         return getDataTable(list);
     }
 

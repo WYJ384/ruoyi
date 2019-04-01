@@ -1,5 +1,6 @@
 package com.ruoyi.worktask.domain;
 
+import com.ruoyi.activiti.domain.TaskVO;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -53,7 +54,17 @@ public class WorkTaskActivity extends BaseEntity
 
 	private String process_instance_id;
 
-    public String getProcess_instance_id() {
+	private TaskVO taskVO;
+
+	public TaskVO getTaskVO() {
+		return taskVO;
+	}
+
+	public void setTaskVO(TaskVO taskVO) {
+		this.taskVO = taskVO;
+	}
+
+	public String getProcess_instance_id() {
         return process_instance_id;
     }
 
