@@ -84,7 +84,10 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-worktask</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-taskscore</artifactId>
+        </dependency>
 
     </dependencies>
 

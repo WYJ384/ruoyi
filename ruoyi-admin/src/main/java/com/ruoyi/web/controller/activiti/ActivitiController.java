@@ -131,5 +131,23 @@ public class ActivitiController {
         List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
         return taskVOS;
     }
+    /**
+     * 4.查询历史流程变量(act_hi_varinst表)
+     */
+    @RequestMapping("/findHistoryProcessVariables")
+    @ResponseBody
+    public  List<HistoricVariableInstance> findHistoryProcessVariables(String processInstanceId){
+        List<HistoricVariableInstance> list = historyService
+                .createHistoricVariableInstanceQuery()                                      //创建一个历史的流程变量查询对象
+                .processInstanceId(processInstanceId)
+                .list();
+        if(list !=null && list.size()>0){
+            for(HistoricVariableInstance hvi:list){
+                System.out.println(hvi.getId()+"   "+hvi.getProcessInstanceId()+"   "+hvi.getVariableName()+"   "+hvi.getVariableTypeName()+"    "+hvi.getValue());
+                System.out.println("###############################################");
+            }
+        }
+        return list;
+    }
 
 }
