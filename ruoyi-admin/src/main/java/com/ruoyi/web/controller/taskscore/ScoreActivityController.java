@@ -65,6 +65,24 @@ public class ScoreActivityController extends BaseController
 	{
 		startPage();
         List<ScoreActivity> list = scoreActivityService.selectScoreActivityList(scoreActivity);
+		Iterator<ScoreActivity> activityIterator = list.iterator();
+		while (activityIterator.hasNext()){
+			ScoreActivity activity = activityIterator.next();
+			Double scoreSum=0D;
+			String activityId = activity.getId();
+			ScoreActivityDetail activityDetail=new ScoreActivityDetail();
+			activityDetail.setActivityId(activityId);
+			List<ScoreActivityDetail> scoreActivityDetails = scoreActivityDetailService.selectScoreActivityDetailList(activityDetail);
+			Iterator<ScoreActivityDetail> detailIterator = scoreActivityDetails.iterator();
+			while (detailIterator.hasNext()){
+				ScoreActivityDetail detail = detailIterator.next();
+				Double score = detail.getScore();
+				if(score!=null){
+					scoreSum+=score;
+				}
+			}
+			activity.setRemark(scoreSum+"");
+		}
 		return getDataTable(list);
 	}
 	

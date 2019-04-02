@@ -1,5 +1,6 @@
 package com.ruoyi.taskscore.domain;
 
+import com.ruoyi.system.domain.SysDept;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -30,6 +31,15 @@ public class ScoreActivity extends BaseEntity
 
 	/** 删除标志 */
 	private String delFlag;
+	private SysDept dept;
+
+	public SysDept getDept() {
+		return dept;
+	}
+
+	public void setDept(SysDept dept) {
+		this.dept = dept;
+	}
 
 	public String getId() {
 		return id;

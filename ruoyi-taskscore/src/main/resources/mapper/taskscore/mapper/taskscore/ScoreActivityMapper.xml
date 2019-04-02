@@ -17,10 +17,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="delFlag"    column="del_flag"    />
         <result property="remark"    column="remark"    />
+        <association property="dept" column="dept_id" javaType="SysDept" resultMap="deptResult"/>
+
     </resultMap>
-	
+    <resultMap id="deptResult" type="SysDept">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+    </resultMap>
 	<sql id="selectScoreActivityVo">
-        select id, name, status, begin_time, end_time, scoring_pointer_id, create_by, create_time, update_by, update_time, del_flag, remark from score_activity
+        SELECT
+	id,
+	NAME,
+	score_activity. STATUS,
+	begin_time,
+	end_time,
+	scoring_pointer_id,
+	score_activity.create_by,
+	score_activity.create_time,
+	score_activity.update_by,
+	score_activity.update_time,
+	score_activity.del_flag,
+	score_activity.remark,
+	d.dept_id,
+	d.dept_name
+FROM
+	score_activity
+LEFT JOIN sys_dept d ON d.dept_id = score_activity.scoring_pointer_id
     </sql>
 	
     <select id="selectScoreActivityList" parameterType="ScoreActivity" resultMap="ScoreActivityResult">

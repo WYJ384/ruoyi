@@ -11,7 +11,7 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								活动名称：<input type="text" name="name"/>
+								评分内容：<input type="text" name="name"/>
 							</li>
 
 							<!--<li>-->
@@ -95,7 +95,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "评分活动",
+                modalName: "绩效评分",
 		        showExport: true,
                 columns: [{
 		            checkbox: true
@@ -107,17 +107,17 @@
 				},
 				{
 					field : 'name', 
-					title : '活动名称',
+					title : '评分内容',
 					sortable: true,
 					formatter: function (value, row, index) {
 						return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.name + '</a>';
 					}
 				},
-//				{
-//					field : 'status',
-//					title : '活动状态',
-//					sortable: true
-//				},
+				{
+					field : 'dept.deptName',
+					title : '部门',
+					sortable: true
+				},
 //				{
 //					field : 'beginTime',
 //					title : '开始时间',
@@ -158,11 +158,11 @@
 //					title : '删除标志',
 //					sortable: true
 //				},
-//				{
-//					field : 'remark',
-//					title : '备注',
-//					sortable: true
-//				},
+				{
+					field : 'remark',
+					title : '得分',
+					sortable: true
+				},
 		        {
 		            title: '操作',
 		            align: 'center',
