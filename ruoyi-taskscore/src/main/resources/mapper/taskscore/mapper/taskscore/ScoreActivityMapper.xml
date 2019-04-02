@@ -47,9 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertScoreActivity" parameterType="ScoreActivity">
-        <selectKey keyProperty="id" resultType="String" order="BEFORE">
-            select replace(uuid(),'-','') from dual
-        </selectKey>
+
         insert into score_activity
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">id,</if>

@@ -14,17 +14,17 @@
 								活动名称：<input type="text" name="name"/>
 							</li>
 
-							<li>
-								活动状态：<input type="text" name="status"/>
-							</li>
+							<!--<li>-->
+								<!--活动状态：<input type="text" name="status"/>-->
+							<!--</li>-->
 
-							<li>
-								开始时间：<input type="text" name="beginTime"/>
-							</li>
+							<!--<li>-->
+								<!--开始时间：<input type="text" name="beginTime"/>-->
+							<!--</li>-->
 
-							<li>
-								结束时间：<input type="text" name="endTime"/>
-							</li>
+							<!--<li>-->
+								<!--结束时间：<input type="text" name="endTime"/>-->
+							<!--</li>-->
 
 							<!--<li>-->
 								<!--评分指标ID：<input type="text" name="scoringPointerId"/>-->
@@ -108,23 +108,26 @@
 				{
 					field : 'name', 
 					title : '活动名称',
-					sortable: true
+					sortable: true,
+					formatter: function (value, row, index) {
+						return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.name + '</a>';
+					}
 				},
-				{
-					field : 'status', 
-					title : '活动状态',
-					sortable: true
-				},
-				{
-					field : 'beginTime', 
-					title : '开始时间',
-					sortable: true
-				},
-				{
-					field : 'endTime', 
-					title : '结束时间',
-					sortable: true
-				},
+//				{
+//					field : 'status',
+//					title : '活动状态',
+//					sortable: true
+//				},
+//				{
+//					field : 'beginTime',
+//					title : '开始时间',
+//					sortable: true
+//				},
+//				{
+//					field : 'endTime',
+//					title : '结束时间',
+//					sortable: true
+//				},
 //				{
 //					field : 'scoringPointerId',
 //					title : '评分指标ID',
@@ -173,6 +176,10 @@
             };
             $.table.init(options);
         });
+		function detail(id) {
+			var url = prefix + '/detail/' + id;
+			createMenuItem(url, "查看");
+		}
     </script>
 </body>
 </html>

@@ -22,7 +22,7 @@ public class ScoreActivity extends BaseEntity
 	/** 活动状态 */
 	private Integer status;
 	/** 开始时间 */
-	private Date beginTime;
+	private String beginTime;
 	/** 结束时间 */
 	private Date endTime;
 	/** 评分指标ID */
@@ -55,11 +55,11 @@ public class ScoreActivity extends BaseEntity
 		this.status = status;
 	}
 
-	public Date getBeginTime() {
+	public String getBeginTime() {
 		return beginTime;
 	}
 
-	public void setBeginTime(Date beginTime) {
+	public void setBeginTime(String beginTime) {
 		this.beginTime = beginTime;
 	}
 

@@ -1,9 +1,16 @@
 package com.ruoyi.web.controller.taskscore;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.taskscore.domain.ScoreActivityDetail;
+import com.ruoyi.taskscore.domain.ScoringPointer;
+import com.ruoyi.taskscore.service.IScoreActivityDetailService;
+import com.ruoyi.taskscore.service.IScoringPointerService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +43,11 @@ public class ScoreActivityController extends BaseController
 	
 	@Autowired
 	private IScoreActivityService scoreActivityService;
-	
+	@Autowired
+	private IScoringPointerService scoringPointerService;
+
+	@Autowired
+	private IScoreActivityDetailService scoreActivityDetailService;
 	@RequiresPermissions("taskscore:scoreActivity:view")
 	@GetMapping()
 	public String scoreActivity()
@@ -89,8 +100,26 @@ public class ScoreActivityController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(ScoreActivity scoreActivity)
 	{
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		scoreActivity.setId(uuid);
 		scoreActivity.setCreateBy(ShiroUtils.getLoginName());
 		scoreActivity.setCreateTime(new Date());
+		String deptId = scoreActivity.getScoringPointerId();
+		ScoringPointer scoringPointer=new ScoringPointer();
+		scoringPointer.setDeptId(deptId);
+		List<ScoringPointer> scoringPointers = scoringPointerService.selectScoringPointerList(scoringPointer);
+		if(scoringPointers.isEmpty()){
+			return  AjaxResult.error(1,"请为该部门添加评分指标");
+		}
+		Iterator<ScoringPointer> scoringPointerIterator = scoringPointers.iterator();
+		while (scoringPointerIterator.hasNext()){
+			ScoringPointer pointer = scoringPointerIterator.next();
+			ScoreActivityDetail	scoreActivityDetail=new ScoreActivityDetail();
+			scoreActivityDetail.setActivityId(uuid);
+			scoreActivityDetail.setScorePointerId(pointer.getId());
+			scoreActivityDetailService.insertScoreActivityDetail(scoreActivityDetail);
+		}
+
 		return toAjax(scoreActivityService.insertScoreActivity(scoreActivity));
 	}
 
@@ -102,7 +131,20 @@ public class ScoreActivityController extends BaseController
 	{
 		ScoreActivity scoreActivity = scoreActivityService.selectScoreActivityById(id);
 		mmap.put("scoreActivity", scoreActivity);
-	    return prefix + "/edit";
+
+		return prefix + "/edit";
+	}
+
+	@GetMapping("/detail/{id}")
+	public String detail(@PathVariable("id") String id, ModelMap mmap)
+	{
+		ScoreActivity scoreActivity = scoreActivityService.selectScoreActivityById(id);
+		mmap.put("scoreActivity", scoreActivity);
+		ScoreActivityDetail scoreActivityDetail=new ScoreActivityDetail();
+		scoreActivityDetail.setActivityId(scoreActivity.getId());
+		List<ScoreActivityDetail> scoreActivityDetails = scoreActivityDetailService.selectScoreActivityDetailList(scoreActivityDetail);
+		mmap.put("scoreActivityDetails", scoreActivityDetails);
+		return prefix + "/detail";
 	}
 	
 	/**

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<h4 class="h3" style="text-align: center" th:text="${scoreActivity.name}"></h4>
+<!--<div class="row"  >-->
+	<!--<div class="col-sm-offset-5 col-md-10">-->
+		<!--&lt;!&ndash;<button th:data-id="${workActivity.process_instance_id}" type="button" class="btn btn-sm btn-primary" onclick="workDetail(this.getAttribute('data-id'))" ><i&ndash;&gt;-->
+		<!--&lt;!&ndash;class="fa fa-check"></i>查看详情&ndash;&gt;-->
+		<!--&lt;!&ndash;</button>&ndash;&gt;-->
+		<!--&lt;!&ndash;&nbsp;&ndash;&gt;-->
+		<!--<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i-->
+				<!--class="fa fa-reply-all"></i>关 闭-->
+		<!--</button>-->
+	<!--</div>-->
+<!--</div>-->
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+		<div class="form-horizontal m">
+			<div th:each="scoreActivity: ${scoreActivityDetails}">
+				<h4 class="form-header h4">受评价部门：<span th:text="${scoreActivity.scoringPointer.dept.deptName}"></span></h4>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">指标类型：</label>
+							<div class="col-sm-8">
+								<input class="form-control" rows="5" disabled th:value="${scoreActivity.scoringPointer.pointerType.name}">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">指标名称：</label>
+							<div class="col-sm-8">
+								<input class="form-control" rows="5" disabled th:value="${scoreActivity.scoringPointer.name}">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">权重：</label>
+							<div class="col-sm-8">
+								<input name="targetScore" readonly th:value="${scoreActivity.scoringPointer.weight}" class="form-control"
+									   type="text">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">数据提供部门：</label>
+							<div class="col-sm-8">
+								<input name="targetScore" readonly th:value="${scoreActivity.scoringPointer.evalDept.deptName}" class="form-control"
+									   type="text">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">得分：</label>
+							<div class="col-sm-8">
+								<input id="score" readonly name="score"  class="form-control" type="text">
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label class="col-xs-2 control-label">评分描述：</label>
+							<div class="col-xs-10">
+                        <textarea name="scoreDescription" readonly autocomplete="off" maxlength="500" class="form-control"
+								  rows="3"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+
+			</div>
+		</div>
+
+	</div>
+
+	<div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "taskscore/scoreActivity";
+		$("#form-scoreActivity-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-scoreActivity-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

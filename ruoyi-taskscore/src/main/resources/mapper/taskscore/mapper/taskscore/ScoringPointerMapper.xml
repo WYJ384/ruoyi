@@ -44,7 +44,7 @@
          from scoring_pointer pointer
         left join sys_dept d on d.dept_id = pointer.dept_id
         left join sys_dept evalDept on evalDept.dept_id = pointer.eval_dept_id
-         left join pointer_type  on pointer_type.id = pointer.pointer_type_id
+        left join pointer_type  on pointer_type.id = pointer.pointer_type_id
     </sql>
 
     <select id="selectScoringPointerList" parameterType="ScoringPointer" resultMap="ScoringPointerResult">

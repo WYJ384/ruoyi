@@ -16,32 +16,81 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="delFlag"    column="del_flag"    />
         <result property="remark"    column="remark"    />
+        <association property="scoringPointer" column="score_pointer_id" javaType="ScoringPointer" resultMap="ScoringPointerResult"/>
     </resultMap>
-	
+    <resultMap type="ScoringPointer" id="ScoringPointerResult">
+        <result property="id" column="score_pointer_id"/>
+        <result property="name" column="score_pointer_name"/>
+        <result property="weight" column="weight"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="evalDeptId" column="eval_dept_id"/>
+        <association property="pointerType" column="pointer_type_id" javaType="PointerType"  resultMap="PointerTypeResult"/>
+        <association property="dept" column="dept_id" javaType="SysDept" resultMap="deptResult"/>
+        <association property="evalDept" column="eval_dept_id" javaType="SysDept" resultMap="evalDeptResult"/>
+    </resultMap>
+    <resultMap id="deptResult" type="SysDept">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+    </resultMap>
+    <resultMap id="evalDeptResult" type="SysDept">
+        <id property="deptId" column="eval_dept_id"/>
+        <id property="deptName" column="eval_dept_name"/>
+    </resultMap>
+    <resultMap id="PointerTypeResult" type="PointerType">
+        <result property="id" column="pointer_id"/>
+        <result property="name" column="pointer_name"/>
+    </resultMap>
 	<sql id="selectScoreActivityDetailVo">
-        select id, activity_id, score_pointer_id, score, score_description, create_by, create_time, update_by, update_time, del_flag, remark from score_activity_detail
+           SELECT
+	detail.id,
+	activity_id,
+	detail.score_pointer_id,
+	detail.score,
+	detail.score_description,
+	detail.create_by,
+	detail.create_time,
+	detail.update_by,
+	detail.update_time,
+	detail.del_flag,
+	detail.remark,
+	pointer.weight,
+	pointer.dept_id,
+	pointer.eval_dept_id,
+	pointer. NAME AS score_pointer_name,
+	pointer_type.id AS pointer_id,
+	pointer_type. NAME AS pointer_name,
+	evalDept.dept_id AS eval_dept_id,
+	evalDept.dept_name AS eval_dept_name,
+	d.dept_id,
+	d.dept_name
+FROM
+	score_activity_detail detail
+LEFT JOIN scoring_pointer pointer ON detail.score_pointer_id = pointer.id
+LEFT JOIN pointer_type ON pointer_type.id = pointer.pointer_type_id
+LEFT JOIN sys_dept d ON d.dept_id = pointer.dept_id
+LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
     </sql>
 	
     <select id="selectScoreActivityDetailList" parameterType="ScoreActivityDetail" resultMap="ScoreActivityDetailResult">
         <include refid="selectScoreActivityDetailVo"/>
         <where>  
-            <if test="id != null  and id != '' "> and id = #{id}</if>
-             <if test="activityId != null  and activityId != '' "> and activity_id = #{activityId}</if>
-             <if test="scorePointerId != null  and scorePointerId != '' "> and score_pointer_id = #{scorePointerId}</if>
-             <if test="score != null "> and score = #{score}</if>
-             <if test="scoreDescription != null  and scoreDescription != '' "> and score_description = #{scoreDescription}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
-             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
-             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+            <if test="id != null  and id != '' "> and detail.id = #{id}</if>
+             <if test="activityId != null  and activityId != '' "> and detail.activity_id = #{activityId}</if>
+             <if test="scorePointerId != null  and scorePointerId != '' "> and detail.score_pointer_id = #{scorePointerId}</if>
+             <if test="score != null "> and detail.score = #{score}</if>
+             <if test="scoreDescription != null  and scoreDescription != '' "> and detail.score_description = #{scoreDescription}</if>
+             <if test="createBy != null  and createBy != '' "> and detail.create_by = #{createBy}</if>
+             <if test="createTime != null "> and detail.create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and detail.update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and detail.update_time = #{updateTime}</if>
+             <if test="delFlag != null  and delFlag != '' "> and detail.del_flag = #{delFlag}</if>
+             <if test="remark != null  and remark != '' "> and detail.remark = #{remark}</if>
          </where>
     </select>
     
     <select id="selectScoreActivityDetailById" parameterType="String" resultMap="ScoreActivityDetailResult">
         <include refid="selectScoreActivityDetailVo"/>
-        where id = #{id}
+        where detail.id = #{id}
     </select>
         
     <insert id="insertScoreActivityDetail" parameterType="ScoreActivityDetail">

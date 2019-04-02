@@ -314,46 +314,93 @@ public class WorkTaskController extends BaseController
 	@GetMapping("/query/{id}")
 	public String query(@PathVariable("id") String id, ModelMap mmap)
 	{
+//		SysUser sysUser = new SysUser();
+//		WorkTask workTask = workTaskService.selectWorkTaskById(id);
+//		//附件
+//		WorkTaskFile workTaskFile=new WorkTaskFile();
+//		workTaskFile.setWorkTaskId(id);
+//		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
+////		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
+////		if(cooperateDept!=null){
+////			workTask.setCooperateDeptName(cooperateDept.getDeptName());
+////		}
+//		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
+//		if(leadDept!=null){
+//			workTask.setLeadDeptName(leadDept.getDeptName());
+//		}
+//
+//		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
+//		workTaskActivity.setWorkTaskId(id);
+//		//workTaskActivity.setTargetMonth(DateFormatUtils.format(new Date(),"MM"));
+//		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
+//		Iterator<WorkTaskActivity> activityIterator = workTaskActivities.iterator();
+//		WorkTaskActivity currentWorkTaskActivity=new WorkTaskActivity();
+//		while (activityIterator.hasNext()){
+//			WorkTaskActivity activity = activityIterator.next();
+//			String currentMonth = DateFormatUtils.format(new Date(), "MM");
+//			if(currentMonth.equals(activity.getTargetMonth())){
+//				activity.setCurrent(true);
+//				currentWorkTaskActivity=activity;
+//			}
+//			String activityId = activity.getId();
+//			WorkTaskFile activityFile=new WorkTaskFile();
+//			activityFile.setWorkTaskId(activityId);
+//			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+//		}
+//		mmap.put("currentWorkTaskActivity", currentWorkTaskActivity);
+//		mmap.put("workTask", workTask);
+//		mmap.put("workTaskFiles", workTaskFiles);
+//		mmap.put("users",userService.selectUserList(sysUser));
+//		mmap.put("workTaskActivities", workTaskActivities);
+//		mmap.put("sysUser",ShiroUtils.getSysUser());
+//		mmap.put("depts",deptService.selectDeptList(new SysDept()));
+
 		SysUser sysUser = new SysUser();
 		WorkTask workTask = workTaskService.selectWorkTaskById(id);
+
 		//附件
 		WorkTaskFile workTaskFile=new WorkTaskFile();
 		workTaskFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
-//		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
-//		if(cooperateDept!=null){
-//			workTask.setCooperateDeptName(cooperateDept.getDeptName());
-//		}
+
+
 		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
+
 		if(leadDept!=null){
 			workTask.setLeadDeptName(leadDept.getDeptName());
 		}
 
+		//查询当前专项工作下的目标任务
 		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
 		workTaskActivity.setWorkTaskId(id);
-		//workTaskActivity.setTargetMonth(DateFormatUtils.format(new Date(),"MM"));
 		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
 		Iterator<WorkTaskActivity> activityIterator = workTaskActivities.iterator();
-		WorkTaskActivity currentWorkTaskActivity=new WorkTaskActivity();
 		while (activityIterator.hasNext()){
 			WorkTaskActivity activity = activityIterator.next();
-			String currentMonth = DateFormatUtils.format(new Date(), "MM");
-			if(currentMonth.equals(activity.getTargetMonth())){
-				activity.setCurrent(true);
-				currentWorkTaskActivity=activity;
-			}
 			String activityId = activity.getId();
 			WorkTaskFile activityFile=new WorkTaskFile();
 			activityFile.setWorkTaskId(activityId);
 			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+
+			//任务流程图查询
+			if(activity.getWorkStatus().equals("2")){
+				TaskVO taskVO=new TaskVO();
+				taskVO.setProcessId(activity.getProcess_instance_id());
+				List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+				if(taskVOS!=null&&taskVOS.size()>0){
+					taskVO = taskVOS.get(taskVOS.size() - 1);
+					taskVO.setCreateBy("/activiti/task/trace/photo/"+taskVO.getProcessDefinitionId()+"/"+taskVO.getExecutionId());
+					activity.setTaskVO(taskVO);
+				}
+			}
+
 		}
-		mmap.put("currentWorkTaskActivity", currentWorkTaskActivity);
+
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));
-		mmap.put("workTaskActivities", workTaskActivities);
-		mmap.put("sysUser",ShiroUtils.getSysUser());
 		mmap.put("depts",deptService.selectDeptList(new SysDept()));
+		mmap.put("workTaskActivities", workTaskActivities);
 		return prefix + "/query";
 	}
 	/**

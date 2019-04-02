@@ -21,6 +21,7 @@ public class ScoreActivityDetail extends BaseEntity
 	private String activityId;
 	/** 评分指标 */
 	private String scorePointerId;
+	private	ScoringPointer scoringPointer;
 	/** 得分 */
 	private Double score;
 	/** 评分描述 */
@@ -29,6 +30,14 @@ public class ScoreActivityDetail extends BaseEntity
 	/** 删除标志 */
 	private String delFlag;
 
+
+	public ScoringPointer getScoringPointer() {
+		return scoringPointer;
+	}
+
+	public void setScoringPointer(ScoringPointer scoringPointer) {
+		this.scoringPointer = scoringPointer;
+	}
 
 	public String getId() {
 		return id;
