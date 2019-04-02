@@ -385,6 +385,15 @@
 <script th:src="@{/ajax/libs/select/select2.js}"></script>
 
 <script type="text/javascript">
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        var startDate = laydate.render({
+            elem: '#targetMonth',
+            theme: 'molv',
+            type: 'month',
+            format: 'MM'
+        });
+    });
     var prefix = ctx + "worktask/workTask";
     $("#form-workTask-edit").validate({
         submitHandler: function (form) {
