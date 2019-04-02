@@ -11,40 +11,48 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								指标名称：<input type="text" name="name"/>
-							</li>
-
-							<!--<li>-->
-								<!--权重：<input type="text" name="weight"/>-->
-							<!--</li>-->
-
-							<!--<li>-->
-								<!--指标类型id：<input type="text" name="pointerTypeId"/>-->
-							<!--</li>-->
-
-							<!--<li>-->
-								<!--评价说明：<input type="text" name="scoreDescription"/>-->
-							<!--</li>-->
-
-							<!--<li>-->
-								<!--得分：<input type="text" name="score"/>-->
-							<!--</li>-->
-
-							<li>
-								受评部门：
-								<select name="deptId" id="deptId">
-									<option value=""></option>
-									<option th:each="dept:${sysDepts}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>
-								</select>
+								活动名称：<input type="text" name="name"/>
 							</li>
 
 							<li>
-								评价部门：
-								<select name="evalDeptId" id="evalDeptId">
-									<option value=""></option>
-									<option th:each="dept:${sysDepts}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>
-								</select>
+								活动状态：<input type="text" name="status"/>
 							</li>
+
+							<li>
+								开始时间：<input type="text" name="beginTime"/>
+							</li>
+
+							<li>
+								结束时间：<input type="text" name="endTime"/>
+							</li>
+
+							<!--<li>-->
+								<!--评分指标ID：<input type="text" name="scoringPointerId"/>-->
+							<!--</li>-->
+
+							<!--<li>-->
+								<!--创建人：<input type="text" name="createBy"/>-->
+							<!--</li>-->
+
+							<!--<li>-->
+								<!--创建时间：<input type="text" name="createTime"/>-->
+							<!--</li>-->
+
+							<!--<li>-->
+								<!--更新者：<input type="text" name="updateBy"/>-->
+							<!--</li>-->
+
+							<!--<li>-->
+								<!--更新时间：<input type="text" name="updateTime"/>-->
+							<!--</li>-->
+
+							<!--<li>-->
+								<!--删除标志：<input type="text" name="delFlag"/>-->
+							<!--</li>-->
+
+							<!--<li>-->
+								<!--备注：<input type="text" name="remark"/>-->
+							<!--</li>-->
 
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -56,16 +64,16 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="taskscore:scoringPointer:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="taskscore:scoreActivity:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="taskscore:scoringPointer:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="taskscore:scoreActivity:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="taskscore:scoringPointer:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="taskscore:scoreActivity:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="taskscore:scoringPointer:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="taskscore:scoreActivity:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -76,9 +84,9 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('taskscore:scoringPointer:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('taskscore:scoringPointer:remove')}]];
-        var prefix = ctx + "taskscore/scoringPointer";
+        var editFlag = [[${@permission.hasPermi('taskscore:scoreActivity:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('taskscore:scoreActivity:remove')}]];
+        var prefix = ctx + "taskscore/scoreActivity";
 
         $(function() {
             var options = {
@@ -87,7 +95,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "评分",
+                modalName: "评分活动",
 		        showExport: true,
                 columns: [{
 		            checkbox: true
@@ -99,39 +107,59 @@
 				},
 				{
 					field : 'name', 
-					title : '指标名称',
+					title : '活动名称',
 					sortable: true
 				},
 				{
-					field : 'weight', 
-					title : '权重',
+					field : 'status', 
+					title : '活动状态',
 					sortable: true
 				},
 				{
-					field : 'pointerType.name',
-					title : '指标类型',
+					field : 'beginTime', 
+					title : '开始时间',
+					sortable: true
+				},
+				{
+					field : 'endTime', 
+					title : '结束时间',
 					sortable: true
 				},
 //				{
-//					field : 'scoreDescription',
-//					title : '评价说明',
+//					field : 'scoringPointerId',
+//					title : '评分指标ID',
 //					sortable: true
 //				},
-				{
-					field : 'score', 
-					title : '得分',
-					sortable: true
-				},
-				{
-					field : 'dept.deptName',
-					title : '受评部门',
-					sortable: true
-				},
-				{
-					field : 'evalDept.deptName',
-					title : '评价部门',
-					sortable: true
-				},
+//				{
+//					field : 'createBy',
+//					title : '创建人',
+//					sortable: true
+//				},
+//				{
+//					field : 'createTime',
+//					title : '创建时间',
+//					sortable: true
+//				},
+//				{
+//					field : 'updateBy',
+//					title : '更新者',
+//					sortable: true
+//				},
+//				{
+//					field : 'updateTime',
+//					title : '更新时间',
+//					sortable: true
+//				},
+//				{
+//					field : 'delFlag',
+//					title : '删除标志',
+//					sortable: true
+//				},
+//				{
+//					field : 'remark',
+//					title : '备注',
+//					sortable: true
+//				},
 		        {
 		            title: '操作',
 		            align: 'center',

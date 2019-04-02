@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysDept;
+import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.taskscore.domain.PointerType;
 import com.ruoyi.taskscore.service.IPointerTypeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -41,11 +43,17 @@ public class ScoringPointerController extends BaseController
 
 	@Autowired
 	private IPointerTypeService pointerTypeService;
+
+	@Autowired
+	private ISysDeptService deptService;
 	@RequiresPermissions("taskscore:scoringPointer:view")
 	@GetMapping()
-	public String scoringPointer()
+	public String scoringPointer(ModelMap mmp)
 	{
-	    return prefix + "/scoringPointer";
+
+		List<SysDept> sysDepts = deptService.selectDeptList(new SysDept());
+		mmp.put("sysDepts",sysDepts);
+		return prefix + "/scoringPointer";
 	}
 	
 	/**

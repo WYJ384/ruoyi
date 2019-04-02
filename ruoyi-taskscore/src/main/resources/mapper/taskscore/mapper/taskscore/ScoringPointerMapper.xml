@@ -50,15 +50,15 @@
     <select id="selectScoringPointerList" parameterType="ScoringPointer" resultMap="ScoringPointerResult">
         <include refid="selectScoringPointerVo"/>
         <where>
-            <if test="id != null  and id != '' ">and id = #{id}</if>
-            <if test="name != null  and name != '' ">and name = #{name}</if>
+            <if test="id != null  and id != '' ">and pointer.id = #{id}</if>
+            <if test="name != null  and name != '' ">and pointer.name = #{name}</if>
             <if test="weight != null ">and weight = #{weight}</if>
             <if test="pointerTypeId != null ">and pointer_type_id = #{pointerTypeId}</if>
             <if test="scoreDescription != null  and scoreDescription != '' ">and score_description =
                 #{scoreDescription}
             </if>
             <if test="score != null ">and score = #{score}</if>
-            <if test="deptId != null  and deptId != '' ">and dept_id = #{deptId}</if>
+            <if test="deptId != null  and deptId != '' ">and pointer.dept_id = #{deptId}</if>
             <if test="evalDeptId != null  and evalDeptId != '' ">and eval_dept_id = #{evalDeptId}</if>
             <if test="createBy != null  and createBy != '' ">and create_by = #{createBy}</if>
             <if test="createTime != null ">and create_time = #{createTime}</if>
@@ -71,7 +71,7 @@
 
     <select id="selectScoringPointerById" parameterType="String" resultMap="ScoringPointerResult">
         <include refid="selectScoringPointerVo"/>
-        where id = #{id}
+        where pointer.id = #{id}
     </select>
 
     <insert id="insertScoringPointer" parameterType="ScoringPointer">

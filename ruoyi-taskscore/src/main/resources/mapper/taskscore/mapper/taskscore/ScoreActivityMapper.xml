@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.taskscore.mapper.ScoreActivityMapper">
+    
+    <resultMap type="ScoreActivity" id="ScoreActivityResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="status"    column="status"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="scoringPointerId"    column="scoring_pointer_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectScoreActivityVo">
+        select id, name, status, begin_time, end_time, scoring_pointer_id, create_by, create_time, update_by, update_time, del_flag, remark from score_activity
+    </sql>
+	
+    <select id="selectScoreActivityList" parameterType="ScoreActivity" resultMap="ScoreActivityResult">
+        <include refid="selectScoreActivityVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="status != null "> and status = #{status}</if>
+             <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+             <if test="endTime != null "> and end_time = #{endTime}</if>
+             <if test="scoringPointerId != null "> and scoring_pointer_id = #{scoringPointerId}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectScoreActivityById" parameterType="String" resultMap="ScoreActivityResult">
+        <include refid="selectScoreActivityVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertScoreActivity" parameterType="ScoreActivity">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+        insert into score_activity
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="status != null  ">status,</if>
+			<if test="beginTime != null  ">begin_time,</if>
+			<if test="endTime != null  ">end_time,</if>
+			<if test="scoringPointerId != null  ">scoring_pointer_id,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="beginTime != null  ">#{beginTime},</if>
+			<if test="endTime != null  ">#{endTime},</if>
+			<if test="scoringPointerId != null  ">#{scoringPointerId},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateScoreActivity" parameterType="ScoreActivity">
+        update score_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="beginTime != null  ">begin_time = #{beginTime},</if>
+            <if test="endTime != null  ">end_time = #{endTime},</if>
+            <if test="scoringPointerId != null  ">scoring_pointer_id = #{scoringPointerId},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteScoreActivityById" parameterType="String">
+        delete from score_activity where id = #{id}
+    </delete>
+	
+    <delete id="deleteScoreActivityByIds" parameterType="String">
+        delete from score_activity where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
