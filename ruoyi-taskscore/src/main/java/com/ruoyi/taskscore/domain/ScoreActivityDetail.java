@@ -19,6 +19,7 @@ public class ScoreActivityDetail extends BaseEntity
 	private String id;
 	/** 活动id */
 	private String activityId;
+	private ScoreActivity scoreActivity;
 	/** 评分指标 */
 	private String scorePointerId;
 	private	ScoringPointer scoringPointer;
@@ -29,7 +30,34 @@ public class ScoreActivityDetail extends BaseEntity
 
 	/** 删除标志 */
 	private String delFlag;
+	/** 任务状态 1 进行中 2 已完成 */
+	private String activityStatus;
 
+	private String evalDeptId;
+
+	public String getEvalDeptId() {
+		return evalDeptId;
+	}
+
+	public void setEvalDeptId(String evalDeptId) {
+		this.evalDeptId = evalDeptId;
+	}
+
+	public String getActivityStatus() {
+		return activityStatus;
+	}
+
+	public void setActivityStatus(String activityStatus) {
+		this.activityStatus = activityStatus;
+	}
+
+	public ScoreActivity getScoreActivity() {
+		return scoreActivity;
+	}
+
+	public void setScoreActivity(ScoreActivity scoreActivity) {
+		this.scoreActivity = scoreActivity;
+	}
 
 	public ScoringPointer getScoringPointer() {
 		return scoringPointer;

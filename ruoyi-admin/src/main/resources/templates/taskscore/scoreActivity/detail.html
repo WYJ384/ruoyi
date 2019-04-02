@@ -64,7 +64,7 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">得分：</label>
 							<div class="col-sm-8">
-								<input id="score" readonly name="score"  class="form-control" type="text">
+								<input id="score" readonly name="score"  th:value="${scoreActivity.score}" class="form-control" type="text">
 							</div>
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 						<div class="form-group">
 							<label class="col-xs-2 control-label">评分描述：</label>
 							<div class="col-xs-10">
-                        <textarea name="scoreDescription" readonly autocomplete="off" maxlength="500" class="form-control"
+                        <textarea name="scoreDescription" readonly autocomplete="off" th:text="${scoreActivity.scoreDescription}"  maxlength="500" class="form-control"
 								  rows="3"></textarea>
 							</div>
 						</div>

@@ -16,7 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="delFlag"    column="del_flag"    />
         <result property="remark"    column="remark"    />
+        <result property="activityStatus"    column="activity_status"    />
         <association property="scoringPointer" column="score_pointer_id" javaType="ScoringPointer" resultMap="ScoringPointerResult"/>
+        <association property="scoreActivity" column="activity_id" javaType="ScoreActivity" resultMap="ScoreActivityResult"/>
+    </resultMap>
+    <resultMap type="ScoreActivity" id="ScoreActivityResult">
+        <result property="id"    column="activity_id"    />
+        <result property="name"    column="activity_name"    />
     </resultMap>
     <resultMap type="ScoringPointer" id="ScoringPointerResult">
         <result property="id" column="score_pointer_id"/>
@@ -41,34 +47,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name" column="pointer_name"/>
     </resultMap>
 	<sql id="selectScoreActivityDetailVo">
-           SELECT
-	detail.id,
-	activity_id,
-	detail.score_pointer_id,
-	detail.score,
-	detail.score_description,
-	detail.create_by,
-	detail.create_time,
-	detail.update_by,
-	detail.update_time,
-	detail.del_flag,
-	detail.remark,
-	pointer.weight,
-	pointer.dept_id,
-	pointer.eval_dept_id,
-	pointer. NAME AS score_pointer_name,
-	pointer_type.id AS pointer_id,
-	pointer_type. NAME AS pointer_name,
-	evalDept.dept_id AS eval_dept_id,
-	evalDept.dept_name AS eval_dept_name,
-	d.dept_id,
-	d.dept_name
-FROM
-	score_activity_detail detail
-LEFT JOIN scoring_pointer pointer ON detail.score_pointer_id = pointer.id
-LEFT JOIN pointer_type ON pointer_type.id = pointer.pointer_type_id
-LEFT JOIN sys_dept d ON d.dept_id = pointer.dept_id
-LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
+        SELECT
+            detail.id,
+            detail.score_pointer_id,
+            detail.score,
+            detail.score_description,
+            detail.create_by,
+            detail.create_time,
+            detail.update_by,
+            detail.update_time,
+            detail.del_flag,
+            detail.remark,
+            detail.activity_status,
+            pointer.weight,
+            pointer.dept_id,
+            pointer.eval_dept_id,
+            pointer. NAME AS score_pointer_name,
+            pointer_type.id AS pointer_id,
+            pointer_type. NAME AS pointer_name,
+            evalDept.dept_id AS eval_dept_id,
+            evalDept.dept_name AS eval_dept_name,
+            d.dept_id,
+            d.dept_name,
+            score_activity.`name` as activity_name,
+            score_activity.`id` as activity_id
+        FROM
+            score_activity_detail detail
+        LEFT JOIN scoring_pointer pointer ON detail.score_pointer_id = pointer.id
+        LEFT JOIN pointer_type ON pointer_type.id = pointer.pointer_type_id
+        LEFT JOIN sys_dept d ON d.dept_id = pointer.dept_id
+        LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
+        LEFT JOIN score_activity ON score_activity.id = detail.activity_id
     </sql>
 	
     <select id="selectScoreActivityDetailList" parameterType="ScoreActivityDetail" resultMap="ScoreActivityDetailResult">
@@ -85,7 +94,9 @@ LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
              <if test="updateTime != null "> and detail.update_time = #{updateTime}</if>
              <if test="delFlag != null  and delFlag != '' "> and detail.del_flag = #{delFlag}</if>
              <if test="remark != null  and remark != '' "> and detail.remark = #{remark}</if>
-         </where>
+            <if test="activityStatus != null  and activityStatus != '' "> and activity_status = #{activityStatus}</if>
+            <if test="evalDeptId!= null  and evalDeptId != '' "> and pointer.eval_dept_id = #{evalDeptId}</if>
+        </where>
     </select>
     
     <select id="selectScoreActivityDetailById" parameterType="String" resultMap="ScoreActivityDetailResult">
@@ -110,6 +121,7 @@ LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
 			<if test="updateTime != null  ">update_time,</if>
 			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
+            <if test="activityStatus != null  and activityStatus != ''  ">activity_status,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
@@ -123,6 +135,7 @@ LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
 			<if test="updateTime != null  ">#{updateTime},</if>
 			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
+            <if test="activityStatus != null  and activityStatus != ''  ">#{activityStatus},</if>
          </trim>
     </insert>
 	 
@@ -139,6 +152,7 @@ LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="activityStatus != null  and activityStatus != ''  ">activity_status = #{activityStatus},</if>
         </trim>
         where id = #{id}
     </update>

@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.taskscore;
 
+import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,11 +43,18 @@ public class ScoreActivityDetailController extends BaseController
 	{
 	    return prefix + "/scoreActivityDetail";
 	}
-	
+
+
+	@GetMapping("/deptScore")
+	public String deptScore()
+	{
+		return prefix + "/deptScore";
+	}
+
+
 	/**
 	 * 查询评分活动详情列表
 	 */
-	@RequiresPermissions("taskscore:scoreActivityDetail:list")
 	@PostMapping("/list")
 	@ResponseBody
 	public TableDataInfo list(ScoreActivityDetail scoreActivityDetail)
@@ -53,8 +63,18 @@ public class ScoreActivityDetailController extends BaseController
         List<ScoreActivityDetail> list = scoreActivityDetailService.selectScoreActivityDetailList(scoreActivityDetail);
 		return getDataTable(list);
 	}
-	
-	
+
+	@PostMapping("/deptDetailList")
+	@ResponseBody
+	public TableDataInfo deptDetailList(ScoreActivityDetail scoreActivityDetail)
+	{
+		scoreActivityDetail.setEvalDeptId(ShiroUtils.getSysUser().getDeptId()+"");
+		scoreActivityDetail.setActivityStatus("1");
+		startPage();
+		List<ScoreActivityDetail> list = scoreActivityDetailService.selectScoreActivityDetailList(scoreActivityDetail);
+		return getDataTable(list);
+	}
+
 	/**
 	 * 导出评分活动详情列表
 	 */
@@ -103,12 +123,14 @@ public class ScoreActivityDetailController extends BaseController
 	/**
 	 * 修改保存评分活动详情
 	 */
-	@RequiresPermissions("taskscore:scoreActivityDetail:edit")
 	@Log(title = "评分活动详情", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(ScoreActivityDetail scoreActivityDetail)
-	{		
+	{
+		scoreActivityDetail.setUpdateBy(ShiroUtils.getLoginName());
+		scoreActivityDetail.setUpdateTime(new Date());
+		scoreActivityDetail.setActivityStatus("2");
 		return toAjax(scoreActivityDetailService.updateScoreActivityDetail(scoreActivityDetail));
 	}
 	
