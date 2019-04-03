@@ -39,7 +39,7 @@
     </resultMap>
 
     <sql id="selectScoringPointerVo">
-        select pointer.id, pointer.name, weight, pointer_type_id, score_description, score, evalDept.dept_id as eval_dept_id,
+        select pointer.id, pointer.name, weight, pointer_type_id, score_description, pointer.remark,score, evalDept.dept_id as eval_dept_id,
         evalDept.dept_name as eval_dept_name, d.dept_id, d.dept_name,pointer_type.id as pointer_id ,pointer_type.name as pointer_name
          from scoring_pointer pointer
         left join sys_dept d on d.dept_id = pointer.dept_id
