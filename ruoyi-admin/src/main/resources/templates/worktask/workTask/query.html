@@ -234,7 +234,6 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">附件：</label>
                     <div class="col-xs-10">
-                        <input type="file" id="file" name="file">
                         <p th:each="taskfile:${workTaskFiles}">
                             <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"
                                th:text="${taskfile.fileName}"></a>

@@ -2,6 +2,9 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet" type="text/css" />
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css" />
+
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}" enctype="multipart/form-data">
@@ -168,8 +171,18 @@
 </div>
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs/select/select2.js}"></script>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
+
 
 <script type="text/javascript">
+
+    $('#file').fileinput({
+        language: 'zh',
+        showPreview: false, //是否显示预览
+        showUpload: false, //是否显示上传按钮
+        showRemove: true, //显示移除按钮
+    });
     var prefix = ctx + "worktask/workTaskActivity";
     $("#form-workTaskActivity-edit").validate({
         submitHandler: function (form) {
