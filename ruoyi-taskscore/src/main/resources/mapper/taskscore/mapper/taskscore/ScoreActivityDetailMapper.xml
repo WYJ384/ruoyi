@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id" column="score_pointer_id"/>
         <result property="name" column="score_pointer_name"/>
         <result property="weight" column="weight"/>
+        <result property="remark" column="score_pointer_remark"/>
         <result property="deptId" column="dept_id"/>
         <result property="evalDeptId" column="eval_dept_id"/>
         <association property="pointerType" column="pointer_type_id" javaType="PointerType"  resultMap="PointerTypeResult"/>
@@ -62,7 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             pointer.weight,
             pointer.dept_id,
             pointer.eval_dept_id,
-            pointer. NAME AS score_pointer_name,
+            pointer.NAME AS score_pointer_name,
+            pointer.remark AS score_pointer_remark,
             pointer_type.id AS pointer_id,
             pointer_type. NAME AS pointer_name,
             evalDept.dept_id AS eval_dept_id,

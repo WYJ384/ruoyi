@@ -73,6 +73,17 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group">
+							<label class="col-xs-2 control-label">计分方法：</label>
+							<div class="col-xs-10">
+                       	<textarea id="remark" readonly name="scoreDescription" th:text="${scoreActivity.scoringPointer.remark}" class="form-control" rows="5">
+						</textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
 							<label class="col-xs-2 control-label">评分描述：</label>
 							<div class="col-xs-10">
                         <textarea name="scoreDescription" readonly autocomplete="off" th:text="${scoreActivity.scoreDescription}"  maxlength="500" class="form-control"
