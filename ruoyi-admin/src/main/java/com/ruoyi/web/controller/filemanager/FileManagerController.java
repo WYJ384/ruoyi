@@ -182,6 +182,7 @@ public class FileManagerController {
     @Log(title = "个人网盘")
     @RequestMapping("changePermissions")
     public Object changePermissions(@RequestBody JSONObject json) {
+        root=ruoYiProfile.getProfile()+ ShiroUtils.getLoginName();
         try {
            
             String perms = json.getString("perms"); // 权限
@@ -195,6 +196,7 @@ public class FileManagerController {
             }
             return success();
         } catch (Exception e) {
+            e.printStackTrace();
             return error(e.getMessage());
         }
     }
@@ -302,7 +304,7 @@ public class FileManagerController {
     /**
      * 查看文件内容,针对html、txt等可编辑文件
      */
-    @Log(title = "个人网盘")
+    @Log(title = "个人网盘-查看文件内容,针对html、txt等可编辑文件")
     @RequestMapping("getContent")
     public Object getContent(@RequestBody JSONObject json) {
         try {
@@ -323,7 +325,7 @@ public class FileManagerController {
     /**
      * 修改文件内容,针对html、txt等可编辑文件
      */
-    @Log(title = "个人网盘")
+    @Log(title = "个人网盘-修改文件内容")
     @RequestMapping("edit")
     public Object edit(@RequestBody JSONObject json) {
         try {
@@ -371,7 +373,7 @@ public class FileManagerController {
     /**
      * 文件解压
      */
-    @Log(title = "个人网盘")
+    @Log(title = "个人网盘-文件解压")
     @RequestMapping("extract")
     public Object extract(@RequestBody JSONObject json) {
         try {

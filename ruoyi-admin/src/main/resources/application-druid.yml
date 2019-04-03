@@ -11,7 +11,7 @@ spring:
             master:
                 url: jdbc:mysql://125.74.71.32:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: root
-                password: root
+                password: noc_network_ry_admin_pwd
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭

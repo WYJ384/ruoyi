@@ -7,6 +7,7 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
@@ -80,6 +81,12 @@ public class SysPasswordService
     public String encryptPassword(String username, String password, String salt)
     {
         return new Md5Hash(username + password + salt).toHex().toString();
+    }
+
+    public static void main(String[] args)
+    {
+        String s = new Md5Hash("admin" + "admin190403" + "111111").toHex().toString();
+        System.out.println(s);
     }
 
 }
