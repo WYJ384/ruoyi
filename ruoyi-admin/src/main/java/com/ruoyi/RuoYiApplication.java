@@ -18,7 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
         org.activiti.spring.boot.SecurityAutoConfiguration.class,
         //org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration.class
-        PageHelperAutoConfiguration.class,}
+       }
 )
 @MapperScan("com.ruoyi.*.mapper")
 public class RuoYiApplication

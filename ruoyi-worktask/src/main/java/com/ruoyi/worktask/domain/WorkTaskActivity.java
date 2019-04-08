@@ -21,6 +21,7 @@ public class WorkTaskActivity extends BaseEntity
 	private String id;
 	/** 任务的id */
 	private String workTaskId;
+	private WorkTask workTask;
 	/** 汇报内容 */
 	private String content;
 	/** 创建人 */
@@ -55,6 +56,15 @@ public class WorkTaskActivity extends BaseEntity
 	private String process_instance_id;
 
 	private TaskVO taskVO;
+
+
+	public WorkTask getWorkTask() {
+		return workTask;
+	}
+
+	public void setWorkTask(WorkTask workTask) {
+		this.workTask = workTask;
+	}
 
 	public TaskVO getTaskVO() {
 		return taskVO;

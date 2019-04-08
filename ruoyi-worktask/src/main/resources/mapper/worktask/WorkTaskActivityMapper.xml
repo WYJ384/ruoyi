@@ -21,38 +21,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="workStatus"    column="work_status"    />
         <result property="orderNum"    column="order_num"    />
         <result property="process_instance_id"    column="process_instance_id"    />
+        <association property="workTask" column="work_task_id" javaType="WorkTask" resultMap="WorkTaskResult"/>
+
+    </resultMap>
+
+    <resultMap type="WorkTask" id="WorkTaskResult">
+        <result property="id"    column="work_id"    />
+        <result property="workName"    column="work_name"    />
+        <result property="leadDeptId"    column="lead_dept_id"    />
+        <result property="leadDeptName"    column="leadDeptName"    />
     </resultMap>
 
 	<sql id="selectWorkTaskActivityVo">
-        select id, work_task_id, content, create_by, create_time, update_by, update_time, del_flag, remark, rep_content, target, target_score, target_month, work_status, order_num,process_instance_id from work_task_activity
+
+        SELECT
+            ac.id,
+            ac.work_task_id,
+            ac.content,
+            ac.create_by,
+            ac.create_time,
+            ac.update_by,
+            ac.update_time,
+            ac.del_flag,
+            ac.remark,
+            ac.rep_content,
+            ac.target,
+            ac.target_score,
+            ac.target_month,
+            ac.work_status,
+            ac.order_num,
+            ac.process_instance_id,
+          work_task.id as work_id,
+          work_task.work_name,
+          leaddept.dept_name   leadDeptName
+        FROM
+            work_task_activity ac
+        INNER JOIN work_task ON ac.work_task_id = work_task.id
+        inner JOIN sys_dept leaddept on work_task.lead_dept_id=leaddept.dept_id
     </sql>
 
     <select id="selectWorkTaskActivityList" parameterType="WorkTaskActivity" resultMap="WorkTaskActivityResult">
         <include refid="selectWorkTaskActivityVo"/>
         <where>
-            <if test="id != null  and id != '' "> and id = #{id}</if>
-             <if test="workTaskId != null  and workTaskId != '' "> and work_task_id = #{workTaskId}</if>
-             <if test="content != null  and content != '' "> and content = #{content}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
-             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
-             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="repContent != null  and repContent != '' "> and rep_content = #{repContent}</if>
-             <if test="target != null  and target != '' "> and target = #{target}</if>
-             <if test="targetScore != null "> and target_score = #{targetScore}</if>
-             <if test="targetMonth != null  and targetMonth != '' "> and target_month = #{targetMonth}</if>
-             <if test="workStatus != null  and workStatus != '' "> and work_status = #{workStatus}</if>
-             <if test="orderNum != null "> and order_num = #{orderNum}</if>
-            <if test="process_instance_id != null "> and process_instance_id = #{process_instance_id}</if>
+            <if test="id != null  and id != '' "> and ac.id = #{id}</if>
+             <if test="workTaskId != null  and workTaskId != '' "> and ac.work_task_id = #{workTaskId}</if>
+             <if test="content != null  and content != '' "> and ac.content = #{content}</if>
+             <if test="createBy != null  and createBy != '' "> and ac.create_by = #{createBy}</if>
+             <if test="createTime != null "> and ac.create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and ac.update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and ac.update_time = #{updateTime}</if>
+             <if test="delFlag != null  and delFlag != '' "> and ac.del_flag = #{delFlag}</if>
+             <if test="remark != null  and remark != '' "> and ac.remark = #{remark}</if>
+             <if test="repContent != null  and repContent != '' "> and ac.rep_content = #{repContent}</if>
+             <if test="target != null  and target != '' "> and ac.target = #{target}</if>
+             <if test="targetScore != null "> and ac.target_score = #{targetScore}</if>
+             <if test="targetMonth != null  and targetMonth != '' "> and ac.target_month = #{targetMonth}</if>
+             <if test="workStatus != null  and workStatus != '' "> and ac.work_status = #{workStatus}</if>
+             <if test="orderNum != null "> and ac.order_num = #{orderNum}</if>
+            <if test="process_instance_id != null "> and ac.process_instance_id = #{process_instance_id}</if>
          </where>
-        ORDER BY  order_num ASC, create_time ASC
+        ORDER BY  ac.target_month ASC, ac.order_num ASC
     </select>
 
     <select id="selectWorkTaskActivityById" parameterType="String" resultMap="WorkTaskActivityResult">
         <include refid="selectWorkTaskActivityVo"/>
-        where id = #{id}
+        where ac.id = #{id}
     </select>
     <select id="selectWorkTaskActivityByProId" parameterType="String" resultMap="WorkTaskActivityResult">
         <include refid="selectWorkTaskActivityVo"/>
