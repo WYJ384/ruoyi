@@ -219,6 +219,12 @@
                 <artifactId>ruoyi-taskscore</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-knowledge</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
@@ -235,6 +241,7 @@
        <module>ruoyi-activiti</module>
         <module>ruoyi-filemanager</module>
         <module>ruoyi-taskscore</module>
+        <module>ruoyi-knowledge</module>
 
     </modules>
     <packaging>pom</packaging>

@@ -1,9 +1,12 @@
 package com.ruoyi.worktask.domain;
 
+import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.activiti.domain.TaskVO;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.activiti.engine.task.Task;
@@ -57,6 +60,15 @@ public class WorkTaskActivity extends BaseEntity
 
 	private TaskVO taskVO;
 
+	private List<HistoryTaskVo> historyTaskVos=new ArrayList<HistoryTaskVo>();
+
+	public List<HistoryTaskVo> getHistoryTaskVos() {
+		return historyTaskVos;
+	}
+
+	public void setHistoryTaskVos(List<HistoryTaskVo> historyTaskVos) {
+		this.historyTaskVos = historyTaskVos;
+	}
 
 	public WorkTask getWorkTask() {
 		return workTask;

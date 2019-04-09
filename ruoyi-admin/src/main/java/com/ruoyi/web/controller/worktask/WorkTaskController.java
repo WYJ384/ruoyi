@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.config.Global;
@@ -22,9 +23,12 @@ import com.ruoyi.worktask.domain.WorkTaskActivity;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskActivityService;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -69,6 +73,9 @@ public class WorkTaskController extends BaseController
 	private	TaskService taskService;
 	@Autowired
 	ActTaskService actTaskService;
+
+	@Autowired
+	HistoryService historyService;
 	@RequiresPermissions("worktask:workTask:view")
 	@GetMapping()
 	public String workTask()
@@ -381,11 +388,23 @@ public class WorkTaskController extends BaseController
 			WorkTaskFile activityFile=new WorkTaskFile();
 			activityFile.setWorkTaskId(activityId);
 			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
-
+			String process_instance_id = activity.getProcess_instance_id();
+			if(StringUtils.isNotEmpty(process_instance_id)){
+				List<HistoricActivityInstance> list=historyService // 历史相关Service
+						.createHistoricActivityInstanceQuery() // 创建历史活动实例查询
+						.processInstanceId(process_instance_id) // 执行流程实例id
+						.finished()
+						.list();
+				for(HistoricActivityInstance hai:list){
+					HistoryTaskVo historyTaskVo=new HistoryTaskVo();
+					BeanUtils.copyProperties(hai,historyTaskVo);
+					activity.getHistoryTaskVos().add(historyTaskVo);
+				}
+			}
 			//任务流程图查询
 			if(activity.getWorkStatus().equals("2")){
 				TaskVO taskVO=new TaskVO();
-				taskVO.setProcessId(activity.getProcess_instance_id());
+				taskVO.setProcessId(process_instance_id);
 				List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
 				if(taskVOS!=null&&taskVOS.size()>0){
 					taskVO = taskVOS.get(taskVOS.size() - 1);
