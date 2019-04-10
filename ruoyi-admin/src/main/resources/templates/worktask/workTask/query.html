@@ -392,10 +392,9 @@
                 <!--右侧内容-->
                 <div class="flowChart-right">
                     <!--一个节点-->
-                    <div class="oneNode">
+                    <div class="oneNode" th:each="his: ${workActivity.historyTaskVos}">
                         <!--左侧小球-->
-                        <div class="check check-danger">
-                            发起
+                        <div class="check check-danger" th:text="${his.activityName}">
                         </div>
                         <div class="tag-boder">
                             <div class="tag">
@@ -409,8 +408,10 @@
                                 <!--<img src="img/headImg.jpg" />-->
                                 <!--内容-->
                                 <div class="details">
-                                    <h4>技术支撑部马忠义</h4>
-                                    <p>发起流程</p>
+                                    <h4 th:text="${his.assignee==null?his.activityName:'任务办理人：'+his.assignee}"></h4>
+<!--                                    -->
+                                    <h4 th:text="${his.queryVariables==null?'':'下一步任务办理人：'+his.queryVariables}"></h4>
+                                    <p th:text="${his.description}"></p>
                                 </div>
                             </div>
                             <!--中-->
@@ -423,150 +424,12 @@
                             </div>-->
                             <!--下-->
                             <div class="NodeDetail-footer">
-                                <span>2017-10-31 22:22:31</span>
+                                <span th:text="${#dates.format(his.endTime, 'yyyy-MM-dd HH:mm')}">2017-10-31 22:22:31</span>
 
                             </div>
                         </div>
                     </div>
-                    <div class="oneNode">
-                        <!--左侧小球-->
-                        <div class="check check-success">
-                            分配
-                        </div>
-                        <div class="tag-boder">
-                            <div class="tag">
-                            </div>
-                        </div>
-                        <!--右侧内容-->
-                        <div class="NodeDetail">
-                            <!--上-->
-                            <div class="NodeDetail-title">
-                                <!--头像-->
-                                <!--<img src="img/headImg.jpg" />-->
-                                <!--内容-->
-                                <div class="details">
-                                    <h4>技术支撑部马忠义</h4>
-                                    <p>审批</p>
-                                </div>
-                            </div>
-                            <!--中-->
-                            <div class="NodeDetail-content">
-                                <span class="badge">回复:</span>
 
-                                <p>分配任务给18193160599</p>
-                            </div>
-                            <!--下-->
-                            <div class="NodeDetail-footer">
-                                <span>2017-10-31 22:22:31</span>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="oneNode">
-                        <!--左侧小球-->
-                        <div class="check check-warning">
-                            汇报
-                        </div>
-                        <div class="tag-boder">
-                            <div class="tag">
-                            </div>
-                        </div>
-                        <!--右侧内容-->
-                        <div class="NodeDetail">
-                            <!--上-->
-                            <div class="NodeDetail-title">
-                                <!--头像-->
-                                <!--<img src="img/headImg.jpg" />-->
-                                <!--内容-->
-                                <div class="details">
-                                    <h4>员工赵丹</h4>
-                                    <p>汇报</p>
-                                </div>
-                            </div>
-                            <!--中-->
-                            <div class="NodeDetail-content">
-                                <span class="badge">回复:</span>
-
-                                <p>
-                                    1、IPRAN网络设备业务接口光功率不达标数少于1792个
-                                    2、承载政企专线的A设备成环率达到88%
-                                    3、按照省公司文件要求不按月分考核，年终抽查考核
-                                    4、研究QOS策略原理
-                                    5、A及以上设备资源与网管一致性和准确率25%</p>
-                            </div>
-                            <!--下-->
-                            <div class="NodeDetail-footer">
-                                <span>2017-10-31 22:22:31</span>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="oneNode">
-                        <!--左侧小球-->
-                        <div class="check check-prime">
-                            评分
-                        </div>
-                        <div class="tag-boder">
-                            <div class="tag">
-                            </div>
-                        </div>
-                        <!--右侧内容-->
-                        <div class="NodeDetail">
-                            <!--上-->
-                            <div class="NodeDetail-title">
-                                <!--头像-->
-                                <!--<img src="img/headImg.jpg" />-->
-                                <!--内容-->
-                                <div class="details">
-                                    <h4>分管领导赵丹</h4>
-                                    <p>评分</p>
-                                </div>
-                            </div>
-                            <!--中-->
-                            <div class="NodeDetail-content">
-                                <span class="badge">回复:</span>
-
-                                <p>评分：100</p>
-                            </div>
-                            <!--下-->
-                            <div class="NodeDetail-footer">
-                                <span>2017-10-31 22:22:31</span>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="oneNode">
-                        <!--左侧小球-->
-                        <div class="check">
-                            结束
-                        </div>
-                        <div class="tag-boder">
-                            <div class="tag">
-                            </div>
-                        </div>
-                        <!--右侧内容-->
-                        <div class="NodeDetail">
-                            <!--上-->
-                            <div class="NodeDetail-title">
-                                <!--头像-->
-                                <!--<img src="img/headImg.jpg" />-->
-                                <!--内容-->
-                                <div class="details">
-                                    <!--<h4>网云科技赵丹</h4>-->
-                                    <p >结束流程</p>
-                                </div>
-                            </div>
-                            <!--中-->
-                            <!--<div class="NodeDetail-content">
-                                <span class="badge BadgeGray">无回复</span>
-                            </div>-->
-                            <!--下-->
-                            <div class="NodeDetail-footer">
-                                <span>2017-10-31 22:22:31</span>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

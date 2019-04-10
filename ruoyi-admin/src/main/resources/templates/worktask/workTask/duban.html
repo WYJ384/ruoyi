@@ -4,6 +4,7 @@
 <head th:include="include :: header"></head>
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet" type="text/css" />
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" th:href="@{/css/flowChart.css}" />
 
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -154,7 +155,60 @@
                 </div>
             </div>
         </div>
+        <!--<h4>事件时间轴</h4>-->
+        <!--<hr />-->
+        <!--事件时间轴-->
+        <div class="flowChart">
+            <!--左侧轴-->
+            <div class="flowChart-left">
+                <!--虚线-->
+                <div class="dashed"></div>
+            </div>
+            <!--右侧内容-->
+            <div class="flowChart-right">
+                <!--一个节点-->
+                <div class="oneNode" th:each="his: ${workTaskActivity.historyTaskVos}">
+                    <!--左侧小球-->
+                    <div class="check check-danger" th:text="${his.activityName}">
+                    </div>
+                    <div class="tag-boder">
+                        <div class="tag">
+                        </div>
+                    </div>
+                    <!--右侧内容-->
+                    <div class="NodeDetail">
+                        <!--上-->
+                        <div class="NodeDetail-title">
+                            <!--头像-->
+                            <!--<img src="img/headImg.jpg" />-->
+                            <!--内容-->
+                            <div class="details">
+                                <h4 th:text="${his.assignee==null?his.activityName:'任务办理人：'+his.assignee}"></h4>
+                                <!--                                    -->
+                                <h4 th:text="${his.queryVariables==null?'':'下一步任务办理人：'+his.queryVariables}"></h4>
+                                <p th:text="${his.description}"></p>
+                            </div>
+                        </div>
+                        <!--中-->
+                        <!--<div class="NodeDetail-content">
+                            <span class="badge">回复:</span>
 
+                            <p>两年后，前女友突然发短信来说：“我们复合吧，转了一圈才发现你是最好的，我后悔了。”
+短短几字倾刻间击溃我所有的伪装与防备，热泪流进挥之不去的记忆，夜夜思念的那些牵手在一起的美好日子又悄然浮上心头，感觉不再累多么温暖。
+紧张，激动，焦急，我颤抖着双手解脱般地回复道：“活该！”</p>
+                        </div>-->
+                        <!--下-->
+                        <div class="NodeDetail-footer">
+                            <span th:text="${#dates.format(his.endTime, 'yyyy-MM-dd HH:mm')}">2017-10-31 22:22:31</span>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--<h4>事件时间轴</h4>-->
 
         <div class="row">
             <div class="col-sm-offset-5 col-sm-10">

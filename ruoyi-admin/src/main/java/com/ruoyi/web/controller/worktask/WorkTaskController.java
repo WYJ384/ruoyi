@@ -2,10 +2,7 @@ package com.ruoyi.web.controller.worktask;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.activiti.domain.TaskVO;
@@ -26,6 +23,10 @@ import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricIdentityLink;
+import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.history.HistoricVariableInstanceQuery;
+import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -318,50 +319,10 @@ public class WorkTaskController extends BaseController
 		mmap.put("workTaskActivities", workTaskActivities);
 		return prefix + "/edit";
 	}
+
 	@GetMapping("/query/{id}")
 	public String query(@PathVariable("id") String id, ModelMap mmap)
 	{
-//		SysUser sysUser = new SysUser();
-//		WorkTask workTask = workTaskService.selectWorkTaskById(id);
-//		//附件
-//		WorkTaskFile workTaskFile=new WorkTaskFile();
-//		workTaskFile.setWorkTaskId(id);
-//		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
-////		SysDept cooperateDept = deptService.selectDeptById(Long.valueOf(workTask.getCooperateDeptId()));
-////		if(cooperateDept!=null){
-////			workTask.setCooperateDeptName(cooperateDept.getDeptName());
-////		}
-//		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
-//		if(leadDept!=null){
-//			workTask.setLeadDeptName(leadDept.getDeptName());
-//		}
-//
-//		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
-//		workTaskActivity.setWorkTaskId(id);
-//		//workTaskActivity.setTargetMonth(DateFormatUtils.format(new Date(),"MM"));
-//		List<WorkTaskActivity> workTaskActivities = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
-//		Iterator<WorkTaskActivity> activityIterator = workTaskActivities.iterator();
-//		WorkTaskActivity currentWorkTaskActivity=new WorkTaskActivity();
-//		while (activityIterator.hasNext()){
-//			WorkTaskActivity activity = activityIterator.next();
-//			String currentMonth = DateFormatUtils.format(new Date(), "MM");
-//			if(currentMonth.equals(activity.getTargetMonth())){
-//				activity.setCurrent(true);
-//				currentWorkTaskActivity=activity;
-//			}
-//			String activityId = activity.getId();
-//			WorkTaskFile activityFile=new WorkTaskFile();
-//			activityFile.setWorkTaskId(activityId);
-//			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
-//		}
-//		mmap.put("currentWorkTaskActivity", currentWorkTaskActivity);
-//		mmap.put("workTask", workTask);
-//		mmap.put("workTaskFiles", workTaskFiles);
-//		mmap.put("users",userService.selectUserList(sysUser));
-//		mmap.put("workTaskActivities", workTaskActivities);
-//		mmap.put("sysUser",ShiroUtils.getSysUser());
-//		mmap.put("depts",deptService.selectDeptList(new SysDept()));
-
 		SysUser sysUser = new SysUser();
 		WorkTask workTask = workTaskService.selectWorkTaskById(id);
 
@@ -398,6 +359,43 @@ public class WorkTaskController extends BaseController
 				for(HistoricActivityInstance hai:list){
 					HistoryTaskVo historyTaskVo=new HistoryTaskVo();
 					BeanUtils.copyProperties(hai,historyTaskVo);
+					SysUser assignee = userService.selectUserByLoginName(historyTaskVo.getAssignee());
+					if(assignee!=null){
+						historyTaskVo.setAssignee(assignee.getDept().getDeptName()+assignee.getUserName());
+					}
+					if(hai.getActivityId().equalsIgnoreCase("start")){
+						HistoricVariableInstance zhuren_users = historyService.createHistoricVariableInstanceQuery()
+								.processInstanceId(process_instance_id)
+								.variableName("zhuren_users").singleResult();
+						historyTaskVo.setQueryVariables(zhuren_users.getValue().toString());
+					}else if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
+						HistoricVariableInstance yuangong_users = historyService.createHistoricVariableInstanceQuery()
+								.processInstanceId(process_instance_id)
+								.variableName("yuangong_users").singleResult();
+						historyTaskVo.setQueryVariables(yuangong_users.getValue().toString());
+						historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
+					}else if(hai.getActivityId().equalsIgnoreCase("gerentijiao")){
+						HistoricVariableInstance fenguan_users = historyService.createHistoricVariableInstanceQuery()
+								.processInstanceId(process_instance_id)
+								.variableName("fenguan_users").singleResult();
+						historyTaskVo.setQueryVariables(fenguan_users.getValue().toString());
+						historyTaskVo.setDescription(historyTaskVo.getAssignee()+"提交工作内容："+activity.getContent());
+					}else if(hai.getActivityId().equalsIgnoreCase("lingdaopingfen")){
+						historyTaskVo.setDescription("分管领导评分:"+activity.getTargetScore());
+					}else if(hai.getActivityId().equalsIgnoreCase("end")){
+						historyTaskVo.setDescription("任务结束");
+					}
+					String queryVariables = historyTaskVo.getQueryVariables();
+					historyTaskVo.setQueryVariables("");
+					if(StringUtils.isNotEmpty(queryVariables)){
+						String[] arrUsers = queryVariables.split(",");
+						for (String loginName:arrUsers) {
+							SysUser user = userService.selectUserByLoginName(loginName);
+							if(user!=null){
+								historyTaskVo.setQueryVariables(historyTaskVo.getQueryVariables()+user.getUserName()+"("+loginName+")"+",");
+							}
+						}
+					}
 					activity.getHistoryTaskVos().add(historyTaskVo);
 				}
 			}
@@ -516,6 +514,57 @@ public class WorkTaskController extends BaseController
 		WorkTaskFile activityFile=new WorkTaskFile();
 		activityFile.setWorkTaskId(activityId);
 		workTaskActivity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+		String process_instance_id = workTaskActivity.getProcess_instance_id();
+		if(StringUtils.isNotEmpty(process_instance_id)){
+			List<HistoricActivityInstance> list=historyService // 历史相关Service
+					.createHistoricActivityInstanceQuery() // 创建历史活动实例查询
+					.processInstanceId(process_instance_id) // 执行流程实例id
+					.finished()
+					.list();
+			for(HistoricActivityInstance hai:list){
+				HistoryTaskVo historyTaskVo=new HistoryTaskVo();
+				BeanUtils.copyProperties(hai,historyTaskVo);
+				SysUser assignee = userService.selectUserByLoginName(historyTaskVo.getAssignee());
+				if(assignee!=null){
+					historyTaskVo.setAssignee(assignee.getDept().getDeptName()+assignee.getUserName());
+				}
+				if(hai.getActivityId().equalsIgnoreCase("start")){
+					HistoricVariableInstance zhuren_users = historyService.createHistoricVariableInstanceQuery()
+							.processInstanceId(process_instance_id)
+							.variableName("zhuren_users").singleResult();
+					historyTaskVo.setQueryVariables(zhuren_users.getValue().toString());
+				}else if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
+					HistoricVariableInstance yuangong_users = historyService.createHistoricVariableInstanceQuery()
+							.processInstanceId(process_instance_id)
+							.variableName("yuangong_users").singleResult();
+					historyTaskVo.setQueryVariables(yuangong_users.getValue().toString());
+					historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
+				}else if(hai.getActivityId().equalsIgnoreCase("gerentijiao")){
+					HistoricVariableInstance fenguan_users = historyService.createHistoricVariableInstanceQuery()
+							.processInstanceId(process_instance_id)
+							.variableName("fenguan_users").singleResult();
+					historyTaskVo.setQueryVariables(fenguan_users.getValue().toString());
+					historyTaskVo.setDescription(historyTaskVo.getAssignee()+"提交工作内容："+workTaskActivity.getContent());
+				}else if(hai.getActivityId().equalsIgnoreCase("lingdaopingfen")){
+					historyTaskVo.setDescription("分管领导评分:"+workTaskActivity.getTargetScore());
+				}else if(hai.getActivityId().equalsIgnoreCase("end")){
+					historyTaskVo.setDescription("任务结束");
+				}
+				String queryVariables = historyTaskVo.getQueryVariables();
+				historyTaskVo.setQueryVariables("");
+				if(StringUtils.isNotEmpty(queryVariables)){
+					String[] arrUsers = queryVariables.split(",");
+					for (String loginName:arrUsers) {
+						SysUser user = userService.selectUserByLoginName(loginName);
+						if(user!=null){
+							historyTaskVo.setQueryVariables(historyTaskVo.getQueryVariables()+user.getUserName()+"("+loginName+")"+",");
+						}
+					}
+				}
+				workTaskActivity.getHistoryTaskVos().add(historyTaskVo);
+			}
+		}
+
 		mmap.put("workTaskActivity", workTaskActivity);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("taskId", taskId);
