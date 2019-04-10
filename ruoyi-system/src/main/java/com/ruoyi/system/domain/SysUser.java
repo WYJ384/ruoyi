@@ -75,7 +75,8 @@ public class SysUser extends BaseEntity
     /** 部门对象 */
     @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT)
     private SysDept dept;
-
+    /** 显示顺序 */
+    private String orderNum;
     private List<SysRole> roles;
 
     /** 角色组 */
@@ -83,6 +84,14 @@ public class SysUser extends BaseEntity
 
     /** 岗位组 */
     private Long[] postIds;
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
 
     public Long getUserId()
     {
