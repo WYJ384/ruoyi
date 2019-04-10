@@ -83,63 +83,7 @@
             </div>
         </div>
 
-        <!--<div class="row">-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>开始时间：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input id="beginTime"  th:value="${#dates.format(workTask.beginTime, 'yyyy-MM-dd HH:mm')}" name="beginTime" class="form-control" readonly type="text" >-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label"><span style="color: red; ">*</span>结束时间：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input id="endTime"  th:value="${#dates.format(workTask.endTime, 'yyyy-MM-dd HH:mm')}" name="endTime" class="form-control" readonly type="text" >-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
 
-        <!--<div class="row">-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">执行人：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<select id="userIds" class="form-control select2-hidden-accessible" multiple="">-->
-        <!--<option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>-->
-        <!--</select>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">督办情况：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<label class="radio-box" style="margin-top: 8px;">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" value="2" th:field="*{result}" id="result2" name="result">-->
-        <!--</div>-->
-        <!--绿灯-->
-        <!--</label>-->
-        <!--<label class="radio-box">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" value="3"  th:field="*{result}" id="result3" name="result">-->
-        <!--</div>-->
-        <!--黄灯-->
-        <!--</label>-->
-        <!--<label class="radio-box" >-->
-        <!--<div class="iradio-blue ">-->
-        <!--<input type="radio" checked="" th:field="*{result}"  value="1" id="result1" name="result">-->
-        <!--</div>-->
-        <!--红灯-->
-        <!--</label>-->
-
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
 
 
         <div class="form-group" style="display: none">
@@ -167,41 +111,7 @@
         </div>
 
 
-        <!--<div class="row">-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">任务完成工时：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<input id="workTime" name="workTime" th:field="*{workTime}" class="form-control" type="text">-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">任务状态：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<label class="radio-box" style="margin-top: 8px;">-->
-        <!--<div class="iradio-blue ">-->
-        <!--<input type="radio" checked="" th:field="*{workStatus}" value="1" id="workStatus1" name="workStatus">-->
-        <!--</div>-->
-        <!--进行中-->
-        <!--</label>-->
-        <!--<label class="radio-box">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" value="2" th:field="*{workStatus}" id="workStatus2" name="workStatus">-->
-        <!--</div>-->
-        <!--已完成-->
-        <!--</label>-->
-        <!--<label class="radio-box">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" value="3" th:field="*{workStatus}" id="workStatus3" name="workStatus">-->
-        <!--</div>-->
-        <!--已归档-->
-        <!--</label>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+
 
 
         <div class="row">
@@ -257,56 +167,12 @@
         </div>
     </form>
 </div>
-<!--<div class="row">-->
-    <!--<div class="col-sm-offset-5 col-sm-10">-->
-        <!--<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存-->
-        <!--</button>&nbsp;-->
-        <!--<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭-->
-        <!--</button>-->
-    <!--</div>-->
-<!--</div>-->
 
-
-<!--<form class="form-horizontal m" id="form-workTaskActivity-add" enctype="multipart/form-data">-->
-    <!--<h4 class="form-header h4">任务目标添加</h4>-->
-    <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务目标：</label>-->
-        <!--<div class="col-sm-8">-->
-            <!--<textarea id="target" name="target" class="form-control"></textarea>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label"><span style="color: red; ">*</span>目标月份：</label>-->
-        <!--<div class="col-sm-8">-->
-            <!--<input id="targetMonth" name="targetMonth" class="form-control" type="text">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<input id="workTaskId" name="workTaskId" th:value="${workTask.id}" class="form-control" type="hidden">-->
-
-    <!--<div class="form-group">-->
-        <!--<label class="col-sm-3 control-label">备注：</label>-->
-        <!--<div class="col-sm-8">-->
-            <!--<textarea id="remark" name="remark" class="form-control"></textarea>-->
-        <!--</div>-->
-    <!--</div>-->
-
-<!--</form>-->
-<!--<div class="row">-->
-    <!--<div class="col-sm-offset-5 col-sm-10">-->
-        <!--<button type="button" class="btn btn-sm btn-primary" onclick="submitWorkTaskActivityAddHandler()"><i-->
-                <!--class="fa fa-check"></i>保存-->
-        <!--</button>-->
-        <!--&nbsp;-->
-        <!--<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i-->
-                <!--class="fa fa-reply-all"></i>关 闭-->
-        <!--</button>-->
-    <!--</div>-->
-<!--</div>-->
 
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
 
     <div class="form-horizontal m">
-        <div th:each="workActivity: ${workTaskActivities}">
+        <div >
             <h4 class="form-header h4">目标月份：<span th:text="${workActivity.targetMonth}"></span>月 &nbsp;任务得分：<span
                     th:text="${workActivity.targetScore}"></span></h4>
             <div class="form-group">

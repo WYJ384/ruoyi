@@ -3,12 +3,16 @@ package com.ruoyi.web.controller.worktask;
 import java.io.IOException;
 import java.util.*;
 
+import com.ruoyi.activiti.domain.HistoryTaskVo;
+import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.config.Global;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.worktask.domain.WorkTask;
@@ -18,9 +22,12 @@ import com.ruoyi.worktask.service.IWorkTaskService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -55,7 +62,8 @@ public class WorkTaskActivityController extends BaseController {
     HistoryService historyService;
     @Autowired
     TaskService taskService;
-
+    @Autowired
+    private ISysDeptService deptService;
     @Autowired
     private ActTaskService actTaskService;
     @Autowired
@@ -259,6 +267,105 @@ public class WorkTaskActivityController extends BaseController {
                 .finished() // 查询已经完成的任务
                 .list();
         return getDataTable(list);
+    }
+
+    @GetMapping("/query/{id}")
+    public String query(@PathVariable("id") String id, ModelMap mmap)
+    {
+
+        WorkTaskActivity workTaskActivity= workTaskActivityService.selectWorkTaskActivityById(id);
+
+        SysUser sysUser = new SysUser();
+        WorkTask workTask = workTaskService.selectWorkTaskById(workTaskActivity.getWorkTaskId());
+
+        //附件
+        WorkTaskFile workTaskFile=new WorkTaskFile();
+        workTaskFile.setWorkTaskId(id);
+        List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
+
+
+        SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
+
+        if(leadDept!=null){
+            workTask.setLeadDeptName(leadDept.getDeptName());
+        }
+
+        //查询当前专项工作下的目标任务
+        String activityId = workTaskActivity.getId();
+        WorkTaskFile activityFile=new WorkTaskFile();
+        activityFile.setWorkTaskId(activityId);
+        workTaskActivity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
+        String process_instance_id = workTaskActivity.getProcess_instance_id();
+        if(StringUtils.isNotEmpty(process_instance_id)){
+            List<HistoricActivityInstance> list=historyService // 历史相关Service
+                    .createHistoricActivityInstanceQuery() // 创建历史活动实例查询
+                    .processInstanceId(process_instance_id) // 执行流程实例id
+                    .finished()
+                    .list();
+            for(HistoricActivityInstance hai:list){
+                HistoryTaskVo historyTaskVo=new HistoryTaskVo();
+                BeanUtils.copyProperties(hai,historyTaskVo);
+                SysUser assignee = userService.selectUserByLoginName(historyTaskVo.getAssignee());
+                if(assignee!=null){
+                    historyTaskVo.setAssignee(assignee.getDept().getDeptName()+assignee.getUserName());
+                }
+                if(hai.getActivityId().equalsIgnoreCase("start")){
+                    HistoricVariableInstance zhuren_users = historyService.createHistoricVariableInstanceQuery()
+                            .processInstanceId(process_instance_id)
+                            .variableName("zhuren_users").singleResult();
+                    historyTaskVo.setQueryVariables(zhuren_users.getValue().toString());
+                }else if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
+                    HistoricVariableInstance yuangong_users = historyService.createHistoricVariableInstanceQuery()
+                            .processInstanceId(process_instance_id)
+                            .variableName("yuangong_users").singleResult();
+                    historyTaskVo.setQueryVariables(yuangong_users.getValue().toString());
+                }else if(hai.getActivityId().equalsIgnoreCase("gerentijiao")){
+                    HistoricVariableInstance fenguan_users = historyService.createHistoricVariableInstanceQuery()
+                            .processInstanceId(process_instance_id)
+                            .variableName("fenguan_users").singleResult();
+                    historyTaskVo.setQueryVariables(fenguan_users.getValue().toString());
+                    historyTaskVo.setDescription(historyTaskVo.getAssignee()+"提交工作内容："+workTaskActivity.getContent());
+                }else if(hai.getActivityId().equalsIgnoreCase("lingdaopingfen")){
+                    historyTaskVo.setDescription("分管领导评分:"+workTaskActivity.getTargetScore());
+                }else if(hai.getActivityId().equalsIgnoreCase("end")){
+                    historyTaskVo.setDescription("任务结束");
+                }
+                String queryVariables = historyTaskVo.getQueryVariables();
+                historyTaskVo.setQueryVariables("");
+                if(StringUtils.isNotEmpty(queryVariables)){
+                    String[] arrUsers = queryVariables.split(",");
+                    for (String loginName:arrUsers) {
+                        SysUser user = userService.selectUserByLoginName(loginName);
+                        if(user!=null){
+                            historyTaskVo.setQueryVariables(historyTaskVo.getQueryVariables()+user.getUserName()+"("+loginName+")"+",");
+
+                        }
+                    }
+                    if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
+                        historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
+                    }
+                }
+                workTaskActivity.getHistoryTaskVos().add(historyTaskVo);
+            }
+        }
+        //任务流程图查询
+        if(workTaskActivity.getWorkStatus().equals("2")){
+            TaskVO taskVO=new TaskVO();
+            taskVO.setProcessId(process_instance_id);
+            List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+            if(taskVOS!=null&&taskVOS.size()>0){
+                taskVO = taskVOS.get(taskVOS.size() - 1);
+                taskVO.setCreateBy("/activiti/task/trace/photo/"+taskVO.getProcessDefinitionId()+"/"+taskVO.getExecutionId());
+                workTaskActivity.setTaskVO(taskVO);
+            }
+        }
+
+        mmap.put("workTask", workTask);
+        mmap.put("workTaskFiles", workTaskFiles);
+        mmap.put("users",userService.selectUserList(sysUser));
+        mmap.put("depts",deptService.selectDeptList(new SysDept()));
+        mmap.put("workActivity", workTaskActivity);
+        return prefix + "/query";
     }
 
 }
