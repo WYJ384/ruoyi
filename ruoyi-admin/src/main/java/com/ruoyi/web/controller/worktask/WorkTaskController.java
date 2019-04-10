@@ -373,7 +373,6 @@ public class WorkTaskController extends BaseController
 								.processInstanceId(process_instance_id)
 								.variableName("yuangong_users").singleResult();
 						historyTaskVo.setQueryVariables(yuangong_users.getValue().toString());
-						historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
 					}else if(hai.getActivityId().equalsIgnoreCase("gerentijiao")){
 						HistoricVariableInstance fenguan_users = historyService.createHistoricVariableInstanceQuery()
 								.processInstanceId(process_instance_id)
@@ -393,7 +392,11 @@ public class WorkTaskController extends BaseController
 							SysUser user = userService.selectUserByLoginName(loginName);
 							if(user!=null){
 								historyTaskVo.setQueryVariables(historyTaskVo.getQueryVariables()+user.getUserName()+"("+loginName+")"+",");
+
 							}
+						}
+						if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
+							historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
 						}
 					}
 					activity.getHistoryTaskVos().add(historyTaskVo);
@@ -560,7 +563,11 @@ public class WorkTaskController extends BaseController
 							historyTaskVo.setQueryVariables(historyTaskVo.getQueryVariables()+user.getUserName()+"("+loginName+")"+",");
 						}
 					}
+					if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
+						historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
+					}
 				}
+
 				workTaskActivity.getHistoryTaskVos().add(historyTaskVo);
 			}
 		}
