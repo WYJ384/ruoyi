@@ -71,7 +71,8 @@ spring:
     restart:
       # 热部署开关
       enabled: true
-
+  resources:
+    static-locations: file:${ruoyi.profile},classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
 
 
       # MyBatis

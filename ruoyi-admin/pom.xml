@@ -88,7 +88,11 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-taskscore</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
     </dependencies>
 
     <build>
