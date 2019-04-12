@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectUserVo">
-        select  u.user_id, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.sex, u.avatar, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
+        select  u.user_id,u.order_num, u.dept_id, u.login_name, u.user_name, u.email, u.phonenumber, u.sex, u.avatar, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
        		    d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status,
        		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
 		from sys_user u
@@ -118,6 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
 		<include refid="selectUserVo"/>
 		where u.user_id = #{userId}
+		order by u.order_num
 	</select>
 
 	<delete id="deleteUserById" parameterType="Long">
