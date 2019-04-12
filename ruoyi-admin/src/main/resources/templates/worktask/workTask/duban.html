@@ -90,7 +90,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">执行人：</label>
                     <div class="col-sm-10">
-                        <select id="userIds" class="form-control select2-hidden-accessible" multiple="">
+                        <select id="userIds" class="form-control select2-hidden-accessible">
+                            <option value=""></option>
                             <option th:each="user:${users}" th:value="${user.loginName}"
                                     th:text="${user.userName}"></option>
                         </select>

@@ -19,7 +19,7 @@
                             <li><a href="#" class="menu-item" id="todoTask">代办任务</a></li>
                             <li><a href="#" class="menu-item" id="finishedTask">已办任务</a></li>
                             <li><a href="#" class="menu-item " id="involvedTask">受邀任务</a></li>
-                            <li><a href="#" class="menu-item" id="archivedTask">已经归档</a></li>
+<!--                            <li><a href="#" class="menu-item" id="archivedTask">已经归档</a></li>-->
                         </ul>
                     </div>
                 </nav>
@@ -78,13 +78,13 @@
                     field: 'name',
                     title: '任务名称'
                 },
-                {
-                    field: 'executionId',
-                    title: '跟踪',
-                    formatter: function (value, row, index) {
-                        return '<a onclick="workProcessDetail(\'' + row.processDefinitionId + '\',\'' + row.processId + '\')">跟踪</a>';
-                    }
-                },
+                // {
+                //     field: 'executionId',
+                //     title: '跟踪',
+                //     formatter: function (value, row, index) {
+                //         return '<a onclick="workProcessDetail(\'' + row.processDefinitionId + '\',\'' + row.processId + '\')">跟踪</a>';
+                //     }
+                // },
                 {
                     title: '操作',
                     align: 'center',

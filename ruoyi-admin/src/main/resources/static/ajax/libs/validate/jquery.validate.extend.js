@@ -37,6 +37,15 @@ $(document).ready(function(){
 		var birth = /^(19|20)\d{2}-(1[0-2]|0?[1-9])-(0?[1-9]|[1-2][0-9]|3[0-1])$/;
 		return this.optional(element) || (birth).test(value);
 	},"出生日期格式示例2000-01-01");
+
+
+	// 邮政编码验证
+	jQuery.validator.addMethod("pwdEasy", function(value, element) {
+		var pwd = /^[A-Za-z0-9]{6,20}$/;
+		return this.optional(element) || (pwd).test(value);
+	}, "密码中必须包含字母、数字、特称字符，至少8个字符，最多30个字符");
+
+
 	//校验新旧密码是否相同
 	jQuery.validator.addMethod("isdiff",function(){
 		var p1=$("#pwdOld").val();

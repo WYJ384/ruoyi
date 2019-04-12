@@ -245,8 +245,7 @@ public class WorkTaskActivityController extends BaseController {
                 SysUser sysUser = userIterator.next();
                 loginNames.add(sysUser.getLoginName());
             }
-
-            vars.put("zhuren_users", StringUtils.join(loginNames, ","));
+            vars.put("zhuren_users", loginNames.get(0));
             ProcessInstance processInstance = actTaskService.startProcess("duban", businessTable, businessId, title, userId, vars);
             String instanceid = processInstance.getId();
             workTaskActivity.setProcess_instance_id(instanceid);
