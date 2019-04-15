@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.EchartVo;
 import com.ruoyi.system.domain.SysLogininfor;
 
 /**
@@ -39,4 +41,26 @@ public interface SysLogininforMapper
      * @return 结果
      */
     public int cleanLogininfor();
+
+    List<EchartVo> getDeptLoginCount();
+
+    /**
+     * 会议室预约次数
+     * @return
+     */
+    List<EchartVo> getMeetRoomCount();
+
+    /**
+     * 部门统计会议室预约次数
+     * @return
+     */
+    List<EchartVo> getMeetingCountByDept();
+
+    /**
+     * 最近一周访问人数
+     * @return
+     */
+    List<EchartVo> weekLoginCount();
+
+
 }

@@ -52,5 +52,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="cleanLogininfor">
         truncate table sys_logininfor
     </update>
-    
+    <select id="getDeptLoginCount" resultType="com.ruoyi.system.domain.EchartVo">
+		SELECT sys_dept.dept_name name ,count(1) as value from sys_logininfor login
+		INNER JOIN sys_user on sys_user.login_name= login.login_name
+		INNER JOIN sys_dept on sys_dept.dept_id= sys_user.dept_id
+		GROUP BY dept_name
+	</select>
+
+<!--	会议室预约次数-->
+	<select id="getMeetRoomCount" resultType="com.ruoyi.system.domain.EchartVo">
+	SELECT meetroom_name name,count(1) value from meeting
+	RIGHT  JOIN meetroom on meeting.meetroom_id =meetroom.id
+	GROUP BY meetroom_name
+	</select>
+	<!--	按部门统计会议室预约次数-->
+	<select id="getMeetingCountByDept" resultType="com.ruoyi.system.domain.EchartVo">
+		SELECT  sys_dept.dept_name name ,count(1) as value from meeting
+		INNER JOIN sys_user on sys_user.login_name= meeting.created_by
+		INNER JOIN sys_dept on sys_dept.dept_id= sys_user.dept_id
+		GROUP BY dept_name
+	</select>
+<!--	最近一周访问人数-->
+	<select id="weekLoginCount" resultType="com.ruoyi.system.domain.EchartVo">
+		SELECT  date_format(login.login_time, '%Y-%m-%d') name ,count(1) value from sys_logininfor login
+		INNER JOIN sys_user on sys_user.login_name= login.login_name
+		INNER JOIN sys_dept on sys_dept.dept_id= sys_user.dept_id
+		where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[ <= ]]> date(login_time)
+		GROUP BY date_format(login.login_time, '%Y-%m-%d')
+
+	</select>
+
 </mapper> 

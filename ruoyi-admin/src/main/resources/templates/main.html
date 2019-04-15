@@ -1,122 +1,548 @@
 <!DOCTYPE html>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--360浏览器优先以webkit内核解析-->
     <title>甘肃电信noc介绍</title>
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
-    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
-    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+    <head th:include="include :: header"></head>
 </head>
 
 <body class="gray-bg">
-    <!--<div class="row  border-bottom white-bg dashboard-header">-->
-        <!--<div class="col-sm-12">-->
-            <!--<blockquote class="text-warning" style="font-size:14px">-->
-                                                        <!--领取阿里云1888通用代金券(新老客户均可用)-->
-                <!--<br><a target="_blank" href="https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=brki8iof">https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=brki8iof</a>-->
-                <!--<h4 class="text-danger">云产品通用红包，可叠加官网常规优惠使用。</h4>-->
-                <!--<h4 class="text-danger">2019阿里云开年Hi购季 云服务器全场限时5折。<a target="_blank" href="https://www.aliyun.com/acts/product-section-2019/new-users?spm=5176.11533457.1089570.1.424777e3bwsfme&userCode=brki8iof">活动入口</a></h4>-->
-            <!--</blockquote>-->
-
-            <!--<hr>-->
-        <!--</div>-->
-        <!--<div class="col-sm-3">-->
-            <!--<h2>Hello,Guest</h2>-->
-            <!--<small>移动设备访问请扫描以下二维码：</small>-->
-            <!--<br>-->
-            <!--<br>-->
-            <!--<img th:src="@{/img/qr_code.png}" width="100%" style="max-width:264px;">-->
-            <!--<br>-->
-        <!--</div>-->
-        <!--<div class="col-sm-5">-->
-            <!--<h2>甘肃电信noc后台管理框架</h2>-->
-            <!--<p>一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。于是利用空闲休息时间开始自己写一套后台系统。如此有了甘肃电信noc管理系统。，她可以用于所有的Web应用程序，如<b>网站管理后台</b>，<b>网站会员中心</b>，<b>CMS</b>，<b>CRM</b>，<b>OA</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。</p>-->
-            <!--<p>-->
-                <!--<b>当前版本：</b><span>v[[${version}]]</span>-->
-            <!--</p>-->
-            <!--<p>-->
-                <!--<span class="label label-warning">&yen;免费开源</span>-->
-            <!--</p>-->
-            <!--<br>-->
-            <!--<p>-->
-                <!--<a class="btn btn-success btn-outline" href="https://gitee.com/y_project/RuoYi" target="_blank">-->
-                    <!--<i class="fa fa-cloud"> </i> 访问码云-->
-                <!--</a>-->
-                <!--<a class="btn btn-white btn-bitbucket" href="http://ruoyi.vip" target="_blank">-->
-                    <!--<i class="fa fa-home"></i> 访问主页-->
-                <!--</a>-->
-            <!--</p>-->
-        <!--</div>-->
-        <!--<div class="col-sm-4">-->
-            <!--<h4>技术选型：</h4>-->
-            <!--<ol>-->
-                <!--<li>核心框架：Spring Boot。</li>-->
-                <!--<li>安全框架：Apache Shiro。</li>-->
-                <!--<li>模板引擎：Thymeleaf。</li>-->
-                <!--<li>持久层框架：MyBatis。</li>-->
-				<!--<li>定时任务:Quartz。</li>-->
-                <!--<li>数据库连接池：Druid。</li>-->
-                <!--<li>工具类：Fastjson。</li>-->
-                <!--<li>更多……</li>-->
-            <!--</ol>-->
-        <!--</div>-->
-
-    <!--</div>-->
-    <div class="wrapper wrapper-content">
+<div class="wrapper wrapper-content">
+    <div class="col-sm-12">
         <div class="row">
-            <div class="col-sm-4">
-
+            <div class="col-sm-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>联系信息</h5>
-
+                        <h5>部门登陆人数统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link"><i class="fa fa-times"></i></a>
+                        </div>
                     </div>
-                    <div class="ibox-content">
-                        <!--<p><i class="fa fa-send-o"></i> 官网：<a href="http://www.ruoyi.vip" target="_blank">http://www.ruoyi.vip</a>-->
-                        <!--</p>-->
-                        <!--<p><i class="fa fa-qq"></i> QQ群：<s>满1389287</s> <s>满1679294</s> <a href="https://jq.qq.com/?_wv=1027&k=5YW0wjE" target="_blank">1529866</a>-->
-                        <!--</p>-->
-                        <!--<p><i class="fa fa-weixin"></i> 微信：<a href="javascript:;">/ *甘肃电信noc</a>-->
-                        <!--</p>-->
-                        <!--<p><i class="fa fa-credit-card"></i> 支付宝：<a href="javascript:;" class="支付宝信息">/ *甘肃电信noc</a>-->
-                        <!--</p>-->
+                    <div class="ibox-content" >
+                        <div id="deptLoginCount" style="height: 300px;background: #fff"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+
+            <div class="col-sm-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5></h5>
+                        <h5>会议室预约次数统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            <a class="close-link"><i class="fa fa-times"></i></a>
+                        </div>
                     </div>
-                    <div class="ibox-content no-padding">
-
+                    <div class="ibox-content">
+                        <div id="getMeetRoomCount" style="height: 300px;background: #fff"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5></h5>
+                        <h5>部门会议预约次数数统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="ibox-content">
-                        <!--<div class="alert alert-warning">-->
-                            	<!--请作者喝杯咖啡。-->
-                        <!--</div>-->
-                        <!--<p id="pay-qrcode">-->
-                            <!--<a href="javascript:;"><img th:src="@{/img/pay.png}" width="100%" alt="请使用手机支付宝或者微信扫码支付">-->
-                            <!--</a>-->
-                        <!--</p>-->
+                        <div id="getMeetingCountByDept" style="height: 300px;background: #fff"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>访问量统计</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="weekLoginCount" style="height: 300px;background: #fff"></div>
 
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>磁盘状态</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover margin bottom">
+                                    <thead>
+                                    <tr>
+                                        <th>盘符路径</th>
+                                        <th>文件系统</th>
+                                        <th>盘符类型</th>
+                                        <th>总大小</th>
+                                        <th>可用大小</th>
+                                        <th>已用大小</th>
+                                        <th>已用百分比</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>C:\</td>
+                                        <td>NTFS</td>
+                                        <td>本地固定磁盘 (C:)</td>
+                                        <td>100.0 GB</td>
+                                        <td>43.1 GB</td>
+                                        <td>56.9 GB</td>
+                                        <td>56.92%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>D:\</td>
+                                        <td>NTFS</td>
+                                        <td>本地固定磁盘 (D:)</td>
+                                        <td>830.3 GB</td>
+                                        <td>819.8 GB</td>
+                                        <td>10.4 GB</td>
+                                        <td>1.26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>E:\</td>
+                                        <td></td>
+                                        <td>光盘 (E:)</td>
+                                        <td>0 B</td>
+                                        <td>0 B</td>
+                                        <td>0 B</td>
+                                        <td>0.0%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+</div>
+<div th:include="include :: footer"></div>
+<script th:src="@{/echarts/dists/echarts.js}"></script>
+<script>
+    $(".modal").appendTo("body"), $("[data-toggle=popover]").popover(), $(".collapse-link").click(function() {
+        var div_ibox = $(this).closest("div.ibox"),
+            e = $(this).find("i"),
+            i = div_ibox.find("div.ibox-content");
+        i.slideToggle(200),
+            e.toggleClass("fa-chevron-up").toggleClass("fa-chevron-down"),
+            div_ibox.toggleClass("").toggleClass("border-bottom"),
+            setTimeout(function() {
+                div_ibox.resize();
+            }, 50);
+    }), $(".close-link").click(function () {
+        var div_ibox = $(this).closest("div.ibox");
+        div_ibox.remove()
+    });
+</script>
+
+<script type="text/javascript">
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: '/echarts/dists'
+        }
+    });
+
+    // 使用
+    require(
+        [
+            'echarts',
+            'echarts/chart/line',
+            'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+        ],
+        function (ec) {
+            // 基于准备好的dom，初始化echarts图表
+            var deptLoginCountChart = ec.init(document.getElementById('deptLoginCount'));
+            // 为echarts对象加载数据
+            deptLoginCountChart.setOption({
+                tooltip: {
+                    show: true
+                },
+                legend: {
+                    data:['部门']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : []
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"部门",
+                        "type":"bar",
+                        "data":[]
+                    }
+                ]
+            });
+            deptLoginCountChart.showLoading();    //数据加载完之前先显示一段简单的loading动画
+            var names=[];    //类别数组（实际用来盛放X轴坐标值）
+            var nums=[];    //销量数组（实际用来盛放Y坐标值）
+            $.ajax({
+                type : "post",
+                async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url : "/monitor/logininfor" + "/getDeptLoginCount",    //请求发送到TestServlet处
+                data : {},
+                dataType : "json",        //返回数据形式为json
+                success : function(result) {
+                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                    if (result.data) {
+                        names=[];
+                        nums=[];
+                        for(var i=0;i<result.data.length;i++){
+                            names.push(result.data[i].name);    //挨个取出类别并填入类别数组
+                        }
+                        for(var i=0;i<result.data.length;i++){
+                            nums.push(result.data[i].value);    //挨个取出销量并填入销量数组
+                        }
+                        console.log(nums)
+                        deptLoginCountChart.hideLoading();    //隐藏加载动画
+                        deptLoginCountChart.setOption({
+                            tooltip: {
+                                show: true
+                            },
+                            legend: {
+                                data:['部门']
+                            },
+                            xAxis : [
+                                {
+                                    type : 'category',
+                                    data : names
+                                }
+                            ],
+                            yAxis : [
+                                {
+                                    type : 'value'
+                                }
+                            ],
+                            series : [
+                                {
+                                    "name":"部门",
+                                    "type":"bar",
+                                    "data":nums
+                                }
+                            ]
+                        });
+
+                    }
+
+                },
+                error : function(errorMsg) {
+                    //请求失败时执行该函数
+                    alert("图表请求数据失败!");
+                    deptLoginCountChart.hideLoading();
+                }
+            })
+
+            var getMeetRoomCountChart = ec.init(document.getElementById('getMeetRoomCount'));
+            getMeetRoomCountChart.setOption({
+                tooltip: {
+                    show: true
+                },
+                legend: {
+                    data:['会议室']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : []
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"会议室",
+                        "type":"bar",
+                        "data":[]
+                    }
+                ]
+            });
+            getMeetRoomCountChart.showLoading();
+
+             names=[];    //类别数组（实际用来盛放X轴坐标值）
+             nums=[];    //销量数组（实际用来盛放Y坐标值）
+            $.ajax({
+                type : "post",
+                async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url : "/monitor/logininfor" + "/getMeetRoomCount",    //请求发送到TestServlet处
+                data : {},
+                dataType : "json",        //返回数据形式为json
+                success : function(result) {
+                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                    if (result.data) {
+                        names=[];
+                        nums=[];
+                        for(var i=0;i<result.data.length;i++){
+                            names.push(result.data[i].name);    //挨个取出类别并填入类别数组
+                        }
+                        for(var i=0;i<result.data.length;i++){
+                            nums.push(result.data[i].value);    //挨个取出销量并填入销量数组
+                        }
+                        console.log(nums)
+                        getMeetRoomCountChart.hideLoading();    //隐藏加载动画
+                        getMeetRoomCountChart.setOption({
+                            tooltip: {
+                                show: true
+                            },
+                            legend: {
+                                data:['会议室']
+                            },
+                            xAxis : [
+                                {
+                                    type : 'category',
+                                    data : names
+                                }
+                            ],
+                            yAxis : [
+                                {
+                                    type : 'value'
+                                }
+                            ],
+                            series : [
+                                {
+                                    "name":"会议室",
+                                    "type":"bar",
+                                    "data":nums
+                                }
+                            ]
+                        });
+
+                    }
+
+                },
+                error : function(errorMsg) {
+                    //请求失败时执行该函数
+                    alert("图表请求数据失败!");
+                    getMeetRoomCountChart.hideLoading();
+                }
+            });
+
+
+            var getMeetingCountByDeptChart = ec.init(document.getElementById('getMeetingCountByDept'));
+            getMeetingCountByDeptChart.setOption({
+                tooltip: {
+                    show: true
+                },
+                legend: {
+                    data:['部门']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : []
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"部门",
+                        "type":"bar",
+                        "data":[]
+                    }
+                ]
+            });
+            getMeetingCountByDeptChart.showLoading();
+             names=[];    //类别数组（实际用来盛放X轴坐标值）
+             nums=[];    //销量数组（实际用来盛放Y坐标值）
+            $.ajax({
+                type : "post",
+                async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url : "/monitor/logininfor" + "/getMeetingCountByDept",    //请求发送到TestServlet处
+                data : {},
+                dataType : "json",        //返回数据形式为json
+                success : function(result) {
+                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                    if (result.data) {
+                        names=[];
+                        nums=[];
+                        for(var i=0;i<result.data.length;i++){
+                            names.push(result.data[i].name);    //挨个取出类别并填入类别数组
+                        }
+                        for(var i=0;i<result.data.length;i++){
+                            nums.push(result.data[i].value);    //挨个取出销量并填入销量数组
+                        }
+                        console.log(nums)
+                        getMeetingCountByDeptChart.hideLoading();    //隐藏加载动画
+                        getMeetingCountByDeptChart.setOption({
+                            tooltip: {
+                                show: true
+                            },
+                            legend: {
+                                data:['部门']
+                            },
+                            xAxis : [
+                                {
+                                    type : 'category',
+                                    data : names
+                                }
+                            ],
+                            yAxis : [
+                                {
+                                    type : 'value'
+                                }
+                            ],
+                            series : [
+                                {
+                                    "name":"部门",
+                                    "type":"bar",
+                                    "data":nums
+                                }
+                            ]
+                        });
+
+                    }
+
+                },
+                error : function(errorMsg) {
+                    //请求失败时执行该函数
+                    alert("图表请求数据失败!");
+                    getMeetingCountByDeptChart.hideLoading();
+                }
+            });
+
+
+            var weekLoginCountChart = ec.init(document.getElementById('weekLoginCount'));
+            weekLoginCountChart.setOption({
+                tooltip: {
+                    show: true
+                },
+                legend: {
+                    data:['人数']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : []
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"人数",
+                        "type":"line",
+                        "data":[]
+                    }
+                ]
+            });
+            weekLoginCountChart.showLoading();
+            names=[];    //类别数组（实际用来盛放X轴坐标值）
+            nums=[];    //销量数组（实际用来盛放Y坐标值）
+            $.ajax({
+                type : "post",
+                async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url : "/monitor/logininfor" + "/weekLoginCount",    //请求发送到TestServlet处
+                data : {},
+                dataType : "json",        //返回数据形式为json
+                success : function(result) {
+                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                    if (result.data) {
+                        names=[];
+                        nums=[];
+                        for(var i=0;i<result.data.length;i++){
+                            names.push(result.data[i].name);    //挨个取出类别并填入类别数组
+                        }
+                        for(var i=0;i<result.data.length;i++){
+                            nums.push(result.data[i].value);    //挨个取出销量并填入销量数组
+                        }
+                        console.log(nums)
+                        weekLoginCountChart.hideLoading();    //隐藏加载动画
+                        weekLoginCountChart.setOption({
+                            tooltip: {
+                                show: true
+                            },
+                            legend: {
+                                data:['人数']
+                            },
+                            xAxis : [
+                                {
+                                    type : 'category',
+                                    data : names
+                                }
+                            ],
+                            yAxis : [
+                                {
+                                    type : 'value'
+                                }
+                            ],
+                            series : [
+                                {
+                                    "name":"人数",
+                                    "type":"line",
+                                    "data":nums
+                                }
+                            ]
+                        });
+
+                    }
+
+                },
+                error : function(errorMsg) {
+                    //请求失败时执行该函数
+                    alert("图表请求数据失败!");
+                    weekLoginCountChart.hideLoading();
+                }
+            });
+
+
+        }
+    );
+</script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.monitor;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.EchartVo;
+import com.ruoyi.system.domain.SysUserOnline;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +49,42 @@ public class SysLogininforController extends BaseController
         startPage();
         List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
         return getDataTable(list);
+    }
+    @PostMapping("/getDeptLoginCount")
+    @ResponseBody
+    public AjaxResult getDeptLoginCount()
+    {
+        List<EchartVo> deptLoginCount = logininforService.getDeptLoginCount();
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.put("data",deptLoginCount);
+        return ajaxResult;
+    }
+    @PostMapping("/getMeetRoomCount")
+    @ResponseBody
+    public AjaxResult getMeetRoomCount()
+    {
+        List<EchartVo> deptLoginCount = logininforService.getMeetRoomCount();
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.put("data",deptLoginCount);
+        return ajaxResult;
+    }
+    @PostMapping("/getMeetingCountByDept")
+    @ResponseBody
+    public AjaxResult getMeetingCountByDept()
+    {
+        List<EchartVo> deptLoginCount = logininforService.getMeetingCountByDept();
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.put("data",deptLoginCount);
+        return ajaxResult;
+    }
+    @PostMapping("/weekLoginCount")
+    @ResponseBody
+    public AjaxResult weekLoginCount()
+    {
+        List<EchartVo> deptLoginCount = logininforService.weekLoginCount();
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.put("data",deptLoginCount);
+        return ajaxResult;
     }
 
     @Log(title = "登陆日志", businessType = BusinessType.EXPORT)

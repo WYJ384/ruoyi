@@ -54,6 +54,15 @@ public class SysUserOnlineController extends BaseController
         List<SysUserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
         return getDataTable(list);
     }
+    @PostMapping("/getOnlineCount")
+    @ResponseBody
+    public AjaxResult getOnlineCount(SysUserOnline userOnline)
+    {
+        List<SysUserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.put("data",list.size());
+        return ajaxResult;
+    }
 
     @RequiresPermissions("monitor:online:batchForceLogout")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)

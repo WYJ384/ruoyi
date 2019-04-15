@@ -53,7 +53,7 @@
                  <li class="active">
                     <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">主页</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a class="menuItem" th:href="@{/meeting/meeting/appointmentTimeline}">会议预约</a></li>
+                        <li class="active"><a class="menuItem" th:href="@{/system/main}">主页</a></li>
                     </ul>
                 </li>
                 <li th:each="menu : ${menus}">
@@ -87,6 +87,7 @@
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right welcome-message">
+                    <li><a href="">欢迎您：[[${user.userName}]] 当前在线 <span id="onlineUser"></span> 人</a></li>
                     <li><a title="使用文档" href="https://www.kancloud.cn/seanj/nocbg/content/%E4%BC%9A%E8%AE%AE%E7%B3%BB%E7%BB%9F.md" target="_blank"><i class="fa fa-question-circle"></i> 使用文档</a></li>
 	                <li><a title="全屏显示" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏显示</a></li>
                     <li class="dropdown user-menu">
@@ -119,7 +120,7 @@
             </button>
             <nav class="page-tabs menuTabs">
                 <div class="page-tabs-content">
-                    <!--<a href="javascript:;" class="active menuTab" data-id="/system/main">首页</a>-->
+                    <a href="javascript:;" class="active menuTab" data-id="/system/main">首页</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right tabRight">
@@ -142,8 +143,8 @@
         <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
 
         <div class="row mainContent" id="content-main">
-            <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" data-id="/meeting/meeting/appointmentTimeline"
-                    th:src="@{/meeting/meeting/appointmentTimeline}" frameborder="0" seamless></iframe>
+            <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" data-id="/system/main"
+                    th:src="@{/system/main}" frameborder="0" seamless></iframe>
         </div>
         <div class="footer">
             <div class="pull-right">© [[${copyrightYear}]]  Copyright </div>
@@ -169,6 +170,24 @@ function resetPwd() {
     var url = ctx + 'system/user/profile/resetPwd';
     $.modal.open("重置密码", url, '800', '500');
 }
+
+$(function () {
+    $.ajax({
+        url: ctx + "monitor/online" + "/getOnlineCount",
+        type: 'post',
+        cache: false,
+        data: {},
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        beforeSend: function () {
+
+        },
+        success: function (result) {
+            $("#onlineUser").text(result.data)
+        }
+    });
+});
 </script>
 </body>
 </html>
