@@ -222,10 +222,12 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">存在的问题：</label>
+                    <label class="col-xs-2 control-label">督办主任：</label>
                     <div class="col-xs-10">
-                        <textarea name="openQuestion" th:field="*{openQuestion}" autocomplete="off" maxlength="500"
-                                  class="form-control" rows="3"></textarea>
+                        <select id="userIds" class="form-control select2-hidden-accessible" >
+                            <option value=""></option>
+                            <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -415,6 +417,10 @@
             var leaderId = $.form.selectSelects("leaderId");
             var cooperateDeptId = $.form.selectSelects("cooperateDeptId");
             var formData = new FormData($("#form-workTask-edit")[0]);
+            if (userIds == "") {
+                $.modal.alert("请选择督办主任", "error");
+                return;
+            }
             formData.append('userIds', userIds);
             formData.append('leaderId', leaderId);
             formData.append('cooperateDeptId', cooperateDeptId);

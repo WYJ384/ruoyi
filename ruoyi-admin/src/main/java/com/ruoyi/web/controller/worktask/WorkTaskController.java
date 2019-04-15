@@ -354,6 +354,7 @@ public class WorkTaskController extends BaseController
 				List<HistoricActivityInstance> list=historyService // 历史相关Service
 						.createHistoricActivityInstanceQuery() // 创建历史活动实例查询
 						.processInstanceId(process_instance_id) // 执行流程实例id
+						.orderByHistoricActivityInstanceStartTime().asc()
 						.finished()
 						.list();
 				for(HistoricActivityInstance hai:list){
@@ -502,8 +503,8 @@ public class WorkTaskController extends BaseController
 
 		//拾取任务
 //		taskService.claim(taskId,ShiroUtils.getLoginName());
-		taskService.setAssignee(taskId,ShiroUtils.getLoginName());
-		taskService.setOwner(taskId,ShiroUtils.getLoginName());
+//		taskService.setAssignee(taskId,ShiroUtils.getLoginName());
+//		taskService.setOwner(taskId,ShiroUtils.getLoginName());
 		WorkTaskActivity workTaskActivity = workTaskActivityService.selectWorkTaskActivityByProId(proId);
 		String workTaskId = workTaskActivity.getWorkTaskId();
 		WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
@@ -522,6 +523,7 @@ public class WorkTaskController extends BaseController
 			List<HistoricActivityInstance> list=historyService // 历史相关Service
 					.createHistoricActivityInstanceQuery() // 创建历史活动实例查询
 					.processInstanceId(process_instance_id) // 执行流程实例id
+					.orderByHistoricActivityInstanceStartTime().asc()
 					.finished()
 					.list();
 			for(HistoricActivityInstance hai:list){

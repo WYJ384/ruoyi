@@ -122,6 +122,17 @@ public class TaskController extends BaseController {
         task.paging()[1]=pageSize;
         task.setAssignee(ShiroUtils.getLoginName());
         List<TaskVO> taskVOs = actTaskService.selectTodoTask(task);
+        Iterator<TaskVO> taskVOIterator = taskVOs.iterator();
+        while (taskVOIterator.hasNext()){
+            TaskVO taskV = taskVOIterator.next();
+            String processId = taskV.getProcessId();
+            WorkTaskActivity workTaskActivity = workTaskActivityService.selectWorkTaskActivityByProId(processId);
+            if(workTaskActivity!=null){
+                String workTaskId = workTaskActivity.getWorkTaskId();
+                WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
+                taskV.setName(workTask.getWorkName()+"("+workTaskActivity.getTargetMonth()+"月)");
+            }
+        }
         TableDataInfo dataTable = getDataTable(taskVOs);
         dataTable.setTotal(task.getCount());
         return dataTable;

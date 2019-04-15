@@ -64,10 +64,10 @@
         <!--<div class="form-group">-->
         <!--<label class="col-sm-4 control-label">执行人：</label>-->
         <!--<div class="col-sm-8">-->
-        <!--<select id="userIds" class="form-control select2-hidden-accessible" multiple="">-->
-        <!--<option th:each="user:${users}" th:value="${user.userId}"-->
-        <!--th:text="${user.userName}"></option>-->
-        <!--</select>-->
+<!--        <select id="userIds" class="form-control select2-hidden-accessible" multiple="">-->
+<!--        <option th:each="user:${users}" th:value="${user.userId}"-->
+<!--        th:text="${user.userName}"></option>-->
+<!--        </select>-->
         <!--</div>-->
         <!--</div>-->
         <!--</div>-->
@@ -164,9 +164,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">存在问题：</label>
+                    <label class="col-xs-2 control-label">督办主任：</label>
                     <div class="col-xs-10">
-                        <textarea id="openQuestion" name="openQuestion" class="form-control"></textarea>
+<!--                        <textarea id="openQuestion" name="openQuestion" class="form-control"></textarea>-->
+                        <select id="userIds" class="form-control select2-hidden-accessible">
+                            <option value=""></option>
+                            <option th:each="user:${users}" th:value="${user.userId}"
+                                    th:text="${user.userName}"></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -329,10 +334,18 @@
         if ($.validate.form()) {
             var leaderId = $.form.selectSelects("leaderId");
             var cooperateDeptId = $.form.selectSelects("cooperateDeptId");
+
+            // userIds
             var formData = new FormData($("#form-workTask-add")[0]);
             formData.append('leaderId', leaderId);
             formData.append('cooperateDeptId', cooperateDeptId);
             formData.append('file', $('#file')[0].files[0]);
+            var userIds = $.form.selectSelects("userIds");
+            if (userIds == "") {
+                $.modal.alert("请选择督办主任", "error");
+                return;
+            }
+            formData.append('userIds', userIds);
             $.ajax({
                 url: prefix + "/add",
                 type: 'post',

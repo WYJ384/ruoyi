@@ -72,6 +72,26 @@
 	</div>
     <div th:include="include::footer"></div>
     <script type="text/javascript">
+
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			var meetingBeginTime = laydate.render({
+				elem: '#meetingBeginTime',
+				theme: 'molv',
+				type: 'datetime',
+				format: 'yyyy-MM-dd HH:mm:ss'
+			});
+
+			var meetingEndTime = laydate.render({
+				elem: '#meetingEndTime',
+				theme: 'molv',
+				type: 'datetime',
+				format: 'yyyy-MM-dd HH:mm:ss'
+			});
+
+		});
+
+
 		var prefix = ctx + "meeting/meeting"
 		$("#form-meeting-add").validate({
 			rules:{

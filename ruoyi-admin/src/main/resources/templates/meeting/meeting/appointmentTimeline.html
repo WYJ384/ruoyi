@@ -174,17 +174,35 @@
         },
         focusCleanup: true
     });
-    $("#meetingBeginTime").datetimepicker({//选择年月日
-        format: 'yyyy-mm-dd hh:ii',
-        autoclose: true,
-        language: 'zh-CN',
-        minuteStep: 1
-    });
-    $("#meetingEndTime").datetimepicker({//选择年月日
-        format: 'yyyy-mm-dd hh:ii',
-        autoclose: true,
-        language: 'zh-CN',
-        minuteStep: 1
+    // $("#meetingBeginTime").datetimepicker({//选择年月日
+    //     format: 'yyyy-mm-dd hh:ii',
+    //     autoclose: true,
+    //     language: 'zh-CN',
+    //     minuteStep: 1
+    // });
+    // $("#meetingEndTime").datetimepicker({//选择年月日
+    //     format: 'yyyy-mm-dd hh:ii',
+    //     autoclose: true,
+    //     language: 'zh-CN',
+    //     minuteStep: 1
+    // });
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        var meetingBeginTime = laydate.render({
+            elem: '#meetingBeginTime',
+            theme: 'molv',
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH:mm:ss'
+        });
+
+        var meetingEndTime = laydate.render({
+            elem: '#meetingEndTime',
+            theme: 'molv',
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH:mm:ss'
+        });
+
     });
     function submitHandler() {
 

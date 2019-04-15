@@ -73,7 +73,7 @@
         <input name="taskId" th:value="${taskId}" type="hidden">
         <input name="taskKey" id="taskKey" th:value="${taskKey}" type="hidden">
         <input name="workTaskId" id="workTaskId" th:value="${workTaskActivity.workTaskId}" type="hidden">
-
+        <input name="submitType" id="submitType"   type="hidden">
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
@@ -93,7 +93,7 @@
                         <select id="userIds" class="form-control select2-hidden-accessible">
                             <option value=""></option>
                             <option th:each="user:${users}" th:value="${user.loginName}"
-                                    th:text="${user.userName}"></option>
+                                    th:text="${user.userName}" ></option>
                         </select>
                     </div>
                 </div>
@@ -211,8 +211,11 @@
 
         <div class="row">
             <div class="col-sm-offset-5 col-sm-10">
-                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler(1)"><i
                         class="fa fa-check"></i>保 存
+                </button>
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler(2)"><i
+                        class="fa fa-check"></i>提 交
                 </button>
                 &nbsp;
                 <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
@@ -251,6 +254,7 @@
             if ($('#file')[0]) {
                 formData.append('file', $('#file')[0].files[0]);
             }
+
             $.ajax({
                 url: prefix + "/edit",
                 type: 'post',
@@ -279,8 +283,9 @@
         focusCleanup: true
     });
 
-    function submitHandler() {
-        $("#form-workTaskActivity-edit").submit();
+    function submitHandler(submitType) {
+        $("#submitType").val(submitType);
+       $("#form-workTaskActivity-edit").submit();
     }
 
 

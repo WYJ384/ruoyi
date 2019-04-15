@@ -156,7 +156,7 @@ public class WorkTaskActivityController extends BaseController {
     @Log(title = "专项工作汇报内容", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(MultipartFile file, WorkTaskActivity workTaskActivity, String userIds, String taskId, String taskKey) {
+    public AjaxResult editSave(MultipartFile file, WorkTaskActivity workTaskActivity, String userIds, String taskId, String taskKey,String submitType) {
         if (file != null && (!file.isEmpty())) {
             try {
                 // 上传文件路径
@@ -180,12 +180,17 @@ public class WorkTaskActivityController extends BaseController {
                 e.printStackTrace();
             }
         }
-        if (StringUtils.isNotEmpty(taskKey)) {
+        if (StringUtils.isNotEmpty(taskKey)&&submitType.equals("2")) {
+
             if (taskKey.equals("zhurenduban")) {
+                taskService.setAssignee(taskId,ShiroUtils.getLoginName());
+                taskService.setOwner(taskId,ShiroUtils.getLoginName());
                 Map<String, Object> vars = new HashMap<String, Object>();
                 vars.put("yuangong_users", userIds);
                 actTaskService.completeTask(taskId, vars);
             } else if (taskKey.equals("gerentijiao")) {
+                taskService.setAssignee(taskId,ShiroUtils.getLoginName());
+                taskService.setOwner(taskId,ShiroUtils.getLoginName());
                 String workTaskId = workTaskActivity.getWorkTaskId();
                 WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
                 String leaderId = workTask.getLeaderId();
@@ -194,6 +199,8 @@ public class WorkTaskActivityController extends BaseController {
                 vars.put("fenguan_users", sysUser.getLoginName());
                 actTaskService.completeTask(taskId, vars);
             } else if (taskKey.equals("lingdaopingfen")) {
+                taskService.setAssignee(taskId,ShiroUtils.getLoginName());
+                taskService.setOwner(taskId,ShiroUtils.getLoginName());
                 Map<String, Object> vars = new HashMap<String, Object>();
                 actTaskService.completeTask(taskId, vars);
                 workTaskActivity.setWorkStatus("3");//任务完成
@@ -235,17 +242,21 @@ public class WorkTaskActivityController extends BaseController {
         String workTaskId = workTaskActivity.getWorkTaskId();
         WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
         if (workTask != null) {
-            List<SysUser> sysUsers = userService.selectPostByDept(Long.valueOf(workTask.getLeadDeptId()));
-            if (sysUsers == null || sysUsers.size() == 0) {
-                return AjaxResult.error(1, "该部门没有主任");
+            String userIds = workTask.getUserIds();
+//            List<SysUser> sysUsers = userService.selectPostByDept(Long.valueOf(workTask.getLeadDeptId()));
+//            if (sysUsers == null || sysUsers.size() == 0) {
+//                return AjaxResult.error(1, "该部门没有主任");
+//            }
+//            Iterator<SysUser> userIterator = sysUsers.iterator();
+//            List<String> loginNames = new ArrayList<String>();
+//            while (userIterator.hasNext()) {
+//                SysUser sysUser = userIterator.next();
+//                loginNames.add(sysUser.getLoginName());
+//            }
+            if(StringUtils.isEmpty(userIds)){
+                return AjaxResult.error(1, "请选择督办主任");
             }
-            Iterator<SysUser> userIterator = sysUsers.iterator();
-            List<String> loginNames = new ArrayList<String>();
-            while (userIterator.hasNext()) {
-                SysUser sysUser = userIterator.next();
-                loginNames.add(sysUser.getLoginName());
-            }
-            vars.put("zhuren_users", loginNames.get(0));
+            vars.put("zhuren_users", userIds);
             ProcessInstance processInstance = actTaskService.startProcess("duban", businessTable, businessId, title, userId, vars);
             String instanceid = processInstance.getId();
             workTaskActivity.setProcess_instance_id(instanceid);
@@ -300,6 +311,7 @@ public class WorkTaskActivityController extends BaseController {
                     .createHistoricActivityInstanceQuery() // 创建历史活动实例查询
                     .processInstanceId(process_instance_id) // 执行流程实例id
                     .finished()
+                    .orderByHistoricActivityInstanceStartTime().asc()
                     .list();
             for(HistoricActivityInstance hai:list){
                 HistoryTaskVo historyTaskVo=new HistoryTaskVo();
