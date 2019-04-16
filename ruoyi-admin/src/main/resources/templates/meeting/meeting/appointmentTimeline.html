@@ -6,13 +6,12 @@
 <link th:href='@{/fullcalendar-scheduler-4.0.1/packages/core/main.css}' rel='stylesheet'/>
 <link th:href='@{/fullcalendar-scheduler-4.0.1/packages/daygrid/main.css}' rel='stylesheet'/>
 <link th:href='@{/fullcalendar-scheduler-4.0.1/packages/timegrid/main.css}' rel='stylesheet'/>
-
-
+<link th:href="@{/week/css/week.css}" rel="stylesheet" type="text/css">
 <body class="white-bg">
 <!--<div class="form-horizontal m" style="text-align: center">-->
-    <!--<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
-        <!--添加会议-->
-    <!--</button>-->
+<!--<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+<!--添加会议-->
+<!--</button>-->
 <!--</div>-->
 <!-- 按钮触发模态框 -->
 
@@ -96,40 +95,37 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal m" >
+                <div class="form-horizontal m">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">会议名称：</label>
                         <div class="col-sm-8">
-                            <input id="vmeetingName"   class="form-control" type="text">
+                            <input id="vmeetingName" class="form-control" type="text">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">会议主题：</label>
                         <div class="col-sm-8">
-                            <textarea id="vmeetingSubject"  class="form-control"></textarea>
+                            <textarea id="vmeetingSubject" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">预约部门：</label>
                         <div class="col-sm-8">
-                            <input id="deptName"  class="form-control">
+                            <input id="deptName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">预约人：</label>
                         <div class="col-sm-8">
-                            <input id="userName"  class="form-control">
+                            <input id="userName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">预约手机：</label>
                         <div class="col-sm-8">
-                            <input id="phonenumber"  class="form-control">
+                            <input id="phonenumber" class="form-control">
                         </div>
                     </div>
-
-
-
 
 
                 </div>
@@ -144,13 +140,14 @@
 </div>
 <div class="container-fluid">
     <div class="row">
+        <div class="bd_w jcalendar_week" id="jcalendar_week"></div>
         <h2 id="nowDate" style="text-align: center">日期</h2>
     </div>
     <div class="row">
-        <div class="col-lg-2">
-            <div id="dateControl" ></div>
-        </div>
-        <div id='calendar' class="col-lg-10"></div>
+        <!--        <div class="col-lg-2">-->
+        <!--            <div id="dateControl" ></div>-->
+        <!--        </div>-->
+        <div id='calendar'></div>
     </div>
 </div>
 
@@ -164,6 +161,7 @@
 <script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-common/main.js}'></script>
 <script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-daygrid/main.js}'></script>
 <script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-timegrid/main.js}'></script>
+<script type="text/javascript" th:src="@{/week/js/week.js}"></script>
 <script type="text/javascript">
 
     var prefix = ctx + "meeting/meeting"
@@ -209,15 +207,16 @@
             $.ajax(config)
         }
     }
+
     $('#save').click(function () {
         submitHandler();
     });
     document.addEventListener('DOMContentLoaded', function () {
         initCalendar();
     });
+
     function initCalendar() {
         var calendarEl = document.getElementById('calendar');
-
 
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -231,8 +230,8 @@
             locale: 'zh-cn',
             selectable: true,
             eventOverlap: false,
-            minTime:'07:00:00',//开始时间早上七点
-            maxTime:'22:00:00',//终止时间晚上19点
+            minTime: '07:00:00',//开始时间早上七点
+            maxTime: '22:00:00',//终止时间晚上19点
             slotDuration: '00:30', // 间隔30分钟
             eventLimit: true, // allow "more" link when too many events
             header: false,
@@ -281,18 +280,18 @@
             },
             dateClick: function (arg) {
                 console.log(
-                        'dateClick',
-                        arg.date,
-                        arg.resource ? arg.resource.id : '(no resource)'
+                    'dateClick',
+                    arg.date,
+                    arg.resource ? arg.resource.id : '(no resource)'
                 );
             },
-            eventClick:function(info){
-                var meetingId=info.event.id;
+            eventClick: function (info) {
+                var meetingId = info.event.id;
                 var config = {
                     url: prefix + "/get",
                     type: "post",
                     dataType: "json",
-                    data: {id:meetingId},
+                    data: {id: meetingId},
                     beforeSend: function () {
                         $.modal.loading("正在处理中，请稍后...");
                         $.modal.disable();
@@ -317,7 +316,7 @@
         $("#calendar .fc-slats table tr").each(function (a, b) {
             $(this).find("span").text($(this).attr("data-time"))
         });
-        var nowStr=FullCalendar.formatDate( new Date(), {
+        var nowStr = FullCalendar.formatDate(new Date(), {
             month: 'long',
             year: 'numeric',
             day: 'numeric',
@@ -340,27 +339,27 @@
                 type: 'datetime',
                 format: 'yyyy-MM-dd HH:mm:ss'
             });
-            laydate.render({
-                elem: '#dateControl'
-                ,position: 'static'
-                ,btns: ['now']
-                ,change: function(value, date){ //监听日期被切换
+            var weekfn = new jcalendar_week({
+                element: "#jcalendar_week",//填充日历的dom元素
+                dayaddclass: function (date) {
+                    //添加某天时给添加类名
+                    return "";
+                },
+                dayclick: function (value, obj) {
+                    // calendar.gotoDate("2019-04-17");
                     calendar.gotoDate(value);
                     $("#calendar .fc-slats table tr").each(function (a, b) {
                         $(this).find("span").text($(this).attr("data-time"))
                     });
                     $("#nowDate").text(value)
-                },done: function(value, date, endDate){
-                    calendar.gotoDate(value);
-                    $("#calendar .fc-slats table tr").each(function (a, b) {
-                        $(this).find("span").text($(this).attr("data-time"))
-                    });
-                    $("#nowDate").text(value)
+                    //day点击事件
+                    $(obj).addClass("calendar_day_act").siblings().removeClass("calendar_day_act");
                 }
             });
         });
 
     }
+
     $('#meetroomId').on('change', function () {
         $("#meetroomIdForm").val($(this).val());
         initCalendar();
