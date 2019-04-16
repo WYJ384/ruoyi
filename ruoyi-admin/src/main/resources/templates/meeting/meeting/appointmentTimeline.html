@@ -142,9 +142,18 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+<div class="container-fluid">
+    <div class="row">
+        <h2 id="nowDate" style="text-align: center">日期</h2>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <div id="dateControl" ></div>
+        </div>
+        <div id='calendar' class="col-lg-10"></div>
+    </div>
+</div>
 
-
-<div id='calendar'></div>
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
 
@@ -155,7 +164,6 @@
 <script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-common/main.js}'></script>
 <script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-daygrid/main.js}'></script>
 <script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-timegrid/main.js}'></script>
-
 <script type="text/javascript">
 
     var prefix = ctx + "meeting/meeting"
@@ -174,36 +182,7 @@
         },
         focusCleanup: true
     });
-    // $("#meetingBeginTime").datetimepicker({//选择年月日
-    //     format: 'yyyy-mm-dd hh:ii',
-    //     autoclose: true,
-    //     language: 'zh-CN',
-    //     minuteStep: 1
-    // });
-    // $("#meetingEndTime").datetimepicker({//选择年月日
-    //     format: 'yyyy-mm-dd hh:ii',
-    //     autoclose: true,
-    //     language: 'zh-CN',
-    //     minuteStep: 1
-    // });
 
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-        var meetingBeginTime = laydate.render({
-            elem: '#meetingBeginTime',
-            theme: 'molv',
-            type: 'datetime',
-            format: 'yyyy-MM-dd HH:mm:ss'
-        });
-
-        var meetingEndTime = laydate.render({
-            elem: '#meetingEndTime',
-            theme: 'molv',
-            type: 'datetime',
-            format: 'yyyy-MM-dd HH:mm:ss'
-        });
-
-    });
     function submitHandler() {
 
         if ($.validate.form()) {
@@ -239,6 +218,8 @@
     function initCalendar() {
         var calendarEl = document.getElementById('calendar');
 
+
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             plugins: ['interaction', 'resourceDayGrid', 'resourceTimeGrid'],
@@ -247,18 +228,14 @@
             editable: false,
             navLinks: true, // can click day/week names to navigate views
             selectMirror: true,
-            // locale: 'zh-cn',
+            locale: 'zh-cn',
             selectable: true,
             eventOverlap: false,
             minTime:'07:00:00',//开始时间早上七点
             maxTime:'22:00:00',//终止时间晚上19点
             slotDuration: '00:30', // 间隔30分钟
             eventLimit: true, // allow "more" link when too many events
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'resourceTimeGridDay,resourceTimeGridTwoDay,resourceTimeGridThreeDay'
-            },
+            header: false,
 
             views: {
                 resourceTimeGridTwoDay: {
@@ -337,6 +314,52 @@
         });
 
         calendar.render();
+        $("#calendar .fc-slats table tr").each(function (a, b) {
+            $(this).find("span").text($(this).attr("data-time"))
+        });
+        var nowStr=FullCalendar.formatDate( new Date(), {
+            month: 'long',
+            year: 'numeric',
+            day: 'numeric',
+            locale: 'zh-ch'
+        });
+        $("#nowDate").text(nowStr);
+
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            var meetingBeginTime = laydate.render({
+                elem: '#meetingBeginTime',
+                theme: 'molv',
+                type: 'datetime',
+                format: 'yyyy-MM-dd HH:mm:ss'
+            });
+
+            var meetingEndTime = laydate.render({
+                elem: '#meetingEndTime',
+                theme: 'molv',
+                type: 'datetime',
+                format: 'yyyy-MM-dd HH:mm:ss'
+            });
+            laydate.render({
+                elem: '#dateControl'
+                ,position: 'static'
+                ,btns: ['now']
+                ,change: function(value, date){ //监听日期被切换
+                    calendar.gotoDate(value);
+                    $("#calendar .fc-slats table tr").each(function (a, b) {
+                        $(this).find("span").text($(this).attr("data-time"))
+                    });
+                    $("#nowDate").text(value)
+                },done: function(value, date, endDate){
+                    calendar.gotoDate(value);
+                    $("#calendar .fc-slats table tr").each(function (a, b) {
+                        $(this).find("span").text($(this).attr("data-time"))
+                    });
+                    $("#nowDate").text(value)
+                }
+            });
+        });
+
     }
     $('#meetroomId').on('change', function () {
         $("#meetroomIdForm").val($(this).val());
@@ -344,5 +367,6 @@
     });
 
 </script>
+
 </body>
 </html>
