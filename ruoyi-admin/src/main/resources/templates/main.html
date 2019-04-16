@@ -12,6 +12,63 @@
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
     <div class="col-sm-12">
+        <div class="row" >
+<!--            <div class="col-lg-3">-->
+<!--                <div class="widget style1 lazur-bg">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-xs-4">-->
+<!--                            <i class="fa fa-envelope-o fa-5x"></i>-->
+<!--                        </div>-->
+<!--                        <div class="col-xs-8 text-right">-->
+<!--                            <span> 通知公告 </span>-->
+<!--                            <h2 class="font-bold">260</h2>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-lg-3">-->
+<!--                <div class="widget style1">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-xs-4 text-center">-->
+<!--                            <i class="fa fa-trophy fa-5x"></i>-->
+<!--                        </div>-->
+<!--                        <div class="col-xs-8 text-right">-->
+<!--                            <span> 今天收入 </span>-->
+<!--                            <h2 class="font-bold">$ 4,232</h2>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="col-lg-3">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-cloud fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 待办事项 </span>
+                            <h2 class="font-bold" >
+                                <a  class="font-bold" style="color: #fff" href="/activiti/task" id="getTaskToDoCount"></a>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="widget style1 yellow-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-music fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 当前在线 </span>
+                            <h2 class="font-bold" id="onlineUser">12</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="ibox float-e-margins">
@@ -543,6 +600,46 @@
 
         }
     );
+
+ $(function () {
+     getTaskToDoCount();
+ });
+    function getTaskToDoCount() {
+        $.ajax({
+            type : "post",
+            async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url : "/activiti/task" + "/getTaskToDoCount",    //请求发送到TestServlet处
+            data : {},
+            dataType : "json",        //返回数据形式为json
+            success : function(result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result.data) {
+                    $("#getTaskToDoCount").text(result.data)
+                }else{
+                    $("#getTaskToDoCount").text(0)
+                }
+            },
+            error : function(errorMsg) {
+            }
+        });
+    }
+
+    $.ajax({
+        url: ctx + "monitor/online" + "/getOnlineCount",
+        type: 'post',
+        cache: false,
+        data: {},
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        beforeSend: function () {
+
+        },
+        success: function (result) {
+            $("#onlineUser").text(result.data+"人")
+        }
+    });
+
 </script>
 </body>
 </html>

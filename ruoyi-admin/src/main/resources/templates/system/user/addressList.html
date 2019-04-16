@@ -1,268 +1,313 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org"
-	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
 <link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
 
 <body class="gray-bg">
-	<div class="ui-layout-west">
-		<div class="main-content">
-			<div class="box box-main">
-				<div class="box-header">
-					<div class="box-title">
-						<i class="fa icon-grid"></i> 组织机构
-					</div>
-					<div class="box-tools pull-right">
-					    <!--<a type="button" class="btn btn-box-tool menuItem" href="#" onclick="dept()" title="管理部门"><i class="fa fa-edit"></i></a>-->
-						<button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i class="fa fa-chevron-up"></i></button>
-						<button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i class="fa fa-chevron-down"></i></button>
-						<button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
-					</div>
-				</div>
-				<div class="ui-layout-content">
-					<div id="tree" class="ztree"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="container-div ui-layout-center">
-		<div class="row">
-			<div class="col-sm-12 search-collapse">
-				<form id="user-form">
-					<input type="hidden" id="deptId" name="deptId">
-	                <input type="hidden" id="parentId" name="parentId">
-					<div class="select-list">
-						<ul>
-							<!--<li>-->
-								<!--登录名称：<input type="text" name="loginName"/>-->
-							<!--</li>-->
-							<li>
-								姓名：<input type="text" name="userName"/>
-							</li>
+<div class="ui-layout-west">
+    <div class="main-content">
+        <div class="box box-main">
+            <div class="box-header">
+                <div class="box-title">
+                    <i class="fa icon-grid"></i> 组织机构
+                </div>
+                <div class="box-tools pull-right">
+                    <!--<a type="button" class="btn btn-box-tool menuItem" href="#" onclick="dept()" title="管理部门"><i class="fa fa-edit"></i></a>-->
+                    <button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display:none;"><i
+                            class="fa fa-chevron-up"></i></button>
+                    <button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠"><i
+                            class="fa fa-chevron-down"></i></button>
+                    <button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i
+                            class="fa fa-refresh"></i></button>
+                </div>
+            </div>
+            <div class="ui-layout-content">
+                <div id="tree" class="ztree"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-							<li>
-								手机号码：<input type="text" name="phonenumber"/>
-							</li>
-							<!--<li>-->
-								<!--用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">-->
-									<!--<option value="">所有</option>-->
-									<!--<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
-								<!--</select>-->
-							<!--</li>-->
-							<!--<li class="select-time">-->
-								<!--<label>创建时间： </label>-->
-								<!--<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>-->
-								<!--<span>-</span>-->
-								<!--<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>-->
-							<!--</li>-->
-							<li>
-								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
-	        <!--<div class="btn-group-sm" id="toolbar" role="group">-->
-	        	<!--<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">-->
-	                <!--<i class="fa fa-plus"></i> 新增-->
-	            <!--</a>-->
-	             <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">-->
-		            <!--<i class="fa fa-edit"></i> 修改-->
-		        <!--</a>-->
-	            <!--<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">-->
-	                <!--<i class="fa fa-remove"></i> 删除-->
-	            <!--</a>-->
-	            <!--<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">-->
-		            <!--<i class="fa fa-upload"></i> 导入-->
-		        <!--</a>-->
-	            <!--<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">-->
-		            <!--<i class="fa fa-download"></i> 导出-->
-		        <!--</a>-->
-	        <!--</div>-->
-	        
-	        <div class="col-sm-12 select-table table-striped">
-			    <table id="bootstrap-table" data-mobile-responsive="true"></table>
-			</div>
-		</div>
-	</div>
-	
-	<div th:include="include :: footer"></div>
-	<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
-	<script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
-	<script th:inline="javascript">
-		var editFlag = [[${@permission.hasPermi('system:user:edit')}]];
-		var removeFlag = [[${@permission.hasPermi('system:user:remove')}]];
-		var resetPwdFlag = [[${@permission.hasPermi('system:user:resetPwd')}]];
-		var datas = [[${@dict.getType('sys_normal_disable')}]];
-		var prefix = ctx + "system/user";
+<div class="container-div ui-layout-center">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="user-form">
+                <input type="hidden" id="deptId" name="deptId">
+                <input type="hidden" id="parentId" name="parentId">
+                <div class="select-list">
+                    <ul>
+                        <!--<li>-->
+                        <!--登录名称：<input type="text" name="loginName"/>-->
+                        <!--</li>-->
+                        <li>
+                            姓名：<input type="text" name="userName" id="userName"/>
+                        </li>
 
-		$(function() {
-		    var panehHidden = false;
-		    if ($(this).width() < 769) {
-		        panehHidden = true;
-		    }
-		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
-		    queryUserList();
-		    queryDeptTree();
-		});
+                        <li>
+                            手机号码：<input type="text" name="phonenumber" id="phonenumber"/>
+                        </li>
+                        <!--<li>-->
+                        <!--用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">-->
+                        <!--<option value="">所有</option>-->
+                        <!--<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+                        <!--</select>-->
+                        <!--</li>-->
+                        <!--<li class="select-time">-->
+                        <!--<label>创建时间： </label>-->
+                        <!--<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>-->
+                        <!--<span>-</span>-->
+                        <!--<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>-->
+                        <!--</li>-->
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" id="search" ><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
 
-		function queryUserList() {
-		    var options = {
-		        url: prefix + "/list",
-		        createUrl: prefix + "/add",
-		        updateUrl: prefix + "/edit/{id}",
-		        removeUrl: prefix + "/remove",
-		        exportUrl: prefix + "/export",
-		        importUrl: prefix + "/importData",
-		        importTemplateUrl: prefix + "/importTemplate",
-		        // sortName: "createTime",
-		        sortOrder: "desc",
-		        modalName: "用户",
-		        columns: [
-//					{
-//		            checkbox: false
-//		        },
-//		        {
-//		            field: 'userId',
-//		            title: '用户ID'
-//		        },
-//		        {
-//		            field: 'loginName',
-//		            title: '登录名称',
-//		            sortable: true
-//		        },
-		        {
-		            field: 'userName',
-		            title: '姓名'
-		        },
-					{
-						field: 'phonenumber',
-						title: '手机'
-					},
-		        {
-		            field: 'dept.deptName',
-		            title: '部门'
-		        },
-		        {
-		            field: 'email',
-		            title: '邮箱',
-		            visible: true
-		        },
+        <!--<div class="btn-group-sm" id="toolbar" role="group">-->
+        <!--<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">-->
+        <!--<i class="fa fa-plus"></i> 新增-->
+        <!--</a>-->
+        <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">-->
+        <!--<i class="fa fa-edit"></i> 修改-->
+        <!--</a>-->
+        <!--<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">-->
+        <!--<i class="fa fa-remove"></i> 删除-->
+        <!--</a>-->
+        <!--<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">-->
+        <!--<i class="fa fa-upload"></i> 导入-->
+        <!--</a>-->
+        <!--<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">-->
+        <!--<i class="fa fa-download"></i> 导出-->
+        <!--</a>-->
+        <!--</div>-->
 
-//		        {
-//		        	visible: editFlag == 'hidden' ? false : true,
-//		        	title: '用户状态',
-//		        	align: 'center',
-//		        	formatter: function (value, row, index) {
-//		        		return statusTools(row);
-//		        	}
-//		        },
-//		        {
-//		            field: 'createTime',
-//		            title: '创建时间',
-//		            sortable: true
-//		        },
-//		        {
-//		            title: '操作',
-//		            align: 'center',
-//		            formatter: function(value, row, index) {
-//		                var actions = [];
-//		                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.userId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-//		                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a> ');
-//		                actions.push('<a class="btn btn-info btn-xs ' + resetPwdFlag + '" href="#" onclick="resetPwd(\'' + row.userId + '\')"><i class="fa fa-key"></i>重置</a>');
-//		                return actions.join('');
-//		            }
-//		        }
+        <div class="col-sm-12 select-table table-striped">
 
-				]
-		    };
-		    $.table.init(options);
-		}
-		
-		function queryDeptTree()
-		{
-			var url = ctx + "system/dept/treeData";
-			var options = {
-		        url: url,
-		        expandLevel: 2,
-		        onClick : zOnClick
-		    };
-			$.tree.init(options);
-			
-			function zOnClick(event, treeId, treeNode) {
-				$("#deptId").val(treeNode.id);
-				$("#parentId").val(treeNode.pId);
-				$.table.search();
-			}
-		}
-		
-		$('#btnExpand').click(function() {
-			$._tree.expandAll(true);
-		    $(this).hide();
-		    $('#btnCollapse').show();
-		});
-		
-		$('#btnCollapse').click(function() {
-			$._tree.expandAll(false);
-		    $(this).hide();
-		    $('#btnExpand').show();
-		});
-		
-		$('#btnRefresh').click(function() {
-			queryDeptTree();
-		});
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row" id="contactList">
+                    <div class="col-lg-4">
+                        <div class="contact-box">
+                            <a>
+                                <div class="col-sm-4">
+                                    <div class="text-center">
+                                        <img alt="image" class="img-circle m-t-xs img-responsive" src="/img/a6.jpg">
+                                        <div class="m-t-xs font-bold">超级CEO</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3><strong>小红</strong></h3>
+                                    <p><i class="fa fa-map-marker"></i> 中国.北京 123/123</p>
+                                    <address>
+                                        <strong>企鹅公司</strong><br>
+                                        北京市朝阳区某区某街道<br>
+                                        企鹅 100000 <br>
+                                        手机 18900000000 <br>
+                                        邮编 100020 <br>
+                                    </address>
+                                </div>
+                                <div class="clearfix"></div>
+                            </a>
+                        </div>
+                    </div>
 
-		/* 用户管理-部门 */
-		function dept() {
-			var url = ctx + "system/dept";
-			createMenuItem(url, "部门管理");
-		}
+                </div>
+                <ul class="pagination" id="pagination0" style="float: right"></ul>
+            </div>
+            <!-- 分页按钮 -->
 
-		/* 用户管理-重置密码 */
-		function resetPwd(userId) {
-		    var url = prefix + '/resetPwd/' + userId;
-		    $.modal.open("重置密码", url, '800', '300');
-		}
-		
-		/* 用户状态显示 */
-		function statusTools(row) {
-		    if (row.status == 1) {
-    			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
-    		} else {
-    			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
-    		}
-		}
-		
-		/* 用户管理-停用 */
-		function disable(userId) {
-			$.modal.confirm("确认要停用用户吗？", function() {
-				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 1 });
-		    })
-		}
+        </div>
 
-		/* 用户管理启用 */
-		function enable(userId) {
-			$.modal.confirm("确认要启用用户吗？", function() {
-				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 0 });
-		    })
-		}
-	</script>
+    </div>
+</div>
+<script id="contactListTpl" type="text/html">
+    {{each rows user}}
+        <div class="col-lg-4">
+            <div class="contact-box">
+                <a>
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            {{if user.avatar==""}}
+                              <img alt="image" class="img-circle m-t-xs img-responsive" src="/img/profile.jpg">
+                            {{else if user.avatar!=""}}
+                              <img alt="image" class="img-circle m-t-xs img-responsive" src="/profile/avatar/{{user.avatar}}">
+                            {{/if}}
+
+                            <div class="m-t-xs font-bold">{{user.userName}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3><strong>{{user.userName}}</strong></h3>
+<!--                        <p><i class="fa fa-map-marker"></i> 中国.北京 123/123</p>-->
+                        <address style="line-height: 40px;">
+                            <strong>{{user.dept.deptName}}</strong><br>
+<!--                            <br>-->
+<!--                             <br>-->
+                            手机 {{user.phonenumber}} <br>
+                            邮箱 {{user.email}} <br>
+                        </address>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </div>
+        </div>
+    {{/each}}
+
+</script>
+
+<div th:include="include :: footer"></div>
+<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
+<script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+<script th:src="@{/js/template-web.js}"></script>
+<script th:src="@{/js/jq-paginator.js}"></script>
+
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:user:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:user:remove')}]];
+    var resetPwdFlag = [[${@permission.hasPermi('system:user:resetPwd')}]];
+    var datas = [[${@dict.getType('sys_normal_disable')}]];
+    var prefix = ctx + "system/user";
+    function search() {
+        queryUserList(1);
+    }
+    $(function () {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('body').layout({initClosed: panehHidden, west__size: 185});
+        queryUserList(1);
+        queryDeptTree();
+        $("#search").click(function () {
+            search();
+        });
+    });
+
+    function queryUserList(num) {
+        $.ajax({
+            type: "post",
+            async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url: prefix + "/list",    //请求发送到TestServlet处
+            data: {
+                pageSize: 6,
+                pageNum: num,
+                userName:$("#userName").val(),
+                phonenumber:$("#phonenumber").val(),
+                deptId:$("#deptId").val()
+            },
+            dataType: "json",        //返回数据形式为json
+            success: function (result) {
+                $("#contactList").html(template("contactListTpl",result));
+                var total_pages=0;
+                if(result.total%2==0){
+                    total_pages=result.total/6
+                }else{
+                    total_pages=result.total/6+1;
+                }
+                display_pages(parseInt(total_pages), 5, num);
+            },
+            error: function (errorMsg) {
+            }
+        });
+    }
+
+    function queryDeptTree() {
+        var url = ctx + "system/dept/treeData";
+        var options = {
+            url: url,
+            expandLevel: 2,
+            onClick: zOnClick
+        };
+        $.tree.init(options);
+
+        function zOnClick(event, treeId, treeNode) {
+            $("#deptId").val(treeNode.id);
+            $("#parentId").val(treeNode.pId);
+            search()
+        }
+    }
+
+    $('#btnExpand').click(function () {
+        $._tree.expandAll(true);
+        $(this).hide();
+        $('#btnCollapse').show();
+    });
+
+    $('#btnCollapse').click(function () {
+        $._tree.expandAll(false);
+        $(this).hide();
+        $('#btnExpand').show();
+    });
+
+    $('#btnRefresh').click(function () {
+        queryDeptTree();
+    });
+
+    function display_pages(total_pages, visible_pages, current_page){
+        // if(!visible_pages){
+        //     visible_pages = 5;
+        // }
+        // if(!current_page){
+        //     current_page = 1;
+        // }
+        $.jqPaginator('#pagination0', {
+            totalPages: total_pages,
+            visiblePages: visible_pages,
+            currentPage: current_page,
+            prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
+            next: '<li class="next"><a href="javascript:;">下一页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (num, type) {
+                if(num!=current_page){
+                    queryUserList(num);
+                    $('#text').html('当前第' + num + '页');
+                }
+            }
+        });
+
+
+    }
+
+</script>
+
+<script>
+    var if_firstime = true;                 //分页组件第一次加载为true，后面false
+
+    /*
+        分页组件展示
+        total_pages: 总页数；
+        visible_pages： 让组件展示5页；
+        current_page: 当前页
+    */
+
+
+    /*
+    1.第一次加载的时候onPageChange就会执行；
+    2.分页改变会触发onPageChange,可以在这个里面写回调函数，写翻页的代码
+    */
+
+</script>
+
 </body>
 <form id="importForm" enctype="multipart/form-data" class="mt20 mb10" style="display: none;">
-	<div class="col-xs-offset-1">
-		<input type="file" id="file" name="file"/>
-		<div class="mt10 pt5">
-			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
-			 &nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
-		</div>
-		<font color="red" class="pull-left mt10">
-			提示：仅允许导入“xls”或“xlsx”格式文件！
-		</font>
-	</div>
+    <div class="col-xs-offset-1">
+        <input type="file" id="file" name="file"/>
+        <div class="mt10 pt5">
+            <input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+            &nbsp; <a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i
+                class="fa fa-file-excel-o"></i> 下载模板</a>
+        </div>
+        <font color="red" class="pull-left mt10">
+            提示：仅允许导入“xls”或“xlsx”格式文件！
+        </font>
+    </div>
 </form>
 </html>

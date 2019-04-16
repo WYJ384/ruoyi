@@ -11,10 +11,13 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.EchartVo;
 import com.ruoyi.worktask.domain.WorkTask;
 import com.ruoyi.worktask.domain.WorkTaskActivity;
 import com.ruoyi.worktask.service.IWorkTaskActivityService;
 import com.ruoyi.worktask.service.IWorkTaskService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.TaskQuery;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +38,8 @@ import java.util.Map;
 @RequestMapping("activiti/task")
 @Controller
 public class TaskController extends BaseController {
-
+    @Autowired
+    private TaskService taskService;
     @Autowired
     ActTaskService actTaskService;
 
@@ -48,6 +52,21 @@ public class TaskController extends BaseController {
     @GetMapping
     public   String task() {
         return prefix + "/tasks";
+    }
+
+    /**
+     * 查询待办工作数
+     * @return
+     */
+    @PostMapping("/getTaskToDoCount")
+    @ResponseBody
+    public AjaxResult getTaskToDoCount()
+    {
+        TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned((ShiroUtils.getLoginName()));
+        long count = taskQuery.count();
+        AjaxResult ajaxResult=new AjaxResult();
+        ajaxResult.put("data",count);
+        return ajaxResult;
     }
 
     /**
