@@ -54,7 +54,22 @@ public class ActTaskServiceImpl implements ActTaskService {
 
     @Autowired
     private HistoryService historyService;
+    @Override
+    public List<TaskVO> taskCandidateOrAssigned(TaskVO task) {
+        int[] pageing = task.paging();
+        TaskQuery taskQuery = taskService.createTaskQuery();
+        if(StringUtils.isNotEmpty(task.getAssignee())){
+            taskQuery.taskCandidateOrAssigned(task.getAssignee());
+        }
+        List<TaskVO> tasks = taskQuery
+                .orderByTaskId()
+                .desc()
+                .listPage(pageing[0], pageing[1]).stream().map(TaskVO::new)
+                .collect(Collectors.toList());
+        task.setCount(taskQuery.count());
 
+        return tasks;
+    }
     @Override
     public List<TaskVO> selectTaskList(TaskVO task) {
         int[] pageing = task.paging();
@@ -338,6 +353,9 @@ public class ActTaskServiceImpl implements ActTaskService {
         }
         return taskVOS;
     }
+
+
+
     @Override
     public Map<String, List<TaskVO>> selectGroupQueueTask(TaskVO taskVO) {
         List<String> groups = identityService.createGroupQuery().list().stream().map(Group::getId).collect(Collectors.toList());

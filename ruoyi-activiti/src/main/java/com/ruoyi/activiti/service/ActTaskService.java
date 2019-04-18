@@ -38,4 +38,6 @@ public interface ActTaskService {
 
 
     List<TaskVO> selectFinishedTask(TaskVO task);
+
+    List<TaskVO> taskCandidateOrAssigned(TaskVO taskVO);
 }

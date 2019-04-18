@@ -83,9 +83,9 @@ public class TaskController extends BaseController {
         Integer pageSize = pageDomain.getPageSize();
         taskVO.paging()[0]=pageNum;
         taskVO.paging()[1]=pageSize;
-        taskVO.setCandidateUser(ShiroUtils.getLoginName());
-//        taskVO.setAssignee(ShiroUtils.getLoginName());
-        List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVO);
+//        taskVO.setCandidateUser(ShiroUtils.getLoginName());
+        taskVO.setAssignee(ShiroUtils.getLoginName());
+        List<TaskVO> taskVOS = actTaskService.taskCandidateOrAssigned(taskVO);
         Iterator<TaskVO> taskVOIterator = taskVOS.iterator();
         while (taskVOIterator.hasNext()){
             TaskVO taskV = taskVOIterator.next();
