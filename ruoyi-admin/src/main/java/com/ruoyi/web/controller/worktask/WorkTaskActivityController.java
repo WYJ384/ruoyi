@@ -232,6 +232,9 @@ public class WorkTaskActivityController extends BaseController {
     @ResponseBody
     public AjaxResult startTask(WorkTaskActivity workTaskActivity) {
         workTaskActivity = workTaskActivityService.selectWorkTaskActivityById(workTaskActivity.getId());
+        if(workTaskActivity.getWorkStatus().equals("2")){
+            return AjaxResult.error("任务已经开始");
+        }
         String businessTable = "work_task_activity";
         String businessId = workTaskActivity.getId();
         String title = "专项工作任务";

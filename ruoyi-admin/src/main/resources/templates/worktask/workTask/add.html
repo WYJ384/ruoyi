@@ -379,12 +379,13 @@
 
     function doSubmitLeadDept(index, layero){
         var tree = layero.find("iframe")[0].contentWindow.$._tree;
-        if ($.tree.notAllowParents(tree)) {
-            var body = layer.getChildFrame('body', index);
-            $("#leadDeptId").val(body.find('#treeId').val());
-            $("#leadDeptName").val(body.find('#treeName').val());
-            layer.close(index);
-        }
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#leadDeptId").val(body.find('#treeId').val());
+        $("#leadDeptName").val(body.find('#treeName').val());
+        layer.close(index);
     }
     function selectCooperateDeptTree(){
         var leadDeptId = $("#cooperateDeptId").val();
@@ -400,12 +401,13 @@
     }
     function doSubmitCooperateDept(index, layero){
         var tree = layero.find("iframe")[0].contentWindow.$._tree;
-        if ($.tree.notAllowParents(tree)) {
-            var body = layer.getChildFrame('body', index);
-            $("#cooperateDeptId").val(body.find('#treeId').val());
-            $("#cooperateDeptName").val(body.find('#treeName').val());
-            layer.close(index);
-        }
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#cooperateDeptId").val(body.find('#treeId').val());
+        $("#cooperateDeptName").val(body.find('#treeName').val());
+        layer.close(index);
     }
 </script>
 </body>
