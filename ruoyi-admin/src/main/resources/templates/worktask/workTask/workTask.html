@@ -16,7 +16,12 @@
                         <li>
                             工作任务名称：<input type="text" name="workName"/>
                         </li>
+                        <li>
+                            <input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
+                                    placeholder="请选择归牵头部门" class="form-control" required>
+                            <input name="leadDeptId" type="hidden" id="leadDeptId"/>
 
+                        </li>
                         <!--<li>-->
                         <!--进度：<input type="text" name="rateProgress"/>-->
                         <!--</li>-->
@@ -322,6 +327,29 @@
     function detail(id) {
         var url = prefix + '/query/' + id;
         createMenuItem(url, "查看");
+    }
+    function selectLeadDeptTree() {
+        var leadDeptId = $("#leadDeptId").val();
+        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
+        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var options = {
+            title: '选择部门',
+            width: "380",
+            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            callBack: doSubmitLeadDept
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmitLeadDept(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#leadDeptId").val(body.find('#treeId').val());
+        $("#leadDeptName").val(body.find('#treeName').val());
+        layer.close(index);
     }
 </script>
 </body>

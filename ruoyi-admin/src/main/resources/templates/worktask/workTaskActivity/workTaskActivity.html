@@ -6,74 +6,77 @@
 
 <div class="container-div">
     <div class="row">
-        <!--<div class="col-sm-12 search-collapse">-->
-            <!--<form id="formId">-->
-                <!--<div class="select-list">-->
-                    <!--<ul>-->
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                           <input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
+                                         placeholder="请选择归牵头部门" class="form-control" required>
+                            <input name="leadDeptId" type="hidden" id="leadDeptId"/>
+
+                        </li>
+
+                        <li>
+                            汇报内容：<input type="text" name="content"/>
+                        </li>
+
                         <!--<li>-->
-                            <!--任务的id：<input type="text" name="workTaskId"/>-->
+                        <!--创建人：<input type="text" name="createBy"/>-->
                         <!--</li>-->
 
                         <!--<li>-->
-                            <!--汇报内容：<input type="text" name="content"/>-->
+                        <!--创建时间：<input type="text" name="createTime"/>-->
                         <!--</li>-->
-
-                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;创建人：<input type="text" name="createBy"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;创建时间：<input type="text" name="createTime"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;更新者：<input type="text" name="updateBy"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;更新时间：<input type="text" name="updateTime"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;删除标志（0代表存在 2代表删除）,默认0：<input type="text" name="delFlag"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;备注：<input type="text" name="remark"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;存在问题内容：<input type="text" name="repContent"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
 
                         <!--<li>-->
-                            <!--<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i-->
-                                    <!--class="fa fa-search"></i>&nbsp;搜索</a>-->
-                            <!--<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i-->
-                                    <!--class="fa fa-refresh"></i>&nbsp;重置</a>-->
+                        <!--更新者：<input type="text" name="updateBy"/>-->
                         <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
 
-        <!--<div class="btn-group-sm" id="toolbar" role="group">-->
-            <!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="worktask:workTaskActivity:add">-->
-                <!--<i class="fa fa-plus"></i> 添加-->
-            <!--</a>-->
-            <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"-->
-               <!--shiro:hasPermission="worktask:workTaskActivity:edit">-->
-                <!--<i class="fa fa-edit"></i> 修改-->
-            <!--</a>-->
-            <!--<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"-->
-               <!--shiro:hasPermission="worktask:workTaskActivity:remove">-->
-                <!--<i class="fa fa-remove"></i> 删除-->
-            <!--</a>-->
-            <!--<a class="btn btn-warning" onclick="$.table.exportExcel()"-->
-               <!--shiro:hasPermission="worktask:workTaskActivity:export">-->
-                <!--<i class="fa fa-download"></i> 导出-->
-            <!--</a>-->
-        <!--</div>-->
+                        <!--<li>-->
+                        <!--更新时间：<input type="text" name="updateTime"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--删除标志（0代表存在 2代表删除）,默认0：<input type="text" name="delFlag"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--备注：<input type="text" name="remark"/>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                        <!--存在问题内容：<input type="text" name="repContent"/>-->
+                        <!--</li>-->
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="worktask:workTaskActivity:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()"
+               shiro:hasPermission="worktask:workTaskActivity:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="worktask:workTaskActivity:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()"
+               shiro:hasPermission="worktask:workTaskActivity:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
@@ -135,7 +138,7 @@
                     formatter: function (value, row, index) {
 //                        1 待办理 2 进行中 3已完成
                         if(value==1){
-                            return '待办理'
+                            return '未开始'
                         }else  if(value==2){
                             return '进行中'
                         }else  if(value==3){
@@ -205,6 +208,29 @@
     function detail(id) {
         var url = prefix + '/query/' + id;
        createMenuItem(url, "查看");
+    }
+    function selectLeadDeptTree() {
+        var leadDeptId = $("#leadDeptId").val();
+        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
+        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var options = {
+            title: '选择部门',
+            width: "380",
+            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            callBack: doSubmitLeadDept
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmitLeadDept(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#leadDeptId").val(body.find('#treeId').val());
+        $("#leadDeptName").val(body.find('#treeName').val());
+        layer.close(index);
     }
 </script>
 </body>

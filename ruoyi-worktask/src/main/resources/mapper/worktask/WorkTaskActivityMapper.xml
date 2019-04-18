@@ -78,7 +78,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="targetMonth != null  and targetMonth != '' "> and ac.target_month = #{targetMonth}</if>
              <if test="workStatus != null  and workStatus != '' "> and ac.work_status = #{workStatus}</if>
              <if test="orderNum != null "> and ac.order_num = #{orderNum}</if>
-            <if test="process_instance_id != null "> and ac.process_instance_id = #{process_instance_id}</if>
+             <if test="process_instance_id != null "> and ac.process_instance_id = #{process_instance_id}</if>
+            <if test="leadDeptId != null and leadDeptId != ''"> and work_task.lead_dept_id = #{leadDeptId}</if>
+
          </where>
         ORDER BY  ac.target_month ASC, ac.order_num ASC
     </select>
@@ -115,7 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
 			<if test="workTaskId != null  and workTaskId != ''  ">#{workTaskId},</if>
-			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="content != null  and content != ''  "> like concat('%', #{content}, '%'),</if>
 			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
 			<if test="createTime != null  ">#{createTime},</if>
 			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>

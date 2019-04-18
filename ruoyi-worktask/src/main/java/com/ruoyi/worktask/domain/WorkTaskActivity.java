@@ -59,6 +59,15 @@ public class WorkTaskActivity extends BaseEntity
 	private String process_instance_id;
 
 	private TaskVO taskVO;
+	private String leadDeptId;
+
+	public String getLeadDeptId() {
+		return leadDeptId;
+	}
+
+	public void setLeadDeptId(String leadDeptId) {
+		this.leadDeptId = leadDeptId;
+	}
 
 	private List<HistoryTaskVo> historyTaskVos=new ArrayList<HistoryTaskVo>();
 
