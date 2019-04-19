@@ -68,7 +68,8 @@ public class ScoreActivityDetailController extends BaseController
 	@ResponseBody
 	public TableDataInfo deptDetailList(ScoreActivityDetail scoreActivityDetail)
 	{
-		scoreActivityDetail.setEvalDeptId(ShiroUtils.getSysUser().getDeptId()+"");
+//		scoreActivityDetail.setEvalDeptId(ShiroUtils.getSysUser().getDeptId()+"");
+		scoreActivityDetail.setEvalUserId(ShiroUtils.getUserId()+"");
 		scoreActivityDetail.setActivityStatus("1");
 		startPage();
 		List<ScoreActivityDetail> list = scoreActivityDetailService.selectScoreActivityDetailList(scoreActivityDetail);

@@ -48,6 +48,16 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-3 control-label">评分人</label>
+				<div class="col-sm-8">
+					<select id="evalUserId" name="evalUserId" class="form-control select2-hidden-accessible">
+						<option value=""></option>
+						<option th:each="user:${users}" th:value="${user.userId}"
+								th:text="${user.userName}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">记分方法：</label>
 				<div class="col-sm-8">
 					<textarea id="remark" name="remark" class="form-control" ></textarea>
@@ -56,7 +66,9 @@
 		</form>
 	</div>
     <div th:include="include::footer"></div>
-    <script type="text/javascript">
+	<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+	<script type="text/javascript">
 		var prefix = ctx + "taskscore/scoringPointer"
 		$("#form-scoringPointer-add").validate({
 			rules:{
@@ -69,6 +81,13 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
+
+				var userIds = $.form.selectSelects("evalUserId");
+				if (userIds == "") {
+					$.modal.alert("请选择评分人", "error");
+					return;
+				}
+
 	            $.operate.save(prefix + "/add", $('#form-scoringPointer-add').serialize());
 	        }
 	    }

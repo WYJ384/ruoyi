@@ -19,6 +19,10 @@
         <result property="updateTime" column="update_time"/>
         <result property="delFlag" column="del_flag"/>
         <result property="remark" column="remark"/>
+        <result property="remark" column="remark"/>
+        <result property="evalUserId"    column="eval_user_id"    />
+        <result property="porder"    column="p_order"    />
+
         <association property="dept" column="dept_id" javaType="SysDept" resultMap="deptResult"/>
         <association property="evalDept" column="eval_dept_id" javaType="SysDept" resultMap="evalDeptResult"/>
         <association property="pointerType" column="pointer_type_id" javaType="PointerType"  resultMap="PointerTypeResult"/>
@@ -40,7 +44,7 @@
 
     <sql id="selectScoringPointerVo">
         select pointer.id, pointer.name, weight, pointer_type_id, score_description, pointer.remark,score, evalDept.dept_id as eval_dept_id,
-        evalDept.dept_name as eval_dept_name, d.dept_id, d.dept_name,pointer_type.id as pointer_id ,pointer_type.name as pointer_name
+        evalDept.dept_name as eval_dept_name, d.dept_id, d.dept_name,pointer_type.id as pointer_id ,pointer_type.name as pointer_name, eval_user_id, p_order
          from scoring_pointer pointer
         left join sys_dept d on d.dept_id = pointer.dept_id
         left join sys_dept evalDept on evalDept.dept_id = pointer.eval_dept_id
@@ -66,6 +70,8 @@
             <if test="updateTime != null ">and update_time = #{updateTime}</if>
             <if test="delFlag != null  and delFlag != '' ">and del_flag = #{delFlag}</if>
             <if test="remark != null  and remark != '' ">and remark = #{remark}</if>
+            <if test="evalUserId != null  and evalUserId != '' "> and eval_user_id = #{evalUserId}</if>
+            <if test="porder != null "> and p_order = #{porder}</if>
         </where>
     </select>
 
@@ -94,6 +100,8 @@
             <if test="updateTime != null  ">update_time,</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
             <if test="remark != null  and remark != ''  ">remark,</if>
+            <if test="evalUserId != null  and evalUserId != ''  ">eval_user_id,</if>
+            <if test="porder != null  ">p_order,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  and id != ''  ">#{id},</if>
@@ -110,6 +118,8 @@
             <if test="updateTime != null  ">#{updateTime},</if>
             <if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
             <if test="remark != null  and remark != ''  ">#{remark},</if>
+            <if test="evalUserId != null  and evalUserId != ''  ">#{evalUserId},</if>
+            <if test="porder != null  ">#{porder},</if>
         </trim>
     </insert>
 
@@ -130,6 +140,8 @@
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="evalUserId != null  and evalUserId != ''  ">eval_user_id = #{evalUserId},</if>
+            <if test="porder != null  ">p_order = #{porder},</if>
         </trim>
         where id = #{id}
     </update>

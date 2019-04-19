@@ -20,7 +20,7 @@ public class ScoringPointer extends BaseEntity
 	/** 指标名称 */
 	private String name;
 	/** 权重 */
-	private Integer weight;
+	private String weight;
 	/** 指标类型id */
 	private String pointerTypeId;
 	/** 评价说明 */
@@ -39,6 +39,29 @@ public class ScoringPointer extends BaseEntity
 
 	/** 删除标志 */
 	private String delFlag;
+
+	//评分人
+	private String evalUserId;
+
+	//排序
+	private Integer porder;
+
+
+	public String getEvalUserId() {
+		return evalUserId;
+	}
+
+	public void setEvalUserId(String evalUserId) {
+		this.evalUserId = evalUserId;
+	}
+
+	public Integer getPorder() {
+		return porder;
+	}
+
+	public void setPorder(Integer porder) {
+		this.porder = porder;
+	}
 
 	public SysDept getDept() {
 		return dept;
@@ -90,12 +113,12 @@ public class ScoringPointer extends BaseEntity
 	{
 		return name;
 	}
-	public void setWeight(Integer weight) 
+	public void setWeight(String weight)
 	{
 		this.weight = weight;
 	}
 
-	public Integer getWeight() 
+	public String getWeight()
 	{
 		return weight;
 	}

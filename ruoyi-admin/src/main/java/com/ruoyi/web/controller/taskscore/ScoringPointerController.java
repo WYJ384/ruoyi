@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysDept;
+import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysDeptService;
+import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.taskscore.domain.PointerType;
 import com.ruoyi.taskscore.service.IPointerTypeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -37,7 +39,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 public class ScoringPointerController extends BaseController
 {
     private String prefix = "taskscore/scoringPointer";
-	
+	@Autowired
+	private ISysUserService userService;
 	@Autowired
 	private IScoringPointerService scoringPointerService;
 
@@ -89,6 +92,8 @@ public class ScoringPointerController extends BaseController
 	@GetMapping("/add")
 	public String add(ModelMap mmap)
 	{
+		SysUser sysUser = new SysUser();
+		mmap.put("users",userService.selectUserList(sysUser));
 		List<PointerType> pointerTypes = pointerTypeService.selectPointerTypeList(new PointerType());
 		mmap.put("pointerTypes", pointerTypes);
 	    return prefix + "/add";
@@ -114,6 +119,8 @@ public class ScoringPointerController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
+		SysUser sysUser = new SysUser();
+		mmap.put("users",userService.selectUserList(sysUser));
 		ScoringPointer scoringPointer = scoringPointerService.selectScoringPointerById(id);
 		mmap.put("scoringPointer", scoringPointer);
 
