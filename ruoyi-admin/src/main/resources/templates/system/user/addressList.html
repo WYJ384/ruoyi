@@ -66,29 +66,32 @@
                                     class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
                                     class="fa fa-refresh"></i>&nbsp;重置</a>
+                            <a class="btn btn-rounded  btn-success btn-sm" onclick="addUser()" shiro:hasPermission="system:user:add">
+                                <i class="fa fa-plus"></i> 新增
+                            </a>
                         </li>
                     </ul>
                 </div>
             </form>
         </div>
 
-        <!--<div class="btn-group-sm" id="toolbar" role="group">-->
-        <!--<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">-->
-        <!--<i class="fa fa-plus"></i> 新增-->
-        <!--</a>-->
-        <!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">-->
-        <!--<i class="fa fa-edit"></i> 修改-->
-        <!--</a>-->
-        <!--<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">-->
-        <!--<i class="fa fa-remove"></i> 删除-->
-        <!--</a>-->
-        <!--<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">-->
-        <!--<i class="fa fa-upload"></i> 导入-->
-        <!--</a>-->
-        <!--<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">-->
-        <!--<i class="fa fa-download"></i> 导出-->
-        <!--</a>-->
-        <!--</div>-->
+<!--        <div class="btn-group-sm" id="toolbar" role="group">-->
+<!--        <a class="btn btn-success" onclick="addUser()" shiro:hasPermission="system:user:add">-->
+<!--            <i class="fa fa-plus"></i> 新增-->
+<!--        </a>-->
+<!--        <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">-->
+<!--                    <i class="fa fa-edit"></i> 修改-->
+<!--                    </a>-->
+<!--                    <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">-->
+<!--                    <i class="fa fa-remove"></i> 删除-->
+<!--                    </a>-->
+<!--                    <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">-->
+<!--                    <i class="fa fa-upload"></i> 导入-->
+<!--                    </a>-->
+<!--        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">-->
+<!--        <i class="fa fa-download"></i> 导出-->
+<!--        </a>-->
+<!--        </div>-->
 
         <div class="col-sm-12 select-table table-striped">
 
@@ -178,6 +181,9 @@
     function search() {
         queryUserList(1);
     }
+    function addUser(){
+        $.modal.openTab("添加用户", prefix + "/add");
+    }
     $(function () {
         var panehHidden = false;
         if ($(this).width() < 769) {
@@ -189,9 +195,11 @@
         $("#search").click(function () {
             search();
         });
+
     });
 
     function queryUserList(num) {
+
         $.ajax({
             type: "post",
             async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）

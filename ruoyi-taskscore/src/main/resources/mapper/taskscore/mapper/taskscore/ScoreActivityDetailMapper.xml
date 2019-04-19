@@ -99,6 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="activityStatus != null  and activityStatus != '' "> and activity_status = #{activityStatus}</if>
             <if test="evalDeptId!= null  and evalDeptId != '' "> and pointer.eval_dept_id = #{evalDeptId}</if>
             <if test="evalUserId!= null  and evalUserId != '' "> and pointer.eval_user_id = #{evalUserId}</if>
+            <if test="deptId!= null  and deptId != '' "> and pointer.dept_id = #{deptId}</if>
         </where>
     </select>
     

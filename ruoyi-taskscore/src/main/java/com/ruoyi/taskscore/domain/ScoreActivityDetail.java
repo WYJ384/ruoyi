@@ -34,6 +34,15 @@ public class ScoreActivityDetail extends BaseEntity
 	private String activityStatus;
 
 	private String evalDeptId;
+	private String 	deptId;
+
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
 
 	//评分人
 	private String evalUserId;

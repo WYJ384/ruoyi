@@ -6,6 +6,27 @@
 
 <div class="container-div">
     <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
+                                    placeholder="请选择归牵头部门" class="form-control" required>
+                            <input name="deptId" type="hidden" id="leadDeptId"/>
+
+                        </li>
+
+
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
@@ -100,6 +121,29 @@
         };
         $.table.init(options);
     });
+    function selectLeadDeptTree() {
+        var leadDeptId = $("#leadDeptId").val();
+        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
+        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var options = {
+            title: '选择部门',
+            width: "380",
+            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            callBack: doSubmitLeadDept
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmitLeadDept(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#leadDeptId").val(body.find('#treeId').val());
+        $("#leadDeptName").val(body.find('#treeName').val());
+        layer.close(index);
+    }
 </script>
 </body>
 </html>
