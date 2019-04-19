@@ -214,12 +214,13 @@
             dataType: "json",        //返回数据形式为json
             success: function (result) {
                 $("#contactList").html(template("contactListTpl",result));
-                var total_pages=0;
-                if(result.total%2==0){
-                    total_pages=result.total/6
-                }else{
-                    total_pages=result.total/6+1;
-                }
+
+                var total_pages = (result.total + 6 -1) / 6;
+                // if(result.total%2==0){
+                //     total_pages=result.total/6
+                // }else{
+                //     total_pages=result.total/6+1;
+                // }
                 display_pages(parseInt(total_pages), 5, num);
             },
             error: function (errorMsg) {
@@ -270,8 +271,10 @@
             totalPages: total_pages,
             visiblePages: visible_pages,
             currentPage: current_page,
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
             prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
             next: '<li class="next"><a href="javascript:;">下一页</a></li>',
+            last: '<li class="last"><a href="javascript:;">末页</a></li>',
             page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
             onPageChange: function (num, type) {
                 if(num!=current_page){

@@ -144,16 +144,29 @@
 				score:{
 					required:true,
 				},
-				scoreDescription:{
-					required:true,
-				},
+				// scoreDescription:{
+				// 	required:true,
+				// },
 			},
 			focusCleanup: true
 		});
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-scoreActivityDetail-edit').serialize());
+				var config = {
+					url: prefix + "/edit",
+					type: "post",
+					dataType: "json",
+					data: $('#form-scoreActivityDetail-edit').serialize(),
+					beforeSend: function () {
+						$.modal.loading("正在处理中，请稍后...");
+						$.modal.disable();
+					},
+					success: function(result) {
+						$.operate.successTabCallback(result);
+					}
+				};
+				$.ajax(config)
 	        }
 	    }
 	</script>
