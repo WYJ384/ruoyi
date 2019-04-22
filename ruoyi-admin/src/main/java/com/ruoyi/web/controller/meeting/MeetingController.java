@@ -2,12 +2,15 @@ package com.ruoyi.web.controller.meeting;
 
 import java.util.*;
 
+import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.meeting.domain.MeetingModel;
 import com.ruoyi.meeting.domain.Meetroom;
 import com.ruoyi.meeting.service.IMeetroomService;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -140,8 +143,17 @@ public class MeetingController extends BaseController
 	}
 	@GetMapping("/findList")
 	@ResponseBody
-	public List<MeetingModel> findList(Meeting meeting)
+	public List<MeetingModel> findList(Meeting meeting,String start,String end)
 	{
+		if(StringUtils.isNotEmpty(start)&&start.indexOf("T")!=-1){
+			String[] startArr = start.split("T");
+			meeting.setMeetingBeginTime(DateUtils.parseDate(startArr[0]));
+		}
+		if(StringUtils.isNotEmpty(end)&&end.indexOf("T")!=-1){
+			String[] endArr = end.split("T");
+			meeting.setMeetingBeginTime(DateUtils.parseDate(endArr[0]));
+		}
+
 		List<MeetingModel> meetingModels=new ArrayList<MeetingModel>();
 		List<Meeting> meetings = meetingService.findAll(meeting);
 		Iterator<Meeting> iterator = meetings.iterator();

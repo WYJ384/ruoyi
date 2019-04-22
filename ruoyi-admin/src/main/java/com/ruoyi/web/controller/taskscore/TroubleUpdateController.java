@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 public class TroubleUpdateController extends BaseController
 {
     private String prefix = "taskscore/troubleUpdate";
-	
+    @Autowired
+    private ISysUserService userService;
 	@Autowired
 	private ITroubleUpdateService troubleUpdateService;
 	
@@ -75,8 +78,11 @@ public class TroubleUpdateController extends BaseController
 	 * 新增隐患整改
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap mmap)
 	{
+        SysUser sysUser = new SysUser();
+        sysUser.setStatus("0");
+        mmap.put("users",userService.selectUserList(sysUser));
 	    return prefix + "/add";
 	}
 	
@@ -99,6 +105,9 @@ public class TroubleUpdateController extends BaseController
 	@GetMapping("/edit/{troId}")
 	public String edit(@PathVariable("troId") String troId, ModelMap mmap)
 	{
+        SysUser sysUser = new SysUser();
+        sysUser.setStatus("0");
+        mmap.put("users",userService.selectUserList(sysUser));
 		TroubleUpdate troubleUpdate = troubleUpdateService.selectTroubleUpdateById(troId);
 		mmap.put("troubleUpdate", troubleUpdate);
 	    return prefix + "/edit";

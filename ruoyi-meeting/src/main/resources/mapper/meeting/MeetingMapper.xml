@@ -28,8 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null "> and id = #{id}</if>
              <if test="meetingName != null  and meetingName != '' "> and meeting_name = #{meetingName}</if>
              <if test="meetingSubject != null  and meetingSubject != '' "> and meeting_subject = #{meetingSubject}</if>
-             <if test="meetingBeginTime != null "> and meeting_begin_time = #{meetingBeginTime}</if>
-             <if test="meetingEndTime != null "> and meeting_end_time = #{meetingEndTime}</if>
+             <if test="meetingBeginTime != null "> and meeting_begin_time >= #{meetingBeginTime}</if>
+             <if test="meetingEndTime != null "> and meeting_end_time <![CDATA[   <= ]]> #{meetingEndTime}</if>
              <if test="meetroomId != null "> and meetroom_id = #{meetroomId}</if>
              <if test="createdTime != null "> and created_time = #{createdTime}</if>
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>

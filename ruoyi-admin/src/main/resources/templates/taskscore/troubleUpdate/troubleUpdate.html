@@ -88,7 +88,7 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="taskscore:troubleUpdate:add">
+				<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="taskscore:troubleUpdate:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
 				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="taskscore:troubleUpdate:edit">
@@ -106,8 +106,11 @@
 			</div>
 		</div>
 	</div>
+
     <div th:include="include :: footer"></div>
-    <script th:inline="javascript">
+	 <script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+	 <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('taskscore:troubleUpdate:edit')}]];
         var removeFlag = [[${@permission.hasPermi('taskscore:troubleUpdate:remove')}]];
         var prefix = ctx + "taskscore/troubleUpdate";
@@ -169,11 +172,11 @@
 					title : '计划完成时间',
 					sortable: true
 				},
-				{
-					field : 'dutyUserIds', 
-					title : '责任人',
-					sortable: true
-				},
+				// {
+				// 	field : 'dutyUserIds',
+				// 	title : '责任人',
+				// 	sortable: true
+				// },
 				{
 					field : 'troStatus', 
 					title : '完成情况',
@@ -181,9 +184,9 @@
 					formatter: function (value, row, index) {
 //                        return '<a href="#" >' + row.workName + '</a>';
 						if(value==1){
-							return "<span class='btn btn-w-m btn-success'>进行中</span>";
+							return "<span class='badge badge-primary'>进行中</span>";
 						}else  if(value==2){
-							return "<span class='btn btn-primary dim'><i class=\"fa fa-check\"></i>已完成</span>";
+							return "<span class='badge  badge-success'><i class=\"fa fa-check\"></i>已完成</span>";
 						}
 
 					}
@@ -228,7 +231,7 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.troId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.troId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.troId + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
