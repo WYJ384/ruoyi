@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.taskscore.mapper.TroubleUpdateMapper">
+    
+    <resultMap type="TroubleUpdate" id="TroubleUpdateResult">
+        <result property="troId"    column="tro_id"    />
+        <result property="troTypeId"    column="tro_type_id"    />
+        <result property="troSubitem"    column="tro_subitem"    />
+        <result property="troQuestion"    column="tro_question"    />
+        <result property="troTarget"    column="tro_target"    />
+        <result property="troSuggest"    column="tro_suggest"    />
+        <result property="leadDeptId"    column="lead_dept_id"    />
+        <result property="cooperateDeptId"    column="cooperate_dept_id"    />
+        <result property="troFinishTime"    column="tro_finish_time"    />
+        <result property="dutyUserIds"    column="duty_user_ids"    />
+        <result property="troStatus"    column="tro_status"    />
+        <result property="troProgress"    column="tro_progress"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectTroubleUpdateVo">
+        select tro_id, tro_type_id, tro_subitem, tro_question, tro_target, tro_suggest, lead_dept_id, cooperate_dept_id, tro_finish_time, duty_user_ids, tro_status, tro_progress, create_by, create_time, update_by, update_time, del_flag, remark from trouble_update
+    </sql>
+	
+    <select id="selectTroubleUpdateList" parameterType="TroubleUpdate" resultMap="TroubleUpdateResult">
+        <include refid="selectTroubleUpdateVo"/>
+        <where>  
+            <if test="troId != null  and troId != '' "> and tro_id = #{troId}</if>
+             <if test="troTypeId != null  and troTypeId != '' "> and tro_type_id = #{troTypeId}</if>
+             <if test="troSubitem != null  and troSubitem != '' "> and tro_subitem = #{troSubitem}</if>
+             <if test="troQuestion != null  and troQuestion != '' "> and tro_question = #{troQuestion}</if>
+             <if test="troTarget != null  and troTarget != '' "> and tro_target = #{troTarget}</if>
+             <if test="troSuggest != null  and troSuggest != '' "> and tro_suggest = #{troSuggest}</if>
+             <if test="leadDeptId != null  and leadDeptId != '' "> and lead_dept_id = #{leadDeptId}</if>
+             <if test="cooperateDeptId != null  and cooperateDeptId != '' "> and cooperate_dept_id = #{cooperateDeptId}</if>
+             <if test="troFinishTime != null "> and tro_finish_time = #{troFinishTime}</if>
+             <if test="dutyUserIds != null  and dutyUserIds != '' "> and duty_user_ids = #{dutyUserIds}</if>
+             <if test="troStatus != null  and troStatus != '' "> and tro_status = #{troStatus}</if>
+             <if test="troProgress != null  and troProgress != '' "> and tro_progress = #{troProgress}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectTroubleUpdateById" parameterType="String" resultMap="TroubleUpdateResult">
+        <include refid="selectTroubleUpdateVo"/>
+        where tro_id = #{troId}
+    </select>
+        
+    <insert id="insertTroubleUpdate" parameterType="TroubleUpdate">
+        insert into trouble_update
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="troId != null  and troId != ''  ">tro_id,</if>
+			<if test="troTypeId != null  and troTypeId != ''  ">tro_type_id,</if>
+			<if test="troSubitem != null  and troSubitem != ''  ">tro_subitem,</if>
+			<if test="troQuestion != null  and troQuestion != ''  ">tro_question,</if>
+			<if test="troTarget != null  and troTarget != ''  ">tro_target,</if>
+			<if test="troSuggest != null  and troSuggest != ''  ">tro_suggest,</if>
+			<if test="leadDeptId != null  and leadDeptId != ''  ">lead_dept_id,</if>
+			<if test="cooperateDeptId != null  and cooperateDeptId != ''  ">cooperate_dept_id,</if>
+			<if test="troFinishTime != null  ">tro_finish_time,</if>
+			<if test="dutyUserIds != null  and dutyUserIds != ''  ">duty_user_ids,</if>
+			<if test="troStatus != null  and troStatus != ''  ">tro_status,</if>
+			<if test="troProgress != null  and troProgress != ''  ">tro_progress,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="troId != null  and troId != ''  ">#{troId},</if>
+			<if test="troTypeId != null  and troTypeId != ''  ">#{troTypeId},</if>
+			<if test="troSubitem != null  and troSubitem != ''  ">#{troSubitem},</if>
+			<if test="troQuestion != null  and troQuestion != ''  ">#{troQuestion},</if>
+			<if test="troTarget != null  and troTarget != ''  ">#{troTarget},</if>
+			<if test="troSuggest != null  and troSuggest != ''  ">#{troSuggest},</if>
+			<if test="leadDeptId != null  and leadDeptId != ''  ">#{leadDeptId},</if>
+			<if test="cooperateDeptId != null  and cooperateDeptId != ''  ">#{cooperateDeptId},</if>
+			<if test="troFinishTime != null  ">#{troFinishTime},</if>
+			<if test="dutyUserIds != null  and dutyUserIds != ''  ">#{dutyUserIds},</if>
+			<if test="troStatus != null  and troStatus != ''  ">#{troStatus},</if>
+			<if test="troProgress != null  and troProgress != ''  ">#{troProgress},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateTroubleUpdate" parameterType="TroubleUpdate">
+        update trouble_update
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="troTypeId != null  and troTypeId != ''  ">tro_type_id = #{troTypeId},</if>
+            <if test="troSubitem != null  and troSubitem != ''  ">tro_subitem = #{troSubitem},</if>
+            <if test="troQuestion != null  and troQuestion != ''  ">tro_question = #{troQuestion},</if>
+            <if test="troTarget != null  and troTarget != ''  ">tro_target = #{troTarget},</if>
+            <if test="troSuggest != null  and troSuggest != ''  ">tro_suggest = #{troSuggest},</if>
+            <if test="leadDeptId != null  and leadDeptId != ''  ">lead_dept_id = #{leadDeptId},</if>
+            <if test="cooperateDeptId != null  and cooperateDeptId != ''  ">cooperate_dept_id = #{cooperateDeptId},</if>
+            <if test="troFinishTime != null  ">tro_finish_time = #{troFinishTime},</if>
+            <if test="dutyUserIds != null  and dutyUserIds != ''  ">duty_user_ids = #{dutyUserIds},</if>
+            <if test="troStatus != null  and troStatus != ''  ">tro_status = #{troStatus},</if>
+            <if test="troProgress != null  and troProgress != ''  ">tro_progress = #{troProgress},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where tro_id = #{troId}
+    </update>
+
+	<delete id="deleteTroubleUpdateById" parameterType="String">
+        delete from trouble_update where tro_id = #{troId}
+    </delete>
+	
+    <delete id="deleteTroubleUpdateByIds" parameterType="String">
+        delete from trouble_update where tro_id in 
+        <foreach item="troId" collection="array" open="(" separator="," close=")">
+            #{troId}
+        </foreach>
+    </delete>
+    
+</mapper>

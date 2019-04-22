@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+<!--							<li>-->
+<!--								问题类别：<input type="text" name="troTypeId"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								分项：<input type="text" name="troSubitem"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								具体问题：<input type="text" name="troQuestion"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								目标：<input type="text" name="troTarget"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								措施及建议：<input type="text" name="troSuggest"/>-->
+<!--							</li>-->
+
+							<li>
+								责任部门：<input type="text" name="leadDeptId"/>
+							</li>
+
+<!--							<li>-->
+<!--								配合部门：<input type="text" name="cooperateDeptId"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								计划完成时间：<input type="text" name="troFinishTime"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								责任人：<input type="text" name="dutyUserIds"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								完成情况：<input type="text" name="troStatus"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								进展情况：<input type="text" name="troProgress"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								创建人：<input type="text" name="createBy"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								创建时间：<input type="text" name="createTime"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								更新者：<input type="text" name="updateBy"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								更新时间：<input type="text" name="updateTime"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								删除标志（0代表存在 2代表删除）,默认0：<input type="text" name="delFlag"/>-->
+<!--							</li>-->
+
+<!--							<li>-->
+<!--								备注：<input type="text" name="remark"/>-->
+<!--							</li>-->
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="taskscore:troubleUpdate:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="taskscore:troubleUpdate:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="taskscore:troubleUpdate:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="taskscore:troubleUpdate:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('taskscore:troubleUpdate:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('taskscore:troubleUpdate:remove')}]];
+        var prefix = ctx + "taskscore/troubleUpdate";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "隐患整改",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'troId', 
+					title : '主键',
+					visible: false
+				},
+				{
+					field : 'troTypeId', 
+					title : '问题类别',
+					sortable: true
+				},
+				{
+					field : 'troSubitem', 
+					title : '分项',
+					sortable: true
+				},
+				// {
+				// 	field : 'troQuestion',
+				// 	title : '具体问题',
+				// 	sortable: true
+				// },
+				{
+					field : 'troTarget', 
+					title : '目标',
+					sortable: true
+				},
+				// {
+				// 	field : 'troSuggest',
+				// 	title : '措施及建议',
+				// 	sortable: true
+				// },
+				{
+					field : 'leadDeptId', 
+					title : '责任部门',
+					sortable: true
+				},
+				// {
+				// 	field : 'cooperateDeptId',
+				// 	title : '配合部门',
+				// 	sortable: true
+				// },
+				{
+					field : 'troFinishTime', 
+					title : '计划完成时间',
+					sortable: true
+				},
+				{
+					field : 'dutyUserIds', 
+					title : '责任人',
+					sortable: true
+				},
+				{
+					field : 'troStatus', 
+					title : '完成情况',
+					sortable: true,
+					formatter: function (value, row, index) {
+//                        return '<a href="#" >' + row.workName + '</a>';
+						if(value==1){
+							return "<span class='btn btn-w-m btn-success'>进行中</span>";
+						}else  if(value==2){
+							return "<span class='btn btn-primary dim'><i class=\"fa fa-check\"></i>已完成</span>";
+						}
+
+					}
+				},
+				{
+					field : 'troProgress', 
+					title : '进展情况',
+					sortable: true
+				},
+				// {
+				// 	field : 'createBy',
+				// 	title : '创建人',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createTime',
+				// 	title : '创建时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateBy',
+				// 	title : '更新者',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateTime',
+				// 	title : '更新时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'delFlag',
+				// 	title : '删除标志（0代表存在 2代表删除）,默认0',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'remark',
+				// 	title : '备注',
+				// 	sortable: true
+				// },
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.troId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.troId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>
