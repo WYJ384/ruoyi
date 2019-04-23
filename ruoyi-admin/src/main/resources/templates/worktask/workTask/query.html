@@ -228,7 +228,7 @@
                     <div class="col-xs-10">
                         <select id="userIds" class="form-control select2-hidden-accessible" >
                             <option value=""></option>
-                            <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>
+                            <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.toString() eq (user.userId.toString())}" ></option>
                         </select>
                     </div>
                 </div>
