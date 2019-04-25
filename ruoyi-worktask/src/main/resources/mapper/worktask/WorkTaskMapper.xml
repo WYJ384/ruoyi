@@ -31,6 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="leaderId"    column="leader_id"    />
         <result property="leadDeptName"    column="leadDeptName"    />
         <result property="cooperateDeptName"    column="cooperateDeptName"    />
+        <association property="leadDept" column="leader_id" javaType="SysDept" resultMap="leadDeptResult"/>
+    </resultMap>
+    <resultMap id="leadDeptResult" type="SysDept">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
     </resultMap>
 
 	<sql id="selectWorkTaskVo">
@@ -48,19 +53,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             result,
             work_time,
             work_status,
-            create_by,
-            create_time,
-            update_by,
-            update_time,
-            del_flag,
-            remark,
-            ancestors,
+            work_task.create_by,
+            work_task.create_time,
+            work_task.update_by,
+            work_task.update_time,
+            work_task.del_flag,
+            work_task.remark,
+            work_task.ancestors,
             work_score,
             lead_dept_id,
             cooperate_dept_id,
-            leader_id
+            leader_id,
+            dept_name
         FROM
         work_task
+         left join sys_dept d on d.dept_id =lead_dept_id
     </sql>
 
     <sql id="selectWorkTaskVoDept">

@@ -1,5 +1,6 @@
 package com.ruoyi.worktask.domain;
 
+import com.ruoyi.system.domain.SysDept;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -62,6 +63,17 @@ public class WorkTask extends BaseEntity
 	private String leadDeptName;
 	/** 配合部门 */
 	private String cooperateDeptName;
+
+	/** 牵头部门 */
+	private SysDept leadDept;
+
+	public SysDept getLeadDept() {
+		return leadDept;
+	}
+
+	public void setLeadDept(SysDept leadDept) {
+		this.leadDept = leadDept;
+	}
 
 	public String getLeadDeptName() {
 		return leadDeptName;

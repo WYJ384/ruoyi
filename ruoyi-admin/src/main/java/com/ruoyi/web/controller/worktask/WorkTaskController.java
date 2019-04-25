@@ -4,13 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import com.github.pagehelper.PageHelper;
 import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.config.Global;
+import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.core.page.PageDomain;
+import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
+import com.ruoyi.common.utils.sql.SqlUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysUser;
@@ -94,7 +99,24 @@ public class WorkTaskController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(WorkTask workTask)
 	{
-		startPage();
+//		startPage();
+		PageDomain pageDomain = new PageDomain();
+		pageDomain.setPageNum(ServletUtils.getParameterToInt(Constants.PAGE_NUM));
+		pageDomain.setPageSize(ServletUtils.getParameterToInt(Constants.PAGE_SIZE));
+		if(ServletUtils.getParameter(Constants.ORDER_BY_COLUMN).equals("leadDept.deptName")){
+			pageDomain.setOrderByColumn("lead_dept_id");
+		}else{
+			pageDomain.setOrderByColumn(ServletUtils.getParameter(Constants.ORDER_BY_COLUMN));
+		}
+		pageDomain.setIsAsc(ServletUtils.getParameter(Constants.IS_ASC));
+		Integer pageNum = pageDomain.getPageNum();
+		Integer pageSize = pageDomain.getPageSize();
+		if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize))
+		{
+			String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
+			PageHelper.startPage(pageNum, pageSize, orderBy);
+		}
+
         List<WorkTask> list = workTaskService.selectWorkTaskList(workTask);
 		Iterator<WorkTask> taskIterator = list.iterator();
 		while (taskIterator.hasNext()){
