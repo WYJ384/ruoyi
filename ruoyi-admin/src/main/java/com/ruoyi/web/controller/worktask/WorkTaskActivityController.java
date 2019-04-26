@@ -267,6 +267,13 @@ public class WorkTaskActivityController extends BaseController {
             if(StringUtils.isEmpty(userIds)){
                 return AjaxResult.error(1, "请选择督办主任");
             }
+            String[] usersArr = userIds.split(",");
+            for (String uid:usersArr){
+                SysUser sysUser = userService.selectUserById(Long.valueOf(uid));
+                if(sysUser!=null){
+                    userIds=sysUser.getLoginName();
+                }
+            }
             vars.put("zhuren_users", userIds);
             ProcessInstance processInstance = actTaskService.startProcess("duban", businessTable, businessId, title, userId, vars);
             String instanceid = processInstance.getId();

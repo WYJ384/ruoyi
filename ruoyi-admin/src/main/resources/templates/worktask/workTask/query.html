@@ -326,7 +326,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">任务目标：</label>
                     <div class="col-sm-8">
-                        <div class="well" th:text="${workActivity.target}"></div>
+                        <div class="well" th:utext="${workActivity.target}"></div>
 <!--                        <textarea class="form-control" rows="5" disabled th:text="${workActivity.target}"></textarea>-->
                     </div>
                 </div>
@@ -340,7 +340,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">汇报内容：</label>
                     <div class="col-sm-8">
-                        <div class="well" th:text="${workActivity.content}"></div>
+                        <div class="well" th:utext="${workActivity.content}"></div>
 <!--                    <textarea name="content" rows="5" readonly th:text="${workActivity.content}" class="form-control"-->
 <!--                    ></textarea>-->
                     </div>
