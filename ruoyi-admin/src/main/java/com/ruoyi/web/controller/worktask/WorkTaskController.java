@@ -393,6 +393,9 @@ public class WorkTaskController extends BaseController
 								.processInstanceId(process_instance_id)
 								.variableName("zhuren_users").singleResult();
 						historyTaskVo.setQueryVariables(zhuren_users.getValue().toString());
+
+
+
 					}else if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
 						HistoricVariableInstance yuangong_users = historyService.createHistoricVariableInstanceQuery()
 								.processInstanceId(process_instance_id)
@@ -409,6 +412,10 @@ public class WorkTaskController extends BaseController
 					}else if(hai.getActivityId().equalsIgnoreCase("end")){
 						historyTaskVo.setDescription("任务结束");
 					}
+
+
+					long datePoorHour = DateUtils.getDatePoorHour(historyTaskVo.getEndTime(),historyTaskVo.getStartTime());
+					historyTaskVo.setDatePoorHour(datePoorHour);
 					String queryVariables = historyTaskVo.getQueryVariables();
 					historyTaskVo.setQueryVariables("");
 					if(StringUtils.isNotEmpty(queryVariables)){
@@ -424,8 +431,7 @@ public class WorkTaskController extends BaseController
 							historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
 						}
 					}
-					long datePoorHour = DateUtils.getDatePoorHour(new Date(),historyTaskVo.getStartTime());
-					historyTaskVo.setDatePoorHour(datePoorHour);
+
 
 					activity.getHistoryTaskVos().add(historyTaskVo);
 				}
