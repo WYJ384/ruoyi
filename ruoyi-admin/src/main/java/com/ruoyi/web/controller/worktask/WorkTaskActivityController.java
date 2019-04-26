@@ -136,7 +136,10 @@ public class WorkTaskActivityController extends BaseController {
         workTaskActivity.setId(uuid);
         workTaskActivity.setCreateBy(ShiroUtils.getLoginName());
         workTaskActivity.setCreateTime(new Date());
-        return toAjax(workTaskActivityService.insertWorkTaskActivity(workTaskActivity));
+        //保存月度任务
+        AjaxResult ajaxResult = toAjax(workTaskActivityService.insertWorkTaskActivity(workTaskActivity));
+        ajaxResult = startTask(workTaskActivity);
+        return ajaxResult;
     }
 
     /**
@@ -224,9 +227,9 @@ public class WorkTaskActivityController extends BaseController {
 
 
 
-    /**
-     * 启动督办任务
-     */
+//    /**
+//     * 启动督办任务
+//     */
     @Log(title = "启动督办任务", businessType = BusinessType.INSERT)
     @PostMapping("/startTask")
     @ResponseBody

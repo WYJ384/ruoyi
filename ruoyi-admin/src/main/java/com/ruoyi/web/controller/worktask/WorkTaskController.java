@@ -338,6 +338,7 @@ public class WorkTaskController extends BaseController
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));
 		mmap.put("depts",deptService.selectDeptList(new SysDept()));
+		mmap.put("currMonth",DateFormatUtils.format(new Date(),"MM"));
 		mmap.put("workTaskActivities", workTaskActivities);
 		return prefix + "/edit";
 	}
@@ -438,7 +439,7 @@ public class WorkTaskController extends BaseController
 			}
 
 		}
-
+		mmap.put("currMonth",DateFormatUtils.format(new Date(),"MM"));
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);
 		mmap.put("users",userService.selectUserList(sysUser));
