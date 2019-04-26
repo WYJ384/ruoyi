@@ -11,6 +11,7 @@ import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.config.Global;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.page.PageDomain;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
@@ -423,6 +424,9 @@ public class WorkTaskController extends BaseController
 							historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
 						}
 					}
+					long datePoorHour = DateUtils.getDatePoorHour(new Date(),historyTaskVo.getStartTime());
+					historyTaskVo.setDatePoorHour(datePoorHour);
+
 					activity.getHistoryTaskVos().add(historyTaskVo);
 				}
 			}

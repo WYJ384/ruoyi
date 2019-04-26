@@ -117,7 +117,8 @@ public class WorkTaskActivityController extends BaseController {
      * 新增专项工作汇报内容
      */
     @GetMapping("/add")
-    public String add() {
+    public String add( String workTaskId,ModelMap modelMap) {
+        modelMap.put("workTaskId",workTaskId);
         return prefix + "/add";
     }
 

@@ -28,6 +28,15 @@ public class HistoryTaskVo {
     private String  taskDefinitionKey;
     //任务描述
     private String  description;
+    private long datePoorHour;
+
+    public long getDatePoorHour() {
+        return datePoorHour;
+    }
+
+    public void setDatePoorHour(long datePoorHour) {
+        this.datePoorHour = datePoorHour;
+    }
 
     public String getDescription() {
         return description;

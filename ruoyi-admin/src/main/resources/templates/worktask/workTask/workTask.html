@@ -122,10 +122,10 @@
 <script th:inline="javascript">
     var editFlag = [[${@permission.hasPermi('worktask:workTask:edit')}]];
     var removeFlag = [[${@permission.hasPermi('worktask:workTask:remove')}]];
-    var addSubFlag = [[${@permission.hasPermi('worktask:workTask:addSub')}]];
+    var addSubFlag = [[${@permission.hasPermi('worktask:workTaskActivity:add')}]];
     var prefix = ctx + "worktask/workTask";
     var query = ctx + "worktask/workTask/query";
-
+    var addSubUrl=ctx + "worktask/workTaskActivity/add";
     $(function () {
         var options = {
             url: prefix + "/list?workType=1",
@@ -315,7 +315,7 @@
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
 //                        actions.push('<a class="btn btn-primary  btn-xs ' + addSubFlag + '" href="#" onclick="$.operate.addSubTab(\'查看\',\'' + query+'/'+row.id + '\')"><i class="fa fa-edit"></i>查看</a>');
-//                        actions.push('<a class="btn btn-primary  btn-xs ' + addSubFlag + '" href="#" onclick="$.operate.addSubTab(\'添加子任务\',\'' + addSubUrl+'?id='+row.id + '\')"><i class="fa fa-plus"></i>添加子任务</a>');
+                       actions.push('<a class="btn btn-primary  btn-xs ' + addSubFlag + '" href="#" onclick="$.operate.addSubTab(\'添加月目标\',\'' + addSubUrl+'?workTaskId='+row.id + '\')"><i class="fa fa-plus"></i>添加月目标</a>');
                         return actions.join('');
                     }
                 }]
