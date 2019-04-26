@@ -151,7 +151,7 @@ public class MeetingController extends BaseController
 		}
 		if(StringUtils.isNotEmpty(end)&&end.indexOf("T")!=-1){
 			String[] endArr = end.split("T");
-			meeting.setMeetingBeginTime(DateUtils.parseDate(endArr[0]));
+			meeting.setMeetingEndTime(DateUtils.parseDate(endArr[0]));
 		}
 
 		List<MeetingModel> meetingModels=new ArrayList<MeetingModel>();

@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="leadDeptId != null  and leadDeptId != '' "> and lead_dept_id = #{leadDeptId}</if>
              <if test="cooperateDeptId != null  and cooperateDeptId != '' "> and cooperate_dept_id = #{cooperateDeptId}</if>
              <if test="troFinishTime != null "> and tro_finish_time = #{troFinishTime}</if>
-             <if test="dutyUserIds != null  and dutyUserIds != '' "> and duty_user_ids = #{dutyUserIds}</if>
+             <if test="dutyUserIds != null  and dutyUserIds != '' "> and find_in_set(#{dutyUserIds},duty_user_ids)</if>
              <if test="troStatus != null  and troStatus != '' "> and tro_status = #{troStatus}</if>
              <if test="troProgress != null  and troProgress != '' "> and tro_progress = #{troProgress}</if>
              <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
