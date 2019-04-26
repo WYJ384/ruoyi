@@ -26,6 +26,7 @@ import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,9 @@ public class WorkTaskActivityController extends BaseController {
     @ResponseBody
     public TableDataInfo list(WorkTaskActivity workTaskActivity) {
         startPage();
+        if(StringUtils.isEmpty(workTaskActivity.getTargetMonth())){
+            workTaskActivity.setTargetMonth(DateFormatUtils.format(new Date(),"MM"));
+        }
         List<WorkTaskActivity> list = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
         return getDataTable(list);
     }

@@ -20,6 +20,11 @@
                         <li>
                             汇报内容：<input type="text" name="content"/>
                         </li>
+                        <li>
+                          <input id="targetMonth" name="targetMonth" class="form-control" type="text" placeholder="目标月份：">
+                        </li>
+
+
 
                         <!--<li>-->
                         <!--创建人：<input type="text" name="createBy"/>-->
@@ -84,6 +89,16 @@
 </div>
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        var startDate = laydate.render({
+            elem: '#targetMonth',
+            theme: 'molv',
+            type: 'month',
+            format: 'MM'
+        });
+    });
     var editFlag = [[${@permission.hasPermi('worktask:workTaskActivity:edit')}]];
     var removeFlag = [[${@permission.hasPermi('worktask:workTaskActivity:remove')}]];
     var prefix = ctx + "worktask/workTaskActivity";
@@ -137,12 +152,19 @@
                     sortable: true,
                     formatter: function (value, row, index) {
 //                        1 待办理 2 进行中 3已完成
+
+                        // if(value==1){
+                        //     return "<span class='badge badge-primary'>进行中</span>";
+                        // }else  if(value==2){
+                        //     return "<span class='badge  badge-success'><i class=\"fa fa-check\"></i>已完成</span>";
+                        // }
+                        //
                         if(value==1){
-                            return '未开始'
+                            return "<span class='badge badge-danger'>未开始</span>";
                         }else  if(value==2){
-                            return '进行中'
+                            return "<span class='badge badge-primary'>进行中</span>";
                         }else  if(value==3){
-                            return '已完成'
+                            return "<span class='badge  badge-success'><i class=\"fa fa-check\"></i>已完成</span>";
                         }
                     }
                 },
