@@ -3,8 +3,10 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 
-<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet" type="text/css" />
-<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css" />
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet"
+      type="text/css"/>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet"
+      type="text/css"/>
 
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -105,44 +107,36 @@
         <!--</div>-->
         <!--</div>-->
 
-        <!--<div class="row">-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">执行人：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<select id="userIds" class="form-control select2-hidden-accessible" multiple="">-->
-        <!--<option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds?.contains(user.userId.toString())}" ></option>-->
-        <!--</select>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-sm-6">-->
-        <!--<div class="form-group">-->
-        <!--<label class="col-sm-4 control-label">督办情况：</label>-->
-        <!--<div class="col-sm-8">-->
-        <!--<label class="radio-box" style="margin-top: 8px;">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" value="2" th:field="*{result}" id="result2" name="result">-->
-        <!--</div>-->
-        <!--绿灯-->
-        <!--</label>-->
-        <!--<label class="radio-box">-->
-        <!--<div class="iradio-blue">-->
-        <!--<input type="radio" value="3"  th:field="*{result}" id="result3" name="result">-->
-        <!--</div>-->
-        <!--黄灯-->
-        <!--</label>-->
-        <!--<label class="radio-box" >-->
-        <!--<div class="iradio-blue ">-->
-        <!--<input type="radio" checked="" th:field="*{result}"  value="1" id="result1" name="result">-->
-        <!--</div>-->
-        <!--红灯-->
-        <!--</label>-->
+        <div class="row">
 
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">督办情况：</label>
+                    <div class="col-sm-8">
+                        <label class="radio-box" style="margin-top: 8px;">
+                            <div class="iradio-blue">
+                                <input type="radio" value="2" th:field="*{result}" id="result2" name="result">
+                            </div>
+                            绿灯
+                        </label>
+                        <label class="radio-box">
+                            <div class="iradio-blue">
+                                <input type="radio" value="3" th:field="*{result}" id="result3" name="result">
+                            </div>
+                            黄灯
+                        </label>
+                        <label class="radio-box">
+                            <div class="iradio-blue ">
+                                <input type="radio" checked="" th:field="*{result}" value="1" id="result1"
+                                       name="result">
+                            </div>
+                            红灯
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <div class="form-group" style="display: none">
@@ -224,9 +218,10 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">督办主任：</label>
                     <div class="col-xs-10">
-                        <select id="userIds" name="userIds" class="form-control select2-hidden-accessible" >
+                        <select id="userIds" name="userIds" class="form-control select2-hidden-accessible">
                             <option value=""></option>
-                            <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"  th:selected="${workTask?.userIds eq (user.userId.toString())}" ></option>
+                            <option th:each="user:${users}" th:value="${user.userId}" th:text="${user.userName}"
+                                    th:selected="${workTask?.userIds eq (user.userId.toString())}"></option>
                         </select>
                     </div>
                 </div>
@@ -240,7 +235,7 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">附件：</label>
                     <div class="col-xs-10">
-                        <input type="file" class="file"  id="file" name="file">
+                        <input type="file" class="file" id="file" name="file">
                         <p th:each="taskfile:${workTaskFiles}">
                             <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"
                                th:text="${taskfile.fileName}"></a>
@@ -316,10 +311,13 @@
             <div class="ibox-title collapse-link">
                 <a class="">
                     <h4 class="h4">目标月份：<span th:text="${workActivity.targetMonth}"></span>月 &nbsp;任务得分：<span
-                            th:text="${workActivity.targetScore}"></span><small class="m-l-sm">点击进行展开或者关闭</small></h4>
+                            th:text="${workActivity.targetScore}"></span>
+                        <small class="m-l-sm">点击进行展开或者关闭</small>
+                    </h4>
                 </a>
             </div>
-            <div class="ibox-content"  th:style="'display:' + @{(${workActivity.targetMonth==currMonth} ? 'block' : 'none')} + ''">
+            <div class="ibox-content"
+                 th:style="'display:' + @{(${workActivity.targetMonth==currMonth} ? 'block' : 'none')} + ''">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">任务目标：</label>
                     <div class="col-sm-8">
@@ -350,29 +348,37 @@
                     </div>
                 </div>
 
-                <div class="row"  th:if='${workActivity.workStatus  eq "1" }'>
+                <div class="row" th:if='${workActivity.workStatus  eq "1" }'>
                     <div class="col-sm-offset-5 col-md-10">
-                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary" onclick="startWork(this.getAttribute('data-id'))" ><i
+                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary"
+                                onclick="startWork(this.getAttribute('data-id'))"><i
                                 class="fa fa-check"></i>开始督办
                         </button>
                         &nbsp;
-                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary" onclick="workTaskActivityEdit(this.getAttribute('data-id'))" ><i
+                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary"
+                                onclick="workTaskActivityEdit(this.getAttribute('data-id'))"><i
                                 class="fa fa-check"></i>编辑
                         </button>
-                        <button th:data-id="${workActivity.id}" type="button"   onclick="deleteWorkActiviti(this.getAttribute('data-id'))"  class="btn btn-sm btn-danger" ><i
+                        <button th:data-id="${workActivity.id}" type="button"
+                                onclick="deleteWorkActiviti(this.getAttribute('data-id'))"
+                                class="btn btn-sm btn-danger"><i
                                 class="fa fa-reply-all"></i>删除目标
                         </button>
                     </div>
                 </div>
 
-                <div class="row"  th:if='${workActivity.workStatus  eq "2" }'>
+                <div class="row" th:if='${workActivity.workStatus  eq "2" }'>
                     <div class="col-sm-offset-5 col-md-10">
-                        <button th:data-processDefinitionId="${workActivity.taskVO.processDefinitionId}" th:data-instanceid="${workActivity.process_instance_id}"
-                                type="button" class="btn btn-sm btn-primary" onclick="workProcessDetail(this.getAttribute('data-processDefinitionId'),this.getAttribute('data-instanceid'))" ><i
-                                class="fa fa-check"></i>流程详情
+                        <button th:data-processDefinitionId="${workActivity.taskVO.processDefinitionId}"
+                                th:data-instanceid="${workActivity.process_instance_id}"
+                                type="button" class="btn btn-sm btn-primary"
+                                onclick="workProcessDetail(this.getAttribute('data-processDefinitionId'),this.getAttribute('data-instanceid'))">
+                            <i
+                                    class="fa fa-check"></i>流程详情
                         </button>
                         &nbsp;
-                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary" onclick="workTaskActivityEdit(this.getAttribute('data-id'))" ><i
+                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary"
+                                onclick="workTaskActivityEdit(this.getAttribute('data-id'))"><i
                                 class="fa fa-check"></i>编辑
                         </button>
                         <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
@@ -380,13 +386,15 @@
                         </button>
                     </div>
                 </div>
-                <div class="row"  th:if='${workActivity.workStatus eq "3"}'>
+                <div class="row" th:if='${workActivity.workStatus eq "3"}'>
                     <div class="col-sm-offset-5 col-md-10">
-                        <button th:data-id="${workActivity.process_instance_id}" type="button" class="btn btn-sm btn-primary" onclick="workDetail(this.getAttribute('data-id'))" ><i
+                        <button th:data-id="${workActivity.process_instance_id}" type="button"
+                                class="btn btn-sm btn-primary" onclick="workDetail(this.getAttribute('data-id'))"><i
                                 class="fa fa-check"></i>查看详情
                         </button>
 
-                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary" onclick="workTaskActivityEdit(this.getAttribute('data-id'))" ><i
+                        <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary"
+                                onclick="workTaskActivityEdit(this.getAttribute('data-id'))"><i
                                 class="fa fa-check"></i>编辑
                         </button>
                         &nbsp;
@@ -397,11 +405,11 @@
                 </div>
             </div>
         </div>
-<!--        <div th:each="workActivity: ${workTaskActivities}">-->
-<!--            <h4 class="form-header h4">目标月份：<span th:text="${workActivity.targetMonth}"></span>月 &nbsp;任务得分：<span-->
-<!--                th:text="${workActivity.targetScore}"></span></h4>-->
+        <!--        <div th:each="workActivity: ${workTaskActivities}">-->
+        <!--            <h4 class="form-header h4">目标月份：<span th:text="${workActivity.targetMonth}"></span>月 &nbsp;任务得分：<span-->
+        <!--                th:text="${workActivity.targetScore}"></span></h4>-->
 
-<!--        </div>-->
+        <!--        </div>-->
     </div>
 
 </div>
@@ -544,31 +552,34 @@
     function submitHandler() {
         $("#form-workTask-edit").submit();
     }
+
     function submitWorkTaskActivityAddHandler() {
         $("#form-workTaskActivity-add").submit();
     }
 
     function startWork(id) {
         var url = ctx + "worktask/workTaskActivity/startTask";
-        $.operate.submit(url, "post", "json", {id:id});
+        $.operate.submit(url, "post", "json", {id: id});
     }
+
     function workTaskActivityEdit(id) {
-        $.modal.openTab("编辑月度目标",ctx +"worktask/workTaskActivity/edit/"+id);
+        $.modal.openTab("编辑月度目标", ctx + "worktask/workTaskActivity/edit/" + id);
     }
+
     function workDetail(process_instance_id) {
-        $.modal.openTab("查看详情",ctx +"worktask/workTaskActivity/workTaskActivityDetail?process_instance_id="+process_instance_id);
-    }
-    function workProcessDetail(processDefinitionId,process_instance_id){
-        $.modal.openTab("查看详情",ctx +"diagram-viewer/index.html?processDefinitionId="+processDefinitionId+"&processInstanceId="+process_instance_id);
-
+        $.modal.openTab("查看详情", ctx + "worktask/workTaskActivity/workTaskActivityDetail?process_instance_id=" + process_instance_id);
     }
 
+    function workProcessDetail(processDefinitionId, process_instance_id) {
+        $.modal.openTab("查看详情", ctx + "diagram-viewer/index.html?processDefinitionId=" + processDefinitionId + "&processInstanceId=" + process_instance_id);
+
+    }
 
 
     function deleteWorkActiviti(id) {
-        $.modal.confirm("确定删除该条信息吗？", function() {
+        $.modal.confirm("确定删除该条信息吗？", function () {
             var url = ctx + "worktask/workTaskActivity/remove";
-            $.operate.submit(url, "post", "json", {ids:id});
+            $.operate.submit(url, "post", "json", {ids: id});
         });
 
     }
