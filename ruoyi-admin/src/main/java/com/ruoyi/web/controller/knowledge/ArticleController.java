@@ -1,9 +1,9 @@
 package com.ruoyi.web.controller.knowledge;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.Array;
+import java.util.*;
 
+import com.ruoyi.common.config.Global;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
@@ -95,7 +95,7 @@ public class ArticleController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(Article article)
 	{
-		article.setId(UUID.randomUUID().toString().replaceAll("-",""));
+//		article.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		article.setDelFlag("0");
 		article.setCreateBy(ShiroUtils.getLoginName());
 		article.setCreateDate(new Date());
@@ -111,9 +111,16 @@ public class ArticleController extends BaseController
         WorkTaskFile activityFile=new WorkTaskFile();
         activityFile.setWorkTaskId(id);
         List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
-        Article article = articleService.selectArticleById(id);
+		Iterator<WorkTaskFile> workTaskFileIterator = workTaskFiles.iterator();
+		String files="";
+		while (workTaskFileIterator.hasNext()){
+			WorkTaskFile workTaskFile = workTaskFileIterator.next();
+			files+= workTaskFile.getFileName()+",";
+		}
+		Article article = articleService.selectArticleById(id);
 		mmap.put("article", article);
-        mmap.put("workTaskFiles", workTaskFiles);
+		System.out.println(files);
+		mmap.put("files", files);
 	    return prefix + "/edit";
 	}
 	

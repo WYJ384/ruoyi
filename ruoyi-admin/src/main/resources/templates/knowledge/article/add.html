@@ -6,7 +6,8 @@
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css" />
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-article-add">
+        <form class="form-horizontal m" id="form-article-add" th:object="${article}">
+			<input id="id" name="id" th:field="*{id}"  type="hidden" >
 			<input id="categoryId" name="categoryId" class="form-control" type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">栏目编号：</label>
