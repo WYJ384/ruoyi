@@ -1,9 +1,14 @@
 package com.ruoyi.web.controller.worktask;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.config.Global;
+import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +26,11 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+
+import static com.ruoyi.web.controller.common.CommonController.UPLOAD_PATH;
 
 /**
  * 附件 信息操作处理
@@ -138,5 +146,43 @@ public class WorkTaskFileController extends BaseController
 	{		
 		return toAjax(workTaskFileService.deleteWorkTaskFileByIds(ids));
 	}
-	
+	/**
+	 * 通用上传请求
+	 */
+	@PostMapping("/upload")
+	@ResponseBody
+	public AjaxResult uploadFile(MultipartFile[] file,String workTaskId) throws Exception
+	{
+		try {
+			for (int i = 0; i < file.length; i++) {
+				MultipartFile multipartFile=file[i];
+				if(file==null){
+					continue;
+				}
+				// 上传文件路径
+				String filePath = Global.getUploadPath();
+				String originalFilename = multipartFile.getOriginalFilename();
+				int lastIndexOf = originalFilename.lastIndexOf(".");
+				String extension = originalFilename.substring(lastIndexOf);
+				// 上传并返回新文件名称
+				String fileName = FileUploadUtils.upload(filePath, multipartFile,extension);
+				WorkTaskFile workTaskFile=new WorkTaskFile();
+				workTaskFile.setUpdateBy(ShiroUtils.getLoginName());
+				workTaskFile.setUpdateTime(new Date());
+				workTaskFile.setCreateBy(ShiroUtils.getLoginName());
+				workTaskFile.setCreateTime(new Date());
+				workTaskFile.setExtension(extension);
+				workTaskFile.setFileName(originalFilename);
+				workTaskFile.setFilePath(fileName);
+				workTaskFile.setWorkTaskId(workTaskId);
+				workTaskFileService.insertWorkTaskFile(workTaskFile);
+			}
+			AjaxResult ajax = AjaxResult.success();
+			return ajax;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return AjaxResult.error(e.getMessage());
+		}
+	}
+
 }

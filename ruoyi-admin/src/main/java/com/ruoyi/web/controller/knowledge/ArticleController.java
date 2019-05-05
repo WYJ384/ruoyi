@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +36,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 public class ArticleController extends BaseController
 {
     private String prefix = "knowledge/article";
-	
+    @Autowired
+    private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private IArticleService articleService;
 	
@@ -76,8 +79,10 @@ public class ArticleController extends BaseController
 	 * 新增文章
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(Article article, ModelMap mmap)
 	{
+		article.setId(UUID.randomUUID().toString().replaceAll("-",""));
+		mmap.put("article",article);
 	    return prefix + "/add";
 	}
 	
@@ -103,8 +108,12 @@ public class ArticleController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
-		Article article = articleService.selectArticleById(id);
+        WorkTaskFile activityFile=new WorkTaskFile();
+        activityFile.setWorkTaskId(id);
+        List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
+        Article article = articleService.selectArticleById(id);
 		mmap.put("article", article);
+        mmap.put("workTaskFiles", workTaskFiles);
 	    return prefix + "/edit";
 	}
 	
