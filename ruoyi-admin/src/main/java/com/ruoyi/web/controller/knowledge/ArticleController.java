@@ -111,12 +111,16 @@ public class ArticleController extends BaseController
         WorkTaskFile activityFile=new WorkTaskFile();
         activityFile.setWorkTaskId(id);
         List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
-		Iterator<WorkTaskFile> workTaskFileIterator = workTaskFiles.iterator();
 		String files="";
-		while (workTaskFileIterator.hasNext()){
-			WorkTaskFile workTaskFile = workTaskFileIterator.next();
-			files+= workTaskFile.getFileName()+",";
+		for (int i = 0; i < workTaskFiles.size(); i++) {
+			WorkTaskFile workTaskFile = workTaskFiles.get(i);
+			files+= workTaskFile.getFileName();
+			if(i< workTaskFiles.size()-1){
+				files+=",";
+			}
+
 		}
+
 		Article article = articleService.selectArticleById(id);
 		mmap.put("article", article);
 		System.out.println(files);
