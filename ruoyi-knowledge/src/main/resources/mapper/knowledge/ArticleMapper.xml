@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.knowledge.mapper.ArticleMapper">
+    
+    <resultMap type="Article" id="ArticleResult">
+        <result property="id"    column="id"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="title"    column="title"    />
+        <result property="link"    column="link"    />
+        <result property="color"    column="color"    />
+        <result property="image"    column="image"    />
+        <result property="keywords"    column="keywords"    />
+        <result property="description"    column="description"    />
+        <result property="weight"    column="weight"    />
+        <result property="weightDate"    column="weight_date"    />
+        <result property="hits"    column="hits"    />
+        <result property="posid"    column="posid"    />
+        <result property="customContentView"    column="custom_content_view"    />
+        <result property="viewConfig"    column="view_config"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+	
+	<sql id="selectArticleVo">
+        select id, category_id, title, link, color, image, keywords, description, weight, weight_date, hits, posid, custom_content_view, view_config, create_by, create_date, update_by, update_date, remarks, del_flag from cms_article
+    </sql>
+	
+    <select id="selectArticleList" parameterType="Article" resultMap="ArticleResult">
+        <include refid="selectArticleVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="categoryId != null  and categoryId != '' "> and category_id = #{categoryId}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="link != null  and link != '' "> and link = #{link}</if>
+             <if test="color != null  and color != '' "> and color = #{color}</if>
+             <if test="image != null  and image != '' "> and image = #{image}</if>
+             <if test="keywords != null  and keywords != '' "> and keywords = #{keywords}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+             <if test="weight != null "> and weight = #{weight}</if>
+             <if test="weightDate != null "> and weight_date = #{weightDate}</if>
+             <if test="hits != null "> and hits = #{hits}</if>
+             <if test="posid != null  and posid != '' "> and posid = #{posid}</if>
+             <if test="customContentView != null  and customContentView != '' "> and custom_content_view = #{customContentView}</if>
+             <if test="viewConfig != null  and viewConfig != '' "> and view_config = #{viewConfig}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+         </where>
+    </select>
+    
+    <select id="selectArticleById" parameterType="String" resultMap="ArticleResult">
+        <include refid="selectArticleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertArticle" parameterType="Article">
+        insert into cms_article
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="categoryId != null  and categoryId != ''  ">category_id,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="link != null  and link != ''  ">link,</if>
+			<if test="color != null  and color != ''  ">color,</if>
+			<if test="image != null  and image != ''  ">image,</if>
+			<if test="keywords != null  and keywords != ''  ">keywords,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+			<if test="weight != null  ">weight,</if>
+			<if test="weightDate != null  ">weight_date,</if>
+			<if test="hits != null  ">hits,</if>
+			<if test="posid != null  and posid != ''  ">posid,</if>
+			<if test="customContentView != null  and customContentView != ''  ">custom_content_view,</if>
+			<if test="viewConfig != null  and viewConfig != ''  ">view_config,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="categoryId != null  and categoryId != ''  ">#{categoryId},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="link != null  and link != ''  ">#{link},</if>
+			<if test="color != null  and color != ''  ">#{color},</if>
+			<if test="image != null  and image != ''  ">#{image},</if>
+			<if test="keywords != null  and keywords != ''  ">#{keywords},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+			<if test="weight != null  ">#{weight},</if>
+			<if test="weightDate != null  ">#{weightDate},</if>
+			<if test="hits != null  ">#{hits},</if>
+			<if test="posid != null  and posid != ''  ">#{posid},</if>
+			<if test="customContentView != null  and customContentView != ''  ">#{customContentView},</if>
+			<if test="viewConfig != null  and viewConfig != ''  ">#{viewConfig},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateArticle" parameterType="Article">
+        update cms_article
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId != null  and categoryId != ''  ">category_id = #{categoryId},</if>
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="link != null  and link != ''  ">link = #{link},</if>
+            <if test="color != null  and color != ''  ">color = #{color},</if>
+            <if test="image != null  and image != ''  ">image = #{image},</if>
+            <if test="keywords != null  and keywords != ''  ">keywords = #{keywords},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+            <if test="weight != null  ">weight = #{weight},</if>
+            <if test="weightDate != null  ">weight_date = #{weightDate},</if>
+            <if test="hits != null  ">hits = #{hits},</if>
+            <if test="posid != null  and posid != ''  ">posid = #{posid},</if>
+            <if test="customContentView != null  and customContentView != ''  ">custom_content_view = #{customContentView},</if>
+            <if test="viewConfig != null  and viewConfig != ''  ">view_config = #{viewConfig},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteArticleById" parameterType="String">
+        delete from cms_article where id = #{id}
+    </delete>
+	
+    <delete id="deleteArticleByIds" parameterType="String">
+        delete from cms_article where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

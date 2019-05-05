@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cmsCategory-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">父级编号：</label>
+				<div class="col-sm-8">
+					<input id="parentId" name="parentId" class="form-control" type="text">
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">所有父级编号：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="parentIds" name="parentIds" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">站点编号：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="siteId" name="siteId" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">归属机构：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="officeId" name="officeId" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">栏目模块：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="module" name="module" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">图片：</label>
+				<div class="col-sm-8">
+					<input id="image" name="image" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">链接：</label>
+				<div class="col-sm-8">
+					<input id="href" name="href" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">目标：</label>
+				<div class="col-sm-8">
+					<input id="target" name="target" class="form-control" type="text">
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">描述：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="description" name="description" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">关键字：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="keywords" name="keywords" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">排序（升序）：</label>
+				<div class="col-sm-8">
+					<input id="sort" name="sort" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否在导航中显示：</label>
+				<div class="col-sm-8">
+					<input id="inMenu" name="inMenu" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否在分类页中显示列表：</label>
+				<div class="col-sm-8">
+					<input id="inList" name="inList" class="form-control" type="text">
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">展现方式：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="showModes" name="showModes" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">是否允许评论：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="allowComment" name="allowComment" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">是否需要审核：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="isAudit" name="isAudit" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">自定义列表视图：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="customListView" name="customListView" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">自定义内容视图：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="customContentView" name="customContentView" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">视图配置：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="viewConfig" name="viewConfig" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createDate" name="createDate" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateDate" name="updateDate" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remarks" name="remarks" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "knowledge/cmsCategory"
+		$("#form-cmsCategory-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-cmsCategory-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cmsCategory-edit" th:object="${cmsCategory}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">父级编号：</label>
+				<div class="col-sm-8">
+					<input id="parentId" name="parentId" th:field="*{parentId}" class="form-control" type="text">
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">所有父级编号：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="parentIds" name="parentIds" th:field="*{parentIds}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">站点编号：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="siteId" name="siteId" th:field="*{siteId}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">归属机构：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="officeId" name="officeId" th:field="*{officeId}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">栏目模块：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="module" name="module" th:field="*{module}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">栏目名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">栏目图片：</label>
+				<div class="col-sm-8">
+					<input id="image" name="image" th:field="*{image}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">链接：</label>
+				<div class="col-sm-8">
+					<input id="href" name="href" th:field="*{href}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">目标：</label>
+				<div class="col-sm-8">
+					<input id="target" name="target" th:field="*{target}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">描述：</label>
+				<div class="col-sm-8">
+					<input id="description" name="description" th:field="*{description}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">关键字：</label>
+				<div class="col-sm-8">
+					<input id="keywords" name="keywords" th:field="*{keywords}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">排序（升序）：</label>
+				<div class="col-sm-8">
+					<input id="sort" name="sort" th:field="*{sort}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否在导航中显示：</label>
+				<div class="col-sm-8">
+					<input id="inMenu" name="inMenu" th:field="*{inMenu}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否在分类页中显示列表：</label>
+				<div class="col-sm-8">
+					<input id="inList" name="inList" th:field="*{inList}" class="form-control" type="text">
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">展现方式：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="showModes" name="showModes" th:field="*{showModes}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">是否允许评论：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="allowComment" name="allowComment" th:field="*{allowComment}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">是否需要审核：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="isAudit" name="isAudit" th:field="*{isAudit}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">自定义列表视图：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="customListView" name="customListView" th:field="*{customListView}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">自定义内容视图：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="customContentView" name="customContentView" th:field="*{customContentView}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">视图配置：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="viewConfig" name="viewConfig" th:field="*{viewConfig}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateDate" name="updateDate" th:field="*{updateDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "knowledge/cmsCategory";
+		$("#form-cmsCategory-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-cmsCategory-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

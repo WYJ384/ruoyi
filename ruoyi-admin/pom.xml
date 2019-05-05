@@ -93,6 +93,10 @@
             <artifactId>json</artifactId>
             <version>20180813</version>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-knowledge</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

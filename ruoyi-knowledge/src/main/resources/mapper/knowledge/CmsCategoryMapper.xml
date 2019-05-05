@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.knowledge.mapper.CmsCategoryMapper">
+    
+    <resultMap type="CmsCategory" id="CmsCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="parentIds"    column="parent_ids"    />
+        <result property="siteId"    column="site_id"    />
+        <result property="officeId"    column="office_id"    />
+        <result property="module"    column="module"    />
+        <result property="name"    column="name"    />
+        <result property="image"    column="image"    />
+        <result property="href"    column="href"    />
+        <result property="target"    column="target"    />
+        <result property="description"    column="description"    />
+        <result property="keywords"    column="keywords"    />
+        <result property="sort"    column="sort"    />
+        <result property="inMenu"    column="in_menu"    />
+        <result property="inList"    column="in_list"    />
+        <result property="showModes"    column="show_modes"    />
+        <result property="allowComment"    column="allow_comment"    />
+        <result property="isAudit"    column="is_audit"    />
+        <result property="customListView"    column="custom_list_view"    />
+        <result property="customContentView"    column="custom_content_view"    />
+        <result property="viewConfig"    column="view_config"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+	
+	<sql id="selectCmsCategoryVo">
+        select id, parent_id, parent_ids, site_id, office_id, module, name,
+        image, href, target, description, keywords, sort, in_menu, in_list, show_modes,
+         allow_comment, is_audit, custom_list_view, custom_content_view, view_config,
+          create_by, create_date, update_by, update_date, remarks, del_flag from cms_category
+    </sql>
+	<select id="selectCountCategoryByParentId" resultType="Integer">
+          select count(1) from cms_category where parent_id=#{id}
+    </select>
+    <select id="selectCmsCategoryList" parameterType="CmsCategory" resultMap="CmsCategoryResult">
+        <include refid="selectCmsCategoryVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="parentId != null  and parentId != '' "> and parent_id = #{parentId}</if>
+             <if test="parentIds != null  and parentIds != '' "> and parent_ids = #{parentIds}</if>
+             <if test="siteId != null  and siteId != '' "> and site_id = #{siteId}</if>
+             <if test="officeId != null  and officeId != '' "> and office_id = #{officeId}</if>
+             <if test="module != null  and module != '' "> and module = #{module}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="image != null  and image != '' "> and image = #{image}</if>
+             <if test="href != null  and href != '' "> and href = #{href}</if>
+             <if test="target != null  and target != '' "> and target = #{target}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+             <if test="keywords != null  and keywords != '' "> and keywords = #{keywords}</if>
+             <if test="sort != null "> and sort = #{sort}</if>
+             <if test="inMenu != null  and inMenu != '' "> and in_menu = #{inMenu}</if>
+             <if test="inList != null  and inList != '' "> and in_list = #{inList}</if>
+             <if test="showModes != null  and showModes != '' "> and show_modes = #{showModes}</if>
+             <if test="allowComment != null  and allowComment != '' "> and allow_comment = #{allowComment}</if>
+             <if test="isAudit != null  and isAudit != '' "> and is_audit = #{isAudit}</if>
+             <if test="customListView != null  and customListView != '' "> and custom_list_view = #{customListView}</if>
+             <if test="customContentView != null  and customContentView != '' "> and custom_content_view = #{customContentView}</if>
+             <if test="viewConfig != null  and viewConfig != '' "> and view_config = #{viewConfig}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+         </where>
+    </select>
+    
+    <select id="selectCmsCategoryById" parameterType="String" resultMap="CmsCategoryResult">
+        <include refid="selectCmsCategoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCmsCategory" parameterType="CmsCategory">
+        insert into cms_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="parentId != null  and parentId != ''  ">parent_id,</if>
+			<if test="parentIds != null  and parentIds != ''  ">parent_ids,</if>
+			<if test="siteId != null  and siteId != ''  ">site_id,</if>
+			<if test="officeId != null  and officeId != ''  ">office_id,</if>
+			<if test="module != null  and module != ''  ">module,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="image != null  and image != ''  ">image,</if>
+			<if test="href != null  and href != ''  ">href,</if>
+			<if test="target != null  and target != ''  ">target,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+			<if test="keywords != null  and keywords != ''  ">keywords,</if>
+			<if test="sort != null  ">sort,</if>
+			<if test="inMenu != null  and inMenu != ''  ">in_menu,</if>
+			<if test="inList != null  and inList != ''  ">in_list,</if>
+			<if test="showModes != null  and showModes != ''  ">show_modes,</if>
+			<if test="allowComment != null  and allowComment != ''  ">allow_comment,</if>
+			<if test="isAudit != null  and isAudit != ''  ">is_audit,</if>
+			<if test="customListView != null  and customListView != ''  ">custom_list_view,</if>
+			<if test="customContentView != null  and customContentView != ''  ">custom_content_view,</if>
+			<if test="viewConfig != null  and viewConfig != ''  ">view_config,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="parentId != null  and parentId != ''  ">#{parentId},</if>
+			<if test="parentIds != null  and parentIds != ''  ">#{parentIds},</if>
+			<if test="siteId != null  and siteId != ''  ">#{siteId},</if>
+			<if test="officeId != null  and officeId != ''  ">#{officeId},</if>
+			<if test="module != null  and module != ''  ">#{module},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="image != null  and image != ''  ">#{image},</if>
+			<if test="href != null  and href != ''  ">#{href},</if>
+			<if test="target != null  and target != ''  ">#{target},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+			<if test="keywords != null  and keywords != ''  ">#{keywords},</if>
+			<if test="sort != null  ">#{sort},</if>
+			<if test="inMenu != null  and inMenu != ''  ">#{inMenu},</if>
+			<if test="inList != null  and inList != ''  ">#{inList},</if>
+			<if test="showModes != null  and showModes != ''  ">#{showModes},</if>
+			<if test="allowComment != null  and allowComment != ''  ">#{allowComment},</if>
+			<if test="isAudit != null  and isAudit != ''  ">#{isAudit},</if>
+			<if test="customListView != null  and customListView != ''  ">#{customListView},</if>
+			<if test="customContentView != null  and customContentView != ''  ">#{customContentView},</if>
+			<if test="viewConfig != null  and viewConfig != ''  ">#{viewConfig},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCmsCategory" parameterType="CmsCategory">
+        update cms_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null  and parentId != ''  ">parent_id = #{parentId},</if>
+            <if test="parentIds != null  and parentIds != ''  ">parent_ids = #{parentIds},</if>
+            <if test="siteId != null  and siteId != ''  ">site_id = #{siteId},</if>
+            <if test="officeId != null  and officeId != ''  ">office_id = #{officeId},</if>
+            <if test="module != null  and module != ''  ">module = #{module},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="image != null  and image != ''  ">image = #{image},</if>
+            <if test="href != null  and href != ''  ">href = #{href},</if>
+            <if test="target != null  and target != ''  ">target = #{target},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+            <if test="keywords != null  and keywords != ''  ">keywords = #{keywords},</if>
+            <if test="sort != null  ">sort = #{sort},</if>
+            <if test="inMenu != null  and inMenu != ''  ">in_menu = #{inMenu},</if>
+            <if test="inList != null  and inList != ''  ">in_list = #{inList},</if>
+            <if test="showModes != null  and showModes != ''  ">show_modes = #{showModes},</if>
+            <if test="allowComment != null  and allowComment != ''  ">allow_comment = #{allowComment},</if>
+            <if test="isAudit != null  and isAudit != ''  ">is_audit = #{isAudit},</if>
+            <if test="customListView != null  and customListView != ''  ">custom_list_view = #{customListView},</if>
+            <if test="customContentView != null  and customContentView != ''  ">custom_content_view = #{customContentView},</if>
+            <if test="viewConfig != null  and viewConfig != ''  ">view_config = #{viewConfig},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCmsCategoryById" parameterType="String">
+        update cms_category set del_flag=1 where id = #{id}
+--         delete from cms_category where id = #{id}
+    </delete>
+	
+    <delete id="deleteCmsCategoryByIds" parameterType="String">
+        update cms_category set del_flag=1  where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
