@@ -2,9 +2,11 @@ package com.ruoyi.web.controller.knowledge;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.domain.ZtreeExt;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysMenu;
@@ -53,6 +55,19 @@ public class CmsCategoryController extends BaseController {
         List<ZtreeExt> ztrees = cmsCategoryService.selectCategoryTree(new CmsCategory());
         return ztrees;
     }
+
+
+    /**
+     * 选择菜单树
+     */
+    @GetMapping("/selectCategoryTree/{id}")
+    public String selectCategoryTree(@PathVariable("id") String id, ModelMap mmap)
+    {
+        mmap.put("cmsCategory", cmsCategoryService.selectCmsCategoryById(id));
+        return prefix + "/tree";
+    }
+
+
     /**
      * 查询栏目列表
      */
@@ -108,6 +123,8 @@ public class CmsCategoryController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(CmsCategory cmsCategory) {
+
+        cmsCategory.setId(UUID.randomUUID().toString().replaceAll("-",""));
         cmsCategory.setDelFlag("0");
         cmsCategory.setCreateBy(ShiroUtils.getLoginName());
         cmsCategory.setCreateDate(new Date());

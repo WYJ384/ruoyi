@@ -6,6 +6,7 @@ import java.util.List;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.domain.ZtreeExt;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,9 @@ public class CmsCategoryServiceImpl implements ICmsCategoryService
 	@Override
 	public int insertCmsCategory(CmsCategory cmsCategory)
 	{
+		CmsCategory info = cmsCategoryMapper.selectCmsCategoryById(cmsCategory.getParentId());
+
+		cmsCategory.setParentIds(info.getParentIds() + "," + cmsCategory.getParentId());
 	    return cmsCategoryMapper.insertCmsCategory(cmsCategory);
 	}
 	

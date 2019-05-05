@@ -27,7 +27,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">标题颜色：</label>
 				<div class="col-sm-8">
-					<input id="color" name="color" th:field="*{color}" class="form-control" type="text">
+					<input id="color" name="color" th:field="*{color}" class="form-control" type="color">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -54,72 +54,72 @@
 					<input id="weight" name="weight" th:field="*{weight}" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">权重期限：</label>
-				<div class="col-sm-8">
-					<input id="weightDate" name="weightDate" th:field="*{weightDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">点击数：</label>
-				<div class="col-sm-8">
-					<input id="hits" name="hits" th:field="*{hits}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">推荐位，多选：</label>
-				<div class="col-sm-8">
-					<input id="posid" name="posid" th:field="*{posid}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">自定义内容视图：</label>
-				<div class="col-sm-8">
-					<input id="customContentView" name="customContentView" th:field="*{customContentView}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">视图配置：</label>
-				<div class="col-sm-8">
-					<input id="viewConfig" name="viewConfig" th:field="*{viewConfig}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建者：</label>
-				<div class="col-sm-8">
-					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建时间：</label>
-				<div class="col-sm-8">
-					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新者：</label>
-				<div class="col-sm-8">
-					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新时间：</label>
-				<div class="col-sm-8">
-					<input id="updateDate" name="updateDate" th:field="*{updateDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注信息：</label>
-				<div class="col-sm-8">
-					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">删除标记：</label>
-				<div class="col-sm-8">
-					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">
-				</div>
-			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">权重期限：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="weightDate" name="weightDate" th:field="*{weightDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">点击数：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="hits" name="hits" th:field="*{hits}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">推荐位，多选：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="posid" name="posid" th:field="*{posid}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">自定义内容视图：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="customContentView" name="customContentView" th:field="*{customContentView}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">视图配置：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="viewConfig" name="viewConfig" th:field="*{viewConfig}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateDate" name="updateDate" th:field="*{updateDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 		</form>
 		<div class="row">
 			<div class="col-sm-offset-5 col-sm-10">
@@ -142,7 +142,7 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-article-edit').serialize());
+	            $.operate.saveTab(prefix + "/edit", $('#form-article-edit').serialize());
 	        }
 	    }
 	</script>

@@ -5,10 +5,14 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-article-add">
+			<input id="categoryId" name="categoryId" class="form-control" type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">栏目编号：</label>
 				<div class="col-sm-8">
-					<input id="categoryId" name="categoryId" class="form-control" type="text">
+					<div class="input-group">
+						<input class="form-control" type="text" onclick="selectCategoryTree()" id="treeName" readonly="true" th:value="${cmsCategory?.name}">
+						<span class="input-group-addon"><i class="fa fa-search"></i></span>
+					</div>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -26,7 +30,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">标题颜色：</label>
 				<div class="col-sm-8">
-					<input id="color" name="color" class="form-control" type="text">
+					<input id="color" name="color" class="form-control" type="color">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -45,80 +49,81 @@
 				<label class="col-sm-3 control-label">描述、摘要：</label>
 				<div class="col-sm-8">
 					<input id="description" name="description" class="form-control" type="text">
+
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">权重，越大越靠前：</label>
+				<label class="col-sm-3 control-label">权重：</label>
 				<div class="col-sm-8">
-					<input id="weight" name="weight" class="form-control" type="text">
+					<input id="weight" name="weight" class="form-control" type="number" placeholder="权重，越大越靠前：">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">权重期限：</label>
-				<div class="col-sm-8">
-					<input id="weightDate" name="weightDate" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">点击数：</label>
-				<div class="col-sm-8">
-					<input id="hits" name="hits" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">推荐位，多选：</label>
-				<div class="col-sm-8">
-					<input id="posid" name="posid" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">自定义内容视图：</label>
-				<div class="col-sm-8">
-					<input id="customContentView" name="customContentView" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">视图配置：</label>
-				<div class="col-sm-8">
-					<input id="viewConfig" name="viewConfig" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建者：</label>
-				<div class="col-sm-8">
-					<input id="createBy" name="createBy" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建时间：</label>
-				<div class="col-sm-8">
-					<input id="createDate" name="createDate" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新者：</label>
-				<div class="col-sm-8">
-					<input id="updateBy" name="updateBy" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新时间：</label>
-				<div class="col-sm-8">
-					<input id="updateDate" name="updateDate" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注信息：</label>
-				<div class="col-sm-8">
-					<input id="remarks" name="remarks" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">删除标记：</label>
-				<div class="col-sm-8">
-					<input id="delFlag" name="delFlag" class="form-control" type="text">
-				</div>
-			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">权重期限：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="weightDate" name="weightDate" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">点击数：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="hits" name="hits" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">推荐位，多选：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="posid" name="posid" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">自定义内容视图：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="customContentView" name="customContentView" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">视图配置：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="viewConfig" name="viewConfig" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createDate" name="createDate" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateDate" name="updateDate" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remarks" name="remarks" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 		</form>
 		<div class="row">
 			<div class="col-sm-offset-5 col-sm-10">
@@ -141,9 +146,29 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-article-add').serialize());
+	            $.operate.saveTab(prefix + "/add", $('#form-article-add').serialize());
 	        }
 	    }
+		/*菜单管理-新增-选择菜单树*/
+		function selectCategoryTree() {
+			var treeId = $("#categoryId").val();
+			var menuId = treeId > 0 ? treeId : 1;
+			var url = ctx + "knowledge/cmsCategory/selectCategoryTree/" + menuId;
+			var options = {
+				title: '分类选择',
+				width: "380",
+				url: url,
+				callBack: doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmit(index, layero){
+			var body = layer.getChildFrame('body', index);
+			$("#categoryId").val(body.find('#treeId').val());
+			$("#treeName").val(body.find('#treeName').val());
+			layer.close(index);
+		}
 	</script>
 </body>
 </html>

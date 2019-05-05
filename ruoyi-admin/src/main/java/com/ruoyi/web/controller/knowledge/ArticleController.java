@@ -1,6 +1,10 @@
 package com.ruoyi.web.controller.knowledge;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +89,11 @@ public class ArticleController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Article article)
-	{		
+	{
+		article.setId(UUID.randomUUID().toString().replaceAll("-",""));
+		article.setDelFlag("0");
+		article.setCreateBy(ShiroUtils.getLoginName());
+		article.setCreateDate(new Date());
 		return toAjax(articleService.insertArticle(article));
 	}
 
@@ -108,7 +116,9 @@ public class ArticleController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Article article)
-	{		
+	{
+		article.setUpdateBy(ShiroUtils.getLoginName());
+		article.setUpdateDate(new Date());
 		return toAjax(articleService.updateArticle(article));
 	}
 	

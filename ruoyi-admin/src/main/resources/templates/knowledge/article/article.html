@@ -100,7 +100,11 @@
 				{
 					field : 'title', 
 					title : '标题',
-					sortable: true
+					sortable: true,
+					formatter: function(value, row, index) {
+
+						return "<span style='color: "+row.color+"'>"+value+"</span>";
+					}
 				},
 				// {
 				// 	field : 'link',
@@ -132,11 +136,11 @@
 					title : '权重',
 					sortable: true
 				},
-				{
-					field : 'weightDate', 
-					title : '权重期限',
-					sortable: true
-				},
+				// {
+				// 	field : 'weightDate',
+				// 	title : '权重期限',
+				// 	sortable: true
+				// },
 				{
 					field : 'hits', 
 					title : '点击数',
