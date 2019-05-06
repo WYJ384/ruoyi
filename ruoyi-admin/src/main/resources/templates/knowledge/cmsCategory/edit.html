@@ -6,10 +6,18 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-cmsCategory-edit" th:object="${cmsCategory}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<input id="treeId" name="parentId" th:field="*{parentId}" class="form-control" type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">父级编号：</label>
+<!--				<div class="col-sm-8">-->
+<!--					<input id="parentId" name="parentId" th:field="*{parentId}" class="form-control" type="text">-->
+<!--				</div>-->
 				<div class="col-sm-8">
-					<input id="parentId" name="parentId" th:field="*{parentId}" class="form-control" type="text">
+					<!--					<input id="parentId" name="parentId" class="form-control" type="text">-->
+					<div class="input-group">
+						<input class="form-control" type="text" onclick="selectCategoryTree()" id="treeName" readonly="true" th:value="${cmsCategory.name}">
+						<span class="input-group-addon"><i class="fa fa-search"></i></span>
+					</div>
 				</div>
 			</div>
 <!--			<div class="form-group">	-->
@@ -78,18 +86,28 @@
 					<input id="sort" name="sort" th:field="*{sort}" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">是否在导航中显示：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="inMenu" name="inMenu" th:field="*{inMenu}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">
 				<label class="col-sm-3 control-label">是否在导航中显示：</label>
 				<div class="col-sm-8">
-					<input id="inMenu" name="inMenu" th:field="*{inMenu}" class="form-control" type="text">
+
+					<label class="radio-box"> <input type="radio"  th:field="*{inMenu}" name="inMenu" value="0" /> 是 </label>
+					<label class="radio-box"> <input type="radio"  th:field="*{inMenu}" name="inMenu" value="1" /> 否 </label>
 				</div>
+
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">是否在分类页中显示列表：</label>
-				<div class="col-sm-8">
-					<input id="inList" name="inList" th:field="*{inList}" class="form-control" type="text">
-				</div>
-			</div>
+<!--			-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">是否在分类页中显示列表：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="inList" name="inList" th:field="*{inList}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 <!--			<div class="form-group">	-->
 <!--				<label class="col-sm-3 control-label">展现方式：</label>-->
 <!--				<div class="col-sm-8">-->
@@ -169,7 +187,7 @@
 		var prefix = ctx + "knowledge/cmsCategory";
 		$("#form-cmsCategory-edit").validate({
 			rules:{
-				xxxx:{
+				name:{
 					required:true,
 				},
 			},
@@ -181,6 +199,26 @@
 	            $.operate.save(prefix + "/edit", $('#form-cmsCategory-edit').serialize());
 	        }
 	    }
+		/*菜单管理-新增-选择菜单树*/
+		function selectCategoryTree() {
+			var treeId = $("#treeId").val();
+			var menuId = treeId > 0 ? treeId : 1;
+			var url = prefix + "/selectCategoryTree/" + menuId;
+			var options = {
+				title: '分类选择',
+				width: "380",
+				url: url,
+				callBack: doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmit(index, layero){
+			var body = layer.getChildFrame('body', index);
+			$("#treeId").val(body.find('#treeId').val());
+			$("#treeName").val(body.find('#treeName').val());
+			layer.close(index);
+		}
 	</script>
 </body>
 </html>

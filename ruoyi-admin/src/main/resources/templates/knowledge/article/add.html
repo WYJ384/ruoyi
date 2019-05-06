@@ -8,7 +8,7 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-article-add" th:object="${article}">
 			<input id="id" name="id" th:field="*{id}"  type="hidden" >
-			<input id="categoryId" name="categoryId" class="form-control" type="hidden">
+			<input id="treeId" name="categoryId" class="form-control" type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">栏目编号：</label>
 				<div class="col-sm-8">
@@ -177,7 +177,7 @@
 	    }
 		/*菜单管理-新增-选择菜单树*/
 		function selectCategoryTree() {
-			var treeId = $("#categoryId").val();
+			var treeId = $("#treeId").val();
 			var menuId = treeId > 0 ? treeId : 1;
 			var url = ctx + "knowledge/cmsCategory/selectCategoryTree/" + menuId;
 			var options = {
@@ -191,7 +191,7 @@
 
 		function doSubmit(index, layero){
 			var body = layer.getChildFrame('body', index);
-			$("#categoryId").val(body.find('#treeId').val());
+			$("#treeId").val(body.find('#treeId').val());
 			$("#treeName").val(body.find('#treeName').val());
 			layer.close(index);
 		}

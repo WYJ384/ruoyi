@@ -76,7 +76,7 @@
         var editFlag = [[${@permission.hasPermi('knowledge:article:edit')}]];
         var removeFlag = [[${@permission.hasPermi('knowledge:article:remove')}]];
         var prefix = ctx + "knowledge/article";
-
+		var previewUrl=ctx+"f/knowledge/article/article/";
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -128,11 +128,11 @@
 				// 	title : '关键字',
 				// 	sortable: true
 				// },
-				{
-					field : 'description', 
-					title : '摘要',
-					sortable: true
-				},
+				// {
+				// 	field : 'description',
+				// 	title : '摘要',
+				// 	sortable: true
+				// },
 				{
 					field : 'weight', 
 					title : '权重',
@@ -199,7 +199,8 @@
 		            formatter: function(value, row, index) {
 		            	var actions = [];
 		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						actions.push('<a class="btn btn-primary  btn-xs ' + editFlag + '" href="'+previewUrl+row.id+'" target="_blank" ><i class="fa fa-plus"></i>预览</a>');
+						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
 		        }]

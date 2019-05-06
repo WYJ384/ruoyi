@@ -5,6 +5,8 @@ import java.util.*;
 
 import com.ruoyi.common.config.Global;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.knowledge.domain.CmsCategory;
+import com.ruoyi.knowledge.service.ICmsCategoryService;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -40,7 +42,9 @@ public class ArticleController extends BaseController
     private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private IArticleService articleService;
-	
+	@Autowired
+	private ICmsCategoryService cmsCategoryService;
+
 	@RequiresPermissions("knowledge:article:view")
 	@GetMapping()
 	public String article()
@@ -125,6 +129,9 @@ public class ArticleController extends BaseController
 		mmap.put("article", article);
 		System.out.println(files);
 		mmap.put("files", files);
+
+		CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(article.getCategoryId());
+		mmap.put("cmsCategory", cmsCategory);
 	    return prefix + "/edit";
 	}
 	

@@ -1,0 +1,218 @@
+body{font-family:"Open Sans",Arial,sans-serif;}
+
+.navbar .nav li a {
+	color: white;
+	font-family: "microsoft yahei";
+	font-size: 16px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.navbar .nav .dropdown .dropdown-menu li a{
+	color: white; 
+	background-color: rgba(63,63,63,1);
+	text-align: center;
+}
+
+.container .row .col-md-3{
+	padding: 15px;
+}
+
+.container .row .col-md-3 .contents{
+	background: #EDF1F5;
+	padding-top: 10px;
+	padding-left: 25px;
+	padding-bottom: 10px;
+}
+
+.container .row .col-md-3 .contents ul{
+	padding-left: 15px;
+}
+
+.container .row .col-md-3 .contents h4{
+	font-family:"microsoft yahei";
+	font-weight:bold;
+  	font-style:normal;
+  	font-size:16px;
+  	color:#797979;
+}
+
+.container .row .col-md-3 .contents ul li{
+	margin: 8px 0;
+}
+
+.container .row .col-md-3 .contents ul a{
+	color: #108EE9;
+	font-family: "microsoft yahei";
+}
+
+div .container .row .col-md-4{
+	padding: 15px;
+}
+
+div .container .row .col-md-4 .knlg-struct{
+	background:white;
+	padding-bottom: 20px;
+	border:1px;
+	box-shadow:0px 0px 1px rgba(0, 0, 0, 0.349019607843137);
+}
+
+div .container .row .col-md-4 .knlg-struct a h4{
+	color: #666666;
+	text-align: center;
+	font-size: 24px;
+	font-family: "microsoft yahei";
+}
+
+.btn-view{
+	background-color: white;
+	color: #108EE9;
+	border-color: #108EE9 #108EE9;
+}
+
+.container .row .col-md-3 .path{
+	border-width: 1px;
+	border-color: #108EE9;
+	border-style: solid;
+	padding: 20px;
+}
+
+
+.done{
+	border-radius: 20px;
+	border-style:solid;
+	border-width:1px;
+  	border-color: #108EE9;
+  	color: #108EE9;
+  	padding: 4px;
+}
+
+.doing{
+	border-radius: 20px;
+	background-color: #108EE9;
+	border-style:solid;
+  	border-width:1px;
+  	border-color: #108EE9;
+	padding: 4px;
+	color: white;
+}
+
+.todo{
+	border-radius: 20px;
+	border-style:solid;
+  	border-width:1px;
+	border-color: #CCCCCC;
+	padding: 4px;
+	color: #CCCCCC;
+}
+
+.text-muted{
+	color: #CCCCCC;
+	font-size: 12px;
+}
+
+.btn-primary{
+	background-color: #108EE9;
+}
+
+.fa-file-word-o{
+	color: #4269A5;
+}
+.fa-file-excel-o{
+	color: #1F6B41;
+}
+.fa-file-powerpoint-o{
+	color: #C44423;
+}
+
+.fa-file-pdf-o{
+	color: #CC0000;
+}
+
+.fa-file-video-o{
+	color: #8E4F89;
+}
+
+.fa-file-text-o{
+	color: #0099CC;
+}
+
+/* Header - Search ---------------------------------------------------------------------------------------------------*/
+.search-area-wrapper {
+  background: #1b1717  center top no-repeat;
+  background-size: 100%;
+  min-height: 279px;
+  height: auto !important;
+  height: 279px;
+}
+.search-area-wrapper .search-area {
+  padding: 50px 0;
+}
+
+h3.search-header {
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 36px;
+  color: #fff;
+  text-align: center;
+}
+
+p.search-tag-line {
+  font-family: "Droid Serif", serif;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 28px;
+  color: #fff;
+  text-align: center;
+}
+
+form.search-form {
+  margin: 40px 0 0;
+  text-align: center;
+
+}
+form.search-form .input-common, form.search-form input.search-term, form.search-form input.search-btn {
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  box-shadow: none;
+  border-radius: 0;
+  display: inline-block;
+  border: none;
+  vertical-align: bottom;
+}
+form.search-form input.search-term {
+  font-size: 14px;
+  height: 49px;
+  line-height: 24px;
+  padding: 12px;
+  width: 72%;
+  color: #858c91;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+form.search-form input.search-term.loading {
+  background-image: url("../images/search-loader.gif");
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
+}
+form.search-form input.search-btn {
+  background-color: #3f4b55;
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 600;
+  padding: 14px 30px 15px;
+  color: #fff;
+}
+form.search-form input.search-btn:hover {
+  background-color: #4b5760;
+}
+
+#search-error-container label {
+  color: #fff;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.lt-ie8 form.search-form input.search-btn {
+  padding-top: 12px;
+  padding-bottom: 13px;
+}
