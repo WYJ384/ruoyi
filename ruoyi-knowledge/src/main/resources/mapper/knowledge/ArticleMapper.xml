@@ -35,7 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectArticleVo"/>
         <where>  
             <if test="id != null  and id != '' "> and id = #{id}</if>
-             <if test="categoryId != null  and categoryId != '' "> and category_id = #{categoryId}</if>
+             <if test="categoryId != null  and categoryId != '' ">
+                 AND (category_id = #{categoryId} OR category_id IN ( SELECT id FROM cms_category t WHERE FIND_IN_SET (#{categoryId},parent_ids) ))
+              </if>
              <if test="title != null  and title != '' "> and title = #{title}</if>
              <if test="link != null  and link != '' "> and link = #{link}</if>
              <if test="color != null  and color != '' "> and color = #{color}</if>
@@ -55,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
          </where>
+         order by weight desc
     </select>
     
     <select id="selectArticleById" parameterType="String" resultMap="ArticleResult">
