@@ -8,7 +8,11 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.knowledge.domain.Article;
+import com.ruoyi.knowledge.domain.ArticleData;
+import com.ruoyi.knowledge.domain.CmsCategory;
+import com.ruoyi.knowledge.service.IArticleDataService;
 import com.ruoyi.knowledge.service.IArticleService;
+import com.ruoyi.knowledge.service.ICmsCategoryService;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,14 +33,17 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/f/knowledge/article")
-public class FArticleController extends BaseController
+public class FArticleController extends FBaseController
 {
     private String prefix = "knowledge/article";
     @Autowired
     private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private IArticleService articleService;
-	
+	@Autowired
+	private ICmsCategoryService cmsCategoryService;
+	@Autowired
+	private IArticleDataService articleDataService;
 	@GetMapping("/article/{id}")
 	public String article(@PathVariable("id") String id,ModelMap modelMap)
 	{
@@ -46,6 +53,17 @@ public class FArticleController extends BaseController
 		activityFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
 		modelMap.addAttribute("workTaskFiles",workTaskFiles);
+
+		ArticleData articleData = articleDataService.selectArticleDataById(id);
+		if(articleData==null){
+			articleData=new ArticleData();
+			articleData.setId(id);
+			articleData.setAllowComment("1");
+			articleDataService.updateArticleData(articleData);
+		}
+		modelMap.put("articleData", articleData);
+
+		getMenu(modelMap);
 		return "/front/"+prefix + "/content";
 	}
 	

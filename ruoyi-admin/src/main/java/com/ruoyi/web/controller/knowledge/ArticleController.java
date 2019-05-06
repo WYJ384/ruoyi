@@ -5,7 +5,9 @@ import java.util.*;
 
 import com.ruoyi.common.config.Global;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.knowledge.domain.ArticleData;
 import com.ruoyi.knowledge.domain.CmsCategory;
+import com.ruoyi.knowledge.service.IArticleDataService;
 import com.ruoyi.knowledge.service.ICmsCategoryService;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
@@ -44,7 +46,8 @@ public class ArticleController extends BaseController
 	private IArticleService articleService;
 	@Autowired
 	private ICmsCategoryService cmsCategoryService;
-
+	@Autowired
+	private IArticleDataService articleDataService;
 	@RequiresPermissions("knowledge:article:view")
 	@GetMapping()
 	public String article()
@@ -97,12 +100,13 @@ public class ArticleController extends BaseController
 	@Log(title = "文章", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(Article article)
+	public AjaxResult addSave(Article article, ArticleData articleData)
 	{
 //		article.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		article.setDelFlag("0");
 		article.setCreateBy(ShiroUtils.getLoginName());
 		article.setCreateDate(new Date());
+		articleDataService.insertArticleData(articleData);
 		return toAjax(articleService.insertArticle(article));
 	}
 
@@ -132,6 +136,16 @@ public class ArticleController extends BaseController
 
 		CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(article.getCategoryId());
 		mmap.put("cmsCategory", cmsCategory);
+
+		ArticleData articleData = articleDataService.selectArticleDataById(id);
+		if(articleData==null){
+			articleData=new ArticleData();
+			articleData.setId(id);
+			articleData.setAllowComment("1");
+			articleDataService.updateArticleData(articleData);
+		}
+		mmap.put("articleData", articleData);
+
 	    return prefix + "/edit";
 	}
 	
@@ -142,10 +156,11 @@ public class ArticleController extends BaseController
 	@Log(title = "文章", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(Article article)
+	public AjaxResult editSave(Article article,ArticleData articleData)
 	{
 		article.setUpdateBy(ShiroUtils.getLoginName());
 		article.setUpdateDate(new Date());
+		articleDataService.updateArticleData(articleData);
 		return toAjax(articleService.updateArticle(article));
 	}
 	

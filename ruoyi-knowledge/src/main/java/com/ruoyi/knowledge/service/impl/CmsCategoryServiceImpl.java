@@ -61,8 +61,12 @@ public class CmsCategoryServiceImpl implements ICmsCategoryService
 	public int insertCmsCategory(CmsCategory cmsCategory)
 	{
 		CmsCategory info = cmsCategoryMapper.selectCmsCategoryById(cmsCategory.getParentId());
+		if(info!=null){
+			cmsCategory.setParentIds(info.getParentIds() + "," + cmsCategory.getParentId());
+		}else{
+			cmsCategory.setParentIds("0," + cmsCategory.getParentId());
+		}
 
-		cmsCategory.setParentIds(info.getParentIds() + "," + cmsCategory.getParentId());
 	    return cmsCategoryMapper.insertCmsCategory(cmsCategory);
 	}
 	

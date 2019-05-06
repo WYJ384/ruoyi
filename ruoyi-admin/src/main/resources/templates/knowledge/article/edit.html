@@ -5,6 +5,14 @@
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet" type="text/css" />
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css" />
 <body class="white-bg">
+<div class="row" style="margin: 20px;">
+	<div class="col-sm-offset-5 col-sm-10">
+		<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+		</button>&nbsp;
+		<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+		</button>
+	</div>
+</div>
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-article-edit" th:object="${article}">
             <input id="id" name="id" th:field="*{id}"  type="hidden">
@@ -13,7 +21,7 @@
 				<label class="col-sm-3 control-label">栏目编号：</label>
 				<div class="col-sm-8">
 					<div class="input-group">
-						<input class="form-control" type="text" onclick="selectCategoryTree()" id="treeName" readonly="true" th:value="${cmsCategory.name}">
+						<input class="form-control" type="text" onclick="selectCategoryTree()" name="treeName" id="treeName" readonly="true" th:value="${cmsCategory.name}">
 						<span class="input-group-addon"><i class="fa fa-search"></i></span>
 					</div>
 				</div>
@@ -24,24 +32,24 @@
 					<input id="title" name="title" th:field="*{title}" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">文章链接：</label>
-				<div class="col-sm-8">
-					<input id="link" name="link" th:field="*{link}" class="form-control" type="text">
-				</div>
-			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">文章链接：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="link" name="link" th:field="*{link}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">标题颜色：</label>
 				<div class="col-sm-8">
 					<input id="color" name="color" th:field="*{color}" class="form-control" type="color">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">文章图片：</label>
-				<div class="col-sm-8">
-					<input id="image" name="image" th:field="*{image}" class="form-control" type="text">
-				</div>
-			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">文章图片：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="image" name="image" th:field="*{image}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">关键字：</label>
 				<div class="col-sm-8">
@@ -56,9 +64,38 @@
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">权重，越大越靠前：</label>
+				<label class="col-sm-3 control-label">权重：</label>
 				<div class="col-sm-8">
 					<input id="weight" name="weight" th:field="*{weight}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否允许评论：</label>
+				<div class="col-sm-8">
+
+
+					<label class="radio-box"> <input type="radio" th:field="${articleData.allowComment}"  name="allowComment" value="0"/> 是 </label>
+					<label class="radio-box"> <input type="radio" th:field="${articleData.allowComment}"  name="allowComment" value="1" /> 否 </label>
+				</div>
+
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">现象：</label>
+				<div class="col-sm-8">
+					<script id="appearance"  th:utext="${articleData?.appearance}" name="appearance" type="text/plain" style="width:100%;height:100px;"></script>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">原因分析：</label>
+				<div class="col-sm-8">
+					<script id="reason" name="reason" th:utext="${articleData?.reason}"  type="text/plain" style="width:100%;height:300px;"></script>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">解决方案：</label>
+				<div class="col-sm-8">
+					<script id="solution" name="solution" th:utext="${articleData?.solution}"  type="text/plain" style="width:100%;height:300px;"></script>
 				</div>
 			</div>
 			<div class="form-group">
@@ -144,7 +181,17 @@
     <div th:include="include::footer"></div>
 	<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
 	<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
+	<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+	<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
     <script type="text/javascript">
+		$(function () {
+			UE.getEditor('solution');
+			UE.getEditor('reason');
+			UE.getEditor('appearance');
+		});
 		var files='[[${files}]]'.split(",");
 		$('#file').fileinput({
 			language: 'zh',
@@ -163,7 +210,10 @@
 		var prefix = ctx + "knowledge/article";
 		$("#form-article-edit").validate({
 			rules:{
-				xxxx:{
+				treeName:{
+					required:true,
+				},
+				title:{
 					required:true,
 				},
 			},

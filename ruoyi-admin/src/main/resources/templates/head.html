@@ -5,7 +5,9 @@
 		<title> 导航栏 </title>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 		<link th:href="@{/css/home.css}" rel="stylesheet"/>
-	</head>
+	<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+
+</head>
 	<body>
 		<nav class="navbar navbar-inverse"  th:fragment="navigation" role="navigation" style="border-radius :0px; background-color: rgba(63,63,63,1);margin: 0;">
 			<div class="container-fluid">
@@ -17,13 +19,10 @@
 						<li>
 							<a href="/f/fIndexController/index#">首页</a>
 						</li>
-						<li>
-							<a href="#">我的知识库</a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								企业知识库 <b class="caret"></b>
-							</a>
+
+
+						<li th:each="menu:${cmsCategories}" class="dropdown">
+							<a href="#" > <span th:text="${menu.name}"></span> <b class="caret"></b></a>
 							<ul class="dropdown-menu" style="min-width: 100%;background-color: rgba(63,63,63,1);">
 								<li>
 									<a href="#">企业文档</a>
@@ -33,9 +32,7 @@
 								</li>
 							</ul>
 						</li>
-						<li>
-							<a href="#">学习路径</a>
-						</li>
+
 					</ul>
 
 					<!-- 向右对齐 -->
