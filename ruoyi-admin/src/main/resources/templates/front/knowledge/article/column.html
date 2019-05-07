@@ -39,7 +39,8 @@
             <!-- 结果显示栏 -->
             <div class="container-fluid">
                 <div class="row clearfix">
-                    <input type="hidden" id="categoryId">
+                    <input type="hidden" id="categoryId" th:value="${categoryId}">
+                    <input type="hidden" id="keywords" th:value="${keywords}">
                     <div class="col-md-10 column" id="articleList">
 
                     </div>
@@ -109,7 +110,9 @@
             data: {
                 pageSize: pageSize,
                 pageNum: num,
-                categoryId:$("#categoryId").val()
+                categoryId:$("#categoryId").val(),
+                keywords:$("#keywords").val(),
+
             },
             beforeSend: function () {
                 $.modal.loading("正在处理中，请稍后...");

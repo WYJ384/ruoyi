@@ -48,12 +48,13 @@ public class FArticleController extends FBaseController
 	public String article(@PathVariable("id") String id,ModelMap modelMap)
 	{
 		Article article = articleService.selectArticleById(id);
+		article.setHits(article.getHits()+1);
+		articleService.updateArticle(article);
 		modelMap.addAttribute("article",article);
 		WorkTaskFile activityFile=new WorkTaskFile();
 		activityFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
 		modelMap.addAttribute("workTaskFiles",workTaskFiles);
-
 		ArticleData articleData = articleDataService.selectArticleDataById(id);
 		if(articleData==null){
 			articleData=new ArticleData();
@@ -62,18 +63,20 @@ public class FArticleController extends FBaseController
 			articleDataService.updateArticleData(articleData);
 		}
 		modelMap.put("articleData", articleData);
-
 		getMenu(modelMap);
 		return "/front/"+prefix + "/content";
+	}
+	@GetMapping("/search")
+	public String search(String keywords,ModelMap modelMap)
+	{
+		getMenu(modelMap);
+		modelMap.addAttribute("keywords",keywords);
+		return "/front/"+prefix + "/column";
 	}
 	@GetMapping("/column/{categoryId}")
 	public String column(@PathVariable("categoryId") String categoryId,ModelMap modelMap)
 	{
 		getMenu(modelMap);
-		Article article=new Article();
-		article.setCategoryId(categoryId);
-		List<Article> articles = articleService.selectArticleList(article);
-		modelMap.addAttribute("articles",articles);
 		modelMap.addAttribute("categoryId",categoryId);
 		return "/front/"+prefix + "/column";
 	}

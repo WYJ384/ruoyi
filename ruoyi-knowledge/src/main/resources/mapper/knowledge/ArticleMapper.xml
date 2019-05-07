@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="link != null  and link != '' "> and link = #{link}</if>
              <if test="color != null  and color != '' "> and color = #{color}</if>
              <if test="image != null  and image != '' "> and image = #{image}</if>
-             <if test="keywords != null  and keywords != '' "> and keywords = #{keywords}</if>
+             <if test="keywords != null  and keywords != '' "> and keywords like concat('%', #{keywords}, '%')</if>
              <if test="description != null  and description != '' "> and description = #{description}</if>
              <if test="weight != null "> and weight = #{weight}</if>
              <if test="weightDate != null "> and weight_date = #{weightDate}</if>
