@@ -21,16 +21,16 @@
 						</li>
 
 
-						<li th:each="menu:${cmsCategories}" class="dropdown">
-							<a href="#" > <span th:text="${menu.name}"></span> <b class="caret"></b></a>
-							<ul class="dropdown-menu" style="min-width: 100%;background-color: rgba(63,63,63,1);">
-								<li>
-									<a href="#">企业文档</a>
-								</li>
-								<li>
-									<a href="#">知识结构</a>
-								</li>
-							</ul>
+						<li th:each="menu:${cmsCategories}">
+							<a th:href="${menu.href+menu.id}" > <span th:text="${menu.name}"></span> </a>
+<!--							<ul class="dropdown-menu" style="min-width: 100%;background-color: rgba(63,63,63,1);">-->
+<!--								<li>-->
+<!--									<a href="#">企业文档</a>-->
+<!--								</li>-->
+<!--								<li>-->
+<!--									<a href="#">知识结构</a>-->
+<!--								</li>-->
+<!--							</ul>-->
 						</li>
 
 					</ul>

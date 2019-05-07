@@ -7,12 +7,24 @@
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
 <nav class="navbar navbar-inverse"  th:include="head::navigation" role="navigation" style="border-radius :0px; background-color: rgba(63,63,63,1);margin: 0;">
 </nav>
-<div class="container">
+<div class="container-fluid">
 <!--    <div class="pull-right">-->
 <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
 <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
 <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
 <!--    </div>-->
+    <div class="row">
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">主页</a>
+            </li>
+
+            <li class="active">
+                <strong>Flot图表</strong>
+            </li>
+        </ol>
+    </div>
+
     <div class="text-center article-title">
         <span class="text-muted" ><i class="fa fa-clock-o"></i> <span th:text="${#dates.format(article.createDate, 'yyyy年MM月dd日')}">2017年10月28日</span> </span>
         <h1 th:text="${article.title}" th:style="'color:'+${article.color}"></h1>

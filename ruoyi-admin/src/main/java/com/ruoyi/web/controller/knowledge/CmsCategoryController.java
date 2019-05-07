@@ -137,7 +137,13 @@ public class CmsCategoryController extends BaseController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") String id, ModelMap mmap) {
         CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(id);
+        CmsCategory pcmsCategory = cmsCategoryService.selectCmsCategoryById(cmsCategory.getParentId());
+
         mmap.put("cmsCategory", cmsCategory);
+        if(pcmsCategory==null){
+            pcmsCategory=cmsCategory;
+        }
+        mmap.put("pcmsCategory", pcmsCategory);
         return prefix + "/edit";
     }
 

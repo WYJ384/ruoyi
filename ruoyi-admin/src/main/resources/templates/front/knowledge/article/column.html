@@ -1,0 +1,177 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<body>
+<link th:href="@{/css/style.css}" rel="stylesheet"/>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/home.css}" rel="stylesheet"/>
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+<link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
+
+<nav class="navbar navbar-inverse" th:include="head::navigation" role="navigation"
+     style="border-radius :0px; background-color: rgba(63,63,63,1);margin: 0;">
+</nav>
+<!-- 搜索主体 -->
+<div class="container-fluid">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">主页</a>
+            </li>
+
+            <li class="active">
+                <strong>Flot图表</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+            <div class="row clearfix">
+                <div class="col-md-4 column"></div>
+                <!-- 分类筛选块 -->
+                <div class="col-md-8 column">
+                    <div id="tree" class="ztree" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 搜索结果块 -->
+        <div class="col-md-9 column">
+
+            <!-- 结果显示栏 -->
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <input type="hidden" id="categoryId">
+                    <div class="col-md-10 column" id="articleList">
+
+                    </div>
+                    <div class="col-md-2 column"></div>
+                </div>
+            </div>
+            <!-- 底部分页块 -->
+            <div class="col-md-1 column"></div>
+            <div class="col-md-6 column">
+                <ul class="pagination" id="pagination0" style="float: right"></ul>
+
+            </div>
+
+            <div class="col-md-1 column"></div>
+        </div>
+    </div>
+</div>
+
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+<script th:src="@{/js/template-web.js}"></script>
+<script th:src="@{/js/jq-paginator.js}"></script>
+
+<script id="articleTpl" type="text/html">
+    {{each rows article}}
+        <div class="list-group" style="margin-top: 10px;" >
+            <a href="/f/knowledge/article/article/{{article.id}}" class="list-group-item"> <i
+                    class="far fa-file-pdf fa-lg"></i>&nbsp;&nbsp;<big><b >{{article.title}}</b></big>
+                <br>
+                {{#article.description}}
+
+                <br>
+                <div class="container-fluid">
+                    <div class="row clearfix gray-word">
+                        <div class="col-md-3 column" text="${#dates.format(article.createDate, 'yyyy年MM月dd日')}">2018-2-27
+                            00:00:00
+                        </div>
+                        <div class="col-md-1 column">
+                            <span class="fenge"></span>
+                        </div>
+                        <div class="col-md-2 column" >{{article.hits}}浏览</div>
+                        <div class="col-md-1 column">
+                            <span class="fenge"></span>
+                        </div>
+                        <div class="col-md-2 column">贡献者：曾祥</div>
+                        <div class="col-md-3 column"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {{/each}}
+</script>
+<script>
+    $(function () {
+        queryDeptTree();
+        loadArticleList(1);
+    });
+    function search() {
+        loadArticleList(1);
+    }
+    function loadArticleList(num) {
+        var pageSize=4;
+        var config = {
+            url: ctx + "f/knowledge/article/list",
+            type: "post",
+            dataType: "json",
+            data: {
+                pageSize: pageSize,
+                pageNum: num,
+                categoryId:$("#categoryId").val()
+            },
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+                $.modal.disable();
+            },
+            success: function (result) {
+                $("#articleList").html(template("articleTpl",result));
+                if(result.total==0){
+                    display_pages(parseInt(1), 5, num);
+                }else{
+                    var total_pages = (result.total + pageSize -1) / pageSize;
+                    display_pages(parseInt(total_pages), 5, num);
+                }
+
+                $.modal.closeLoading();
+                $.modal.enable();
+            }
+        };
+        $.ajax(config)
+    }
+
+    function queryDeptTree() {
+        var url = ctx + "f/knowledge/category/treeData";
+        var options = {
+            url: url,
+            expandLevel: 2,
+            onClick: zOnClick
+        };
+        $.tree.init(options);
+
+        function zOnClick(event, treeId, treeNode) {
+            $("#categoryId").val(treeNode.id);
+            $("#parentId").val(treeNode.pId);
+            search();
+        }
+    }
+    function display_pages(total_pages, visible_pages, current_page){
+        // if(!visible_pages){
+        //     visible_pages = 5;
+        // }
+        // if(!current_page){
+        //     current_page = 1;
+        // }
+        $.jqPaginator('#pagination0', {
+            totalPages: total_pages,
+            visiblePages: visible_pages,
+            currentPage: current_page,
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
+            next: '<li class="next"><a href="javascript:;">下一页</a></li>',
+            last: '<li class="last"><a href="javascript:;">末页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (num, type) {
+                if(num!=current_page){
+                    loadArticleList(num);
+                    $('#text').html('当前第' + num + '页');
+                }
+            }
+        });
+
+
+    }
+</script>
+</body>
+</html>

@@ -66,7 +66,25 @@ public class FArticleController extends FBaseController
 		getMenu(modelMap);
 		return "/front/"+prefix + "/content";
 	}
-	
+	@GetMapping("/column/{categoryId}")
+	public String column(@PathVariable("categoryId") String categoryId,ModelMap modelMap)
+	{
+		getMenu(modelMap);
+		Article article=new Article();
+		article.setCategoryId(categoryId);
+		List<Article> articles = articleService.selectArticleList(article);
+		modelMap.addAttribute("articles",articles);
+		modelMap.addAttribute("categoryId",categoryId);
+		return "/front/"+prefix + "/column";
+	}
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(Article article)
+	{
+		startPage();
+		List<Article> list = articleService.selectArticleList(article);
+		return getDataTable(list);
+	}
 
 	
 }
