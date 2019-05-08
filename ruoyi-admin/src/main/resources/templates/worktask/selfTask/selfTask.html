@@ -14,61 +14,61 @@
 								任务标题：<input type="text" name="taskTitle"/>
 							</li>
 
-							<li>
-								开始时间：<input type="text" name="startDate"/>
-							</li>
+<!--							<li>-->
+<!--								开始时间：<input type="text" name="startDate"/>-->
+<!--							</li>-->
 
-							<li>
-								要求完成时间：<input type="text" name="requireTime"/>
-							</li>
+<!--							<li>-->
+<!--								要求完成时间：<input type="text" name="requireTime"/>-->
+<!--							</li>-->
 
-							<li>
-								任务类型：<input type="text" name="selvalTaskType"/>
-							</li>
+<!--							<li>-->
+<!--								任务类型：<input type="text" name="selvalTaskType"/>-->
+<!--							</li>-->
 
-							<li>
-								优先级0高1中2低：<input type="text" name="priority"/>
-							</li>
+<!--							<li>-->
+<!--								优先级0高1中2低：<input type="text" name="priority"/>-->
+<!--							</li>-->
 
-							<li>
-								任务描述：<input type="text" name="taskContent"/>
-							</li>
+<!--							<li>-->
+<!--								任务描述：<input type="text" name="taskContent"/>-->
+<!--							</li>-->
 
-							<li>
-								任务执行人：<input type="text" name="executorUser"/>
-							</li>
+<!--							<li>-->
+<!--								任务执行人：<input type="text" name="executorUser"/>-->
+<!--							</li>-->
 
-							<li>
-								任务验收人：<input type="text" name="acceptorUser"/>
-							</li>
+<!--							<li>-->
+<!--								任务验收人：<input type="text" name="acceptorUser"/>-->
+<!--							</li>-->
 
-							<li>
-								任务进度：<input type="text" name="taskProgress"/>
-							</li>
+<!--							<li>-->
+<!--								任务进度：<input type="text" name="taskProgress"/>-->
+<!--							</li>-->
 
-							<li>
-								共享给：<input type="text" name="isShare"/>
-							</li>
+<!--							<li>-->
+<!--								共享给：<input type="text" name="isShare"/>-->
+<!--							</li>-->
 
-							<li>
-								创建时间：<input type="text" name="createdTime"/>
-							</li>
+<!--							<li>-->
+<!--								创建时间：<input type="text" name="createdTime"/>-->
+<!--							</li>-->
 
-							<li>
-								修改人：<input type="text" name="updateBy"/>
-							</li>
+<!--							<li>-->
+<!--								修改人：<input type="text" name="updateBy"/>-->
+<!--							</li>-->
 
-							<li>
-								修改时间：<input type="text" name="updatedTime"/>
-							</li>
+<!--							<li>-->
+<!--								修改时间：<input type="text" name="updatedTime"/>-->
+<!--							</li>-->
 
-							<li>
-								创建人：<input type="text" name="createdBy"/>
-							</li>
+<!--							<li>-->
+<!--								创建人：<input type="text" name="createdBy"/>-->
+<!--							</li>-->
 
-							<li>
-								备注：<input type="text" name="remarks"/>
-							</li>
+<!--							<li>-->
+<!--								备注：<input type="text" name="remarks"/>-->
+<!--							</li>-->
 
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -143,59 +143,68 @@
 				},
 				{
 					field : 'priority', 
-					title : '优先级0高1中2低',
-					sortable: true
+					title : '优先级',
+					sortable: true,
+					formatter: function(value, row, index) {
+						if(value==0){
+							return "高"
+						}else if(value==1){
+							return "中"
+						}else if(value==2){
+							return "低"
+						}
+					}
 				},
-				{
-					field : 'taskContent', 
-					title : '任务描述',
-					sortable: true
-				},
-				{
-					field : 'executorUser', 
-					title : '任务执行人',
-					sortable: true
-				},
-				{
-					field : 'acceptorUser', 
-					title : '任务验收人',
-					sortable: true
-				},
+				// {
+				// 	field : 'taskContent',
+				// 	title : '任务描述',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'executorUser',
+				// 	title : '任务执行人',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'acceptorUser',
+				// 	title : '任务验收人',
+				// 	sortable: true
+				// },
 				{
 					field : 'taskProgress', 
 					title : '任务进度',
 					sortable: true
 				},
-				{
-					field : 'isShare', 
-					title : '共享给',
-					sortable: true
-				},
-				{
-					field : 'createdTime', 
-					title : '创建时间',
-					sortable: true
-				},
-				{
-					field : 'updateBy', 
-					title : '修改人',
-					sortable: true
-				},
-				{
-					field : 'updatedTime', 
-					title : '修改时间',
-					sortable: true
-				},
-				{
-					field : 'createdBy', 
-					title : '创建人',
-					sortable: true
-				},
-				{
-					field : 'remarks', 
-					title : '备注',
-					sortable: true
-				},
+				// {
+				// 	field : 'isShare',
+				// 	title : '共享给',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createdTime',
+				// 	title : '创建时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateBy',
+				// 	title : '修改人',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updatedTime',
+				// 	title : '修改时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createdBy',
+				// 	title : '创建人',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'remarks',
+				// 	title : '备注',
+				// 	sortable: true
+				// },
 		        {
 		            title: '操作',
 		            align: 'center',
