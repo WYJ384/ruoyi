@@ -27,7 +27,7 @@
 <!--        </ol>-->
 <!--    </div>-->
     <div class="row clearfix">
-        <div class="col-md-3 column">
+        <div class="col-md-3 col-sm-3  column">
             <div class="row clearfix">
                 <div class="col-md-4 column"></div>
                 <!-- 分类筛选块 -->
@@ -37,7 +37,7 @@
             </div>
         </div>
         <!-- 搜索结果块 -->
-        <div class="col-md-9 column">
+        <div class="col-md-9  col-sm-9 column">
 
             <!-- 结果显示栏 -->
             <div class="container-fluid">
@@ -70,8 +70,8 @@
 <script id="articleTpl" type="text/html">
     {{each rows article}}
         <div class="list-group" style="margin-top: 10px;" >
-            <a href="/f/knowledge/article/article/{{article.id}}" class="list-group-item"> <i
-                    class="far fa-file-pdf fa-lg"></i>&nbsp;&nbsp;<big><b >{{article.title}}</b></big>
+            <a href="/f/knowledge/article/article/{{article.id}}" class="list-group-item "> <i
+                    class="far fa-file-pdf fa-lg"></i>&nbsp;&nbsp;<big><b  style="color: #337ab7">{{article.title}}</b></big>
                 <br>
                 {{#article.description}}
 

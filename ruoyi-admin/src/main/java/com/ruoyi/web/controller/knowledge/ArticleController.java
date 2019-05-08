@@ -56,7 +56,14 @@ public class ArticleController extends BaseController
 	{
 	    return prefix + "/article";
 	}
-	
+    @RequiresPermissions("knowledge:article:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<Article> util = new ExcelUtil<Article>(Article.class);
+        return util.importTemplateExcel("知识库");
+    }
 	/**
 	 * 查询文章列表
 	 */
