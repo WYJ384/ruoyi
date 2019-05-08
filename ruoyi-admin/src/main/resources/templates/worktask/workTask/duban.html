@@ -83,12 +83,22 @@
                     <label class="col-sm-2 control-label">任务目标：</label>
                     <div class="col-sm-10">
                         <div class="well" th:utext="${workTaskActivity.target}"></div>
-<!--                        <textarea name="target" class="form-control" rows="5" readonly-->
-<!--                                  th:utext="${workTaskActivity.target}"></textarea>-->
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">要求完成时间：</label>
+                    <div class="col-sm-10">
+                        <input name="updateTime" readonly th:value="${#dates.format(workTaskActivity?.updateTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row" th:if="${taskKey=='zhurenduban'}">
             <div class="col-sm-12">
                 <div class="form-group">
