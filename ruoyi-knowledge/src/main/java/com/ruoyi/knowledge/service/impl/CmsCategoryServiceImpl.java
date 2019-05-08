@@ -105,6 +105,12 @@ public class CmsCategoryServiceImpl implements ICmsCategoryService
 		List<ZtreeExt> ztrees = initZtree(deptList);
 		return ztrees;
 	}
+
+	@Override
+	public CmsCategory selectCategoryByName(CmsCategory cmsCategory) {
+		return cmsCategoryMapper.selectCategoryByName(cmsCategory);
+	}
+
 	/**
 	 * 对象转部门树
 	 *

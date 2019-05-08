@@ -60,4 +60,7 @@ public interface CmsCategoryMapper
 	public int deleteCmsCategoryByIds(String[] ids);
 
     int selectCountCategoryByParentId(String id);
+
+
+	CmsCategory selectCategoryByName(CmsCategory cmsCategory);
 }

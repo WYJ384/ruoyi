@@ -56,4 +56,6 @@ public interface ICmsCategoryService
 	int selectCountCategoryByParentId(String id);
 
     List<ZtreeExt> selectCategoryTree(CmsCategory cmsCategory);
+
+	CmsCategory selectCategoryByName(CmsCategory cmsCategory);
 }

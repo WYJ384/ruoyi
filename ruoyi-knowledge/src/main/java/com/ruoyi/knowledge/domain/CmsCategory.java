@@ -314,7 +314,14 @@ public class CmsCategory extends BaseEntity
 		return delFlag;
 	}
 
-    public String toString() {
+	public CmsCategory(String name) {
+		this.name = name;
+	}
+
+	public CmsCategory() {
+	}
+
+	public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("parentId", getParentId())

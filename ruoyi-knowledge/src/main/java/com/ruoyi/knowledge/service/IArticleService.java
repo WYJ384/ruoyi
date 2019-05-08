@@ -50,5 +50,6 @@ public interface IArticleService
      * @return 结果
      */
 	public int deleteArticleByIds(String ids);
-	
+
+    String importArticle(List<Article> articleList, boolean updateSupport, String operName);
 }

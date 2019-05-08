@@ -1,5 +1,6 @@
 package com.ruoyi.knowledge.domain;
 
+import com.ruoyi.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -14,7 +15,22 @@ import java.util.Date;
 public class Article extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+	@Excel(name = "专业")
+	private String category;
+	@Excel(name = "子专业")
+	private String ccategory;
+	/** 关键字 */
+	@Excel(name = "关键词")
+	private String keywords;
+	/** 描述、摘要 */
+	@Excel(name = "现象")
+	private String description;
+	/** 原因分析 */
+	@Excel(name = "原因分析")
+	private String reason;
+	/** 解决方案 */
+	@Excel(name = "解决方案")
+	private String solution;
 	/** 编号 */
 	private String id;
 	/** 栏目编号 */
@@ -27,10 +43,8 @@ public class Article extends BaseEntity
 	private String color;
 	/** 文章图片 */
 	private String image;
-	/** 关键字 */
-	private String keywords;
-	/** 描述、摘要 */
-	private String description;
+
+
 	/** 权重，越大越靠前 */
 	private Integer weight;
 	/** 权重期限 */
@@ -56,7 +70,41 @@ public class Article extends BaseEntity
 	/** 删除标记 */
 	private String delFlag;
 
-	public void setId(String id) 
+
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getCcategory() {
+		return ccategory;
+	}
+
+	public void setCcategory(String ccategory) {
+		this.ccategory = ccategory;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getSolution() {
+		return solution;
+	}
+
+	public void setSolution(String solution) {
+		this.solution = solution;
+	}
+
+	public void setId(String id)
 	{
 		this.id = id;
 	}

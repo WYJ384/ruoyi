@@ -9,6 +9,7 @@ import com.ruoyi.knowledge.domain.ArticleData;
 import com.ruoyi.knowledge.domain.CmsCategory;
 import com.ruoyi.knowledge.service.IArticleDataService;
 import com.ruoyi.knowledge.service.ICmsCategoryService;
+import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,6 +29,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 文章 信息操作处理
@@ -67,8 +69,19 @@ public class ArticleController extends BaseController
         List<Article> list = articleService.selectArticleList(article);
 		return getDataTable(list);
 	}
-	
-	
+
+	@Log(title = "案例导入", businessType = BusinessType.IMPORT)
+	@RequiresPermissions("knowledge:article:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+	{
+		ExcelUtil<Article> util = new ExcelUtil<Article>(Article.class);
+		List<Article> articleList = util.importExcel(file.getInputStream());
+		String operName = ShiroUtils.getSysUser().getLoginName();
+		String message = articleService.importArticle(articleList, updateSupport, operName);
+		return AjaxResult.success(message);
+	}
 	/**
 	 * 导出文章列表
 	 */
