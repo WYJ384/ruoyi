@@ -2,12 +2,13 @@
 <head>
     <title th:text="${article.title}"></title>
     <meta charset="utf-8">
-
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 <body>
-<link th:href="@{/css/style.css}" rel="stylesheet"/>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+<!--<link th:href="@{/css/style.css}" rel="stylesheet"/>-->
 <link th:href="@{/css/home.css}" rel="stylesheet"/>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
 <nav class="navbar navbar-inverse"  th:include="head::navigation" role="navigation" style="border-radius :0px; background-color: rgba(63,63,63,1);margin: 0;">
 </nav>
