@@ -12,17 +12,17 @@
 </nav>
 <!-- 搜索主体 -->
 <div class="container-fluid">
-    <div class="row">
-        <ol class="breadcrumb">
-            <li>
-                <a href="index.html">主页</a>
-            </li>
+<!--    <div class="row">-->
+<!--        <ol class="breadcrumb">-->
+<!--            <li>-->
+<!--                <a href="index.html">主页</a>-->
+<!--            </li>-->
 
-            <li class="active">
-                <strong>Flot图表</strong>
-            </li>
-        </ol>
-    </div>
+<!--            <li class="active">-->
+<!--                <strong>Flot图表</strong>-->
+<!--            </li>-->
+<!--        </ol>-->
+<!--    </div>-->
     <div class="row clearfix">
         <div class="col-md-3 column">
             <div class="row clearfix">
@@ -75,8 +75,7 @@
                 <br>
                 <div class="container-fluid">
                     <div class="row clearfix gray-word">
-                        <div class="col-md-3 column" text="${#dates.format(article.createDate, 'yyyy年MM月dd日')}">2018-2-27
-                            00:00:00
+                        <div class="col-md-3 column" >{{article.createDate}}
                         </div>
                         <div class="col-md-1 column">
                             <span class="fenge"></span>
@@ -85,7 +84,7 @@
                         <div class="col-md-1 column">
                             <span class="fenge"></span>
                         </div>
-                        <div class="col-md-2 column">贡献者：曾祥</div>
+<!--                        <div class="col-md-2 column">贡献者：曾祥</div>-->
                         <div class="col-md-3 column"></div>
                     </div>
                 </div>
@@ -94,6 +93,7 @@
     {{/each}}
 </script>
 <script>
+
     $(function () {
         queryDeptTree();
         loadArticleList(1);

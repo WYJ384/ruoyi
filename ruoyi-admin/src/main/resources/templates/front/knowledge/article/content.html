@@ -57,7 +57,7 @@
         <div class="attachment">
             <div class="file-box" th:each="file:${workTaskFiles}">
                 <div class="file">
-                    <a href="#">
+                    <a th:href="'http://135.151.0.120:8088/onlinePreview?url=http://localhost:8080/upload/'+${file.filePath}+'&officePreviewType=pdf'">
                         <span class="corner"></span>
                         <div class="icon">
                             <i class="fa fa-file"></i>

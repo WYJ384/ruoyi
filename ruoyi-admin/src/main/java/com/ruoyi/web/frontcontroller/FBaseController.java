@@ -41,6 +41,21 @@ public class FBaseController {
             PageHelper.startPage(pageNum, pageSize, orderBy);
         }
     }
+    protected void startPage( Integer pageNum,Integer pageSize,String orderBy)
+    {
+        if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize))
+        {
+            PageHelper.startPage(pageNum, pageSize, orderBy);
+        }
+    }
+    public String getOrderBy(String orderByColumn,String isAsc)
+    {
+        if (StringUtils.isEmpty(orderByColumn))
+        {
+            return "";
+        }
+        return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
+    }
     protected TableDataInfo getDataTable(List<?> list)
     {
         TableDataInfo rspData = new TableDataInfo();
