@@ -81,7 +81,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="col-sm-3 control-label">现象：</label>
+				<label class="col-sm-3 control-label">现象(简介)：</label>
 				<div class="col-sm-8">
 					<script id="appearance"  th:utext="${article.description}" name="description" type="text/plain" style="width:100%;height:100px;"></script>
 				</div>
@@ -93,7 +93,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">解决方案：</label>
+				<label class="col-sm-3 control-label">解决方案(内容)：</label>
 				<div class="col-sm-8">
 					<script id="solution" name="solution" th:utext="${articleData?.solution}"  type="text/plain" style="width:100%;height:300px;"></script>
 				</div>
@@ -201,9 +201,9 @@
 			enctype: 'multipart/form-data',
 			uploadUrl: ctx+'worktask/workTaskFile/upload', // you must set a valid URL here else you will get an error
 			uploadExtraData:{"workTaskId": '[[${article.id}]]'},
-			allowedFileExtensions : ['ppt', 'xls','xlsx',"doc","docx","pptx"],
+			allowedFileExtensions : ['ppt', 'xls','xlsx',"doc","docx","pptx","pdf"],
 			overwriteInitial: false,
-			maxFileSize: 1000,
+			maxFileSize: 10000,
 			maxFilesNum: 10,
 			initialPreview: files,
 		});

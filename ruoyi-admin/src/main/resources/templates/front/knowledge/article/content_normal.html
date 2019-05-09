@@ -26,11 +26,11 @@
     </div>
     <div ></div>
 
-    <div class="ibox float-e-margins">
-        <div class="ibox-content" th:utext="${articleData.solution}" >
-            登录主备EAS，前往重定向策略文件路径下，核查userip.txt文件，发现用户机顶盒获取10.239.160.X地址段确实包含在重定向策略中，产生业务接入死循环。启用VI命令重新编辑删除。
-        </div>
-    </div>
+<!--    <div class="ibox float-e-margins">-->
+<!--        <div class="ibox-content" th:utext="${articleData.solution}" >-->
+<!--            登录主备EAS，前往重定向策略文件路径下，核查userip.txt文件，发现用户机顶盒获取10.239.160.X地址段确实包含在重定向策略中，产生业务接入死循环。启用VI命令重新编辑删除。-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="mail-attachment" th:if="${workTaskFiles.size()>0}">
         <p>
@@ -41,7 +41,7 @@
         <div class="attachment">
             <div class="file-box" th:each="file:${workTaskFiles}">
                 <div class="file">
-                    <a th:href="'http://135.151.0.120:8088/onlinePreview?url=http://135.151.0.120:8080/upload/'+${file.filePath}+'&officePreviewType=pdf'">
+                    <a th:href="'/f/knowledge/article/downloadFile/'+${file.id}">
                         <span class="corner"></span>
                         <div class="icon">
                             <i class="fa fa-file"></i>
@@ -109,49 +109,49 @@
     </div>
     <hr>
 
-    <div class="row">
-        <div class="col-md-6">
-            <h5>标签:</h5>
-            <button class="btn btn-primary btn-xs" type="button">无发接入</button>
-            <button class="btn btn-white btn-xs" type="button">无任何报错页面弹出</button>
-            <button class="btn btn-white btn-xs" type="button">黑屏卡死</button>
-        </div>
-        <div class="col-md-6">
-            <div class="small text-right">
-                <h5>统计:</h5>
-                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
-                <i class="fa fa-eye"> </i> <span th:text="${article.hits}"></span> 查看
-            </div>
-        </div>
-    </div>
+<!--    <div class="row">-->
+<!--        <div class="col-md-6">-->
+<!--            <h5>标签:</h5>-->
+<!--            <button class="btn btn-primary btn-xs" type="button">无发接入</button>-->
+<!--            <button class="btn btn-white btn-xs" type="button">无任何报错页面弹出</button>-->
+<!--            <button class="btn btn-white btn-xs" type="button">黑屏卡死</button>-->
+<!--        </div>-->
+<!--        <div class="col-md-6">-->
+<!--            <div class="small text-right">-->
+<!--                <h5>统计:</h5>-->
+<!--                <div><i class="fa fa-comments-o"> </i> 56 评论</div>-->
+<!--                <i class="fa fa-eye"> </i> <span th:text="${article.hits}"></span> 查看-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <div class="row">
-        <div class="col-lg-12">
+<!--    <div class="row">-->
+<!--        <div class="col-lg-12">-->
 
-            <h2>评论:</h2>
-            <div class="social-feed-box">
-                <div class="social-avatar">
-                    <a href="" class="pull-left">
-<!--                        <img alt="image" src="img/a1.jpg">-->
-                    </a>
-                    <div class="media-body">
-                        <a href="#">
-                            小明
-                        </a>
-                        <small class="text-muted">今天下午2017.12.12 4:21</small>
-                    </div>
-                </div>
-                <div class="social-body">
-                    <p>
-                        时间是一切财富中最宝贵的财富。
-                    </p>
-                </div>
-            </div>
+<!--            <h2>评论:</h2>-->
+<!--            <div class="social-feed-box">-->
+<!--                <div class="social-avatar">-->
+<!--                    <a href="" class="pull-left">-->
+<!--&lt;!&ndash;                        <img alt="image" src="img/a1.jpg">&ndash;&gt;-->
+<!--                    </a>-->
+<!--                    <div class="media-body">-->
+<!--                        <a href="#">-->
+<!--                            小明-->
+<!--                        </a>-->
+<!--                        <small class="text-muted">今天下午2017.12.12 4:21</small>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="social-body">-->
+<!--                    <p>-->
+<!--                        时间是一切财富中最宝贵的财富。-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
 
-        </div>
-    </div>
+<!--        </div>-->
+<!--    </div>-->
 
 
 </div>

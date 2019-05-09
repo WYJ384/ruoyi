@@ -71,7 +71,6 @@
         <div class="list-group" style="margin-top: 10px;" >
             <a href="/f/knowledge/article/article/{{article.id}}" class="list-group-item "> <i
                     class="far fa-file-pdf fa-lg"></i>&nbsp;&nbsp;<big><b  style="color: #337ab7" lass="col-md-9 col-xs-9 pull-right">{{article.title}}</b></big>
-
             </a>
         </div>
     {{/each}}
@@ -79,7 +78,6 @@
 <script>
 
     $(function () {
-        // queryDeptTree();
         loadArticleList(1);
     });
     function search() {
@@ -118,28 +116,8 @@
         $.ajax(config)
     }
 
-    // function queryDeptTree() {
-    //     var url = ctx + "f/knowledge/category/treeData";
-    //     var options = {
-    //         url: url,
-    //         expandLevel: 2,
-    //         onClick: zOnClick
-    //     };
-    //     $.tree.init(options);
-    //
-    //     function zOnClick(event, treeId, treeNode) {
-    //         $("#categoryId").val(treeNode.id);
-    //         $("#parentId").val(treeNode.pId);
-    //         search();
-    //     }
-    // }
+
     function display_pages(total_pages, visible_pages, current_page){
-        // if(!visible_pages){
-        //     visible_pages = 5;
-        // }
-        // if(!current_page){
-        //     current_page = 1;
-        // }
         $.jqPaginator('#pagination0', {
             totalPages: total_pages,
             visiblePages: visible_pages,
@@ -156,8 +134,6 @@
                 }
             }
         });
-
-
     }
 </script>
 </body>

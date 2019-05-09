@@ -1,10 +1,12 @@
 package com.ruoyi.web.frontcontroller;
 
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.config.Global;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.knowledge.domain.Article;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -72,6 +75,17 @@ public class FArticleController extends FBaseController
 		}else{
 			return "/front/"+prefix + "/content";
 		}
+	}
+	@GetMapping("/downloadFile/{id}")
+	public void downloadFile(@PathVariable("id") Integer id, HttpServletResponse response) throws Exception
+	{
+		WorkTaskFile sysFile = workTaskFileService.selectWorkTaskFileById(id);
+		String filePath = sysFile.getFilePath();
+		String path = Global.getUploadPath() + filePath;
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("multipart/form-data");
+		response.setHeader("Content-Disposition", "attachment;fileName=" + sysFile.getFilePath());
+		FileUtils.writeBytes(path, response.getOutputStream());
 	}
 	@GetMapping("/search")
 	public String search(String keywords,ModelMap modelMap)
