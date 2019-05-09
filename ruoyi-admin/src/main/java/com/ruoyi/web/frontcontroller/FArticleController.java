@@ -15,6 +15,7 @@ import com.ruoyi.knowledge.service.IArticleService;
 import com.ruoyi.knowledge.service.ICmsCategoryService;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,7 +65,13 @@ public class FArticleController extends FBaseController
 		}
 		modelMap.put("articleData", articleData);
 		getMenu(modelMap);
-		return "/front/"+prefix + "/content";
+		CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(article.getCategoryId());
+		String customContentView = cmsCategory.getCustomContentView();
+		if(StringUtils.isNotEmpty(customContentView)){
+			return "/front/"+prefix + "/"+customContentView;
+		}else{
+			return "/front/"+prefix + "/content";
+		}
 	}
 	@GetMapping("/search")
 	public String search(String keywords,ModelMap modelMap)
@@ -77,8 +84,15 @@ public class FArticleController extends FBaseController
 	public String column(@PathVariable("categoryId") String categoryId,ModelMap modelMap)
 	{
 		getMenu(modelMap);
+		CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(categoryId);
+		String customListView = cmsCategory.getCustomListView();
 		modelMap.addAttribute("categoryId",categoryId);
-		return "/front/"+prefix + "/column";
+		modelMap.addAttribute("cmsCategory",cmsCategory);
+		if(StringUtils.isNotEmpty(customListView)){
+			return "/front/"+prefix + "/"+customListView;
+		}else{
+			return "/front/"+prefix + "/column";
+		}
 	}
 	@PostMapping("/list")
 	@ResponseBody

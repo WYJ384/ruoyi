@@ -126,18 +126,26 @@
 <!--					<input id="isAudit" name="isAudit" th:field="*{isAudit}" class="form-control" type="text">-->
 <!--				</div>-->
 <!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">自定义列表视图：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="customListView" name="customListView" th:field="*{customListView}" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">自定义内容视图：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="customContentView" name="customContentView" th:field="*{customContentView}" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">自定义列表视图：</label>
+				<div class="col-sm-8">
+					<select id="customListView" name="customListView" class="form-control"  th:field="*{customListView}" >
+						<option value=""></option>
+						<option value="column_normal">常规列表</option>
+						<option value="column">默认</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">自定义内容视图：</label>
+				<div class="col-sm-8">
+					<select id="customContentView" name="customContentView" th:field="*{customContentView}" class="form-control" >
+						<option value=""></option>
+						<option value="content">默认内容</option>
+						<option value="content_normal">常规视图</option>
+					</select>
+				</div>
+			</div>
 <!--			<div class="form-group">	-->
 <!--				<label class="col-sm-3 control-label">视图配置：</label>-->
 <!--				<div class="col-sm-8">-->

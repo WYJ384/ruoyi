@@ -98,7 +98,7 @@
 <script>
 
     $(function () {
-        queryDeptTree();
+        // queryDeptTree();
         loadArticleList(1);
     });
     function search() {
@@ -137,21 +137,21 @@
         $.ajax(config)
     }
 
-    function queryDeptTree() {
-        var url = ctx + "f/knowledge/category/treeData";
-        var options = {
-            url: url,
-            expandLevel: 2,
-            onClick: zOnClick
-        };
-        $.tree.init(options);
-
-        function zOnClick(event, treeId, treeNode) {
-            $("#categoryId").val(treeNode.id);
-            $("#parentId").val(treeNode.pId);
-            search();
-        }
-    }
+    // function queryDeptTree() {
+    //     var url = ctx + "f/knowledge/category/treeData";
+    //     var options = {
+    //         url: url,
+    //         expandLevel: 2,
+    //         onClick: zOnClick
+    //     };
+    //     $.tree.init(options);
+    //
+    //     function zOnClick(event, treeId, treeNode) {
+    //         $("#categoryId").val(treeNode.id);
+    //         $("#parentId").val(treeNode.pId);
+    //         search();
+    //     }
+    // }
     function display_pages(total_pages, visible_pages, current_page){
         // if(!visible_pages){
         //     visible_pages = 5;

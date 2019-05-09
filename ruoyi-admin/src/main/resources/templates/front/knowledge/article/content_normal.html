@@ -25,31 +25,10 @@
         <h1 th:text="${article.title}" th:style="'color:'+${article.color}"></h1>
     </div>
     <div ></div>
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <h5>现象</h5>
-        </div>
-        <div class="ibox-content" th:utext="${article.description}">
 
-        </div>
-    </div>
     <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <h5>原因分析</h5>
-        </div>
-        <div class="ibox-content" th:utext="${articleData.reason}">
-            "排除该账号和某一个甘南EPG服务器交互异常，在后台手动干预为用户指定一台EPG服务器，联系现场断电重启机顶盒后再次测试，但是现场反馈故障现象依旧没有消失。进入EAS原始日志进行筛选。筛选结果发现该账号日志记录中全部出现‘skip to other platform’。
-            "
-
-        </div>
-    </div>
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <h5>解决方案</h5>
-        </div>
         <div class="ibox-content" th:utext="${articleData.solution}" >
             登录主备EAS，前往重定向策略文件路径下，核查userip.txt文件，发现用户机顶盒获取10.239.160.X地址段确实包含在重定向策略中，产生业务接入死循环。启用VI命令重新编辑删除。
-
         </div>
     </div>
 
