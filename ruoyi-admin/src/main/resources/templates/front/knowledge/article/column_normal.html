@@ -27,25 +27,24 @@
 <!--        </ol>-->
 <!--    </div>-->
     <div class="row clearfix">
-        <div class="col-md-3 col-sm-3  column">
-            <div class="row clearfix">
-                <div class="col-md-4 column"></div>
-                <!-- 分类筛选块 -->
-                <div class="col-md-8 column">
-                    <div id="tree" class="ztree" style="margin-top: 10px;"></div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="col-md-3 col-sm-3  column">-->
+<!--            <div class="row clearfix">-->
+<!--                <div class="col-md-4 column"></div>-->
+<!--                &lt;!&ndash; 分类筛选块 &ndash;&gt;-->
+<!--                <div class="col-md-8 column">-->
+<!--                    <div id="tree" class="ztree" style="margin-top: 10px;"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <!-- 搜索结果块 -->
-        <div class="col-md-9  col-sm-9 column">
+        <div class="col-md-12  col-sm-12 column">
 
             <!-- 结果显示栏 -->
             <div class="container-fluid">
                 <div class="row clearfix">
                     <input type="hidden" id="categoryId" th:value="${categoryId}">
                     <input type="hidden" id="keywords" th:value="${keywords}">
-                    <div class="col-md-10 column" id="articleList">
-
+                    <div class="container column" id="articleList">
                     </div>
                     <div class="col-md-2 column"></div>
                 </div>
