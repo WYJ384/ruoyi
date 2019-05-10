@@ -1,6 +1,13 @@
 package com.ruoyi.web.controller.worktask;
 
 import java.util.List;
+import java.util.UUID;
+
+import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.worktask.domain.SelfTaskProcess;
+import com.ruoyi.worktask.service.ISelfTaskProcessService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +40,10 @@ public class SelfTaskController extends BaseController
 	
 	@Autowired
 	private ISelfTaskService selfTaskService;
-	
+	@Autowired
+	private ISelfTaskProcessService selfTaskProcessService;
+	@Autowired
+	private ISysUserService userService;
 	@RequiresPermissions("worktask:selfTask:view")
 	@GetMapping()
 	public String selfTask()
@@ -42,7 +52,7 @@ public class SelfTaskController extends BaseController
 	}
 	
 	/**
-	 * 查询任务列表
+	 * 我创建的
 	 */
 	@RequiresPermissions("worktask:selfTask:list")
 	@PostMapping("/list")
@@ -50,11 +60,25 @@ public class SelfTaskController extends BaseController
 	public TableDataInfo list(SelfTask selfTask)
 	{
 		startPage();
+		selfTask.setCreateBy(ShiroUtils.getUserId()+"");
         List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
 		return getDataTable(list);
 	}
-	
-	
+	/**
+	 * 我的任务
+	 */
+	@RequiresPermissions("worktask:selfTask:list")
+	@PostMapping("/myTask")
+	@ResponseBody
+	public TableDataInfo myTask(SelfTask selfTask)
+	{
+		startPage();
+		selfTask.setExecutorUser(ShiroUtils.getUserId()+"");
+		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
+		return getDataTable(list);
+	}
+
+
 	/**
 	 * 导出任务列表
 	 */
@@ -72,9 +96,11 @@ public class SelfTaskController extends BaseController
 	 * 新增任务
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap modelMap)
 	{
-	    return prefix + "/add";
+		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+		modelMap.addAttribute("sysUsers",sysUsers);
+		return prefix + "/add";
 	}
 	
 	/**
@@ -85,7 +111,10 @@ public class SelfTaskController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(SelfTask selfTask)
-	{		
+	{
+		selfTask.setTaskStatus("0");
+		selfTask.setCreateBy(ShiroUtils.getUserId()+"");
+		selfTask.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		return toAjax(selfTaskService.insertSelfTask(selfTask));
 	}
 
@@ -95,11 +124,30 @@ public class SelfTaskController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
+		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+		mmap.addAttribute("sysUsers",sysUsers);
 		SelfTask selfTask = selfTaskService.selectSelfTaskById(id);
+		SelfTaskProcess selfTaskProcess=new SelfTaskProcess();
+		selfTaskProcess.setId(id);
+		List<SelfTaskProcess> processList = selfTaskProcessService.selectSelfTaskProcessList(selfTaskProcess);
+		mmap.put("processList", processList);
 		mmap.put("selfTask", selfTask);
 	    return prefix + "/edit";
 	}
-	
+	@GetMapping("/query/{id}/{taskType}")
+	public String query(@PathVariable("id") String id,@PathVariable("taskType") String taskType, ModelMap mmap)
+	{
+		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+		mmap.addAttribute("sysUsers",sysUsers);
+		SelfTask selfTask = selfTaskService.selectSelfTaskById(id);
+		SelfTaskProcess selfTaskProcess=new SelfTaskProcess();
+		selfTaskProcess.setId(id);
+		List<SelfTaskProcess> processList = selfTaskProcessService.selectSelfTaskProcessList(selfTaskProcess);
+		mmap.put("taskType", taskType);
+		mmap.put("processList", processList);
+		mmap.put("selfTask", selfTask);
+		return prefix + "/edit";
+	}
 	/**
 	 * 修改保存任务
 	 */

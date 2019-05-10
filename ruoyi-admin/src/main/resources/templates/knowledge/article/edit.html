@@ -200,6 +200,7 @@
 			showRemove: true, //显示移除按钮
 			enctype: 'multipart/form-data',
 			uploadUrl: ctx+'worktask/workTaskFile/upload', // you must set a valid URL here else you will get an error
+			deleteUrl: ctx+"worktask/workTaskFile/remove",
 			uploadExtraData:{"workTaskId": '[[${article.id}]]'},
 			allowedFileExtensions : ['ppt', 'xls','xlsx',"doc","docx","pptx","pdf"],
 			overwriteInitial: false,
@@ -207,6 +208,7 @@
 			maxFilesNum: 10,
 			initialPreview: files,
 		});
+
 		var prefix = ctx + "knowledge/article";
 		$("#form-article-edit").validate({
 			rules:{

@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="SelfTask" id="SelfTaskResult">
         <result property="id"    column="id"    />
         <result property="taskTitle"    column="task_title"    />
+        <result property="taskStatus"    column="task_status"    />
         <result property="startDate"    column="start_date"    />
         <result property="requireTime"    column="require_time"    />
         <result property="selvalTaskType"    column="selval_task_type"    />
@@ -15,16 +16,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="executorUser"    column="executor_user"    />
         <result property="acceptorUser"    column="acceptor_user"    />
         <result property="taskProgress"    column="task_progress"    />
+        <result property="shareUser"    column="share_user"    />
         <result property="isShare"    column="is_share"    />
-        <result property="createdTime"    column="created_time"    />
+        <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
-        <result property="updatedTime"    column="updated_time"    />
-        <result property="createdBy"    column="created_by"    />
-        <result property="remarks"    column="remarks"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="remark"    column="remark"    />
     </resultMap>
 	
 	<sql id="selectSelfTaskVo">
-        select id, task_title, start_date, require_time, selval_task_type, priority, task_content, executor_user, acceptor_user, task_progress, is_share, created_time, update_by, updated_time, created_by, remarks from self_task
+        select id, task_title, task_status, start_date, require_time, selval_task_type, priority, task_content, executor_user, acceptor_user, task_progress, share_user, is_share, create_time, update_by, update_time, create_by, remark from self_task
     </sql>
 	
     <select id="selectSelfTaskList" parameterType="SelfTask" resultMap="SelfTaskResult">
@@ -32,20 +34,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="id != null  and id != '' "> and id = #{id}</if>
              <if test="taskTitle != null  and taskTitle != '' "> and task_title = #{taskTitle}</if>
+             <if test="taskStatus != null  and taskStatus != '' "> and task_status = #{taskStatus}</if>
              <if test="startDate != null "> and start_date = #{startDate}</if>
              <if test="requireTime != null "> and require_time = #{requireTime}</if>
              <if test="selvalTaskType != null  and selvalTaskType != '' "> and selval_task_type = #{selvalTaskType}</if>
              <if test="priority != null  and priority != '' "> and priority = #{priority}</if>
              <if test="taskContent != null  and taskContent != '' "> and task_content = #{taskContent}</if>
-             <if test="executorUser != null  and executorUser != '' "> and executor_user = #{executorUser}</if>
+             <if test="executorUser != null  and executorUser != '' "> and find_in_set(#{executorUser},executor_user) </if>
              <if test="acceptorUser != null  and acceptorUser != '' "> and acceptor_user = #{acceptorUser}</if>
              <if test="taskProgress != null  and taskProgress != '' "> and task_progress = #{taskProgress}</if>
+             <if test="shareUser != null  and shareUser != '' "> and share_user = #{shareUser}</if>
              <if test="isShare != null  and isShare != '' "> and is_share = #{isShare}</if>
-             <if test="createdTime != null "> and created_time = #{createdTime}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updatedTime != null "> and updated_time = #{updatedTime}</if>
-             <if test="createdBy != null  and createdBy != '' "> and created_by = #{createdBy}</if>
-             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
          </where>
     </select>
     
@@ -59,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">id,</if>
 			<if test="taskTitle != null  and taskTitle != ''  ">task_title,</if>
+			<if test="taskStatus != null  and taskStatus != ''  ">task_status,</if>
 			<if test="startDate != null  ">start_date,</if>
 			<if test="requireTime != null  ">require_time,</if>
 			<if test="selvalTaskType != null  and selvalTaskType != ''  ">selval_task_type,</if>
@@ -67,16 +72,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="executorUser != null  and executorUser != ''  ">executor_user,</if>
 			<if test="acceptorUser != null  and acceptorUser != ''  ">acceptor_user,</if>
 			<if test="taskProgress != null  and taskProgress != ''  ">task_progress,</if>
+			<if test="shareUser != null  and shareUser != ''  ">share_user,</if>
 			<if test="isShare != null  and isShare != ''  ">is_share,</if>
-			<if test="createdTime != null  ">created_time,</if>
+			<if test="createTime != null  ">create_time,</if>
 			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updatedTime != null  ">updated_time,</if>
-			<if test="createdBy != null  and createdBy != ''  ">created_by,</if>
-			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
 			<if test="taskTitle != null  and taskTitle != ''  ">#{taskTitle},</if>
+			<if test="taskStatus != null  and taskStatus != ''  ">#{taskStatus},</if>
 			<if test="startDate != null  ">#{startDate},</if>
 			<if test="requireTime != null  ">#{requireTime},</if>
 			<if test="selvalTaskType != null  and selvalTaskType != ''  ">#{selvalTaskType},</if>
@@ -85,12 +92,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="executorUser != null  and executorUser != ''  ">#{executorUser},</if>
 			<if test="acceptorUser != null  and acceptorUser != ''  ">#{acceptorUser},</if>
 			<if test="taskProgress != null  and taskProgress != ''  ">#{taskProgress},</if>
+			<if test="shareUser != null  and shareUser != ''  ">#{shareUser},</if>
 			<if test="isShare != null  and isShare != ''  ">#{isShare},</if>
-			<if test="createdTime != null  ">#{createdTime},</if>
+			<if test="createTime != null  ">#{createTime},</if>
 			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updatedTime != null  ">#{updatedTime},</if>
-			<if test="createdBy != null  and createdBy != ''  ">#{createdBy},</if>
-			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
          </trim>
     </insert>
 	 
@@ -98,6 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update self_task
         <trim prefix="SET" suffixOverrides=",">
             <if test="taskTitle != null  and taskTitle != ''  ">task_title = #{taskTitle},</if>
+            <if test="taskStatus != null  and taskStatus != ''  ">task_status = #{taskStatus},</if>
             <if test="startDate != null  ">start_date = #{startDate},</if>
             <if test="requireTime != null  ">require_time = #{requireTime},</if>
             <if test="selvalTaskType != null  and selvalTaskType != ''  ">selval_task_type = #{selvalTaskType},</if>
@@ -106,12 +115,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="executorUser != null  and executorUser != ''  ">executor_user = #{executorUser},</if>
             <if test="acceptorUser != null  and acceptorUser != ''  ">acceptor_user = #{acceptorUser},</if>
             <if test="taskProgress != null  and taskProgress != ''  ">task_progress = #{taskProgress},</if>
+            <if test="shareUser != null  and shareUser != ''  ">share_user = #{shareUser},</if>
             <if test="isShare != null  and isShare != ''  ">is_share = #{isShare},</if>
-            <if test="createdTime != null  ">created_time = #{createdTime},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
-            <if test="updatedTime != null  ">updated_time = #{updatedTime},</if>
-            <if test="createdBy != null  and createdBy != ''  ">created_by = #{createdBy},</if>
-            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
         </trim>
         where id = #{id}
     </update>

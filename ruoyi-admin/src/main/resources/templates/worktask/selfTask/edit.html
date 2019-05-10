@@ -1,120 +1,474 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<style type="text/css">
+    /* task */
+    .task-list-main {
+        padding: 15px 0 30px;
+    }
+
+    .task-progress {
+        width: 70px;
+        background: #e0e2e7;
+        border-radius: 5px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .task-progress-bar {
+        width: 0;
+        height: 8px;
+        background: #85c02a;
+        border-radius: 5px;
+        float: left;
+    }
+
+    .task-sub-split {
+        width: 27px;
+        height: 21px;
+        background: url(img/ioop-icon.png) -550px -70px no-repeat;
+        cursor: pointer;
+    }
+
+    .task-creator {
+        border-right: #ffd3b6 2px solid;
+        padding-top: 5px;
+    }
+
+    .task-creator dl {
+        width: 60px;
+        margin: 0 auto;
+    }
+
+    .task-creator dl dt {
+        text-align: center;
+        height: 26px;
+    }
+
+    .task-creator dl dt img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .task-creator dl dd {
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        color: #488ebc;
+        overflow: hidden;
+    }
+
+    .task-detail-operate {
+        height: 28px;
+        padding-top: 10px;
+        text-align: right;
+    }
+
+    .task-detail-operate b {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .task-tree-main {
+        padding: 5px;
+        border: #d9d9d9 1px solid;
+    }
+
+    .task-tree-iframe {
+        width: 100%;
+        height: 600px;
+    }
+
+    .task-progress-cont {
+        width: 500px;
+        margin-top: 10px;
+        float: left;
+    }
+
+    /*.task-progress-current {*/
+    /*    height: 22px;*/
+    /*    line-height: 22px;*/
+    /*    margin: 5px 0 0 15px;*/
+    /*    float: left;*/
+    /*    width: 100px;*/
+    /*}*/
+
+    /*.task-progress-current span {*/
+    /*    color: #85c02a;*/
+    /*}*/
+
+    /*.task-progress-save {*/
+    /*    margin: 3px 0 0 10px;*/
+    /*    float: left;*/
+    /*}*/
+
+    .task-progress-items {
+        padding: 15px 0 10px;
+    }
+
+    .task-progress-items h5 {
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+        border-top: #dcdcdc 1px solid;
+        border-bottom: #dcdcdc 1px solid;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .task-progress-items li {
+        border-bottom: #dcdcdc 1px solid;
+        padding: 5px 10px 10px 10px;
+    }
+
+    .task-pitem-info {
+        height: 24px;
+        line-height: 24px;
+        padding-bottom: 5px;
+    }
+
+    .task-pitem-info .task-pitems-user {
+        color: #0574d2;
+    }
+
+    .task-pitem-info .task-pitems-time {
+        color: #78b020;
+    }
+
+    .task-pitem-info .task-pitems-progress {
+        color: #ec6262;
+    }
+
+    .task-pitem-desc {
+        line-height: 20px;
+        color: #888;
+        word-break: break-all;
+    }
+
+    .d-task-nopass {
+        width: 320px;
+        height: 225px;
+    }
+
+    .task-remind {
+        width: 320px;
+        height: 196px;
+    }
+
+    .task-statis-main {
+        padding-top: 20px;
+    }
+
+    .task-statis-cont {
+        width: 500px;
+        margin: 0 auto;
+    }
+
+    .task-type-list {
+        margin-top: 20px;
+    }
+
+    .task-type-item {
+        float: left;
+        width: 148px;
+        height: 76px;
+        margin: 0 10px 20px;
+        border: #D9D9D9 1px solid;
+    }
+
+    .ttpe-item-cont {
+        padding: 11px 10px;
+    }
+
+    .ttpe-item-name {
+        height: 24px;
+        line-height: 24px;
+        font-size: 14px;
+        color: #000;
+    }
+
+    .ttpe-item-oper {
+        height: 14px;
+        padding: 7px 6px 8px 8px;
+        background: #F9F9F9;
+        border-top: #D9D9D9 1px solid;
+    }
+
+    .ttpe-item-oper input {
+        float: left;
+        width: 14px;
+        height: 14px;
+    }
+
+    .ttpe-item-oper a {
+        float: right;
+        height: 14px;
+        line-height: 14px;
+        margin-left: 18px;
+        cursor: pointer;
+    }
+
+    .ttpe-item-oper a.del {
+        color: #ff4747;
+    }
+
+    .task-type-item.add {
+        background: url(img/icon-plus-gray-40x40.png) center no-repeat;
+        cursor: pointer;
+    }
+
+    .task-type-item.add:hover {
+        background: #F0F9FF url(img/icon-plus-blue-40x40.png) center no-repeat;
+        border: #38ADFF 1px solid;
+    }
+
+    .ttim-add-layer {
+        width: 349px;
+        height: 199px;
+    }
+
+    .ttia-lyr-form {
+        padding: 8px 10px 0;
+    }
+
+    .ttia-lyr-name {
+        width: 96%;
+    }
+
+    .ttia-lyr-rmk {
+        line-height: 24px;
+        margin-top: 8px;
+        padding-left: 10px;
+        font-size: 14px;
+        color: #818181;
+    }
+
+    .ttia-lyr-btn {
+        display: block;
+        height: 24px;
+        line-height: 24px;
+        margin-top: 18px;
+        padding: 8px 0;
+        background: #3186F0;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .ttia-lyr-btn:hover {
+        background: #297be2;
+    }
+</style>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
-            <input id="id" name="id" th:field="*{id}"  type="hidden">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">任务标题：</label>
-				<div class="col-sm-8">
-					<input id="taskTitle" name="taskTitle" th:field="*{taskTitle}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">开始时间：</label>
-				<div class="col-sm-8">
-					<input id="startDate" name="startDate" th:field="*{startDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">要求完成时间：</label>
-				<div class="col-sm-8">
-					<input id="requireTime" name="requireTime" th:field="*{requireTime}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">任务类型：</label>
-				<div class="col-sm-8">
-					<input id="selvalTaskType" name="selvalTaskType" th:field="*{selvalTaskType}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">优先级0高1中2低：</label>
-				<div class="col-sm-8">
-					<input id="priority" name="priority" th:field="*{priority}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">任务描述：</label>
-				<div class="col-sm-8">
-					<input id="taskContent" name="taskContent" th:field="*{taskContent}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">任务执行人：</label>
-				<div class="col-sm-8">
-					<input id="executorUser" name="executorUser" th:field="*{executorUser}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">任务验收人：</label>
-				<div class="col-sm-8">
-					<input id="acceptorUser" name="acceptorUser" th:field="*{acceptorUser}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">任务进度：</label>
-				<div class="col-sm-8">
-					<input id="taskProgress" name="taskProgress" th:field="*{taskProgress}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">共享给：</label>
-				<div class="col-sm-8">
-					<input id="isShare" name="isShare" th:field="*{isShare}" class="form-control" type="text">
-				</div>
-			</div>
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="createdTime" name="createdTime" th:field="*{createdTime}" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">修改人：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">修改时间：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="updatedTime" name="updatedTime" th:field="*{updatedTime}" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">创建人：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="createdBy" name="createdBy" th:field="*{createdBy}" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">备注：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-		</form>
-    </div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-		var prefix = ctx + "worktask/selfTask";
-		$("#form-selfTask-edit").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			},
-			focusCleanup: true
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-selfTask-edit').serialize());
-	        }
-	    }
-	</script>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务标题：</label>
+            <div class="col-sm-8">
+                <input id="taskTitle" name="taskTitle" th:field="*{taskTitle}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">开始时间：</label>
+            <div class="col-sm-8">
+                <input id="startDate" name="startDate"
+                       th:value="${#dates.format(selfTask.startDate, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">要求完成时间：</label>
+            <div class="col-sm-8">
+                <input id="requireTime" name="requireTime"
+                       th:value="${#dates.format(selfTask.requireTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="col-sm-3 control-label">任务类型：</label>-->
+<!--            <div class="col-sm-8">-->
+<!--                <input id="selvalTaskType" name="selvalTaskType" th:field="*{selvalTaskType}" class="form-control"-->
+<!--                       type="text">-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">优先级：</label>
+            <div class="col-sm-8">
+                <label class="radio-box"> <input type="radio" name="priority" th:field="*{priority}" value="0" checked/>
+                    高 </label>
+                <label class="radio-box"> <input type="radio" name="priority" th:field="*{priority}" value="1"/> 中
+                </label>
+                <label class="radio-box"> <input type="radio" name="priority" th:field="*{priority}" value="2"/> 低
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务描述：</label>
+            <div class="col-sm-8">
+                <textarea id="taskContent" name="taskContent" th:field="*{taskContent}" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务执行人：</label>
+            <div class="col-sm-8">
+<!--                <input id="executorUser" name="executorUser" th:field="*{executorUser}" class="form-control"-->
+<!--                       type="text">-->
+                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible" multiple="" >
+                    <option th:each="user:${sysUsers}"  th:value="${user.userId}"
+                            th:text="${user.userName}"  th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
+                </select>
+            </div>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="col-sm-3 control-label">任务验收人：</label>-->
+<!--            <div class="col-sm-8">-->
+<!--                <input id="acceptorUser" name="acceptorUser" th:field="*{acceptorUser}" class="form-control"-->
+<!--                       type="text">-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+            <label class="col-sm-3 control-label">任务进度：</label>
+            <div class="col-sm-8">
+                <input id="percentAge" name="percentAge" th:value="*{taskProgress}" type="hidden">
+
+                <div id="slider-range-min" class="col-sm-8" style="margin-top: 10px;"></div>
+                <div class="task-progress-current col-sm-2" style="margin-top: 8px;">
+                    当前进度：<span id="task_progress_current" style="color: #85c02a"
+                               th:text="${selfTask.taskProgress}+'%'"></span>
+                </div>
+                <div class="task-progress-save col-sm-2" style="margin-top: 4px;">
+                    <a id="savePercent" onclick="submitHandler()"
+                       class="b-btn-five dp-inline task-sub-save btn btn-primary btn-xs">保存进度</a>
+                </div>
+                <!--					<input id="taskProgress" name="taskProgress" th:field="*{taskProgress}" class="form-control" type="text">-->
+            </div>
+        </div>
+
+        <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+            <label class="col-sm-3 control-label">进度描述：</label>
+            <div class="col-sm-8">
+                <textarea id="processText" name="processText" class="form-control"></textarea>
+            </div>
+        </div>
+        <label class="col-sm-3 control-label"></label>
+        <div class="col-sm-8">
+
+            <div class="task-progress-items">
+                <h5>任务进度提交记录</h5>
+                <div class="task-pitems-main">
+                    <ul>
+                        <li th:each="process:${processList}">
+                            <div class="task-pitem-info">
+                                <span class="task-pitems-user" th:text="${process.createBy}"></span> 于 <span class="task-pitems-time" th:text="${#dates.format(process.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-05-09 16:58:40 </span>提交任务进度，完成<span
+                                    class="task-pitems-progress" th:text="${process.percentAge}+'%'">50%</span>
+                            </div>
+                            <div class="task-pitem-desc" th:text="'进度描述:'+${process.processText}">进度描述：222</div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="createdTime" name="createdTime" th:field="*{createdTime}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">修改人：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">修改时间：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="updatedTime" name="updatedTime" th:field="*{updatedTime}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">创建人：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="createdBy" name="createdBy" th:field="*{createdBy}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">备注：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+<script type="text/javascript">
+    var prefix = ctx + "worktask/selfTaskProcess";
+    $("#form-selfTask-edit").validate({
+        rules: {
+            processText: {
+                required: true,
+            },
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var config = {
+                url: prefix + "/add",
+                type: "post",
+                dataType: "json",
+                data: $('#form-selfTask-edit').serialize(),
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function(result) {
+                    $.modal.closeLoading();
+                    window.location.reload()
+                }
+            };
+            $.ajax(config)
+
+        }
+    }
+
+
+    $(function () {
+
+        //通用初始化方法
+        var startValue = '[[${selfTask.taskProgress}]]';
+        //初始化进度条
+        $("#slider-range-min").slider({
+            range: "min",
+            value: startValue,
+            min: 1,
+            max: 100,
+            slide: function (event, ui) {
+                if (ui.value < parseInt(startValue, 10)) {
+                    return false;
+                } else {
+                    $("#task_progress_current").text(ui.value + "%");
+                    $("#percentAge").val(ui.value);
+                }
+            }
+        });
+
+    });
+</script>
 </body>
 </html>
