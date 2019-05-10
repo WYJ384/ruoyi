@@ -138,12 +138,17 @@ public class WorkTaskFileController extends BaseController
 	/**
 	 * 删除附件
 	 */
-	@RequiresPermissions("worktask:workTaskFile:remove")
 	@Log(title = "附件", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
 	{		
+		return toAjax(workTaskFileService.deleteWorkTaskFileByIds(ids));
+	}
+	@PostMapping( "/delete")
+	@ResponseBody
+	public AjaxResult delete(String ids)
+	{
 		return toAjax(workTaskFileService.deleteWorkTaskFileByIds(ids));
 	}
 	/**

@@ -7,7 +7,9 @@ import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.worktask.domain.SelfTaskProcess;
+import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.ISelfTaskProcessService;
+import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +39,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 public class SelfTaskController extends BaseController
 {
     private String prefix = "worktask/selfTask";
-	
+	@Autowired
+	private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private ISelfTaskService selfTaskService;
 	@Autowired
@@ -155,11 +158,16 @@ public class SelfTaskController extends BaseController
         SelfTask childSelfTask=new SelfTask();
         childSelfTask.setPid(id);
         List<SelfTask> childSelfTasks = selfTaskService.selectSelfTaskList(childSelfTask);
+
+		WorkTaskFile activityFile=new WorkTaskFile();
+		activityFile.setWorkTaskId(id);
+		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
+		mmap.put("workTaskFiles", workTaskFiles);
         mmap.put("taskType", taskType);
 		mmap.put("processList", processList);
 		mmap.put("selfTask", selfTask);
         mmap.put("childSelfTasks", childSelfTasks);
-		return prefix + "/edit";
+		return prefix + "/query";
 	}
 	/**
 	 * 修改保存任务
