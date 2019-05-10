@@ -306,31 +306,122 @@
     .mditem-worker-edit .list-users a p{line-height: 20px; max-width: 70px;}
     .mditem-worker-edit .list-users a b.user-remove{margin-top: 7px;}
     .mditem-worker-edit .list-users .add-user{line-height: 22px; margin-left: 0; margin-bottom: 4px;}
+    /* form */
+    .form-option{padding: 5px 0; font-size: 12px; color: #333; zoom: 1;}
+    .form-option:after{display: block; clear: both; content: ""; visibility: hidden; height: 0;}
+    .form-option.w50p,.form-option.w33p,.form-option.w25p,.form-option.w20p{float: left;}
+    .form-option.w50p{width: 50%;}
+    .form-option.w33p{width: 33%;}
+    .form-option.w25p{width: 25%;}
+    .form-option.w20p{width: 20%;}
+    .field-name{display: block; line-height: 34px; text-align: right; padding-right: 10px;}
+    .field-name.require{
+        position: relative;
+    }
+    .field-name.require:after{
+        position: absolute;
+        top: 8px;
+        right: 2px;
+        height: 24px;
+        line-height: 24px;
+        content: "*";
+        font-size: 14px;
+        color: #ff3e3e;
+    }
+    .form-option .line-h-18{line-height: 18px;}
+    .form-option .form-field-remark{height: 16px; line-height: 16px; padding: 9px 5px;}
+    .form-t-side{height: 32px; line-height: 32px;}
+    .form-t-big{width: 70%;}
+    .form-t-big .b-text-input{width: 96%;}
+    .form-t-midle{width: 60%;}
+    .form-t-midle .b-text-input{width: 94%;}
+    .form-t-half{width: 50%;}
+    .form-t-half .b-text-input{width: 92%;}
+    .form-t-short{width: 40%;}
+    .form-t-short .b-text-input{width: 96%;}
+    .form-t-micro{width: 30%;}
+    .form-t-micro .b-text-input{width: 92%;}
+    .form-t-lang .b-text-input{width: 98%;}
+    .form-t-side .b-text-input{width: 92%;}
+    .form-t-text{line-height: 34px; word-break: break-all;}
+    .form-t-input{height: 32px; line-height: 32px;}
+    .form-t-input .b-text-input,.form-t-side .b-text-input{padding-top: 5px; padding-bottom: 5px;}
+    .form-mg-lt-60{margin-left: 60px;}
+    .form-t-lang.form-mg-lt-60 .b-text-input{*margin-left: -60px;}
+    .form-mg-lt-70{margin-left: 70px;}
+    .form-t-lang.form-mg-lt-70 .b-text-input{*margin-left: -70px;}
+    .form-mg-lt-80{margin-left: 80px;}
+    .form-t-lang.form-mg-lt-80 .b-text-input{*margin-left: -80px;}
+    .form-mg-lt-90{margin-left: 90px;}
+    .form-t-lang.form-mg-lt-90 .b-text-input{*margin-left: -90px;}
+    .form-mg-lt-110{margin-left: 110px;}
+    .form-t-lang.form-mg-lt-110 .b-text-input{*margin-left: -110px;}
+    .form-mg-lt-120{margin-left: 120px;}
+    .form-t-lang.form-mg-lt-120 .b-text-input{*margin-left: -120px;}
+    .form-mg-lt-130{margin-left: 130px;}
+    .form-t-lang.form-mg-lt-130 .b-text-input{*margin-left: -130px;}
+    .form-mg-lt-140{margin-left: 140px;}
+    .form-t-lang.form-mg-lt-140 .b-text-input{*margin-left: -140px;}
+    .label-w-50{width: 50px;}
+    .label-w-60{width: 60px;}
+    .label-w-70{width: 70px;}
+    .label-w-80{width: 80px;}
+    .label-w-90{width: 90px;}
+    .label-w-100{width: 100px;}
+    .label-w-110{width: 110px;}
+    .label-w-120{width: 120px;}
+    .label-w-130{width: 130px;}
+    .editor-main{width: 100%;}
+    .form-add-select{width: 100%;}
+    .has-select{padding: 0;}
+    .form-btn,.form-btn-short{padding-top: 20px;}
+    .form-btn a{margin-right: 10px; padding: 0 25px;}
+    .form-btn-short a{margin-right: 10px; padding: 0 20px;}
+    .font-bold,.not-read{font-weight: bold;}
+    .txt-left{text-align: left;}
+    .txt-cen{text-align: center;}
+    .opt-pd-z{padding: 0;}
+    .enable-open{cursor: pointer;}
+    .form-field-remark.form-tr-split{padding-right: 10px;}
+    .form-opt-remark{line-height:34px; margin-left: 10px; font-size: 12px; color: #eeb4b4;}
+    span.form-control, .single-line {
+        background: #FFFFFF none;
+        border: none;
+        border-radius: 1px;
+        color: inherit;
+        display: block;
+        padding: 6px 12px;
+        -webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+        width: 100%;
+        font-size: 14px;
+    }
 </style>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+
     <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
         <input id="id" name="id" th:field="*{id}" type="hidden">
         <div class="form-group">
             <label class="col-sm-3 control-label">任务标题：</label>
             <div class="col-sm-8">
-                <input id="taskTitle" name="taskTitle" th:field="*{taskTitle}" class="form-control" type="text">
+                <span th:text="*{taskTitle}" class="form-control" > </span>
+<!--                <input id="taskTitle" name="taskTitle" th:field="*{taskTitle}" class="form-control" type="text">-->
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">开始时间：</label>
             <div class="col-sm-8">
-                <input id="startDate" name="startDate"
-                       th:value="${#dates.format(selfTask.startDate, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
-                       type="text">
+                <span th:text="${#dates.format(selfTask.startDate, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" > </span>
+
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">要求完成时间：</label>
             <div class="col-sm-8">
-                <input id="requireTime" name="requireTime"
-                       th:value="${#dates.format(selfTask.requireTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
-                       type="text">
+                <span th:text="${#dates.format(selfTask.requireTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" > </span>
+
+
             </div>
         </div>
         <!--        <div class="form-group">-->
@@ -344,31 +435,21 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">优先级：</label>
             <div class="col-sm-8">
-                <label class="radio-box"> <input type="radio" name="priority" th:field="*{priority}" value="0" checked/>
-                    高 </label>
-                <label class="radio-box"> <input type="radio" name="priority" th:field="*{priority}" value="1"/> 中
-                </label>
-                <label class="radio-box"> <input type="radio" name="priority" th:field="*{priority}" value="2"/> 低
-                </label>
+                <span class="form-control"  th:if="${selfTask.priority eq '0'}">高</span>
+                <span class="form-control"  th:if="${selfTask.priority eq '1'}">中</span>
+                <span class="form-control"  th:if="${selfTask.priority eq '2'}">低</span>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">任务描述：</label>
             <div class="col-sm-8">
-                <textarea id="taskContent" name="taskContent" th:field="*{taskContent}" class="form-control"></textarea>
+                <span th:text="*{taskContent}" class="form-control" > </span>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">任务执行人：</label>
             <div class="col-sm-8">
-                <!--                <input id="executorUser" name="executorUser" th:field="*{executorUser}" class="form-control"-->
-                <!--                       type="text">-->
-                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible"
-                        multiple="">
-                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
-                            th:text="${user.userName}"
-                            th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
-                </select>
+                <span th:text="*{remark}" class="form-control" > </span>
             </div>
         </div>
         <!--        <div class="form-group">-->
