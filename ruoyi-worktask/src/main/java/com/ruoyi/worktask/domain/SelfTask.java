@@ -17,6 +17,10 @@ public class SelfTask extends BaseEntity
 	
 	/**  */
 	private String id;
+	/** 任务级别0一级1二级 */
+	private String taskLevel;
+	/** 父任务 */
+	private String pid;
 	/** 任务标题 */
 	private String taskTitle;
 	/** 0进行中1已完成 */
@@ -41,108 +45,220 @@ public class SelfTask extends BaseEntity
 	private String shareUser;
 	/** 共享给 */
 	private String isShare;
+	/** 创建时间 */
+	private Date createTime;
+	/** 修改人 */
+	private String updateBy;
+	/** 修改时间 */
+	private Date updateTime;
+	/** 创建人 */
+	private String createBy;
+	/** 备注 */
+	private String remark;
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
+	public void setId(String id) 
+	{
 		this.id = id;
 	}
 
-	public String getTaskTitle() {
-		return taskTitle;
+	public String getId() 
+	{
+		return id;
+	}
+	public void setTaskLevel(String taskLevel) 
+	{
+		this.taskLevel = taskLevel;
 	}
 
-	public void setTaskTitle(String taskTitle) {
+	public String getTaskLevel() 
+	{
+		return taskLevel;
+	}
+	public void setPid(String pid) 
+	{
+		this.pid = pid;
+	}
+
+	public String getPid() 
+	{
+		return pid;
+	}
+	public void setTaskTitle(String taskTitle) 
+	{
 		this.taskTitle = taskTitle;
 	}
 
-	public String getTaskStatus() {
-		return taskStatus;
+	public String getTaskTitle() 
+	{
+		return taskTitle;
 	}
-
-	public void setTaskStatus(String taskStatus) {
+	public void setTaskStatus(String taskStatus) 
+	{
 		this.taskStatus = taskStatus;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public String getTaskStatus() 
+	{
+		return taskStatus;
 	}
-
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Date startDate) 
+	{
 		this.startDate = startDate;
 	}
 
-	public Date getRequireTime() {
-		return requireTime;
+	public Date getStartDate() 
+	{
+		return startDate;
 	}
-
-	public void setRequireTime(Date requireTime) {
+	public void setRequireTime(Date requireTime) 
+	{
 		this.requireTime = requireTime;
 	}
 
-	public String getSelvalTaskType() {
-		return selvalTaskType;
+	public Date getRequireTime() 
+	{
+		return requireTime;
 	}
-
-	public void setSelvalTaskType(String selvalTaskType) {
+	public void setSelvalTaskType(String selvalTaskType) 
+	{
 		this.selvalTaskType = selvalTaskType;
 	}
 
-	public String getPriority() {
-		return priority;
+	public String getSelvalTaskType() 
+	{
+		return selvalTaskType;
 	}
-
-	public void setPriority(String priority) {
+	public void setPriority(String priority) 
+	{
 		this.priority = priority;
 	}
 
-	public String getTaskContent() {
-		return taskContent;
+	public String getPriority() 
+	{
+		return priority;
 	}
-
-	public void setTaskContent(String taskContent) {
+	public void setTaskContent(String taskContent) 
+	{
 		this.taskContent = taskContent;
 	}
 
-	public String getExecutorUser() {
-		return executorUser;
+	public String getTaskContent() 
+	{
+		return taskContent;
 	}
-
-	public void setExecutorUser(String executorUser) {
+	public void setExecutorUser(String executorUser) 
+	{
 		this.executorUser = executorUser;
 	}
 
-	public String getAcceptorUser() {
-		return acceptorUser;
+	public String getExecutorUser() 
+	{
+		return executorUser;
 	}
-
-	public void setAcceptorUser(String acceptorUser) {
+	public void setAcceptorUser(String acceptorUser) 
+	{
 		this.acceptorUser = acceptorUser;
 	}
 
-	public String getTaskProgress() {
-		return taskProgress;
+	public String getAcceptorUser() 
+	{
+		return acceptorUser;
 	}
-
-	public void setTaskProgress(String taskProgress) {
+	public void setTaskProgress(String taskProgress) 
+	{
 		this.taskProgress = taskProgress;
 	}
 
-	public String getShareUser() {
-		return shareUser;
+	public String getTaskProgress() 
+	{
+		return taskProgress;
 	}
-
-	public void setShareUser(String shareUser) {
+	public void setShareUser(String shareUser) 
+	{
 		this.shareUser = shareUser;
 	}
 
-	public String getIsShare() {
-		return isShare;
+	public String getShareUser() 
+	{
+		return shareUser;
 	}
-
-	public void setIsShare(String isShare) {
+	public void setIsShare(String isShare) 
+	{
 		this.isShare = isShare;
 	}
+
+	public String getIsShare() 
+	{
+		return isShare;
+	}
+	public void setCreateTime(Date createTime) 
+	{
+		this.createTime = createTime;
+	}
+
+	public Date getCreateTime() 
+	{
+		return createTime;
+	}
+	public void setUpdateBy(String updateBy) 
+	{
+		this.updateBy = updateBy;
+	}
+
+	public String getUpdateBy() 
+	{
+		return updateBy;
+	}
+	public void setUpdateTime(Date updateTime) 
+	{
+		this.updateTime = updateTime;
+	}
+
+	public Date getUpdateTime() 
+	{
+		return updateTime;
+	}
+	public void setCreateBy(String createBy) 
+	{
+		this.createBy = createBy;
+	}
+
+	public String getCreateBy() 
+	{
+		return createBy;
+	}
+	public void setRemark(String remark) 
+	{
+		this.remark = remark;
+	}
+
+	public String getRemark() 
+	{
+		return remark;
+	}
+
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("taskLevel", getTaskLevel())
+            .append("pid", getPid())
+            .append("taskTitle", getTaskTitle())
+            .append("taskStatus", getTaskStatus())
+            .append("startDate", getStartDate())
+            .append("requireTime", getRequireTime())
+            .append("selvalTaskType", getSelvalTaskType())
+            .append("priority", getPriority())
+            .append("taskContent", getTaskContent())
+            .append("executorUser", getExecutorUser())
+            .append("acceptorUser", getAcceptorUser())
+            .append("taskProgress", getTaskProgress())
+            .append("shareUser", getShareUser())
+            .append("isShare", getIsShare())
+            .append("createTime", getCreateTime())
+            .append("updateBy", getUpdateBy())
+            .append("updateTime", getUpdateTime())
+            .append("createBy", getCreateBy())
+            .append("remark", getRemark())
+            .toString();
+    }
 }

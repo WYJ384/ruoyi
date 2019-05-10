@@ -5,6 +5,8 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-selfTask-add">
+			<input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
+			<input id="remark" name="remark" class="form-control" type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务标题：</label>
 				<div class="col-sm-8">
@@ -120,6 +122,15 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
+				var  executorUser=$('#executorUser option:selected').text();
+				var executorUsers = "";
+				for (var i = 0; i < $("#executorUser").select2('data').length; i++) {
+					executorUsers += $("#executorUser").select2('data')[i].text;
+					if( i < $("#executorUser").select2('data').length-1){
+						executorUsers +=",";
+					}
+				}
+				$("#remark").val(executorUsers)
 	            $.operate.save(prefix + "/add", $('#form-selfTask-add').serialize());
 	        }
 	    }

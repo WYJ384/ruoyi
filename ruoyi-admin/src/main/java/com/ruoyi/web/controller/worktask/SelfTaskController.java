@@ -102,6 +102,14 @@ public class SelfTaskController extends BaseController
 		modelMap.addAttribute("sysUsers",sysUsers);
 		return prefix + "/add";
 	}
+    @GetMapping("/addChild/{pid}")
+    public String addChild(ModelMap modelMap,@PathVariable("pid")  String pid)
+    {
+        List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+        modelMap.addAttribute("sysUsers",sysUsers);
+        modelMap.addAttribute("pid",pid);
+        return prefix + "/add";
+    }
 	
 	/**
 	 * 新增保存任务
@@ -113,6 +121,7 @@ public class SelfTaskController extends BaseController
 	public AjaxResult addSave(SelfTask selfTask)
 	{
 		selfTask.setTaskStatus("0");
+        selfTask.setTaskLevel("0");
 		selfTask.setCreateBy(ShiroUtils.getUserId()+"");
 		selfTask.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		return toAjax(selfTaskService.insertSelfTask(selfTask));
@@ -143,9 +152,13 @@ public class SelfTaskController extends BaseController
 		SelfTaskProcess selfTaskProcess=new SelfTaskProcess();
 		selfTaskProcess.setId(id);
 		List<SelfTaskProcess> processList = selfTaskProcessService.selectSelfTaskProcessList(selfTaskProcess);
-		mmap.put("taskType", taskType);
+        SelfTask childSelfTask=new SelfTask();
+        childSelfTask.setPid(id);
+        List<SelfTask> childSelfTasks = selfTaskService.selectSelfTaskList(childSelfTask);
+        mmap.put("taskType", taskType);
 		mmap.put("processList", processList);
 		mmap.put("selfTask", selfTask);
+        mmap.put("childSelfTasks", childSelfTasks);
 		return prefix + "/edit";
 	}
 	/**

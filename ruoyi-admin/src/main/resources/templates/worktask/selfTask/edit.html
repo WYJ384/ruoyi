@@ -265,6 +265,47 @@
     .ttia-lyr-btn:hover {
         background: #297be2;
     }
+    /* task sub */
+    .task-sub-list h2{height: 32px; line-height: 32px; color: #b8b8b8;}
+    .task-sub-list h2 span{color: #6d6d6d; margin-right: 10px;}
+    .task-sub-items{border-top: #dcdcdc 1px solid; margin-top: 15px;}
+    .task-sub-item{vertical-align: middle; border-bottom: #dcdcdc 1px solid; padding: 10px 0 15px;}
+    .task-sitem-label{width: 80px; line-height: 24px; text-align: right; float: left;}
+    .task-sitem-text{line-height: 24px; color: #888; word-break: break-all; padding-left: 10px; margin-left: 80px;}
+    .task-sitem-middle,.task-sitem-lang{width: 140px; margin-left: 0; float: left;}
+    .task-sitem-lang{width: 200px;}
+    .task-sitem-flist{padding-top: 5px;}
+    .task-resolve{display: inline-block; margin-left: 10px;}
+    .task-resolve.b-btn-disable{border-color: #666;}
+    .task-sub-edit{color: #656565;}
+    .task-sub-save{background: #f8875b; border: #d6704a 1px solid;}
+    .task-sub-save:hover{background: #f99f7b;}
+    .module-to-task{margin-top: 15px;}
+    .moduto-task-head{height: 30px; border-top: #dcdcdc 1px solid; border-bottom: #dcdcdc 1px solid;}
+    .moduto-thead-title,.moduto-thead-worker,.moduto-thead-time,.moduto-thead-operate{line-height: 30px; font-size: 14px; font-weight: bold; text-align: center; float: right;}
+    .moduto-thead-title{float: none;}
+    .moduto-thead-worker{width: 120px; padding: 0 5px;}
+    .moduto-thead-time{width: 140px;}
+    .moduto-thead-operate{width: 100px;}
+    .moduto-task-item{height: 30px; line-height: 30px; padding: 10px 0; font-size: 12px; border-bottom: #cbcbcb 1px dotted;}
+    .moduto-titem-title{padding: 0 5px;}
+    .moduto-titem-num{width: 40px; line-height: 30px; color: #68a708; font-weight: bold; text-align: center; float: left;}
+    .moduto-titem-worker,.mditem-worker-edit,.moduto-titem-time,.mditem-time-edit,.moduto-titem-operate,.mditem-operate-edit{line-height: 30px; text-align: center; float: right;}
+    .moduto-titem-worker{width: 110px; padding: 0 5px;}
+    .moduto-titem-time{width: 140px;}
+    .moduto-titem-operate{width: 100px; *padding-top: 4px;}
+    .mditem-input-text{padding: 5px; line-height: 18px; border: #e7e7e7 1px solid;}
+    .mditem-input-text input{width: 100%; height: 18px; line-height: 18px; border: 0;}
+    .mditem-input-text-time{background: url(img/b-time-bg.png) 136px center no-repeat;}
+    .mditem-worker-edit{width: 182px;}
+    .mditem-time-edit{width: 165px; padding: 0 5px;}
+    .mditem-operate-edit{width: 110px; *padding-top: 4px;}
+    .mditem-operate-edit .task-sub-save{margin-right: 5px;}
+    .mditem-worker-edit .list-users{padding-top: 4px; *padding-bottom: 4px;}
+    .mditem-worker-edit .list-users a{margin-bottom: 2px; max-width: 85px;}
+    .mditem-worker-edit .list-users a p{line-height: 20px; max-width: 70px;}
+    .mditem-worker-edit .list-users a b.user-remove{margin-top: 7px;}
+    .mditem-worker-edit .list-users .add-user{line-height: 22px; margin-left: 0; margin-bottom: 4px;}
 </style>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -292,13 +333,13 @@
                        type="text">
             </div>
         </div>
-<!--        <div class="form-group">-->
-<!--            <label class="col-sm-3 control-label">任务类型：</label>-->
-<!--            <div class="col-sm-8">-->
-<!--                <input id="selvalTaskType" name="selvalTaskType" th:field="*{selvalTaskType}" class="form-control"-->
-<!--                       type="text">-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="form-group">-->
+        <!--            <label class="col-sm-3 control-label">任务类型：</label>-->
+        <!--            <div class="col-sm-8">-->
+        <!--                <input id="selvalTaskType" name="selvalTaskType" th:field="*{selvalTaskType}" class="form-control"-->
+        <!--                       type="text">-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <div class="form-group">
             <label class="col-sm-3 control-label">优先级：</label>
@@ -320,21 +361,23 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">任务执行人：</label>
             <div class="col-sm-8">
-<!--                <input id="executorUser" name="executorUser" th:field="*{executorUser}" class="form-control"-->
-<!--                       type="text">-->
-                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible" multiple="" >
-                    <option th:each="user:${sysUsers}"  th:value="${user.userId}"
-                            th:text="${user.userName}"  th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
+                <!--                <input id="executorUser" name="executorUser" th:field="*{executorUser}" class="form-control"-->
+                <!--                       type="text">-->
+                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible"
+                        multiple="">
+                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                            th:text="${user.userName}"
+                            th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
                 </select>
             </div>
         </div>
-<!--        <div class="form-group">-->
-<!--            <label class="col-sm-3 control-label">任务验收人：</label>-->
-<!--            <div class="col-sm-8">-->
-<!--                <input id="acceptorUser" name="acceptorUser" th:field="*{acceptorUser}" class="form-control"-->
-<!--                       type="text">-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="form-group">-->
+        <!--            <label class="col-sm-3 control-label">任务验收人：</label>-->
+        <!--            <div class="col-sm-8">-->
+        <!--                <input id="acceptorUser" name="acceptorUser" th:field="*{acceptorUser}" class="form-control"-->
+        <!--                       type="text">-->
+        <!--            </div>-->
+        <!--        </div>-->
         <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
             <label class="col-sm-3 control-label">任务进度：</label>
             <div class="col-sm-8">
@@ -368,7 +411,9 @@
                     <ul>
                         <li th:each="process:${processList}">
                             <div class="task-pitem-info">
-                                <span class="task-pitems-user" th:text="${process.createBy}"></span> 于 <span class="task-pitems-time" th:text="${#dates.format(process.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-05-09 16:58:40 </span>提交任务进度，完成<span
+                                <span class="task-pitems-user" th:text="${process.createBy}"></span> 于 <span
+                                    class="task-pitems-time"
+                                    th:text="${#dates.format(process.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-05-09 16:58:40 </span>提交任务进度，完成<span
                                     class="task-pitems-progress" th:text="${process.percentAge}+'%'">50%</span>
                             </div>
                             <div class="task-pitem-desc" th:text="'进度描述:'+${process.processText}">进度描述：222</div>
@@ -380,12 +425,63 @@
             </div>
 
         </div>
-        <!--			<div class="form-group">	-->
-        <!--				<label class="col-sm-3 control-label">创建时间：</label>-->
-        <!--				<div class="col-sm-8">-->
-        <!--					<input id="createdTime" name="createdTime" th:field="*{createdTime}" class="form-control" type="text">-->
-        <!--				</div>-->
-        <!--			</div>-->
+        <div class="form-group"  th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+            <label class="col-sm-3 control-label">分解任务：</label>
+            <div class="col-sm-8">
+                按执行步骤，流程，阶段等，您可以快速将本任务进行分解，子任务也可以指派给其他同事。
+                <a onclick="addChildTask()"
+                   class="b-btn-five dp-inline task-sub-save btn btn-primary btn-xs">添加子任务</a>
+                <div class="task-sub-items">
+                    <ul>
+
+                        <li class="task-sub-item" th:each="task:${childSelfTasks}">
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label" >任务标题</label>
+                                <div class="task-sitem-text" th:text="${task.taskTitle}">
+
+                                    <a id="ff8080816a8cd094016aa0706dc63278" class="b-btn-five float-right task-sub-edit">编辑</a>
+
+                                    111111
+                                </div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label">开始时间</label>
+                                <div class="task-sitem-text task-sitem-middle"  th:text="${#dates.format(task.startDate, 'yyyy-MM-dd HH:mm:ss')}">2019-05-10 14:31:29</div>
+                                <label class="task-sitem-label">要求完成时间</label>
+                                <div class="task-sitem-text task-sitem-middle" th:text="${#dates.format(task.requireTime, 'yyyy-MM-dd HH:mm:ss')}">2019-05-11 14:31:33</div>
+                                <label class="task-sitem-label">优先级</label>
+                                <div class="task-sitem-text task-sitem-middle">
+                                    <span th:if="${task.priority eq '0'}">高</span>
+                                    <span th:if="${task.priority eq '1'}">中</span>
+                                    <span th:if="${task.priority eq '2'}">低</span>
+                                </div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label" >任务描述</label>
+                                <div class="task-sitem-text"th:text="${task.taskContent}"></div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label" >任务进度</label>
+                                <div class="task-sitem-text" th:text="${task.taskProgress}+'%'">0%</div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label" >任务执行人</label>
+                                <div class="task-sitem-text font-c-dgreen" th:text="${task.remark}"></div>
+                            </div>
+<!--                            <div class="task-sitem-option clear">-->
+
+<!--                                <label class="task-sitem-label" th:text="${task.taskTitle}">任务验收人</label>-->
+<!--                                <div class="task-sitem-text task-sitem-long font-c-dgreen">马忠义</div>-->
+<!--                            </div>-->
+                            <div class="task-sitem-flist" id="task_sitem_flist_ff8080816a8cd094016aa0706dc63278">
+                                <ul id="task_file_list_ff8080816a8cd094016aa0706dc63278" class="attch-list"></ul>
+                            </div></li >
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
         <!--			<div class="form-group">	-->
         <!--				<label class="col-sm-3 control-label">修改人：</label>-->
         <!--				<div class="col-sm-8">-->
@@ -437,7 +533,7 @@
                 beforeSend: function () {
                     $.modal.loading("正在处理中，请稍后...");
                 },
-                success: function(result) {
+                success: function (result) {
                     $.modal.closeLoading();
                     window.location.reload()
                 }
@@ -445,6 +541,9 @@
             $.ajax(config)
 
         }
+    }
+    function addChildTask(){
+        $.modal.open("添加子任务",ctx+"worktask/selfTask/addChild/"+$("#id").val())
     }
 
 

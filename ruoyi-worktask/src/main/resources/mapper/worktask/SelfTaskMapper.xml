@@ -6,6 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="SelfTask" id="SelfTaskResult">
         <result property="id"    column="id"    />
+        <result property="taskLevel"    column="task_level"    />
+        <result property="pid"    column="pid"    />
         <result property="taskTitle"    column="task_title"    />
         <result property="taskStatus"    column="task_status"    />
         <result property="startDate"    column="start_date"    />
@@ -26,13 +28,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectSelfTaskVo">
-        select id, task_title, task_status, start_date, require_time, selval_task_type, priority, task_content, executor_user, acceptor_user, task_progress, share_user, is_share, create_time, update_by, update_time, create_by, remark from self_task
+        select id, task_level, pid, task_title, task_status, start_date, require_time, selval_task_type, priority, task_content, executor_user, acceptor_user, task_progress, share_user, is_share, create_time, update_by, update_time, create_by, remark from self_task
     </sql>
 	
     <select id="selectSelfTaskList" parameterType="SelfTask" resultMap="SelfTaskResult">
         <include refid="selectSelfTaskVo"/>
         <where>  
             <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="taskLevel != null  and taskLevel != '' "> and task_level = #{taskLevel}</if>
+             <if test="pid != null  and pid != '' "> and pid = #{pid}</if>
              <if test="taskTitle != null  and taskTitle != '' "> and task_title = #{taskTitle}</if>
              <if test="taskStatus != null  and taskStatus != '' "> and task_status = #{taskStatus}</if>
              <if test="startDate != null "> and start_date = #{startDate}</if>
@@ -40,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="selvalTaskType != null  and selvalTaskType != '' "> and selval_task_type = #{selvalTaskType}</if>
              <if test="priority != null  and priority != '' "> and priority = #{priority}</if>
              <if test="taskContent != null  and taskContent != '' "> and task_content = #{taskContent}</if>
-             <if test="executorUser != null  and executorUser != '' "> and find_in_set(#{executorUser},executor_user) </if>
+             <if test="executorUser != null  and executorUser != '' ">and find_in_set(#{executorUser},executor_user) </if>
              <if test="acceptorUser != null  and acceptorUser != '' "> and acceptor_user = #{acceptorUser}</if>
              <if test="taskProgress != null  and taskProgress != '' "> and task_progress = #{taskProgress}</if>
              <if test="shareUser != null  and shareUser != '' "> and share_user = #{shareUser}</if>
@@ -62,6 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into self_task
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">id,</if>
+			<if test="taskLevel != null  and taskLevel != ''  ">task_level,</if>
+			<if test="pid != null  and pid != ''  ">pid,</if>
 			<if test="taskTitle != null  and taskTitle != ''  ">task_title,</if>
 			<if test="taskStatus != null  and taskStatus != ''  ">task_status,</if>
 			<if test="startDate != null  ">start_date,</if>
@@ -82,6 +88,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="taskLevel != null  and taskLevel != ''  ">#{taskLevel},</if>
+			<if test="pid != null  and pid != ''  ">#{pid},</if>
 			<if test="taskTitle != null  and taskTitle != ''  ">#{taskTitle},</if>
 			<if test="taskStatus != null  and taskStatus != ''  ">#{taskStatus},</if>
 			<if test="startDate != null  ">#{startDate},</if>
@@ -105,6 +113,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateSelfTask" parameterType="SelfTask">
         update self_task
         <trim prefix="SET" suffixOverrides=",">
+            <if test="taskLevel != null  and taskLevel != ''  ">task_level = #{taskLevel},</if>
+            <if test="pid != null  and pid != ''  ">pid = #{pid},</if>
             <if test="taskTitle != null  and taskTitle != ''  ">task_title = #{taskTitle},</if>
             <if test="taskStatus != null  and taskStatus != ''  ">task_status = #{taskStatus},</if>
             <if test="startDate != null  ">start_date = #{startDate},</if>
