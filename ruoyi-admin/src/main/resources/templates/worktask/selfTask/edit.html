@@ -1,29 +1,31 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
-        <input id="id" name="id" th:field="*{id}"  type="hidden">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
         <input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
         <input id="remark" name="remark" class="form-control" type="hidden">
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务标题：</label>
             <div class="col-sm-8">
-                <input id="taskTitle"  th:field="*{taskTitle}"  name="taskTitle" class="form-control" type="text">
+                <input id="taskTitle" th:field="*{taskTitle}" name="taskTitle" class="form-control" type="text">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>开始时间：</label>
             <div class="col-sm-8">
-                <input id="startDate" th:value="${#dates.format(selfTask.startDate, 'yyyy-MM-dd HH:mm:ss')}"  name="startDate" class="form-control" type="text">
+                <input id="startDate" th:value="${#dates.format(selfTask.startDate, 'yyyy-MM-dd HH:mm:ss')}"
+                       name="startDate" class="form-control" type="text">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>要求完成时间：</label>
             <div class="col-sm-8">
-                <input id="requireTime" th:value="${#dates.format(selfTask.requireTime, 'yyyy-MM-dd HH:mm:ss')}"  name="requireTime" class="form-control" type="text">
+                <input id="requireTime" th:value="${#dates.format(selfTask.requireTime, 'yyyy-MM-dd HH:mm:ss')}"
+                       name="requireTime" class="form-control" type="text">
             </div>
         </div>
         <!--			<div class="form-group">	-->
@@ -36,33 +38,43 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">优先级：</label>
             <div class="col-sm-8">
-                <label class="radio-box"> <input type="radio" th:field="*{priority}" name="priority" value="0" checked/> 高 </label>
-                <label class="radio-box"> <input type="radio" th:field="*{priority}" name="priority" value="1" /> 中 </label>
-                <label class="radio-box"> <input type="radio" th:field="*{priority}" name="priority" value="2" /> 低 </label>
+                <label class="radio-box"> <input type="radio" th:field="*{priority}" name="priority" value="0" checked/>
+                    高 </label>
+                <label class="radio-box"> <input type="radio" th:field="*{priority}" name="priority" value="1"/> 中
+                </label>
+                <label class="radio-box"> <input type="radio" th:field="*{priority}" name="priority" value="2"/> 低
+                </label>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-3 control-label">任务描述：</label>
             <div class="col-sm-8">
-                <textarea  id="taskContent" th:field="*{taskContent}" name="taskContent" class="form-control"></textarea>
+                <textarea id="taskContent" th:field="*{taskContent}" name="taskContent" class="form-control"></textarea>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务执行人：</label>
             <div class="col-sm-8">
-                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible" multiple="">-->
+                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible"
+                        multiple="">-->
                     <option th:each="user:${sysUsers}" th:value="${user.userId}"
-                            th:text="${user.userName}" th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
+                            th:text="${user.userName}"
+                            th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
                 </select>
             </div>
         </div>
-        <!--			<div class="form-group">	-->
-        <!--				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务验收人：</label>-->
-        <!--				<div class="col-sm-8">-->
-        <!--					<input id="acceptorUser" name="acceptorUser" class="form-control" type="text">-->
-        <!--				</div>-->
-        <!--			</div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务验收人：</label>
+            <div class="col-sm-8">
+                <select id="acceptorUser" name="acceptorUser" class="form-control select2-hidden-accessible">
+                    <option value=""></option>
+                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                            th:text="${user.userName}"
+                            th:selected="${selfTask.acceptorUser?.contains(user.userId.toString())}"></option>
+                </select>
+            </div>
+        </div>
         <!--			<div class="form-group">	-->
         <!--				<label class="col-sm-3 control-label">任务进度：</label>-->
         <!--				<div class="col-sm-8">-->
@@ -87,21 +99,21 @@
 <script type="text/javascript">
     var prefix = ctx + "worktask/selfTask"
     $("#form-selfTask-edit").validate({
-        rules:{
-            taskTitle:{
-                required:true,
+        rules: {
+            taskTitle: {
+                required: true,
             },
-            startDate:{
-                required:true,
+            startDate: {
+                required: true,
             },
-            requireTime:{
-                required:true,
+            requireTime: {
+                required: true,
             },
-            executorUser:{
-                required:true,
+            executorUser: {
+                required: true,
             },
-            acceptorUser:{
-                required:true,
+            acceptorUser: {
+                required: true,
             },
         },
         focusCleanup: true
@@ -123,12 +135,12 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            var  executorUser=$('#executorUser option:selected').text();
+            var executorUser = $('#executorUser option:selected').text();
             var executorUsers = "";
             for (var i = 0; i < $("#executorUser").select2('data').length; i++) {
                 executorUsers += $("#executorUser").select2('data')[i].text;
-                if( i < $("#executorUser").select2('data').length-1){
-                    executorUsers +=",";
+                if (i < $("#executorUser").select2('data').length - 1) {
+                    executorUsers += ",";
                 }
             }
             $("#remark").val(executorUsers)

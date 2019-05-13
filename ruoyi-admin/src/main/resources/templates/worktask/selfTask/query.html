@@ -1085,7 +1085,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">附件：</label>
             <div class="col-sm-8">
-                <input id="file" multiple name="file" class="form-control" type="file">
+                <input id="file" multiple name="file" class="form-control" type="file" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
                 <ul id="task_file_list" class="attch-list" style="display: block;">
                     <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i class="attch-itm-icon xlsx"></i><a
                             class="attch-itm-name"
@@ -1239,6 +1239,15 @@
         <!--			</div>-->
     </form>
 </div>
+<div class="row"  th:if="${taskType eq '3' && selfTask.taskStatus eq '1'}">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="passCheck()"><i class="fa fa-check"></i>通过
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="noPassCheck()"><i class="fa fa-reply-all"></i>不通过
+        </button>
+    </div>
+</div>
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
 <script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
@@ -1269,7 +1278,40 @@
         },
         focusCleanup: true
     });
-
+    //通过
+    function passCheck() {
+        var config = {
+            url: ctx + "worktask/selfTask/edit",
+            type: "post",
+            dataType: "json",
+            data: {id:$("#id").val(),check:2},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function (result) {
+                $.modal.closeLoading();
+                window.location.reload()
+            }
+        };
+        $.ajax(config)
+    }
+    //不通过
+    function noPassCheck() {
+        var config = {
+            url: ctx + "worktask/selfTask/edit",
+            type: "post",
+            dataType: "json",
+            data: {id:$("#id").val(),check:1},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function (result) {
+                $.modal.closeLoading();
+                window.location.reload()
+            }
+        };
+        $.ajax(config)
+    }
     function submitHandler() {
         if ($.validate.form()) {
             var config = {

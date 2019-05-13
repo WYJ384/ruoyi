@@ -10,6 +10,7 @@ import com.ruoyi.worktask.domain.SelfTaskProcess;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.ISelfTaskProcessService;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,7 +81,19 @@ public class SelfTaskController extends BaseController
 		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
 		return getDataTable(list);
 	}
-
+	/**
+	 * 我验收的任务
+	 */
+	@RequiresPermissions("worktask:selfTask:list")
+	@PostMapping("/myCheckTask")
+	@ResponseBody
+	public TableDataInfo myCheckTask(SelfTask selfTask)
+	{
+		startPage();
+		selfTask.setAcceptorUser(ShiroUtils.getUserId()+"");
+		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
+		return getDataTable(list);
+	}
 
 	/**
 	 * 导出任务列表
@@ -176,8 +189,16 @@ public class SelfTaskController extends BaseController
 	@Log(title = "任务", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(SelfTask selfTask)
-	{		
+	public AjaxResult editSave(SelfTask selfTask,String check)
+	{
+		if(StringUtils.isNotEmpty(check)){
+			if(check.equals("1")){//不通过
+				selfTask.setTaskStatus("0");
+				selfTask.setTaskProgress("0");
+			}else if(check.equals("2")){//通过
+				selfTask.setTaskStatus("2");
+			}
+		}
 		return toAjax(selfTaskService.updateSelfTask(selfTask));
 	}
 	
