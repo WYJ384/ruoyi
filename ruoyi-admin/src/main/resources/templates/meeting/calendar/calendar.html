@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
+<link th:href='@{/fullcalendar-scheduler-4.0.1/packages/core/main.css}' rel='stylesheet'/>
+<link th:href='@{/fullcalendar-scheduler-4.0.1/packages/daygrid/main.css}' rel='stylesheet'/>
+<link th:href='@{/fullcalendar-scheduler-4.0.1/packages/timegrid/main.css}' rel='stylesheet'/>
+<link th:href="@{/week/css/week.css}" rel="stylesheet" type="text/css">
+<body class="white-bg">
+<!--<div class="form-horizontal m" style="text-align: center">-->
+<!--<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+<!--添加会议-->
+<!--</button>-->
+<!--</div>-->
+<!-- 按钮触发模态框 -->
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					预约会议
+				</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal m" id="form-calendar-add">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">标题：</label>
+						<div class="col-sm-8">
+							<input id="title" name="title" class="form-control" type="text">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">开始时间：</label>
+						<div class="col-sm-8">
+							<input id="start" name="start" class="form-control" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">结束时间：</label>
+						<div class="col-sm-8">
+							<input id="end" name="end" class="form-control" type="text">
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">备注：</label>
+						<div class="col-sm-8">
+							<textarea id="remark" name="remark" class="form-control"></textarea>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary" id="save">
+					提交更改
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="vieModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="vieModalLabel">
+					查看会议
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-horizontal m">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">会议名称：</label>
+						<div class="col-sm-8">
+							<input id="vmeetingName" class="form-control" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">会议主题：</label>
+						<div class="col-sm-8">
+							<textarea id="vmeetingSubject" class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">预约部门：</label>
+						<div class="col-sm-8">
+							<input id="deptName" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">预约人：</label>
+						<div class="col-sm-8">
+							<input id="userName" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">预约手机：</label>
+						<div class="col-sm-8">
+							<input id="phonenumber" class="form-control">
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<div class="container-fluid">
+
+	<div class="row">
+		<!--        <div class="col-lg-2">-->
+		<!--            <div id="dateControl" ></div>-->
+		<!--        </div>-->
+		<div id='calendar' ></div>
+	</div>
+</div>
+
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
+<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/core/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/interaction/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/daygrid/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/timegrid/main.js}'></script>
+<script type="text/javascript" th:src="@{/week/js/week.js}"></script>
+<script type="text/javascript">
+	layui.use('laydate', function () {
+		var laydate = layui.laydate;
+		laydate.render({
+			elem: '#start',
+			theme: 'molv',
+			type: 'date',
+			format: 'yyyy-MM-dd'
+		});
+
+		laydate.render({
+			elem: '#end',
+			theme: 'molv',
+			type: 'date',
+			format: 'yyyy-MM-dd'
+		});
+
+	});
+
+	var prefix = ctx + "meeting/calendar"
+	$("#form-calendar-add").validate({
+		rules: {
+			title: {
+				required: true,
+			},
+			start: {
+				required: true,
+			},
+			end: {
+				required: true,
+			},
+
+		},
+		focusCleanup: true
+	});
+	function submitHandler() {
+
+		if ($.validate.form()) {
+			var config = {
+				url: prefix + "/add",
+				type: "post",
+				dataType: "json",
+				data: $('#form-calendar-add').serialize(),
+				beforeSend: function () {
+					$.modal.loading("正在处理中，请稍后...");
+					$.modal.disable();
+				},
+				success: function (result) {
+					if (result.code == web_status.SUCCESS) {
+						$.modal.msgSuccess(result.msg);
+					} else {
+						$.modal.alertError(result.msg);
+					}
+					$.modal.closeLoading();
+					initCalendar();
+					$("#myModal").modal('hide')
+				}
+			};
+			$.ajax(config)
+		}
+	}
+
+	$('#save').click(function () {
+		submitHandler();
+	});
+	document.addEventListener('DOMContentLoaded', function () {
+		initCalendar();
+	});
+	function initCalendar(){
+		var calendarEl = document.getElementById('calendar');
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			plugins: ['interaction', 'dayGrid', 'timeGrid'],
+			editable: false,
+			navLinks: true, // can click day/week names to navigate views
+			selectMirror: true,
+			locale: 'zh-cn',
+			selectable: true,
+			eventOverlap: false,
+			eventLimit: true, // allow "more" link when too many events
+			header: false,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'dayGridMonth'
+			},
+			dateClick: function(info) {
+				$("#start").val(info.dateStr);
+				$("#end").val(info.dateStr);
+				$("#myModal").modal('show')
+			},
+			locale: 'zh-cn',
+			events: { // you can also specify a plain string like 'json/events.json'
+				url: prefix + "/findList"
+			},
+			select: function(info) {
+				$("#start").val(info.startStr);
+				$("#end").val(info.endStr);
+				$("#myModal").modal('show')
+			},
+			eventClick: function (info) {
+				var meetingId = info.event.id;
+				alert(meetingId)
+			}
+		});
+		calendar.render();
+		calendar.on('dateClick', function(info) {
+			console.log('clicked on ' + info.dateStr);
+		});
+
+	}
+</script>
+
+</body>
+</html>

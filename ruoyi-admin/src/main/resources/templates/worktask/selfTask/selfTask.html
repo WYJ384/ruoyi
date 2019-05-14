@@ -97,8 +97,17 @@
                     title: '任务标题',
                     sortable: true,
                     formatter: function (value, row, index) {
+
                         var actions = [];
-                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\'任务\',\'' +prefix +'/query/'+row.id+'/'+taskType + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+                        var title="";
+                        if(taskType==1){
+                            title="我的任务"
+                        }else  if(taskType==2){
+                            title="我分配的任务"
+                        }else  if(taskType==3){
+                            title="我审核的任务"
+                        }
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/query/'+row.id+'/'+taskType + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
                         return actions.join('');
                     }
                 },
@@ -179,12 +188,12 @@
                 options.url = prefix + '/myTask';
                 $("#toolbar").hide();
             }
-            if (menu == 'myCreateTask') {//我分配的
+            if (menu == 'myCreateTask') {//我分配的任务
                 $("#toolbar").show();
                 taskType=2;
                 options.url = prefix + '/list';
             }
-            if (menu == 'myCheckTask') {//我分配的
+            if (menu == 'myCheckTask') {//我审核的任务
                 $("#toolbar").hide();
                 taskType=3;
                 options.url = prefix + '/myCheckTask';
