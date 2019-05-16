@@ -11,7 +11,7 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								评分内容：<input type="text" name="name"/>
+								<input id="beginTime" name="beginTime" class="form-control" type="text" placeholder="日期">
 							</li>
 
 							<!--<li>-->
@@ -84,6 +84,14 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			var startDate = laydate.render({
+				elem: '#beginTime',
+				theme: 'molv',
+				type: 'month',
+			});
+		});
         var editFlag = [[${@permission.hasPermi('taskscore:scoreActivity:edit')}]];
         var removeFlag = [[${@permission.hasPermi('taskscore:scoreActivity:remove')}]];
         var prefix = ctx + "taskscore/scoreActivity";
@@ -105,24 +113,27 @@
 					title : '主键',
 					visible: false
 				},
-				{
-					field : 'name', 
-					title : '评分内容',
-					sortable: true,
-					formatter: function (value, row, index) {
-						return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.name + '</a>';
-					}
-				},
+				// {
+				// 	field : 'name',
+				// 	title : '评分内容',
+				// 	sortable: true,
+				// 	formatter: function (value, row, index) {
+				// 		return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.name + '</a>';
+				// 	}
+				// },
 				{
 					field : 'dept.deptName',
 					title : '部门',
+					sortable: true,
+					formatter: function (value, row, index) {
+						return '<a href="#" onclick="detail(\'' + row.id + '\')">' + row.dept.deptName + '</a>';
+					}
+				},
+				{
+					field : 'beginTime',
+					title : '日期',
 					sortable: true
 				},
-//				{
-//					field : 'beginTime',
-//					title : '开始时间',
-//					sortable: true
-//				},
 //				{
 //					field : 'endTime',
 //					title : '结束时间',

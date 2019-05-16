@@ -5,12 +5,12 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-scoreActivity-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">名称：</label>
-				<div class="col-sm-8">
-					<input id="name" name="name" class="form-control" type="text">
-				</div>
-			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">名称：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="name" name="name" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 			<!--<div class="form-group">	-->
 				<!--<label class="col-sm-3 control-label">活动状态：</label>-->
 				<!--<div class="col-sm-8">-->
@@ -91,15 +91,18 @@
 				elem: '#beginTime',
 				theme: 'molv',
 				type: 'month',
-				format: 'MM'
 			});
 		});
 		var prefix = ctx + "taskscore/scoreActivity"
 		$("#form-scoreActivity-add").validate({
 			rules:{
-				name:{
+				beginTime:{
 					required:true,
 				},
+				deptName:{
+					required:true,
+				},
+
 			},
 			focusCleanup: true
 		});

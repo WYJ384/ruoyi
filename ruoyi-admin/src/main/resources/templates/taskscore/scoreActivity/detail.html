@@ -31,24 +31,32 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label class="col-sm-4 control-label">指标类型：</label>
+							<label class="col-sm-4 control-label">得分：</label>
 							<div class="col-sm-8">
-								<input class="form-control" rows="5" disabled th:value="${scoreActivity.scoringPointer.pointerType.name}">
+								<input id="score" readonly name="score"  th:value="${scoreActivity.score}" class="form-control" type="text">
 							</div>
 						</div>
 					</div>
+<!--					<div class="col-sm-6">-->
+<!--						<div class="form-group">-->
+<!--							<label class="col-sm-4 control-label">指标类型：</label>-->
+<!--							<div class="col-sm-8">-->
+<!--								<input class="form-control" rows="5" disabled th:value="${scoreActivity.scoringPointer.pointerType.name}">-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
 
 				</div>
 				<div class="row">
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label class="col-sm-4 control-label">权重：</label>
-							<div class="col-sm-8">
-								<input name="targetScore" readonly th:value="${scoreActivity.scoringPointer.weight}" class="form-control"
-									   type="text">
-							</div>
-						</div>
-					</div>
+<!--					<div class="col-sm-6">-->
+<!--						<div class="form-group">-->
+<!--							<label class="col-sm-4 control-label">权重：</label>-->
+<!--							<div class="col-sm-8">-->
+<!--								<input name="targetScore" readonly th:value="${scoreActivity.scoringPointer.weight}" class="form-control"-->
+<!--									   type="text">-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
 <!--					<div class="col-sm-6">-->
 <!--						<div class="form-group">-->
 <!--							<label class="col-sm-4 control-label">数据提供部门：</label>-->
@@ -61,27 +69,20 @@
 				</div>
 
 				<div class="row">
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label class="col-sm-4 control-label">得分：</label>
-							<div class="col-sm-8">
-								<input id="score" readonly name="score"  th:value="${scoreActivity.score}" class="form-control" type="text">
-							</div>
-						</div>
-					</div>
+
 
 				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="form-group">
-							<label class="col-xs-2 control-label">计分方法：</label>
-							<div class="col-xs-10">
-                       	<textarea id="remark" readonly name="scoreDescription" th:text="${scoreActivity.scoringPointer.remark}" class="form-control" rows="5">
-						</textarea>
-							</div>
-						</div>
-					</div>
-				</div>
+<!--				<div class="row">-->
+<!--					<div class="col-sm-12">-->
+<!--						<div class="form-group">-->
+<!--							<label class="col-xs-2 control-label">计分方法：</label>-->
+<!--							<div class="col-xs-10">-->
+<!--                       	<textarea id="remark" readonly name="scoreDescription" th:text="${scoreActivity.scoringPointer.remark}" class="form-control" rows="5">-->
+<!--						</textarea>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group">

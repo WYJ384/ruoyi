@@ -8,20 +8,20 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">指标名称：</label>
 				<div class="col-sm-8">
-					<input id="name" name="name" class="form-control" type="text">
+					<input id="name" name="name" class="form-control" type="text" value="省公司月度考核">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">权重：</label>
 				<div class="col-sm-8">
-					<input id="weight" name="weight" class="form-control" type="number">
+					<input id="weight" name="weight" class="form-control" type="number" value="">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">排序：</label>
 				<div class="col-sm-8">
 
-					<input id="porder" name="porder"  class="form-control" type="text">
+					<input id="porder" name="porder"  class="form-control" type="text" value="33">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -29,7 +29,7 @@
 				<div class="col-sm-8">
 					<select class="form-control"  id="pointerTypeId" name="pointerTypeId">
 						<option th:each="type: ${pointerTypes}" th:text="${type.name}"
-								th:value="${type.id}"></option>
+								th:value="${type.id}" th:selected="${type.id eq '22bfcb10778711e98a55005056be272c'}"></option>
 					</select>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 					<select id="evalUserId" name="evalUserId" class="form-control select2-hidden-accessible">
 						<option value=""></option>
 						<option th:each="user:${users}" th:value="${user.userId}"
-								th:text="${user.userName}"></option>
+								th:text="${user.userName}" th:selected="${user.userId == 319}" ></option>
 					</select>
 				</div>
 			</div>

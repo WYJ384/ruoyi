@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="evalUserId!= null  and evalUserId != '' "> and pointer.eval_user_id = #{evalUserId}</if>
             <if test="deptId!= null  and deptId != '' "> and pointer.dept_id = #{deptId}</if>
         </where>
-        order  by  pointer.pointer_type_id,p_order
+        order  by  p_order,pointer.pointer_type_id
     </select>
     
     <select id="selectScoreActivityDetailById" parameterType="String" resultMap="ScoreActivityDetailResult">
