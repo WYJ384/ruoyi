@@ -30,7 +30,7 @@
 				<div class="col-sm-8">
 					<select class="form-control"  id="pointerTypeId" name="pointerTypeId">
 						<option th:each="type: ${pointerTypes}" th:text="${type.name}"
-								th:value="${type.id}" th:selected="${type.id == scoringPointer.pointerTypeId}"></option>
+								th:value="${type.id}" th:selected="${type.id eq scoringPointer.pointerTypeId}"></option>
 					</select>
 				</div>
 			</div>
