@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.knowledge.mapper.CommentMapper">
+    
+    <resultMap type="Comment" id="CommentResult">
+        <result property="id"    column="id"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="contentId"    column="content_id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="ip"    column="ip"    />
+        <result property="time"    column="time"    />
+        <result property="replyName"    column="replyName"    />
+        <result property="beReplyName"    column="beReplyName"    />
+        <result property="img"    column="img"    />
+        <result property="auditUserId"    column="audit_user_id"    />
+        <result property="auditDate"    column="audit_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+	
+	<sql id="selectCommentVo">
+        select id, category_id, content_id, title, content, ip, time, replyName, beReplyName, img, audit_user_id, audit_date, del_flag from cms_comment
+    </sql>
+	
+    <select id="selectCommentList" parameterType="Comment" resultMap="CommentResult">
+        <include refid="selectCommentVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="categoryId != null  and categoryId != '' "> and category_id = #{categoryId}</if>
+             <if test="contentId != null  and contentId != '' "> and content_id = #{contentId}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="ip != null  and ip != '' "> and ip = #{ip}</if>
+             <if test="time != null "> and time = #{time}</if>
+             <if test="replyName != null  and replyName != '' "> and replyName = #{replyName}</if>
+             <if test="beReplyName != null  and beReplyName != '' "> and beReplyName = #{beReplyName}</if>
+             <if test="img != null  and img != '' "> and img = #{img}</if>
+             <if test="auditUserId != null  and auditUserId != '' "> and audit_user_id = #{auditUserId}</if>
+             <if test="auditDate != null "> and audit_date = #{auditDate}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+         </where>
+    </select>
+    
+    <select id="selectCommentById" parameterType="String" resultMap="CommentResult">
+        <include refid="selectCommentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertComment" parameterType="Comment">
+        insert into cms_comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="categoryId != null  and categoryId != ''  ">category_id,</if>
+			<if test="contentId != null  and contentId != ''  ">content_id,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="ip != null  and ip != ''  ">ip,</if>
+			<if test="time != null  ">time,</if>
+			<if test="replyName != null  and replyName != ''  ">replyName,</if>
+			<if test="beReplyName != null  and beReplyName != ''  ">beReplyName,</if>
+			<if test="img != null  and img != ''  ">img,</if>
+			<if test="auditUserId != null  and auditUserId != ''  ">audit_user_id,</if>
+			<if test="auditDate != null  ">audit_date,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="categoryId != null  and categoryId != ''  ">#{categoryId},</if>
+			<if test="contentId != null  and contentId != ''  ">#{contentId},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="ip != null  and ip != ''  ">#{ip},</if>
+			<if test="time != null  ">#{time},</if>
+			<if test="replyName != null  and replyName != ''  ">#{replyName},</if>
+			<if test="beReplyName != null  and beReplyName != ''  ">#{beReplyName},</if>
+			<if test="img != null  and img != ''  ">#{img},</if>
+			<if test="auditUserId != null  and auditUserId != ''  ">#{auditUserId},</if>
+			<if test="auditDate != null  ">#{auditDate},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateComment" parameterType="Comment">
+        update cms_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId != null  and categoryId != ''  ">category_id = #{categoryId},</if>
+            <if test="contentId != null  and contentId != ''  ">content_id = #{contentId},</if>
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="ip != null  and ip != ''  ">ip = #{ip},</if>
+            <if test="time != null  ">time = #{time},</if>
+            <if test="replyName != null  and replyName != ''  ">replyName = #{replyName},</if>
+            <if test="beReplyName != null  and beReplyName != ''  ">beReplyName = #{beReplyName},</if>
+            <if test="img != null  and img != ''  ">img = #{img},</if>
+            <if test="auditUserId != null  and auditUserId != ''  ">audit_user_id = #{auditUserId},</if>
+            <if test="auditDate != null  ">audit_date = #{auditDate},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCommentById" parameterType="String">
+        delete from cms_comment where id = #{id}
+    </delete>
+	
+    <delete id="deleteCommentByIds" parameterType="String">
+        delete from cms_comment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-comment-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">栏目编号：</label>
+				<div class="col-sm-8">
+					<input id="categoryId" name="categoryId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">栏目内容的编号：</label>
+				<div class="col-sm-8">
+					<input id="contentId" name="contentId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">栏目内容的标题：</label>
+				<div class="col-sm-8">
+					<input id="title" name="title" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">评论内容：</label>
+				<div class="col-sm-8">
+					<input id="content" name="content" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">评论IP：</label>
+				<div class="col-sm-8">
+					<input id="ip" name="ip" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">评论时间：</label>
+				<div class="col-sm-8">
+					<input id="time" name="time" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">评论人姓名：</label>
+				<div class="col-sm-8">
+					<input id="replyName" name="replyName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">被评论人姓名：</label>
+				<div class="col-sm-8">
+					<input id="beReplyName" name="beReplyName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">头像路径：</label>
+				<div class="col-sm-8">
+					<input id="img" name="img" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">审核人：</label>
+				<div class="col-sm-8">
+					<input id="auditUserId" name="auditUserId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">审核时间：</label>
+				<div class="col-sm-8">
+					<input id="auditDate" name="auditDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">删除标记：</label>
+				<div class="col-sm-8">
+					<input id="delFlag" name="delFlag" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "knowledge/comment"
+		$("#form-comment-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-comment-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

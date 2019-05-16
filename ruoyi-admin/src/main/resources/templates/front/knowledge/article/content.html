@@ -2,29 +2,32 @@
 <head>
     <title th:text="${article.title}"></title>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 </head>
 <body>
 <!--<link th:href="@{/css/style.css}" rel="stylesheet"/>-->
 <link th:href="@{/css/home.css}" rel="stylesheet"/>
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/jquery_commt.css}" rel="stylesheet"/>
 
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
-<nav class="navbar navbar-inverse"  th:include="head::navigation" role="navigation" style="border-radius :0px; background-color: rgba(63,63,63,1);margin: 0;">
+<nav class="navbar navbar-inverse" th:include="head::navigation" role="navigation"
+     style="border-radius :0px; background-color: rgba(63,63,63,1);margin: 0;">
 </nav>
 <div class="container">
-<!--    <div class="pull-right">-->
-<!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
-<!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
-<!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
-<!--    </div>-->
+    <!--    <div class="pull-right">-->
+    <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
+    <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
+    <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
+    <!--    </div>-->
 
 
     <div class="text-center article-title">
-        <span class="text-muted" ><i class="fa fa-clock-o"></i> <span th:text="${#dates.format(article.createDate, 'yyyy年MM月dd日')}">2017年10月28日</span> </span>
+        <span class="text-muted"><i class="fa fa-clock-o"></i> <span
+                th:text="${#dates.format(article.createDate, 'yyyy年MM月dd日')}">2017年10月28日</span> </span>
         <h1 th:text="${article.title}" th:style="'color:'+${article.color}"></h1>
     </div>
-    <div ></div>
+    <div></div>
     <div class="ibox float-e-margins">
         <div class="ibox-title">
             <h5>现象</h5>
@@ -38,7 +41,8 @@
             <h5>原因分析</h5>
         </div>
         <div class="ibox-content" th:utext="${articleData.reason}">
-            "排除该账号和某一个甘南EPG服务器交互异常，在后台手动干预为用户指定一台EPG服务器，联系现场断电重启机顶盒后再次测试，但是现场反馈故障现象依旧没有消失。进入EAS原始日志进行筛选。筛选结果发现该账号日志记录中全部出现‘skip to other platform’。
+            "排除该账号和某一个甘南EPG服务器交互异常，在后台手动干预为用户指定一台EPG服务器，联系现场断电重启机顶盒后再次测试，但是现场反馈故障现象依旧没有消失。进入EAS原始日志进行筛选。筛选结果发现该账号日志记录中全部出现‘skip
+            to other platform’。
             "
 
         </div>
@@ -47,7 +51,7 @@
         <div class="ibox-title">
             <h5>解决方案</h5>
         </div>
-        <div class="ibox-content" th:utext="${articleData.solution}" >
+        <div class="ibox-content" th:utext="${articleData.solution}">
             登录主备EAS，前往重定向策略文件路径下，核查userip.txt文件，发现用户机顶盒获取10.239.160.X地址段确实包含在重定向策略中，产生业务接入死循环。启用VI命令重新编辑删除。
 
         </div>
@@ -56,7 +60,7 @@
     <div class="mail-attachment" th:if="${workTaskFiles.size()>0}">
         <p>
             <span><i class="fa fa-paperclip"></i> <span th:text="${workTaskFiles.size()}"></span> 个附件 -</span>
-            <a href="#" >全部下载</a>
+            <a href="#">全部下载</a>
         </p>
 
         <div class="attachment">
@@ -76,106 +80,169 @@
                 </div>
 
             </div>
-<!--            <div class="file-box">-->
-<!--                <div class="file">-->
-<!--                    <a href="#">-->
-<!--                        <span class="corner"></span>-->
-<!--                        <div class="icon">-->
-<!--                            <i class="fa fa-file"></i>-->
-<!--                        </div>-->
-<!--                        <div class="file-name">-->
-<!--                            Document_2014.doc-->
-<!--                            <br>-->
-<!--                            <small>添加: 2017.12.12</small>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--            <div class="file-box">-->
-<!--                <div class="file">-->
-<!--                    <a href="#">-->
-<!--                        <span class="corner"></span>-->
-
-<!--                        <div class="image">-->
-<!--                            <img alt="image" class="img-responsive" src="img/p1.jpg">-->
-<!--                        </div>-->
-<!--                        <div class="file-name">-->
-<!--                            Italy street.jpg-->
-<!--                            <br>-->
-<!--                            <small>添加: 2017.12.12</small>-->
-<!--                        </div>-->
-<!--                    </a>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="file-box">-->
-<!--                <div class="file">-->
-<!--                    <a href="#">-->
-<!--                        <span class="corner"></span>-->
-
-<!--                        <div class="image">-->
-<!--                            <img alt="image" class="img-responsive" src="img/p2.jpg">-->
-<!--                        </div>-->
-<!--                        <div class="file-name">-->
-<!--                            My feel.png-->
-<!--                            <br>-->
-<!--                            <small>添加: 2017.12.12</small>-->
-<!--                        </div>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="clearfix"></div>
         </div>
     </div>
     <hr>
 
-    <div class="row">
-        <div class="col-md-6">
-            <h5>标签:</h5>
-            <button class="btn btn-primary btn-xs" type="button">无发接入</button>
-            <button class="btn btn-white btn-xs" type="button">无任何报错页面弹出</button>
-            <button class="btn btn-white btn-xs" type="button">黑屏卡死</button>
+    <div class="container">
+        <div class="commentbox">
+            <textarea cols="80" rows="50" placeholder="来说几句吧......" class="mytextarea" id="content"></textarea>
+            <div class="btn btn-info pull-right" id="comment">评论</div>
         </div>
-        <div class="col-md-6">
-            <div class="small text-right">
-                <h5>统计:</h5>
-                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
-                <i class="fa fa-eye"> </i> <span th:text="${article.hits}"></span> 查看
-            </div>
+        <div class="comment-list">
+
         </div>
     </div>
 
-<!--    <div class="row">-->
-<!--        <div class="col-lg-12">-->
-
-<!--            <h2>评论:</h2>-->
-<!--            <div class="social-feed-box">-->
-<!--                <div class="social-avatar">-->
-<!--                    <a href="" class="pull-left">-->
-<!--&lt;!&ndash;                        <img alt="image" src="img/a1.jpg">&ndash;&gt;-->
-<!--                    </a>-->
-<!--                    <div class="media-body">-->
-<!--                        <a href="#">-->
-<!--                            小明-->
-<!--                        </a>-->
-<!--                        <small class="text-muted">今天下午2017.12.12 4:21</small>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="social-body">-->
-<!--                    <p>-->
-<!--                        时间是一切财富中最宝贵的财富。-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--            </div>-->
-
-
-
-<!--        </div>-->
-<!--    </div>-->
-
-
 </div>
 <div th:include="include::footer"></div>
+<script>
+    function filterNum(num) {
+        if (num < 10) {
+            return "0" + num;
+        } else {
+            return num;
+        }
+    }
+
+    function createReplyComment(reply) {
+        var replyEl = "<div class='reply'><div><a href='javascript:void(0)' class='replyname'>" + reply.replyName + "</a>:<a href='javascript:void(0)'>@" + reply.beReplyName + "</a><span>" + reply.content + "</span></div>"
+            + "<p><span>" + reply.time + "</span> <span class='reply-list-btn'>回复</span></p></div>";
+        return replyEl;
+    }
+    function getNowDateFormat() {
+        var nowDate = new Date();
+        var year = nowDate.getFullYear();
+        var month = filterNum(nowDate.getMonth() + 1);
+        var day = filterNum(nowDate.getDate());
+        var hours = filterNum(nowDate.getHours());
+        var min = filterNum(nowDate.getMinutes());
+        var seconds = filterNum(nowDate.getSeconds());
+        return year + "-" + month + "-" + day + " " + hours + ":" + min + ":" + seconds;
+    }
+    function replyClick(el) {
+        el.parent().parent().append("<div class='replybox'><textarea cols='80' rows='50' placeholder='来说几句吧......' class='mytextarea' ></textarea><span class='send'>发送</span></div>").find(".send").click(function () {
+            var content = $(this).prev().val();
+            if (content != "") {
+                var parentEl = $(this).parent().parent().parent().parent();
+                var obj = new Object();
+                obj.replyName = "匿名";
+                if (el.parent().parent().hasClass("reply")) {
+                    console.log("1111");
+                    obj.beReplyName = el.parent().parent().find("a:first").text();
+                } else {
+                    console.log("2222");
+                    obj.beReplyName = parentEl.find("h3").text();
+                }
+                obj.content = content;
+                obj.time = getNowDateFormat();
+                var replyString = createReplyComment(obj);
+                $(".replybox").remove();
+                parentEl.find(".reply-list").append(replyString).find(".reply-list-btn:last").click(function () {
+                    alert("不能回复自己");
+                });
+            } else {
+                alert("空内容");
+            }
+        });
+    }
+</script>
+<script th:src="@{/js/jquery.comment.js}"></script>
+<script>
+    //初始化数据
+    var arr = [{
+        id: 1,
+        img: "/img/profile.jpg",
+        replyName: "帅大叔",
+        beReplyName: "匿名",
+        content: "同学聚会，看到当年追我的屌丝开着宝马车带着他老婆来了，他老婆是我隔壁宿舍的同班同学，心里后悔极了。",
+        time: "2017-10-17 11:42:53",
+        replyBody: []
+    },
+        {
+            id: 2,
+            img: "/img/profile.jpg",
+            replyName: "匿名",
+            beReplyName: "",
+            content: "到菜市场买菜，看到一个孩子在看摊，我问：“一只鸡多少钱？” 那孩子回答：“23。” 我又问：“两只鸡多少钱？” 孩子愣了一下，一时间没算过来，急中生智大吼一声：“一次只能买一只！”",
+            time: "2017-10-17 11:42:53",
+            address: "深圳",
+            osname: "",
+            browse: "谷歌",
+            replyBody: [{
+                id: 3,
+                img: "",
+                replyName: "帅大叔",
+                beReplyName: "匿名",
+                content: "来啊，我们一起吃鸡",
+                time: "2017-10-17 11:42:53",
+                address: "",
+                osname: "",
+                browse: "谷歌"
+            }]
+        },
+        {
+            id: 3,
+            img: "/img/profile.jpg",
+            replyName: "帅大叔",
+            beReplyName: "匿名",
+            content: "同学聚会，看到当年追我的屌丝开着宝马车带着他老婆来了，他老婆是我隔壁宿舍的同班同学，心里后悔极了。",
+            time: "2017-10-17 11:42:53",
+            address: "深圳",
+            osname: "win10",
+            browse: "谷歌",
+            replyBody: []
+        }
+    ];
+    $(function () {
+        $(".comment-list").addCommentList({
+            data: arr,
+            add: ""
+        });
+        $("#comment").click(function () {
+            var obj = new Object();
+            obj.img = "/img/profile.jpg";
+            obj.replyName = "匿名";
+            obj.content = $("#content").val();
+            obj.browse = "深圳";
+            obj.osname = "win10";
+            obj.replyBody = "";
+            $(".comment-list").addCommentList({
+                data: [],
+                add: obj
+            });
+        });
+
+        function replyClick(el) {
+
+            el.parent().parent().append("<div class='replybox'><textarea cols='80' rows='50' placeholder='来说几句吧......' class='mytextarea' ></textarea><span class='send'>发送</span></div>").find(".send").click(function () {
+                var content = $(this).prev().val();
+                if (content != "") {
+                    var parentEl = $(this).parent().parent().parent().parent();
+                    var obj = new Object();
+                    obj.replyName = "匿名";
+                    if (el.parent().parent().hasClass("reply")) {
+                        console.log("1111");
+                        obj.beReplyName = el.parent().parent().find("a:first").text();
+                    } else {
+                        console.log("2222");
+                        obj.beReplyName = parentEl.find("h3").text();
+                    }
+                    obj.content = content;
+                    obj.time = getNowDateFormat();
+                    var replyString = createReplyComment(obj);
+                    alert(replyString)
+                    $(".replybox").remove();
+                    parentEl.find(".reply-list").append(replyString).find(".reply-list-btn:last").click(function () {
+                        alert("不能回复自己");
+                    });
+                } else {
+                    alert("空内容");
+                }
+            });
+        }
+    })
+</script>
 </body>
 </html>
