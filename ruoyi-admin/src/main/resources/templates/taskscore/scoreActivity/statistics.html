@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="col-sm-12 select-table table-striped">
+        <h1 style="text-align: center">省网络监控维护中心各部门月度考核得分（ <span th:text="${month}"></span> 月份）</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>序号</th>
+                <th>部门</th>
+                <th>省公司考核得分</th>
+                <th>总经理考核</th>
+                <th>分管领导考核</th>
+                <th>分管领导考核</th>
+                <th>分管领导考核</th>
+                <th>省市一体化考核</th>
+                <th>安全生产考核</th>
+                <th>政企支撑考核</th>
+                <th>监控工单考核</th>
+                <th>党建工作考核</th>
+                <th>网络安全得分</th>
+                <th>资源</th>
+                <th>基础</th>
+                <th>总经理加扣分</th>
+                <th>省公司月度考核</th>
+                <th>总分</th>
+            </tr>
+            <tr th:each="score,iterStat:${scoreActivityVOList}">
+                <td th:text="${iterStat.index+1}">序号</td>
+                <td th:text="${score.deptName}">部门</td>
+                <td th:text="${score.shenggongsikaohe}">省公司考核得分</td>
+                <td th:text="${score.zongjingliScore}">总经理考核</td>
+                <td th:text="${score.fenguanScore1}">分管领导考核</td>
+                <td th:text="${score.fenguanScore2}">分管领导考核</td>
+                <td th:text="${score.fenguanScore3}">分管领导考核</td>
+                <td th:text="${score.shengshiyitihuaScore}">省市一体化考核</td>
+                <td th:text="${score.anquanshengchanScore}">安全生产考核</td>
+                <td th:text="${score.zhengqizhicheng}">政企支撑考核</td>
+                <td th:text="${score.jiankonggongdan}">监控工单考核</td>
+                <td th:text="${score.dangjiangongzuo}">党建工作考核</td>
+                <td th:text="${score.wangluoanquan}">网络安全得分</td>
+                <td th:text="${score.ziyuan}">资源</td>
+                <td th:text="${score.jichu}">基础</td>
+                <td th:text="${score.zongjinglijiafen}">总经理加扣分</td>
+                <td th:text="${score.shenggongsiyuedukaohe}">省公司月度考核</td>
+                <td th:text="${score.totalScore}">总分</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<div th:include="include :: footer"></div>
+</body>
+</html>

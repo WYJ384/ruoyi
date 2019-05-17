@@ -81,7 +81,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
         LEFT JOIN score_activity ON score_activity.id = detail.activity_id
     </sql>
-	
+	<select id="getDeptMonthScore" resultType="com.ruoyi.taskscore.domain.ScoreDeptVO" parameterType="com.ruoyi.taskscore.domain.ScoreDeptVO">
+        SELECT
+            d.dept_name as deptName,
+            sum(detail.score) score,
+            pointer_type. NAME AS pointerType,
+            detail.activity_id AS activityId
+        FROM
+            score_activity_detail detail
+        LEFT JOIN scoring_pointer pointer ON detail.score_pointer_id = pointer.id
+        LEFT JOIN pointer_type ON pointer_type.id = pointer.pointer_type_id
+        LEFT JOIN sys_dept d ON d.dept_id = pointer.dept_id
+        LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
+        WHERE  detail.activity_id=#{activityId}
+        GROUP BY
+            pointer_type. NAME,
+            d.dept_name,
+            detail.activity_id
+    </select>
     <select id="selectScoreActivityDetailList" parameterType="ScoreActivityDetail" resultMap="ScoreActivityDetailResult">
         <include refid="selectScoreActivityDetailVo"/>
         <where>  

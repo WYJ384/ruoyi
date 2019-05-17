@@ -1,6 +1,8 @@
 package com.ruoyi.taskscore.service;
 
 import com.ruoyi.taskscore.domain.ScoreActivityDetail;
+import com.ruoyi.taskscore.domain.ScoreDeptVO;
+
 import java.util.List;
 
 /**
@@ -50,5 +52,7 @@ public interface IScoreActivityDetailService
      * @return 结果
      */
 	public int deleteScoreActivityDetailByIds(String ids);
+
+	List<ScoreDeptVO> getDeptMonthScore(ScoreDeptVO scoreDeptVO);
 	
 }

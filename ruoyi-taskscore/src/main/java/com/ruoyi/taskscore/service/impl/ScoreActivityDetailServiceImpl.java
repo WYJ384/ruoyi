@@ -1,6 +1,8 @@
 package com.ruoyi.taskscore.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.taskscore.domain.ScoreDeptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.taskscore.mapper.ScoreActivityDetailMapper;
@@ -79,5 +81,11 @@ public class ScoreActivityDetailServiceImpl implements IScoreActivityDetailServi
 	{
 		return scoreActivityDetailMapper.deleteScoreActivityDetailByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<ScoreDeptVO> getDeptMonthScore(ScoreDeptVO scoreDeptVO) {
+
+		return scoreActivityDetailMapper.getDeptMonthScore(scoreDeptVO);
+	}
+
 }

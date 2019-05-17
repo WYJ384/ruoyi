@@ -1,7 +1,9 @@
 package com.ruoyi.taskscore.mapper;
 
 import com.ruoyi.taskscore.domain.ScoreActivityDetail;
-import java.util.List;	
+import com.ruoyi.taskscore.domain.ScoreDeptVO;
+
+import java.util.List;
 
 /**
  * 评分活动详情 数据层
@@ -58,5 +60,7 @@ public interface ScoreActivityDetailMapper
      * @return 结果
      */
 	public int deleteScoreActivityDetailByIds(String[] ids);
+
+	List<ScoreDeptVO> getDeptMonthScore(ScoreDeptVO scoreDeptVO);
 	
 }
