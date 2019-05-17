@@ -156,7 +156,7 @@ public class ScoreActivityController extends BaseController {
 
     @GetMapping("/statistics")
     public String statistics(ModelMap mmap) {
-        List<com.ruoyi.taskdomain.ScoreActivityVO> scoreActivityVOList=new ArrayList<com.ruoyi.taskdomain.ScoreActivityVO>();
+        List<ScoreActivityVO> scoreActivityVOList=new ArrayList<ScoreActivityVO>();
         ScoreActivity scoreActivity = new ScoreActivity();
         scoreActivity.setBeginTime(DateFormatUtils.format(new Date(),"yyyy-MM"));
         List<ScoreActivity> scoreActivities = scoreActivityService.selectScoreActivityList(scoreActivity);
@@ -165,8 +165,8 @@ public class ScoreActivityController extends BaseController {
             ScoreActivity activity = scoreActivityIterator.next();
             ScoreActivityDetail scoreActivityDetail = new ScoreActivityDetail();
             scoreActivityDetail.setActivityId(activity.getId());
-            com.ruoyi.taskdomain.ScoreActivityVO scoreActivityVO=new com.ruoyi.taskdomain.ScoreActivityVO();
-
+            ScoreActivityVO scoreActivityVO=new ScoreActivityVO();
+            scoreActivityVO.setActivityId(activity.getId());
             ScoreDeptVO scoreDeptVO=new ScoreDeptVO();
             scoreDeptVO.setActivityId(activity.getId());
             List<ScoreDeptVO> deptMonthScore = scoreActivityDetailService.getDeptMonthScore(scoreDeptVO);
@@ -178,40 +178,47 @@ public class ScoreActivityController extends BaseController {
                 if(StringUtils.isEmpty(pointerType)){
                     continue;
                 }
-
+                Double score = deptVO.getScore();
+                if(score==null){
+                    score=0D;
+                }
                 if(pointerType.equals("省公司考核得分")){
-                    scoreActivityVO.setShenggongsikaohe(deptVO.getScore());
+                    scoreActivityVO.setShenggongsikaohe(score);
                 }else  if(pointerType.equals("总经理考核")){
-                    scoreActivityVO.setZongjingliScore(deptVO.getScore());
+                    scoreActivityVO.setZongjingliScore(score);
                 }else  if(pointerType.equals("分管领导考核1")){
-                    scoreActivityVO.setFenguanScore1(deptVO.getScore());
+                    scoreActivityVO.setFenguanScore1(score);
                 }else  if(pointerType.equals("分管领导考核2")){
-                    scoreActivityVO.setFenguanScore2(deptVO.getScore());
+                    scoreActivityVO.setFenguanScore2(score);
                 }else  if(pointerType.equals("分管领导考核3")){
-                    scoreActivityVO.setFenguanScore3(deptVO.getScore());
+                    scoreActivityVO.setFenguanScore3(score);
                 }else  if(pointerType.equals("省市一体化考核")){
-                    scoreActivityVO.setShengshiyitihuaScore(deptVO.getScore());
+                    scoreActivityVO.setShengshiyitihuaScore(score);
                 }else  if(pointerType.equals("安全生产考核")){
-                    scoreActivityVO.setAnquanshengchanScore(deptVO.getScore());
+                    scoreActivityVO.setAnquanshengchanScore(score);
                 }else  if(pointerType.equals("政企支撑考核")){
-                    scoreActivityVO.setZhengqizhicheng(deptVO.getScore());
+                    scoreActivityVO.setZhengqizhicheng(score);
                 }else  if(pointerType.equals("监控工单考核")){
-                    scoreActivityVO.setJiankonggongdan(deptVO.getScore());
+                    scoreActivityVO.setJiankonggongdan(score);
                 }else  if(pointerType.equals("党建工作考核")){
-                    scoreActivityVO.setDangjiangongzuo(deptVO.getScore());
-                }else  if(pointerType.equals("网络安全得分")){
-                    scoreActivityVO.setZiyuan(deptVO.getScore());
-                }else  if(pointerType.equals("资源")){
-                    scoreActivityVO.setShengshiyitihuaScore(deptVO.getScore());
-                }else  if(pointerType.equals("基础")){
-                    scoreActivityVO.setJichu(deptVO.getScore());
+                    scoreActivityVO.setDangjiangongzuo(score);
+                }else  if(pointerType.equals("网络安全考核")){
+                    scoreActivityVO.setWangluoanquan(score);
+                }else  if(pointerType.equals("资源融智")){
+                    scoreActivityVO.setZiyuan(score);
+                }else  if(pointerType.equals("基础维护管理提升")){
+                    scoreActivityVO.setJichu(score);
                 }else  if(pointerType.equals("总经理加扣分")){
-                    scoreActivityVO.setZongjinglijiafen(deptVO.getScore());
+                    scoreActivityVO.setZongjinglijiafen(score);
                 }else  if(pointerType.equals("省公司月度考核")){
-                    scoreActivityVO.setShenggongsiyuedukaohe(deptVO.getScore());
+                    scoreActivityVO.setShenggongsiyuedukaohe(score);
                 }
             }
-            scoreActivityVO.setTotalScore();
+//            scoreActivityVO.setTotalScore();
+//
+//            this.totalScore = shenggongsikaohe * (zongjingliScore*0.4 + fenguanScore1 + fenguanScore2 + fenguanScore3 +
+//                    shengshiyitihuaScore + anquanshengchanScore + zhengqizhicheng + jiankonggongdan + dangjiangongzuo + wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+            getDeptScore(scoreActivityVO);
             scoreActivityVOList.add(scoreActivityVO);
         }
 
@@ -219,6 +226,57 @@ public class ScoreActivityController extends BaseController {
         mmap.addAttribute("month", DateFormatUtils.format(new Date(),"MM"));
 
         return prefix + "/statistics";
+    }
+    public void getDeptScore(ScoreActivityVO scoreActivityVO){
+        Double shenggongsikaohe = scoreActivityVO.getShenggongsikaohe();
+        Double shenggongsiyuedukaohe = scoreActivityVO.getShenggongsiyuedukaohe();
+        Double zongjingliScore = scoreActivityVO.getZongjingliScore();
+        Double anquanshengchanScore = scoreActivityVO.getAnquanshengchanScore();
+        Double dangjiangongzuo = scoreActivityVO.getDangjiangongzuo();
+        Double jiankonggongdan = scoreActivityVO.getJiankonggongdan();
+        Double zhengqizhicheng = scoreActivityVO.getZhengqizhicheng();
+        Double wangluoanquan = scoreActivityVO.getWangluoanquan();
+        Double jichu = scoreActivityVO.getJichu();
+        Double zongjinglijiafen = scoreActivityVO.getZongjinglijiafen();
+        Double fenguanScore1 = scoreActivityVO.getFenguanScore1();
+        if(fenguanScore1==null){
+            fenguanScore1=0D;
+        }
+        Double fenguanScore2 = scoreActivityVO.getFenguanScore2();
+        if(fenguanScore2==null){
+            fenguanScore2=0D;
+        }
+        Double shengshiyitihuaScore = scoreActivityVO.getShengshiyitihuaScore();
+        Double totalScore=0D;
+        if(scoreActivityVO.getDeptName().equals("办公室")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.4 + fenguanScore1*0.2 + fenguanScore2*0.2  +
+                     anquanshengchanScore  + wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("技术支撑部")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.3 + fenguanScore1*0.2 + fenguanScore2*0.2  +
+                    anquanshengchanScore +jiankonggongdan + wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("移动业务运营部")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.15 + fenguanScore1*0.15+shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
+                     +jiankonggongdan +dangjiangongzuo+ wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("承载网络运营部")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.3 + fenguanScore1*0.3 +anquanshengchanScore+zhengqizhicheng  +
+                    +jiankonggongdan +dangjiangongzuo+ wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("云与IDC运营部")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.15 + fenguanScore1*0.15   +shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
+                    +jiankonggongdan +dangjiangongzuo+ wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("政企支撑中心")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.20 + fenguanScore1*0.20   +shengshiyitihuaScore+anquanshengchanScore  +
+                    +jiankonggongdan +dangjiangongzuo+ wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("监控调度部")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.20 + fenguanScore1*0.20   +shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
+                     +dangjiangongzuo+ wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("宽带与视频运营部")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.30 + fenguanScore1*0.30 +anquanshengchanScore+zhengqizhicheng  +
+                    +jiankonggongdan +dangjiangongzuo+ wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }else if(scoreActivityVO.getDeptName().equals("基础设施维护部")){
+            totalScore = shenggongsikaohe * (zongjingliScore*0.40 + fenguanScore1*0.30 +anquanshengchanScore  +
+                    +jiankonggongdan +dangjiangongzuo+ wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+        }
+        scoreActivityVO.setTotalScore(totalScore);
     }
 
     /**

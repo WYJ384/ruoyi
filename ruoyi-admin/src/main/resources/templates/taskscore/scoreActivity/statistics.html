@@ -11,35 +11,35 @@
             <tr>
                 <th>序号</th>
                 <th>部门</th>
-                <th>省公司考核得分</th>
+                <th>省公司考核</th>
                 <th>总经理考核</th>
                 <th>分管领导考核</th>
-                <th>分管领导考核</th>
-                <th>分管领导考核</th>
+<!--                <th>分管领导考核</th>-->
+<!--                <th>分管领导考核</th>-->
                 <th>省市一体化考核</th>
                 <th>安全生产考核</th>
                 <th>政企支撑考核</th>
                 <th>监控工单考核</th>
                 <th>党建工作考核</th>
-                <th>网络安全得分</th>
-                <th>资源</th>
-                <th>基础</th>
+                <th>网络安全考核</th>
+                <th>资源融智</th>
+                <th>基础维护管理提升</th>
                 <th>总经理加扣分</th>
                 <th>省公司月度考核</th>
                 <th>总分</th>
             </tr>
             <tr th:each="score,iterStat:${scoreActivityVOList}">
                 <td th:text="${iterStat.index+1}">序号</td>
-                <td th:text="${score.deptName}">部门</td>
+                <td style="color: #337ab7;cursor: pointer" th:text="${score.deptName}" th:onclick="detail([[${score.activityId}]])" >部门</td>
                 <td th:text="${score.shenggongsikaohe}">省公司考核得分</td>
                 <td th:text="${score.zongjingliScore}">总经理考核</td>
-                <td th:text="${score.fenguanScore1}">分管领导考核</td>
-                <td th:text="${score.fenguanScore2}">分管领导考核</td>
-                <td th:text="${score.fenguanScore3}">分管领导考核</td>
-                <td th:text="${score.shengshiyitihuaScore}">省市一体化考核</td>
+                <td th:text="${score.fenguanScore1==null?'——':score.fenguanScore1}">分管领导考核</td>
+<!--                <td th:text="${score.fenguanScore2}">分管领导考核</td>-->
+<!--                <td th:text="${score.fenguanScore3}">分管领导考核</td>-->
+                <td th:text="${score.shengshiyitihuaScore==null?'——':score.shengshiyitihuaScore}">省市一体化考核</td>
                 <td th:text="${score.anquanshengchanScore}">安全生产考核</td>
-                <td th:text="${score.zhengqizhicheng}">政企支撑考核</td>
-                <td th:text="${score.jiankonggongdan}">监控工单考核</td>
+                <td th:text="${score.zhengqizhicheng==null?'——':score.zhengqizhicheng}">政企支撑考核</td>
+                <td th:text="${score.jiankonggongdan==null?'——':score.jiankonggongdan}">监控工单考核</td>
                 <td th:text="${score.dangjiangongzuo}">党建工作考核</td>
                 <td th:text="${score.wangluoanquan}">网络安全得分</td>
                 <td th:text="${score.ziyuan}">资源</td>
@@ -53,5 +53,12 @@
 
 </div>
 <div th:include="include :: footer"></div>
+<script>
+    var prefix = ctx + "taskscore/scoreActivity";
+    function detail(id) {
+        var url = prefix + '/detail/' + id;
+        createMenuItem(url, "查看");
+    }
+</script>
 </body>
 </html>

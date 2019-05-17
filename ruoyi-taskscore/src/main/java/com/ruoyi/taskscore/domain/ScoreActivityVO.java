@@ -1,8 +1,9 @@
-package com.ruoyi.taskdomain;
+package com.ruoyi.taskscore.domain;
 
 public class ScoreActivityVO {
     //部门
     private String deptName;
+    private String activityId;
     //省公司考核得分
     private Double shenggongsikaohe;
     //总经理考核
@@ -35,6 +36,15 @@ public class ScoreActivityVO {
     private Double shenggongsiyuedukaohe;
     //    总分
     private Double totalScore;
+
+
+    public String getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(String activityId) {
+        this.activityId = activityId;
+    }
 
     public String getDeptName() {
         return deptName;
@@ -168,48 +178,7 @@ public class ScoreActivityVO {
         return totalScore;
     }
 
-    public void setTotalScore() {
-        if (shenggongsikaohe == null) {
-            shenggongsikaohe = 0D;
-        }
-        if (zongjingliScore == null) {
-            zongjingliScore = 0D;
-        }
-        if (fenguanScore1 == null) {
-            fenguanScore1 = 0D;
-        }
-        if (fenguanScore2 == null) {
-            fenguanScore2 = 0D;
-        }
-        if (fenguanScore3 == null) {
-            fenguanScore3 = 0D;
-        }
-        if (shengshiyitihuaScore == null) {
-            shengshiyitihuaScore = 0D;
-        }
-        if (anquanshengchanScore == null) {
-            anquanshengchanScore = 0D;
-        }
-        if (zhengqizhicheng == null) {
-            zhengqizhicheng = 0D;
-        }
-        if (jiankonggongdan == null) {
-            jiankonggongdan = 0D;
-        }
-        if (dangjiangongzuo == null) {
-            dangjiangongzuo = 0D;
-        }
-        if (wangluoanquan == null) {
-            wangluoanquan = 0D;
-        }
-        if (zongjinglijiafen == null) {
-            zongjinglijiafen = 0D;
-        }
-        if (shenggongsiyuedukaohe == null) {
-            shenggongsiyuedukaohe = 0D;
-        }
-        this.totalScore = shenggongsikaohe * (zongjingliScore + fenguanScore1 + fenguanScore2 + fenguanScore3 +
-                shengshiyitihuaScore + anquanshengchanScore + zhengqizhicheng + jiankonggongdan + dangjiangongzuo + wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
-
+    public void setTotalScore(Double totalScore) {
+        this.totalScore = totalScore;
     }
 }
