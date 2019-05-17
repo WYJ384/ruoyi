@@ -214,10 +214,6 @@ public class ScoreActivityController extends BaseController {
                     scoreActivityVO.setShenggongsiyuedukaohe(score);
                 }
             }
-//            scoreActivityVO.setTotalScore();
-//
-//            this.totalScore = shenggongsikaohe * (zongjingliScore*0.4 + fenguanScore1 + fenguanScore2 + fenguanScore3 +
-//                    shengshiyitihuaScore + anquanshengchanScore + zhengqizhicheng + jiankonggongdan + dangjiangongzuo + wangluoanquan) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
             getDeptScore(scoreActivityVO);
             scoreActivityVOList.add(scoreActivityVO);
         }
