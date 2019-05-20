@@ -55,7 +55,9 @@
         <include refid="selectScoringPointerVo"/>
         <where>
             <if test="id != null  and id != '' ">and pointer.id = #{id}</if>
-            <if test="name != null  and name != '' ">and pointer.name = #{name}</if>
+            <if test="name != null  and name != '' ">
+                AND  pointer.name like concat('%', #{name}, '%')
+            </if>
             <if test="weight != null ">and weight = #{weight}</if>
             <if test="pointerTypeId != null ">and pointer_type_id = #{pointerTypeId}</if>
             <if test="scoreDescription != null  and scoreDescription != '' ">and score_description =

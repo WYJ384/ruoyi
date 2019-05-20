@@ -194,6 +194,7 @@ public class ScoreActivityController extends BaseController {
                 }else  if(pointerType.equals("总经理考核")){
                     scoreActivityVO.setZongjingliScore(score);
                 }else  if(pointerType.equals("分管领导考核1")){
+
                     scoreActivityVO.setFenguanScore1(score);
                 }else  if(pointerType.equals("分管领导考核2")){
                     scoreActivityVO.setFenguanScore2(score);

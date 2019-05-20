@@ -33,6 +33,14 @@
 					obj.eq(0).removeClass(cla);
 					$('.table').find("."+cla).remove();
 				}
+			});
+
+
+			$('.table').find("td").each(function (index, element) {
+				var td_text=$(element).text();
+				if(td_text=="分管领导考核1" ||td_text=="分管领导考核2"||td_text=="分管领导考核3"){
+					$(element).text("分管领导考核")
+				}
 			})
 		});
 	</script>

@@ -13,9 +13,9 @@
                 <th>部门</th>
                 <th>省公司考核</th>
                 <th>总经理考核</th>
-                <th>分管领导考核</th>
-<!--                <th>分管领导考核</th>-->
-<!--                <th>分管领导考核</th>-->
+                <th>分管领导</th>
+                <th>分管领导</th>
+                <th>分管领导</th>
                 <th>省市一体化考核</th>
                 <th>安全生产考核</th>
                 <th>政企支撑考核</th>
@@ -34,8 +34,8 @@
                 <td th:text="${score.shenggongsikaohe}">省公司考核得分</td>
                 <td th:text="${score.zongjingliScore}">总经理考核</td>
                 <td th:text="${score.fenguanScore1==null?'——':score.fenguanScore1}">分管领导考核</td>
-<!--                <td th:text="${score.fenguanScore2}">分管领导考核</td>-->
-<!--                <td th:text="${score.fenguanScore3}">分管领导考核</td>-->
+                <td th:text="${score.fenguanScore2==null?'——':score.fenguanScore2}">分管领导考核</td>
+                <td th:text="${score.fenguanScore3==null?'——':score.fenguanScore3}">分管领导考核</td>
                 <td th:text="${score.shengshiyitihuaScore==null?'——':score.shengshiyitihuaScore}">省市一体化考核</td>
                 <td th:text="${score.anquanshengchanScore}">安全生产考核</td>
                 <td th:text="${score.zhengqizhicheng==null?'——':score.zhengqizhicheng}">政企支撑考核</td>
