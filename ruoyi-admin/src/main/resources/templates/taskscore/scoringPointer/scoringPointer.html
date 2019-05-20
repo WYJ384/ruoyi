@@ -30,21 +30,26 @@
 								<!--得分：<input type="text" name="score"/>-->
 							<!--</li>-->
 
+<!--							<li>-->
+<!--								受评部门：-->
+<!--								<select name="deptId" id="deptId">-->
+<!--									<option value=""></option>-->
+<!--									<option th:each="dept:${sysDepts}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>-->
+<!--								</select>-->
+<!--							</li>-->
 							<li>
-								受评部门：
-								<select name="deptId" id="deptId">
-									<option value=""></option>
-									<option th:each="dept:${sysDepts}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>
-								</select>
-							</li>
+								<input  onclick="selectDeptTree()" id="deptName" type="text"
+										placeholder="请选择部门" class="form-control" required>
+								<input name="deptId" type="hidden" id="deptId"/>
 
-							<li>
-								评价部门：
-								<select name="evalDeptId" id="evalDeptId">
-									<option value=""></option>
-									<option th:each="dept:${sysDepts}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>
-								</select>
 							</li>
+<!--							<li>-->
+<!--								评价部门：-->
+<!--								<select name="evalDeptId" id="evalDeptId">-->
+<!--									<option value=""></option>-->
+<!--									<option th:each="dept:${sysDepts}" th:value="${dept.deptId}" th:text="${dept.deptName}"></option>-->
+<!--								</select>-->
+<!--							</li>-->
 
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -145,6 +150,31 @@
             };
             $.table.init(options);
         });
+
+
+		function selectDeptTree() {
+			var leadDeptId = $("#deptId").val();
+			var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#deptId").val();
+			var url = ctx + "system/dept/selectDeptTree/" + deptId;
+			var options = {
+				title: '选择部门',
+				width: "380",
+				url: ctx + "system/dept/selectDeptTree/" + deptId,
+				callBack: doSubmitDept
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmitDept(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+			// if ($.tree.notAllowParents(tree)) {
+			//
+			// }
+			var body = layer.getChildFrame('body', index);
+			$("#deptId").val(body.find('#treeId').val());
+			$("#deptName").val(body.find('#treeName').val());
+			layer.close(index);
+		}
     </script>
 </body>
 </html>

@@ -42,7 +42,7 @@
                 <td th:text="${score.jiankonggongdan==null?'——':score.jiankonggongdan}">监控工单考核</td>
                 <td th:text="${score.dangjiangongzuo}">党建工作考核</td>
                 <td th:text="${score.wangluoanquan}">网络安全得分</td>
-                <td th:text="${score.ziyuan}">资源</td>
+                <td th:text="${score.ziyuan==null?'——':score.ziyuan}">资源</td>
                 <td th:text="${score.jichu}">基础</td>
                 <td th:text="${score.zongjinglijiafen}">总经理加扣分</td>
                 <td th:text="${score.shenggongsiyuedukaohe}">省公司月度考核</td>

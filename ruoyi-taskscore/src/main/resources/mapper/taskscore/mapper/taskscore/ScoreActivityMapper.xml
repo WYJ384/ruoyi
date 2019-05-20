@@ -61,6 +61,7 @@ LEFT JOIN sys_dept d ON d.dept_id = score_activity.scoring_pointer_id
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
          </where>
+         order  by remark
     </select>
     
     <select id="selectScoreActivityById" parameterType="String" resultMap="ScoreActivityResult">
