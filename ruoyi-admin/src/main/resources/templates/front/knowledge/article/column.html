@@ -2,7 +2,7 @@
 <head>
     <title th:text="${cmsCategory?.name}"></title>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 </head>
 <body>
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
@@ -15,17 +15,17 @@
 </nav>
 <!-- 搜索主体 -->
 <div class="container-fluid">
-<!--    <div class="row">-->
-<!--        <ol class="breadcrumb">-->
-<!--            <li>-->
-<!--                <a href="index.html">主页</a>-->
-<!--            </li>-->
+    <!--    <div class="row">-->
+    <!--        <ol class="breadcrumb">-->
+    <!--            <li>-->
+    <!--                <a href="index.html">主页</a>-->
+    <!--            </li>-->
 
-<!--            <li class="active">-->
-<!--                <strong>Flot图表</strong>-->
-<!--            </li>-->
-<!--        </ol>-->
-<!--    </div>-->
+    <!--            <li class="active">-->
+    <!--                <strong>Flot图表</strong>-->
+    <!--            </li>-->
+    <!--        </ol>-->
+    <!--    </div>-->
     <div class="row clearfix">
         <div class="col-md-3 col-sm-3  column">
             <div class="row clearfix">
@@ -41,6 +41,24 @@
 
             <!-- 结果显示栏 -->
             <div class="container-fluid">
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-11 column">
+                        <form id="search-form" class="search-form clearfix" method="get"
+                              action="/f/knowledge/article/search"
+                              autocomplete="off"
+                              novalidate="novalidate">
+                            <input class="search-term required" type="text" th:value="${keywords}" name="keywords"
+                                   placeholder="输入关键字进行搜索"
+                                   title="输入关键字进行搜索" autocomplete="off" style="border: solid 1px">
+                            <input class="search-btn" type="submit" value="搜索">
+                            <div id="search-error-container"></div>
+                        </form>
+                    </div>
+                    <div class="col-md-1 column"></div>
+                </div>
                 <div class="row clearfix">
                     <input type="hidden" id="categoryId" th:value="${categoryId}">
                     <input type="hidden" id="keywords" th:value="${keywords}">
@@ -69,30 +87,30 @@
 
 <script id="articleTpl" type="text/html">
     {{each rows article}}
-        <div class="list-group" style="margin-top: 10px;" >
-            <a href="/f/knowledge/article/article/{{article.id}}" class="list-group-item "> <i
-                    class="far fa-file-pdf fa-lg"></i>&nbsp;&nbsp;<big><b  style="color: #337ab7">{{article.title}}</b></big>
-                <br>
-                {{#article.description}}
+    <div class="list-group" style="margin-top: 10px;">
+        <a href="/f/knowledge/article/article/{{article.id}}" class="list-group-item "> <i
+                class="far fa-file-pdf fa-lg"></i>&nbsp;&nbsp;<big><b style="color: #337ab7">{{article.title}}</b></big>
+            <br>
+            {{#article.description}}
 
-                <br>
-                <div class="container-fluid">
-                    <div class="row clearfix gray-word">
-                        <div class="col-md-3 column" >{{article.createDate}}
-                        </div>
-                        <div class="col-md-1 column">
-                            <span class="fenge"></span>
-                        </div>
-                        <div class="col-md-2 column" >{{article.hits}}浏览</div>
-                        <div class="col-md-1 column">
-                            <span class="fenge"></span>
-                        </div>
-<!--                        <div class="col-md-2 column">贡献者：曾祥</div>-->
-                        <div class="col-md-3 column"></div>
+            <br>
+            <div class="container-fluid">
+                <div class="row clearfix gray-word">
+                    <div class="col-md-3 column">{{article.createDate}}
                     </div>
+                    <div class="col-md-1 column">
+                        <span class="fenge"></span>
+                    </div>
+                    <div class="col-md-2 column">{{article.hits}}浏览</div>
+                    <div class="col-md-1 column">
+                        <span class="fenge"></span>
+                    </div>
+                    <!--                        <div class="col-md-2 column">贡献者：曾祥</div>-->
+                    <div class="col-md-3 column"></div>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
+    </div>
     {{/each}}
 </script>
 <script>
@@ -101,11 +119,13 @@
         queryDeptTree();
         loadArticleList(1);
     });
+
     function search() {
         loadArticleList(1);
     }
+
     function loadArticleList(num) {
-        var pageSize=6;
+        var pageSize = 6;
         var config = {
             url: ctx + "f/knowledge/article/list",
             type: "post",
@@ -113,8 +133,8 @@
             data: {
                 pageSize: pageSize,
                 pageNum: num,
-                categoryId:$("#categoryId").val(),
-                keywords:$("#keywords").val(),
+                categoryId: $("#categoryId").val(),
+                keywords: $("#keywords").val(),
 
             },
             beforeSend: function () {
@@ -122,11 +142,11 @@
                 $.modal.disable();
             },
             success: function (result) {
-                $("#articleList").html(template("articleTpl",result));
-                if(result.total==0){
+                $("#articleList").html(template("articleTpl", result));
+                if (result.total == 0) {
                     display_pages(parseInt(1), 5, num);
-                }else{
-                    var total_pages = (result.total + pageSize -1) / pageSize;
+                } else {
+                    var total_pages = (result.total + pageSize - 1) / pageSize;
                     display_pages(parseInt(total_pages), 5, num);
                 }
 
@@ -152,7 +172,8 @@
             search();
         }
     }
-    function display_pages(total_pages, visible_pages, current_page){
+
+    function display_pages(total_pages, visible_pages, current_page) {
         // if(!visible_pages){
         //     visible_pages = 5;
         // }
@@ -169,7 +190,7 @@
             last: '<li class="last"><a href="javascript:;">末页</a></li>',
             page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
             onPageChange: function (num, type) {
-                if(num!=current_page){
+                if (num != current_page) {
                     loadArticleList(num);
                     $('#text').html('当前第' + num + '页');
                 }
