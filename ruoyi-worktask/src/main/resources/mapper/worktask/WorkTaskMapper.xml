@@ -108,7 +108,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             <if test="id != null "> and id = #{id}</if>
             <if test="pid != null "> and pid = #{pid}</if>
-            <if test="workName != null  and workName != '' "> and work_name = #{workName}</if>
+            <if test="workName != null  and workName != '' ">
+                and work_name  like concat('%', #{workName}, '%')
+             </if>
             <if test="rateProgress != null "> and rate_progress = #{rateProgress}</if>
             <if test="description != null  and description != '' "> and description = #{description}</if>
             <if test="beginTime != null "> and begin_time = #{beginTime}</if>
@@ -139,7 +141,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             <if test="id != null "> and id = #{id}</if>
              <if test="pid != null "> and pid = #{pid}</if>
-             <if test="workName != null  and workName != '' "> and work_name = #{workName}</if>
+            <if test="workName != null  and workName != '' ">
+                and work_name  like concat('%', #{workName}, '%')
+            </if>
              <if test="rateProgress != null "> and rate_progress = #{rateProgress}</if>
              <if test="description != null  and description != '' "> and description = #{description}</if>
              <if test="beginTime != null "> and begin_time = #{beginTime}</if>
