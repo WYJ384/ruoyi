@@ -119,8 +119,10 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">主要目标：</label>
                     <div class="col-xs-10">
-                        <textarea name="description" th:field="*{description}" autocomplete="off" maxlength="500"
-                                  class="form-control" rows="3"></textarea>
+<!--                        <textarea name="description" th:field="*{description}" autocomplete="off" maxlength="500"-->
+<!--                                  class="form-control" rows="3"></textarea>-->
+
+                        <div class="well" th:utext="${workTask.description}"></div>
                     </div>
                 </div>
             </div>

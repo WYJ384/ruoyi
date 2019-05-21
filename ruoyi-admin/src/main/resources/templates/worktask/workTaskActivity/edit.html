@@ -22,7 +22,12 @@
 <!--					<textarea id="target" rows="10"  name="target" th:field="*{target}"  class="form-control"></textarea>-->
 				</div>
 			</div>
-
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>目标月份：</label>
+				<div class="col-sm-8">
+					<input id="targetMonth" name="targetMonth" class="form-control" th:field="*{targetMonth}" type="text">
+				</div>
+			</div>
 
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>要求完成时间：</label>
@@ -98,12 +103,12 @@
     <script type="text/javascript">
 		layui.use('laydate', function () {
 			var laydate = layui.laydate;
-			// var startDate = laydate.render({
-			// 	elem: '#targetMonth',
-			// 	theme: 'molv',
-			// 	type: 'month',
-			// 	format: 'MM'
-			// });
+			var startDate = laydate.render({
+				elem: '#targetMonth',
+				theme: 'molv',
+				type: 'month',
+				format: 'MM'
+			});
 			var updateTime = laydate.render({
 				elem: '#updateTime',
 				theme: 'molv',
