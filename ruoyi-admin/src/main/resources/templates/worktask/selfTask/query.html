@@ -1095,7 +1095,7 @@
                             class="attch-itm-dload"
                             th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
                             target="_blank">下载</a>
-<!--                        <a class="attch-itm-delete"  th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a></li>-->
+                        <a class="attch-itm-delete"  th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a></li>
                 </ul>
             </div>
         </div>
@@ -1339,7 +1339,7 @@
     function deleteFile(id){
         var data = { "ids": id };
         $.ajax({
-            url:ctx  + "/worktask/workTaskFile/delete",
+            url:ctx  + "worktask/workTaskFile/delete",
             type: "post",
             dataType: "json",
             data: data,

@@ -7,7 +7,246 @@
       type="text/css"/>
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet"
       type="text/css"/>
+<style type="text/css">
+    /* attch */
+    .attch-list {
+        position: relative;
+        padding: 5px 0;
+        border-top: #d9d9d9 1px solid;
+        border-bottom: #d9d9d9 1px solid;
+        display: none;
+    }
 
+    .attch-item {
+        line-height: 28px;
+        color: #888;
+        overflow: hidden;
+    }
+
+    .atch-itm-icon {
+        float: left;
+        width: 20px;
+        height: 20px;
+        margin: 3px 5px 0 0;
+        background: url(../images/ioop-icon-3.5.png) 0 -165px no-repeat;
+    }
+
+    .atch-itm-icon.xls, .atch-itm-icon.xlsx {
+        background-position: -25px -165px;
+    }
+
+    .atch-itm-icon.doc, .atch-itm-icon.docx {
+        background-position: -50px -165px;
+    }
+
+    .atch-itm-icon.ppt, .atch-itm-icon.pptx {
+        background-position: -75px -165px;
+    }
+
+    .atch-itm-icon.txt {
+        background-position: -100px -165px;
+    }
+
+    .atch-itm-icon.rm, .atch-itm-icon.rmvb, .atch-itm-icon.swf, .atch-itm-icon.mp4, .atch-itm-icon.avi {
+        background-position: -125px -165px;
+    }
+
+    .atch-itm-icon.pdf {
+        background-position: -150px -165px;
+    }
+
+    .atch-itm-icon.rar, .atch-itm-icon.zip {
+        background-position: -175px -165px;
+    }
+
+    .atch-itm-icon.jpg, .atch-itm-icon.png, .atch-itm-icon.gif {
+        background-position: -200px -165px;
+    }
+
+    .atch-itm-icon.html {
+        background-position: -225px -165px;
+    }
+
+    .atch-itm-name, .atch-itm-size, .atch-itm-state, .atch-itm-upler {
+        float: left;
+        margin: 0 10px 0 0;
+    }
+
+    .atch-itm-name {
+        text-decoration: none;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .atch-itm-name:hover {
+        text-decoration: underline;
+        color: #5184ec;
+    }
+
+    .atch-itm-view, .atch-itm-dload, .atch-itm-del, .atch-itm-trans {
+        margin: 0 0 0 10px;
+        text-decoration: none;
+        color: #5184ec;
+        cursor: pointer;
+    }
+
+    .atch-itm-view:hover, .atch-itm-dload:hover, .atch-itm-del:hover, .atch-itm-trans:hover {
+        text-decoration: underline;
+    }
+
+    .atch-itm-prog {
+        background-color: #fff;
+        border: #d6dee2 1px solid;
+    }
+
+    .aitm-prog-bar {
+        width: 0;
+        height: 6px;
+        background-color: #51a3d8;
+    }
+
+    .atch-dlad-all {
+        position: absolute;
+        top: 15px;
+        right: 0;
+    }
+
+    .atch-dlad-all a {
+        display: block;
+        width: 64px;
+        height: 24px;
+        line-height: 24px;
+        text-decoration: none;
+        padding: 3px 10px;
+        background: #74cc39;
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .atch-dlad-all a:hover {
+        background: #3cb536;
+    }
+
+    .attch-list {
+        position: relative;
+        padding: 5px 0;
+        border-top: #d9d9d9 1px solid;
+        border-bottom: #d9d9d9 1px solid;
+        display: none;
+    }
+
+    .attch-item {
+        line-height: 26px;
+        color: #888;
+        overflow: hidden;
+    }
+
+    .attch-itm-icon {
+        float: left;
+        width: 20px;
+        height: 20px;
+        margin: 3px 5px 0 0;
+        background: url(img/ioop-icon-3.5.png) 0 -165px no-repeat;
+    }
+
+    .attch-itm-icon.xls, .attch-itm-icon.xlsx {
+        background-position: -25px -165px;
+    }
+
+    .attch-itm-icon.doc, .attch-itm-icon.docx {
+        background-position: -50px -165px;
+    }
+
+    .attch-itm-icon.ppt, .attch-itm-icon.pptx {
+        background-position: -75px -165px;
+    }
+
+    .attch-itm-icon.txt {
+        background-position: -100px -165px;
+    }
+
+    .attch-itm-icon.rm, .attch-itm-icon.rmvb, .attch-itm-icon.swf, .attch-itm-icon.mp4, .attch-itm-icon.avi {
+        background-position: -125px -165px;
+    }
+
+    .attch-itm-icon.pdf {
+        background-position: -150px -165px;
+    }
+
+    .attch-itm-icon.rar, .attch-itm-icon.zip {
+        background-position: -175px -165px;
+    }
+
+    .attch-itm-icon.jpg, .attch-itm-icon.png, .attch-itm-icon.gif {
+        background-position: -200px -165px;
+    }
+
+    .attch-itm-icon.html {
+        background-position: -225px -165px;
+    }
+
+    .attch-itm-name, .attch-itm-size, .attch-itm-state, .attch-itm-upler {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .attch-itm-name {
+        text-decoration: none;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .attch-itm-name:hover {
+        text-decoration: underline;
+        color: #5184ec;
+    }
+
+    .attch-itm-view, .attch-itm-dload, .attch-itm-delete, .attch-itm-trans {
+        margin-left: 10px;
+        text-decoration: none;
+        color: #5184ec;
+        cursor: pointer;
+    }
+
+    .attch-itm-view:hover, .attch-itm-dload:hover, .attch-itm-delete:hover, .attch-itm-trans:hover {
+        text-decoration: underline;
+    }
+
+    .attch-itm-progs {
+        background-color: #fff;
+        border: #d6dee2 1px solid;
+    }
+
+    .aitm-progs-bar {
+        width: 0;
+        height: 6px;
+        background-color: #51a3d8;
+    }
+
+    .attch-dload-all {
+        position: absolute;
+        top: 15px;
+        right: 0;
+    }
+
+    .attch-dload-all a {
+        display: block;
+        width: 64px;
+        height: 14px;
+        line-height: 14px;
+        text-decoration: none;
+        padding: 8px 10px;
+        background-color: #74cc39;
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .attch-dload-all a:hover {
+        background-color: #3cb536;
+    }
+</style>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-workTask-edit" th:object="${workTask}" enctype="multipart/form-data">
@@ -351,10 +590,21 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">附件：</label>
                     <div class="col-sm-8">
-                        <p th:each="taskfile:${workActivity.workTaskFiles}">
-                            <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"
-                               th:text="${taskfile.fileName}"></a>
-                        </p>
+<!--                        <p th:each="taskfile:${workActivity.workTaskFiles}">-->
+<!--                            <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"-->
+<!--                               th:text="${taskfile.fileName}"></a>-->
+<!--                        </p>-->
+                        <ul id="task_file_list" class="attch-list" style="display: block;">
+                            <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i class="attch-itm-icon xlsx"></i><a
+                                    class="attch-itm-name"
+                                    th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                                    target="_blank" th:text="${file.fileName}" th:title="${file.fileName}" ></a><span
+                                    class="attch-itm-size"></span><span class="attch-itm-state"></span><a
+                                    class="attch-itm-dload"
+                                    th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                                    target="_blank">下载</a>
+                                                        <a class="attch-itm-delete"  th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a></li>
+                        </ul>
                     </div>
                 </div>
 
@@ -593,6 +843,27 @@
         });
 
     }
+
+    function deleteFile(id){
+
+        $.modal.confirm("确定删除该附件吗？", function() {
+            var data = { "ids": id };
+            $.ajax({
+                url:ctx  + "worktask/workTaskFile/delete",
+                type: "post",
+                data: data,
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function(result) {
+                    $.modal.closeLoading();
+                    window.location.reload()
+                }
+            })
+        });
+    }
+
+
 </script>
 </body>
 </html>
