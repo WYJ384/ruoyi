@@ -7,7 +7,7 @@ ruoyi:
   # 版权年份
   copyrightYear: 2019
   # 文件上传
-  profile: c:/profile/
+  profile: /home/app/meetingservice/profile
   # 获取ip地址开关
   addressEnabled: true
 
@@ -27,7 +27,7 @@ server:
     min-spare-threads: 30
     basedir: ${ruoyi.profile}/deployer/tomcat
 fileServer:
-  domain: http://127.0.0.1:8080
+  domain: http://127.0.0.1:8088
 files:
   docservice.url.api: http://127.0.0.1/web-apps/apps/api/documents/api.js
 
@@ -74,8 +74,11 @@ spring:
   resources:
     static-locations: file:${ruoyi.profile},classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
 
-
-      # MyBatis
+  mail:
+    host: smtp.qq.com
+    username: 1192016076@qq.com
+    password: brmdkwrevdbcgcic
+  # MyBatis
 mybatis:
     # 搜索指定包别名
     typeAliasesPackage: com.ruoyi
