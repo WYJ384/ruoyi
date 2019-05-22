@@ -76,7 +76,7 @@
                         <select id="leaderId" class="form-control select2-hidden-accessible">
                             <option th:each="user:${users}" th:value="${user.userId}"
                                     th:text="${user.userName}"
-                                    th:selected="${workTask?.leaderId?.contains(user.userId.toString())}"></option>
+                                    th:selected="${workTask?.leaderId eq (user.userId.toString())}"></option>
                         </select>
                     </div>
                 </div>

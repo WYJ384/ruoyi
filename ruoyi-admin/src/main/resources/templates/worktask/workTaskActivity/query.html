@@ -76,7 +76,7 @@
                         <select id="leaderId" class="form-control select2-hidden-accessible">
                             <option th:each="user:${users}" th:value="${user.userId}"
                                     th:text="${user.userName}"
-                                    th:selected="${workTask?.leaderId?.contains(user.userId.toString())}"></option>
+                                    th:selected="${workTask?.leaderId eq (user.userId.toString())}"></option>
                         </select>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">要求完成时间：</label>
                 <div class="col-sm-8">
-                    <input name="updateTime" readonly th:value="${#dates.format(workTaskActivity?.updateTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
+                    <input name="updateTime" readonly th:value="${#dates.format(workActivity?.updateTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
                            type="text">
                 </div>
             </div>
