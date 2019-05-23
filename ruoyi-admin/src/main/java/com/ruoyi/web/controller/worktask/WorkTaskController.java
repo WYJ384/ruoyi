@@ -612,7 +612,7 @@ public class WorkTaskController extends BaseController
 		mmap.put("taskId", taskId);
 		mmap.put("taskKey", taskKey);
 		SysUser sysUser = new SysUser();
-		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
+//		sysUser.setDeptId(ShiroUtils.getSysUser().getDeptId());
 		mmap.put("users",userService.selectUserList(sysUser));
 
 

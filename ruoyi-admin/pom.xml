@@ -97,6 +97,11 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-knowledge</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-exam</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
