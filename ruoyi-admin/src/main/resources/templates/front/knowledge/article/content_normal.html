@@ -26,11 +26,11 @@
     </div>
     <div ></div>
 
-<!--    <div class="ibox float-e-margins">-->
-<!--        <div class="ibox-content" th:utext="${articleData.solution}" >-->
-<!--            登录主备EAS，前往重定向策略文件路径下，核查userip.txt文件，发现用户机顶盒获取10.239.160.X地址段确实包含在重定向策略中，产生业务接入死循环。启用VI命令重新编辑删除。-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="ibox float-e-margins">
+        <div class="ibox-content" th:utext="${articleData.solution}" >
+            登录主备EAS，前往重定向策略文件路径下，核查userip.txt文件，发现用户机顶盒获取10.239.160.X地址段确实包含在重定向策略中，产生业务接入死循环。启用VI命令重新编辑删除。
+        </div>
+    </div>
 
     <div class="mail-attachment" th:if="${workTaskFiles.size()>0}">
         <p>

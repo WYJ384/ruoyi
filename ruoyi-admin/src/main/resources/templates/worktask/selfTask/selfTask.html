@@ -138,11 +138,11 @@
                         return actions.join('');
                     }
                 },
-                // {
-                //     field: 'selvalTaskType',
-                //     title: '任务类型',
-                //     sortable: true
-                // },
+                {
+                    field: 'remark',
+                    title: '执行人',
+                    sortable: true
+                },
                 {
                     field: 'priority',
                     title: '优先级',
@@ -161,7 +161,10 @@
                 {
                     field: 'taskProgress',
                     title: '任务进度',
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return value+"%";
+                    }
                 },
 
                 {
