@@ -6,7 +6,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 通知公告表 sys_notice
- * 
+ *
  * @author ruoyi
  */
 public class SysNotice extends BaseEntity
@@ -15,20 +15,44 @@ public class SysNotice extends BaseEntity
 
     /** 公告ID */
     private Long noticeId;
-    
+
     /** 公告标题 */
     private String noticeTitle;
-    
+
     /** 公告类型（1通知 2公告） */
     private String noticeType;
-    
+
     /** 公告内容 */
     private String noticeContent;
-    
+
     /** 公告状态（0正常 1关闭） */
     private String status;
+    //0未读，1已读
+    private String readStatus;
+    //发布范围 0所有,1本部门,3选择
+    private String displayUser;
 
-    public Long getNoticeId()
+    public String getDisplayUser() {
+        return displayUser;
+    }
+
+    public void setDisplayUser(String displayUser) {
+        this.displayUser = displayUser;
+    }
+
+    public Long getNoticeId() {
+        return noticeId;
+    }
+
+    public String getReadStatus() {
+        return readStatus;
+    }
+
+    public void setReadStatus(String readStatus) {
+        this.readStatus = readStatus;
+    }
+
+    public Long gNoticeId()
     {
         return noticeId;
     }
@@ -77,7 +101,7 @@ public class SysNotice extends BaseEntity
     {
         return status;
     }
-    
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)

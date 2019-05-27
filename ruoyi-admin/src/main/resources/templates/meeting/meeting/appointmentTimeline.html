@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <link th:href="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
@@ -230,8 +231,8 @@
             locale: 'zh-cn',
             selectable: true,
             eventOverlap: false,
-            minTime: '07:00:00',//开始时间早上七点
-            maxTime: '22:00:00',//终止时间晚上19点
+            minTime: '08:30:00',//开始时间早上七点
+            maxTime: '18:00:00',//终止时间晚上19点
             slotDuration: '00:30', // 间隔30分钟
             eventLimit: true, // allow "more" link when too many events
             header: false,

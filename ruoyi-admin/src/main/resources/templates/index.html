@@ -37,7 +37,7 @@
             	</li>
             	<li>
             		<div class="user-panel">
-            			<a class="menuItem" title="个人中心" th:href="@{/system/user/profile}"> 
+            			<a class="menuItem" title="个人中心" th:href="@{/system/user/profile}">
             				<div class="hide" th:text="个人中心"></div>
 					        <div class="pull-left image">
 		                    	<img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{/profile/avatar/} + ${user.avatar}" class="img-circle" alt="User Image">
@@ -87,6 +87,7 @@
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right welcome-message">
+                    <li><a href="/f/fIndexController/index#">资源库</a></li>
                     <li><a href="">欢迎您：[[${user.userName}]] 当前在线 <span id="onlineUser"></span> 人</a></li>
                     <li><a title="使用文档" href="https://www.kancloud.cn/seanj/nocbg/content/%E4%BC%9A%E8%AE%AE%E7%B3%BB%E7%BB%9F.md" target="_blank"><i class="fa fa-question-circle"></i> 使用文档</a></li>
 	                <li><a title="全屏显示" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏显示</a></li>
@@ -163,7 +164,7 @@
 <script th:src="@{/ruoyi/js/ry-ui.js?v=3.2.0}"></script>
 <script th:src="@{/ruoyi/index.js}"></script>
 <script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
-<script th:inline="javascript"> 
+<script th:inline="javascript">
 var ctx = [[@{/}]];
 /*用户管理-重置密码*/
 function resetPwd() {
