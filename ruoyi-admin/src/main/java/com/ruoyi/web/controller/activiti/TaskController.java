@@ -95,6 +95,7 @@ public class TaskController extends BaseController {
                 String workTaskId = workTaskActivity.getWorkTaskId();
                 WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
                 taskV.setName(workTask.getWorkName()+"("+workTaskActivity.getTargetMonth()+"月)");
+                taskV.setProcessInstanceBusinessKey(workTaskActivity.getId());
             }
         }
         TableDataInfo dataTable = getDataTable(taskVOS);
@@ -214,6 +215,7 @@ public class TaskController extends BaseController {
                 String workTaskId = workTaskActivity.getWorkTaskId();
                 WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
                 taskVO.setName(workTask.getWorkName()+"("+workTaskActivity.getTargetMonth()+"月)");
+                taskVO.setProcessInstanceBusinessKey(workTaskActivity.getId());
             }
         }
         TableDataInfo dataTable = getDataTable(taskVOs);

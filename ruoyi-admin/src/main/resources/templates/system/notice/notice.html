@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+
 <body class="gray-bg">
     
     <div class="container-div">
@@ -32,10 +33,10 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-		        <a class="btn btn-success" onclick="$.operate.addFull()" shiro:hasPermission="system:notice:add">
+		        <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:notice:add">
 		            <i class="fa fa-plus"></i> 新增
 		        </a>
-		        <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editFull()" shiro:hasPermission="system:notice:edit">
+		        <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:notice:edit">
 		            <i class="fa fa-edit"></i> 修改
 		        </a>
 		        <a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:notice:remove">
@@ -66,13 +67,16 @@
                 columns: [{
 		            checkbox: true
 		        },
-				{
-					field : 'noticeId', 
-					title : '序号' 
-				},
+				// {
+				// 	field : 'noticeId',
+				// 	title : '序号'
+				// },
 				{
 					field : 'noticeTitle', 
-					title : '公告标题' 
+					title : '公告标题' ,
+					formatter: function (value, row, index) {
+						return '<a href="#" onclick="detail(\'' + row.noticeId + '\',\'' + row.noticeTitle + '\')">' + row.noticeTitle + '</a>';
+					}
 				},
 				{
 		            field: 'noticeType',
@@ -82,16 +86,16 @@
 		            	return $.table.selectDictLabel(types, value);
 		            }
 		        },
+				// {
+		        //     field: 'status',
+		        //     title: '状态',
+		        //     align: 'center',
+		        //     formatter: function(value, row, index) {
+		        //     	return $.table.selectDictLabel(datas, value);
+		        //     }
+		        // },
 				{
-		            field: 'status',
-		            title: '状态',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	return $.table.selectDictLabel(datas, value);
-		            }
-		        },
-				{
-					field : 'createBy', 
+					field : 'remark',
 					title : '创建者' 
 				},
 				{
@@ -104,14 +108,20 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editFull(\'' + row.noticeId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.noticeId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.noticeId + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
 		        }]
             };
             $.table.init(options);
+
+
         });
+		function detail(id,noticeTitle) {
+			var url = prefix + '/view/' + id;
+			createMenuItem(url,noticeTitle);
+		}
     </script>
 </body>
 </html>

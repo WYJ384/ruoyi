@@ -40,6 +40,14 @@ public class SysNoticeController extends BaseController
         return prefix + "/notice";
     }
 
+
+    @RequiresPermissions("system:notice:view")
+    @GetMapping("/view/{id}")
+    public String toView(@PathVariable("id") Long id,ModelMap mmap)
+    {
+        mmap.put("notice", noticeService.selectNoticeById(id));
+        return prefix + "/noticePreview";
+    }
     /**
      * 查询公告列表
      */
@@ -71,7 +79,8 @@ public class SysNoticeController extends BaseController
     @ResponseBody
     public AjaxResult addSave(SysNotice notice)
     {
-        notice.setCreateBy(ShiroUtils.getLoginName());
+        notice.setCreateBy(ShiroUtils.getUserId()+"");
+        notice.setRemark(ShiroUtils.getSysUser().getUserName());
         return toAjax(noticeService.insertNotice(notice));
     }
 

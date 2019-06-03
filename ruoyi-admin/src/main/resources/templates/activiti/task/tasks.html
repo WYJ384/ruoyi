@@ -55,7 +55,8 @@
                 // },
                 {
                     field: 'id', // 列字段名
-                    title: '任务' // 列标题
+                    title: '任务', // 列标题
+                    visible: false
                 },
 //                {
 //                    field: 'key', // 列字段名
@@ -71,7 +72,10 @@
                 // },
                 {
                     field: 'name',
-                    title: '任务名称'
+                    title: '任务名称',
+                    formatter: function (value, row, index) {
+                        return '<a href="#" onclick="detail(\'' + row.processInstanceBusinessKey + '\',\'' + row.name + '\')">' + row.name + '</a>';
+                    }
                 },
                 // {
                 //     field: 'executionId',
@@ -86,9 +90,8 @@
                     formatter: function (value, row, index) {
                         var actions = [];
                         if(options.url.indexOf("list")!=-1||options.url.indexOf("todo")!=-1){
-                            actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>处理</a> ');
+                            actions.push('<a class="btn btn-primary btn-xs " title="签收任务" href="#" onclick="form(\'' + row.processId + '\',\'' + row.name + '\',\'' + row.id + '\',\'' + row.key + '\')"><i class="fa fa-play-circle-o"></i>处理</a> ');
                         }
-                        // actions.push('<a class="btn btn-primary btn-xs ' + todoFlag + '" title="签收任务" href="#" onclick="form(\'' + row.processDefinitionId + '\',\'' + row.id + '\')"><i class="fa fa-play-circle-o"></i>审批</a> ');
                         return actions.join('');
                     }
                 }]
@@ -116,33 +119,18 @@
         });
     });
 
-    function form(proId, taskId,taskKey) {
+    function form(proId,title, taskId,taskKey) {
+        $.modal.openTab(title,"/worktask/workTask/toDuban?proId="+proId+"&taskId="+taskId+"&taskKey="+taskKey);
 
-        //主任分配任务
-        // if(taskKey=="zhurenduban"){
-        //     alert("主任分配任务")
-        // }else if(taskKey=="gerentijiao"){
-        //     alert("个人提交任务")
-        // }else if(taskKey=="lingdaopingfen"){
-        //     alert("分管领导评分")
-        // }
-
-        $.modal.openTab("办理","/worktask/workTask/toDuban?proId="+proId+"&taskId="+taskId+"&taskKey="+taskKey);
-        //员工完成任务
-        //分管领导评分
-        // layer.open({
-        //     type: 2,
-        //     title: '发起流程',
-        //     maxmin: true,
-        //     shadeClose: false,
-        //     area: ['100%', '100%'],
-        //     content: prefix + '/form/' + proId + '/' + id
-        // })
     }
 
     function workProcessDetail(processDefinitionId,process_instance_id){
         $.modal.openTab("查看详情",ctx +"diagram-viewer/index.html?processDefinitionId="+processDefinitionId+"&processInstanceId="+process_instance_id);
 
+    }
+    function detail(id,noticeTitle) {
+        var url = ctx + 'worktask/workTaskActivity/query/' + id;
+        createMenuItem(url,noticeTitle);
     }
 </script>
 </body>

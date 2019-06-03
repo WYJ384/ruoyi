@@ -2,12 +2,11 @@
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
-<link th:href="@{/ajax/libs/summernote/summernote.css}" rel="stylesheet"/>
-<link th:href="@{/ajax/libs/summernote/summernote-bs3.css}" rel="stylesheet"/>
+
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-notice-add">
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">公告标题：</label>
 				<div class="col-sm-8">
 					<input id="noticeTitle" name="noticeTitle" class="form-control" type="text" required>
@@ -17,15 +16,21 @@
 				<label class="col-sm-3 control-label">公告类型：</label>
 				<div class="col-sm-8">
 					<select name="noticeType" class="form-control m-b" th:with="type=${@dict.getType('sys_notice_type')}">
-	                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-	                </select>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+					</select>
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">公告内容：</label>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>公告内容：</label>
 				<div class="col-sm-8">
-				    <input id="noticeContent" name="noticeContent" type="hidden">
-				    <div class="summernote"></div>
+					<script id="noticeContent" name="noticeContent" type="text/plain" style="width:100%;height:500px;"  ></script>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">发布范围：</label>
+				<div class="col-sm-8">
+					<input data-toggle="modal" data-target="#myModal" id="displayUser" name="displayUser" class="form-control" type="text" required>
 				</div>
 			</div>
 			<div class="form-group">
@@ -39,58 +44,43 @@
 			</div>
 		</form>
 	</div>
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i
+					class="fa fa-check"></i>保存
+			</button>
+			&nbsp;
+			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
+					class="fa fa-reply-all"></i>关 闭
+			</button>
+		</div>
+	</div>
+
+	<div  th:include="userList" ></div>
     <div th:include="include::footer"></div>
-    <script th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
-    <script th:src="@{/ajax/libs/summernote/summernote-zh-CN.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"> </script>
+	<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+	<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
     <script type="text/javascript">
         var prefix = ctx + "system/notice";
-
-	    $('.summernote').summernote({
-			height : '220px',
-			lang : 'zh-CN',
-			callbacks: {
-                onImageUpload: function (files) {
-                    sendFile(files[0], this);
-                }
-            }
+		$(function () {
+			 UE.getEditor('noticeContent');
 		});
-	    
 	    // 上传文件
-	    function sendFile(file, obj) {
-	        var data = new FormData();
-	        data.append("file", file);
-	        $.ajax({
-	            type: "POST",
-	            url: ctx + "common/upload",
-	            data: data,
-	            cache: false,
-	            contentType: false,
-	            processData: false,
-	            dataType: 'json',
-	            success: function(result) {
-	                if (result.code == web_status.SUCCESS) {
-	                	$(obj).summernote('editor.insertImage', result.url, result.fileName);
-					} else {
-						$.modal.alertError(result.msg);
-					}
-	            },
-	            error: function(error) {
-	                $.modal.alertWarning("图片上传失败。");
-	            }
-	        });
-	    }
-		
+
 		$("#form-notice-add").validate({
 			focusCleanup: true
 		});
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	        	var sHTML = $('.summernote').summernote('code');
-				$("#noticeContent").val(sHTML);
-				$.operate.save(prefix + "/add", $('#form-notice-add').serialize());
+				$.operate.saveTab(prefix + "/add", $('#form-notice-add').serialize());
 	        }
 	    }
+	    $("#displayUser").click(function () {
+		});
 	</script>
 </body>
 </html>
