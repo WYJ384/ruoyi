@@ -29,6 +29,16 @@ public class HistoryTaskVo {
     //任务描述
     private String  description;
     private long datePoorHour;
+    //领导批示意见
+    private String repContent;
+
+    public String getRepContent() {
+        return repContent;
+    }
+
+    public void setRepContent(String repContent) {
+        this.repContent = repContent;
+    }
 
     public long getDatePoorHour() {
         return datePoorHour;

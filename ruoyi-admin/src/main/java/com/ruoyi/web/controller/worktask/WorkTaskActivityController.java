@@ -356,6 +356,8 @@ public class WorkTaskActivityController extends BaseController {
                     historyTaskVo.setDescription(historyTaskVo.getAssignee()+"提交工作内容："+workTaskActivity.getContent());
                 }else if(hai.getActivityId().equalsIgnoreCase("lingdaopingfen")){
                     historyTaskVo.setDescription("分管领导评分:"+workTaskActivity.getTargetScore());
+                    historyTaskVo.setRepContent(workTaskActivity.getRepContent());
+
                 }else if(hai.getActivityId().equalsIgnoreCase("end")){
                     historyTaskVo.setDescription("任务结束");
                 }
