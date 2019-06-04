@@ -48,8 +48,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 AND read_status = #{readStatus}
             </if>
 			<if test="displayUser != null and displayUser != ''">
-				AND display_user #{displayUser}
-			</if>
+				AND  find_in_set(#{displayUser},display_user)
+            </if>
 		</where>
     </select>
 

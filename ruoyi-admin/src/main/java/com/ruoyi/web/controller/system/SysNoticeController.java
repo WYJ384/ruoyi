@@ -1,6 +1,10 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,14 +33,16 @@ import com.ruoyi.system.service.ISysNoticeService;
 public class SysNoticeController extends BaseController
 {
     private String prefix = "system/notice";
-
+    @Autowired
+    private ISysUserService userService;
     @Autowired
     private ISysNoticeService noticeService;
 
     @RequiresPermissions("system:notice:view")
     @GetMapping()
-    public String notice()
+    public String notice(ModelMap mmap)
     {
+        mmap.put("user", ShiroUtils.getSysUser());
         return prefix + "/notice";
     }
 
@@ -56,6 +62,10 @@ public class SysNoticeController extends BaseController
     @ResponseBody
     public TableDataInfo list(SysNotice notice)
     {
+        if (!SysUser.isAdmin(ShiroUtils.getUserId()))
+        {
+            notice.setDisplayUser(ShiroUtils.getUserId()+"");
+        }
         startPage();
         List<SysNotice> list = noticeService.selectNoticeList(notice);
         return getDataTable(list);
@@ -65,8 +75,12 @@ public class SysNoticeController extends BaseController
      * 新增公告
      */
     @GetMapping("/add")
-    public String add()
+    public String add(ModelMap mmap)
     {
+        SysUser sysUser=new SysUser();
+        List<SysUser> sysUsers = userService.selectUserList(sysUser);
+        mmap.put("users",sysUsers);
+
         return prefix + "/add";
     }
 
@@ -90,6 +104,8 @@ public class SysNoticeController extends BaseController
     @GetMapping("/edit/{noticeId}")
     public String edit(@PathVariable("noticeId") Long noticeId, ModelMap mmap)
     {
+        SysUser sysUser=new SysUser();
+        mmap.put("users",userService.selectUserList(sysUser));
         mmap.put("notice", noticeService.selectNoticeById(noticeId));
         return prefix + "/edit";
     }
