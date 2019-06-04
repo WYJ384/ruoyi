@@ -18,7 +18,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务目标：</label>
 				<div class="col-sm-8">
-					<script id="target" name="target" type="text/plain" style="width:1024px;height:500px;" th:utext="*{target}" ></script>
+					<script id="target" name="target" type="text/plain" style="width:100%;height:500px;" th:utext="*{target}" ></script>
 <!--					<textarea id="target" rows="10"  name="target" th:field="*{target}"  class="form-control"></textarea>-->
 				</div>
 			</div>
@@ -118,7 +118,6 @@
 		// $("#target").markdown({autofocus:false,savable:false})
 		$(function () {
 			var ue = UE.getEditor('target');
-
 		});
 		var prefix = ctx + "worktask/workTaskActivity";
 		$("#form-workTaskActivity-edit").validate({

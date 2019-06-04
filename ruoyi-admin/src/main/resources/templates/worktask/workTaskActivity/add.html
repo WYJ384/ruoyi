@@ -9,7 +9,8 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务目标：</label>
 				<div class="col-sm-8">
-					<textarea id="target" rows="10" name="target" class="form-control"></textarea>
+					<script id="target" name="target" type="text/plain" style="width:100%;height:500px;" th:utext="*{target}" ></script>
+
 				</div>
 			</div>
 			<div class="form-group">
@@ -42,7 +43,17 @@
 		</div>
 	</div>
     <div th:include="include::footer"></div>
+	<!--	<script th:src="@{/ajax/libs/bootstrap-markdown/bootstrap-markdown.js}"></script>-->
+	<!--	<script th:src="@{/ajax/libs/bootstrap-markdown/markdown.js}"></script>-->
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"> </script>
+	<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+	<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
     <script type="text/javascript">
+		$(function () {
+			var ue = UE.getEditor('target');
+		});
 		layui.use('laydate', function () {
 			var laydate = layui.laydate;
 			var startDate = laydate.render({
