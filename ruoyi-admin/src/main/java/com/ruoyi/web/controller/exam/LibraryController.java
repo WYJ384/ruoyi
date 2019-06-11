@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.exam;
 
 import java.util.List;
+import java.util.UUID;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +87,8 @@ public class LibraryController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Library library)
-	{		
+	{
+		library.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		return toAjax(libraryService.insertLibrary(library));
 	}
 
