@@ -146,7 +146,8 @@ public class LibraryCategoryController extends BaseController
 		mmap.put("pCategory", pCategory);
 	    return prefix + "/edit";
 	}
-	
+
+
 	/**
 	 * 修改保存题库类型
 	 */
@@ -181,7 +182,9 @@ public class LibraryCategoryController extends BaseController
 		if (libraryCategoryService.selectCountCategoryByParentId(id) > 0) {
 			return error(1, "存在子分类,不允许删除");
 		}
-
+		if (id.equals("1")) {
+			return error(1, "顶级分类不可删除");
+		}
 		ShiroUtils.clearCachedAuthorizationInfo();
 		return toAjax(libraryCategoryService.deleteLibraryCategoryByIds(id));
 	}

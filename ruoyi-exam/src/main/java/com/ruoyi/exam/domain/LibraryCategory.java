@@ -34,7 +34,17 @@ public class LibraryCategory extends BaseEntity
 	/** 删除标记 */
 	private String delFlag;
 
-	public void setId(String id) 
+	private String parentIds;
+
+	public String getParentIds() {
+		return parentIds;
+	}
+
+	public void setParentIds(String parentIds) {
+		this.parentIds = parentIds;
+	}
+
+	public void setId(String id)
 	{
 		this.id = id;
 	}

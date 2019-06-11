@@ -58,7 +58,15 @@ public class LibraryCategoryServiceImpl implements ILibraryCategoryService
 	@Override
 	public int insertLibraryCategory(LibraryCategory libraryCategory)
 	{
-	    return libraryCategoryMapper.insertLibraryCategory(libraryCategory);
+		LibraryCategory info = libraryCategoryMapper.selectLibraryCategoryById(libraryCategory.getPid());
+		if(info!=null){
+			libraryCategory.setParentIds(info.getParentIds() + "," + libraryCategory.getPid());
+		}else{
+			libraryCategory.setParentIds("0," + libraryCategory.getPid());
+		}
+
+
+		return libraryCategoryMapper.insertLibraryCategory(libraryCategory);
 	}
 	
 	/**

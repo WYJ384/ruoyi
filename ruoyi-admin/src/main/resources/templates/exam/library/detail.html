@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="include :: header"></head>
+<body>
+<div class="container-div  ui-layout-center">
+    <div class="row">
+        <div class="btn-group-sm pull-right" id="toolbar" role="group">
+
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="exam:library:add">
+                <i class="fa fa-plus"></i> 添加试题
+            </a>
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="exam:library:add">
+                <i class="fa fa-plus"></i> 批量导入
+            </a>
+            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="exam:library:add">
+                <i class="fa fa-plus"></i> 返回题库列表
+            </a>
+        </div>
+    </div>
+</div>
+
+<div th:include="include::footer"></div>
+
+</body>
+</html>

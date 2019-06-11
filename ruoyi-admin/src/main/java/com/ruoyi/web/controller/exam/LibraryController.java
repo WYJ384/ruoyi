@@ -3,6 +3,7 @@ package com.ruoyi.web.controller.exam;
 import java.util.List;
 import java.util.UUID;
 
+import com.ruoyi.exam.domain.LibraryCategory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,7 +92,13 @@ public class LibraryController extends BaseController
 		library.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		return toAjax(libraryService.insertLibrary(library));
 	}
-
+	@GetMapping("/detail/{id}")
+	public String detail(@PathVariable("id") String id, ModelMap mmap)
+	{
+		Library library = libraryService.selectLibraryById(id);
+		mmap.put("library", library);
+		return prefix + "/detail";
+	}
 	/**
 	 * 修改试题库
 	 */

@@ -33,45 +33,13 @@
     <div class="row">
         <div class="col-sm-12 search-collapse">
             <form id="formId">
-                <input type="hidden" id="categoryId" name="categoryId"/>
-                <input type="hidden" id="parentId" name="parentId">
+                <input type="hidden" id="categoryId" name="cateId"/>
+                <input type="hidden" id="parentId" name="pid">
                 <div class="select-list">
                     <ul>
                         <li>
                             题库名称：<input type="text" name="name"/>
                         </li>
-
-<!--                        <li>-->
-<!--                            0私密1公开：<input type="text" name="permission"/>-->
-<!--                        </li>-->
-
-<!--                        <li>-->
-<!--                            所属分类：<input type="text" name="cateId"/>-->
-<!--                        </li>-->
-
-<!--                        <li>-->
-<!--                            创建者：<input type="text" name="createBy"/>-->
-<!--                        </li>-->
-
-<!--                        <li>-->
-<!--                            创建时间：<input type="text" name="createDate"/>-->
-<!--                        </li>-->
-
-<!--                        <li>-->
-<!--                            更新者：<input type="text" name="updateBy"/>-->
-<!--                        </li>-->
-
-<!--                        <li>-->
-<!--                            更新时间：<input type="text" name="updateDate"/>-->
-<!--                        </li>-->
-
-<!--                        <li>-->
-<!--                            备注信息：<input type="text" name="remark"/>-->
-<!--                        </li>-->
-
-<!--                        <li>-->
-<!--                            删除标记：<input type="text" name="delFlag"/>-->
-<!--                        </li>-->
 
                         <li>
                             <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
@@ -136,7 +104,14 @@
                 {
                     field: 'name',
                     title: '题库名称',
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+
+                        var actions = [];
+                        var title="题库详情";
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/detail/'+row.id + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+                        return actions.join('');
+                    }
                 },
                 // {
                 //     field: 'permission',

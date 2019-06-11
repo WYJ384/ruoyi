@@ -14,10 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateDate"    column="update_date"    />
         <result property="remark"    column="remark"    />
         <result property="delFlag"    column="del_flag"    />
+        <result property="parentIds"    column="parent_ids"    />
     </resultMap>
 	
 	<sql id="selectLibraryCategoryVo">
-        select id, name, pid, create_by, create_date, update_by, update_date, remark, del_flag from exam_library_category
+        select id, name, pid,parent_ids, create_by, create_date, update_by, update_date, remark, del_flag from exam_library_category
     </sql>
     <select id="selectCountCategoryByParentId" resultType="Integer">
           select count(1) from exam_library_category where pid=#{id} and  del_flag='0'
@@ -26,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectLibraryCategoryVo"/>
         <where>  
             <if test="id != null  and id != '' "> and id = #{id}</if>
+            <if test="parentIds != null  and parentIds != '' "> and parent_ids = #{parentIds}</if>
              <if test="name != null  and name != '' "> and name = #{name}</if>
              <if test="pid != null  and pid != '' "> and pid = #{pid}</if>
              <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
@@ -55,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateDate != null  ">update_date,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+            <if test="parentIds != null  and parentIds != '' "> and parent_ids = #{parentIds}</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
@@ -66,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateDate != null  ">#{updateDate},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+            <if test="parentIds != null  and parentIds != ''  ">#{parentIds},</if>
          </trim>
     </insert>
 	 
@@ -80,6 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateDate != null  ">update_date = #{updateDate},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="parentIds != null  and parentIds != ''  ">parent_ids = #{parentIds},</if>
         </trim>
         where id = #{id}
     </update>
