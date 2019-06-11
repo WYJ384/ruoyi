@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								题目：<input type="text" name="title"/>
+							</li>
+
+
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="exam:singleChoice:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="exam:singleChoice:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="exam:singleChoice:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="exam:singleChoice:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('exam:singleChoice:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('exam:singleChoice:remove')}]];
+        var prefix = ctx + "exam/singleChoice";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "单选题",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				// {
+				// 	field : 'id',
+				// 	title : '单选题ID',
+				// 	visible: false
+				// },
+				{
+					field : 'title', 
+					title : '题目',
+					sortable: true
+				},
+				// {
+				// 	field : 'choiceA',
+				// 	title : '选项A',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'choiceB',
+				// 	title : '选项B',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'choiceC',
+				// 	title : '选项C',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'choiceD',
+				// 	title : '选项D',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'choiceE',
+				// 	title : '选项E',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'choiceF',
+				// 	title : '选项F',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'choiceG',
+				// 	title : '选项G',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'choiceH',
+				// 	title : '选项H',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'answer',
+				// 	title : '答案',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'answerTip',
+				// 	title : '解析',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createBy',
+				// 	title : '创建者',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createDate',
+				// 	title : '创建时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateBy',
+				// 	title : '更新者',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateDate',
+				// 	title : '更新时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'remark',
+				// 	title : '备注信息',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'delFlag',
+				// 	title : '删除标记',
+				// 	sortable: true
+				// },
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

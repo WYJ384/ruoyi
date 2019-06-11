@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-libraryCategory-edit" th:object="${libraryCategory}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<input id="treeId" name="parentId" th:field="*{pid}" class="form-control" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">父级编号：</label>
+				<div class="col-sm-8">
+					<div class="input-group">
+						<input class="form-control" type="text" onclick="selectCategoryTree()" id="treeName" readonly="true" th:value="${pCategory.name}">
+						<span class="input-group-addon"><i class="fa fa-search"></i></span>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">类型名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">父类型：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="pid" name="pid" th:field="*{pid}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateDate" name="updateDate" th:field="*{updateDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "exam/libraryCategory";
+		$("#form-libraryCategory-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-libraryCategory-edit').serialize());
+	        }
+	    }
+
+		/*菜单管理-新增-选择菜单树*/
+		function selectCategoryTree() {
+			var treeId = $("#treeId").val();
+			var menuId = treeId > 0 ? treeId : 1;
+			var url = prefix + "/selectCategoryTree/" + menuId;
+			var options = {
+				title: '分类选择',
+				width: "380",
+				url: url,
+				callBack: doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+
+		function doSubmit(index, layero){
+			var body = layer.getChildFrame('body', index);
+			$("#treeId").val(body.find('#treeId').val());
+			$("#treeName").val(body.find('#treeName').val());
+			layer.close(index);
+		}
+	</script>
+</body>
+</html>

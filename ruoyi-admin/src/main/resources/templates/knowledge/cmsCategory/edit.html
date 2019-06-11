@@ -9,11 +9,7 @@
 			<input id="treeId" name="parentId" th:field="*{parentId}" class="form-control" type="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">父级编号：</label>
-<!--				<div class="col-sm-8">-->
-<!--					<input id="parentId" name="parentId" th:field="*{parentId}" class="form-control" type="text">-->
-<!--				</div>-->
 				<div class="col-sm-8">
-					<!--					<input id="parentId" name="parentId" class="form-control" type="text">-->
 					<div class="input-group">
 						<input class="form-control" type="text" onclick="selectCategoryTree()" id="treeName" readonly="true" th:value="${pcmsCategory.name}">
 						<span class="input-group-addon"><i class="fa fa-search"></i></span>

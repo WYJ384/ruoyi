@@ -247,7 +247,7 @@
         <module>ruoyi-filemanager</module>
         <module>ruoyi-taskscore</module>
         <module>ruoyi-knowledge</module>
-
+        <module>ruoyi-exam</module>
     </modules>
     <packaging>pom</packaging>
 

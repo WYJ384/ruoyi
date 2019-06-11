@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.exam.mapper.LibraryCategoryMapper">
+    
+    <resultMap type="LibraryCategory" id="LibraryCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="pid"    column="pid"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+	
+	<sql id="selectLibraryCategoryVo">
+        select id, name, pid, create_by, create_date, update_by, update_date, remark, del_flag from exam_library_category
+    </sql>
+    <select id="selectCountCategoryByParentId" resultType="Integer">
+          select count(1) from exam_library_category where pid=#{id} and  del_flag='0'
+    </select>
+    <select id="selectLibraryCategoryList" parameterType="LibraryCategory" resultMap="LibraryCategoryResult">
+        <include refid="selectLibraryCategoryVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="pid != null  and pid != '' "> and pid = #{pid}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+            and del_flag = '0'
+         </where>
+    </select>
+    
+    <select id="selectLibraryCategoryById" parameterType="String" resultMap="LibraryCategoryResult">
+        <include refid="selectLibraryCategoryVo"/>
+        where id = #{id}  and del_flag = '0'
+    </select>
+        
+    <insert id="insertLibraryCategory" parameterType="LibraryCategory">
+        insert into exam_library_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="pid != null  and pid != ''  ">pid,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="pid != null  and pid != ''  ">#{pid},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateLibraryCategory" parameterType="LibraryCategory">
+        update exam_library_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="pid != null  and pid != ''  ">pid = #{pid},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteLibraryCategoryById" parameterType="String">
+         update exam_single_choice set del_flag=1 where id = #{id}
+    </delete>
+	
+    <delete id="deleteLibraryCategoryByIds" parameterType="String">
+        update exam_single_choice set del_flag=1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
