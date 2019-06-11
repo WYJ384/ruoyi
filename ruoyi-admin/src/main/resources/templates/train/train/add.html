@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-train-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">培训人员项目：</label>
+				<div class="col-sm-8">
+					<input id="userName" name="userName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">培训人员id：</label>
+				<div class="col-sm-8">
+					<input id="userId" name="userId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">出发时间：</label>
+				<div class="col-sm-8">
+					<input id="startDate" name="startDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">回程时间：</label>
+				<div class="col-sm-8">
+					<input id="endDate" name="endDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交通工具：</label>
+				<div class="col-sm-8">
+					<input id="transportation" name="transportation" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">出差类别：</label>
+				<div class="col-sm-8">
+					<input id="trainType" name="trainType" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">主办单位是否安排食宿：</label>
+				<div class="col-sm-8">
+					<input id="isFood" name="isFood" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">总经理：</label>
+				<div class="col-sm-8">
+					<input id="zjl" name="zjl" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">主管副总经理：</label>
+				<div class="col-sm-8">
+					<input id="zfgzjl" name="zfgzjl" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">技术负责人：</label>
+				<div class="col-sm-8">
+					<input id="jsfzr" name="jsfzr" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">教育培训委员会办公室：</label>
+				<div class="col-sm-8">
+					<input id="pxwyhbgs" name="pxwyhbgs" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">办公室：</label>
+				<div class="col-sm-8">
+					<input id="bgs" name="bgs" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">部门主任：</label>
+				<div class="col-sm-8">
+					<input id="bmzr" name="bmzr" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">途程及住勤地点：</label>
+				<div class="col-sm-8">
+					<input id="address" name="address" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请状态：</label>
+				<div class="col-sm-8">
+					<input id="trainStatus" name="trainStatus" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">流程编号：</label>
+				<div class="col-sm-8">
+					<input id="processInstanceId" name="processInstanceId" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "train/train"
+		$("#form-train-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-train-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -101,7 +101,10 @@
             <artifactId>ruoyi-exam</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-train</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>

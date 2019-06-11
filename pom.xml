@@ -229,7 +229,11 @@
                 <artifactId>ruoyi-exam</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-train</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -248,6 +252,8 @@
         <module>ruoyi-taskscore</module>
         <module>ruoyi-knowledge</module>
         <module>ruoyi-exam</module>
+
+        <module>ruoyi-train</module>
     </modules>
     <packaging>pom</packaging>
 
