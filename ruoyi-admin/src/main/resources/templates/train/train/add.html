@@ -5,110 +5,201 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-train-add">
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">培训人员姓名：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="userName" name="userName" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">培训人员id：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="userId" name="userId" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">培训人员项目：</label>
-				<div class="col-sm-8">
-					<input id="userName" name="userName" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">培训人员id：</label>
-				<div class="col-sm-8">
-					<input id="userId" name="userId" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">出发时间：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>出发时间：</label>
 				<div class="col-sm-8">
 					<input id="startDate" name="startDate" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">回程时间：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>回程时间：</label>
 				<div class="col-sm-8">
 					<input id="endDate" name="endDate" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">交通工具：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>交通工具：</label>
 				<div class="col-sm-8">
 					<input id="transportation" name="transportation" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">出差类别：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>出差类别：</label>
 				<div class="col-sm-8">
 					<input id="trainType" name="trainType" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">主办单位是否安排食宿：</label>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">主办单位是否安排食宿：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					-->
+<!--					<input id="isFood" name="isFood" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>主办单位是否安排食宿：</label>
 				<div class="col-sm-8">
-					<input id="isFood" name="isFood" class="form-control" type="text">
+					<label class="radio-box"> <input type="radio" name="isFood" value="是" checked/>是 </label>
+					<label class="radio-box"> <input type="radio" name="isFood" value="否" /> 否 </label>
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">总经理：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>总经理：</label>
 				<div class="col-sm-8">
 					<input id="zjl" name="zjl" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">主管副总经理：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>主管副总经理：</label>
 				<div class="col-sm-8">
 					<input id="zfgzjl" name="zfgzjl" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">技术负责人：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>技术负责人：</label>
 				<div class="col-sm-8">
 					<input id="jsfzr" name="jsfzr" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">教育培训委员会办公室：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>教育培训委员会办公室：</label>
 				<div class="col-sm-8">
 					<input id="pxwyhbgs" name="pxwyhbgs" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">办公室：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>办公室：</label>
 				<div class="col-sm-8">
 					<input id="bgs" name="bgs" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">部门主任：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>部门主任：</label>
 				<div class="col-sm-8">
 					<input id="bmzr" name="bmzr" class="form-control" type="text">
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">途程及住勤地点：</label>
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>途程及住勤地点：</label>
 				<div class="col-sm-8">
 					<input id="address" name="address" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">申请状态：</label>
-				<div class="col-sm-8">
-					<input id="trainStatus" name="trainStatus" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">流程编号：</label>
-				<div class="col-sm-8">
-					<input id="processInstanceId" name="processInstanceId" class="form-control" type="text">
-				</div>
-			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">申请状态：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="trainStatus" name="trainStatus" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">流程编号：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="processInstanceId" name="processInstanceId" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建人：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createTime" name="createTime" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateTime" name="updateTime" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标志（0代表存在 2代表删除）,默认0：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remark" name="remark" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
 		</form>
 	</div>
     <div th:include="include::footer"></div>
     <script type="text/javascript">
-		var prefix = ctx + "train/train"
+		var prefix = ctx + "train/train";
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			laydate.render({
+				elem: '#startDate',
+				theme: 'molv',
+				type: 'date',
+			});
+			laydate.render({
+				elem: '#endDate',
+				theme: 'molv',
+				type: 'date',
+			});
+		});
+
 		$("#form-train-add").validate({
 			rules:{
-				xxxx:{
+				startDate:{
+					required:true,
+				},
+				endDate:{
+					required:true,
+				},
+				transportation:{
+					required:true,
+				},
+				trainType:{
+					required:true,
+				},
+				isFood:{
+					required:true,
+				},
+				zjl:{
+					required:true,
+				},
+				zfgzjl:{
+					required:true,
+				},
+				jsfzr:{
+					required:true,
+				},
+				pxwyhbgs:{
+					required:true,
+				},
+				bgs:{
+					required:true,
+				},
+				bmzr:{
+					required:true,
+				},
+				address:{
 					required:true,
 				},
 			},

@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.train.domain.Train;
 import com.ruoyi.train.service.ITrainService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 培训审批 信息操作处理
@@ -82,7 +85,12 @@ public class TrainController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Train train)
-	{		
+	{
+		train.setId(UUID.randomUUID().toString().replaceAll("-",""));
+		train.setCreateBy(ShiroUtils.getUserId()+"");
+		train.setCreateTime(new Date());
+		train.setUserName(ShiroUtils.getSysUser().getUserName());
+		train.setUserId(ShiroUtils.getUserId());
 		return toAjax(trainService.insertTrain(train));
 	}
 

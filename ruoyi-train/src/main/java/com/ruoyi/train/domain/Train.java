@@ -17,10 +17,10 @@ public class Train extends BaseEntity
 	
 	/**  */
 	private String id;
-	/** 培训人员项目 */
+	/** 培训人员姓名 */
 	private String userName;
 	/** 培训人员id */
-	private Integer userId;
+	private Long userId;
 	/** 出发时间 */
 	private Date startDate;
 	/** 回程时间 */
@@ -49,6 +49,18 @@ public class Train extends BaseEntity
 	private String trainStatus;
 	/** 流程编号 */
 	private String processInstanceId;
+	/** 创建人 */
+	private String createBy;
+	/** 创建时间 */
+	private Date createTime;
+	/** 更新者 */
+	private String updateBy;
+	/** 更新时间 */
+	private Date updateTime;
+	/** 删除标志（0代表存在 2代表删除）,默认0 */
+	private String delFlag;
+	/** 备注 */
+	private String remark;
 
 	public void setId(String id) 
 	{
@@ -68,12 +80,12 @@ public class Train extends BaseEntity
 	{
 		return userName;
 	}
-	public void setUserId(Integer userId) 
+	public void setUserId(Long userId)
 	{
 		this.userId = userId;
 	}
 
-	public Integer getUserId() 
+	public Long getUserId()
 	{
 		return userId;
 	}
@@ -203,6 +215,60 @@ public class Train extends BaseEntity
 	{
 		return processInstanceId;
 	}
+	public void setCreateBy(String createBy) 
+	{
+		this.createBy = createBy;
+	}
+
+	public String getCreateBy() 
+	{
+		return createBy;
+	}
+	public void setCreateTime(Date createTime) 
+	{
+		this.createTime = createTime;
+	}
+
+	public Date getCreateTime() 
+	{
+		return createTime;
+	}
+	public void setUpdateBy(String updateBy) 
+	{
+		this.updateBy = updateBy;
+	}
+
+	public String getUpdateBy() 
+	{
+		return updateBy;
+	}
+	public void setUpdateTime(Date updateTime) 
+	{
+		this.updateTime = updateTime;
+	}
+
+	public Date getUpdateTime() 
+	{
+		return updateTime;
+	}
+	public void setDelFlag(String delFlag) 
+	{
+		this.delFlag = delFlag;
+	}
+
+	public String getDelFlag() 
+	{
+		return delFlag;
+	}
+	public void setRemark(String remark) 
+	{
+		this.remark = remark;
+	}
+
+	public String getRemark() 
+	{
+		return remark;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -223,6 +289,12 @@ public class Train extends BaseEntity
             .append("address", getAddress())
             .append("trainStatus", getTrainStatus())
             .append("processInstanceId", getProcessInstanceId())
+            .append("createBy", getCreateBy())
+            .append("createTime", getCreateTime())
+            .append("updateBy", getUpdateBy())
+            .append("updateTime", getUpdateTime())
+            .append("delFlag", getDelFlag())
+            .append("remark", getRemark())
             .toString();
     }
 }

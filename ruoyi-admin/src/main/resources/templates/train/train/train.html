@@ -11,12 +11,12 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								培训人员项目：<input type="text" name="userName"/>
+								培训人员姓名：<input type="text" name="userName"/>
 							</li>
 
-							<li>
-								培训人员id：<input type="text" name="userId"/>
-							</li>
+<!--							<li>-->
+<!--								培训人员id：<input type="text" name="userId"/>-->
+<!--							</li>-->
 
 							<li>
 								出发时间：<input type="text" name="startDate"/>
@@ -26,53 +26,6 @@
 								回程时间：<input type="text" name="endDate"/>
 							</li>
 
-							<li>
-								交通工具：<input type="text" name="transportation"/>
-							</li>
-
-							<li>
-								出差类别：<input type="text" name="trainType"/>
-							</li>
-
-							<li>
-								主办单位是否安排食宿：<input type="text" name="isFood"/>
-							</li>
-
-							<li>
-								总经理：<input type="text" name="zjl"/>
-							</li>
-
-							<li>
-								主管副总经理：<input type="text" name="zfgzjl"/>
-							</li>
-
-							<li>
-								技术负责人：<input type="text" name="jsfzr"/>
-							</li>
-
-							<li>
-								教育培训委员会办公室：<input type="text" name="pxwyhbgs"/>
-							</li>
-
-							<li>
-								办公室：<input type="text" name="bgs"/>
-							</li>
-
-							<li>
-								部门主任：<input type="text" name="bmzr"/>
-							</li>
-
-							<li>
-								途程及住勤地点：<input type="text" name="address"/>
-							</li>
-
-							<li>
-								申请状态：<input type="text" name="trainStatus"/>
-							</li>
-
-							<li>
-								流程编号：<input type="text" name="processInstanceId"/>
-							</li>
 
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -85,7 +38,7 @@
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
 				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="train:train:add">
-					<i class="fa fa-plus"></i> 添加
+					<i class="fa fa-plus"></i> 申请
 				</a>
 				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="train:train:edit">
 					<i class="fa fa-edit"></i> 修改
@@ -120,21 +73,21 @@
                 columns: [{
 		            checkbox: true
 		        },
-				{
-					field : 'id', 
-					title : '',
-					visible: false
-				},
+				// {
+				// 	field : 'id',
+				// 	title : '',
+				// 	visible: false
+				// },
 				{
 					field : 'userName', 
-					title : '培训人员项目',
+					title : '培训人员姓名',
 					sortable: true
 				},
-				{
-					field : 'userId', 
-					title : '培训人员id',
-					sortable: true
-				},
+				// {
+				// 	field : 'userId',
+				// 	title : '培训人员id',
+				// 	sortable: true
+				// },
 				{
 					field : 'startDate', 
 					title : '出发时间',
@@ -145,66 +98,96 @@
 					title : '回程时间',
 					sortable: true
 				},
-				{
-					field : 'transportation', 
-					title : '交通工具',
-					sortable: true
-				},
-				{
-					field : 'trainType', 
-					title : '出差类别',
-					sortable: true
-				},
-				{
-					field : 'isFood', 
-					title : '主办单位是否安排食宿',
-					sortable: true
-				},
-				{
-					field : 'zjl', 
-					title : '总经理',
-					sortable: true
-				},
-				{
-					field : 'zfgzjl', 
-					title : '主管副总经理',
-					sortable: true
-				},
-				{
-					field : 'jsfzr', 
-					title : '技术负责人',
-					sortable: true
-				},
-				{
-					field : 'pxwyhbgs', 
-					title : '教育培训委员会办公室',
-					sortable: true
-				},
-				{
-					field : 'bgs', 
-					title : '办公室',
-					sortable: true
-				},
-				{
-					field : 'bmzr', 
-					title : '部门主任',
-					sortable: true
-				},
-				{
-					field : 'address', 
-					title : '途程及住勤地点',
-					sortable: true
-				},
-				{
-					field : 'trainStatus', 
-					title : '申请状态',
-					sortable: true
-				},
-				{
-					field : 'processInstanceId', 
-					title : '流程编号',
-					sortable: true
-				},
+				// {
+				// 	field : 'transportation',
+				// 	title : '交通工具',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'trainType',
+				// 	title : '出差类别',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'isFood',
+				// 	title : '主办单位是否安排食宿',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'zjl',
+				// 	title : '总经理',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'zfgzjl',
+				// 	title : '主管副总经理',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'jsfzr',
+				// 	title : '技术负责人',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'pxwyhbgs',
+				// 	title : '教育培训委员会办公室',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'bgs',
+				// 	title : '办公室',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'bmzr',
+				// 	title : '部门主任',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'address',
+				// 	title : '途程及住勤地点',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'trainStatus',
+				// 	title : '申请状态',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'processInstanceId',
+				// 	title : '流程编号',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createBy',
+				// 	title : '创建人',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createTime',
+				// 	title : '创建时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateBy',
+				// 	title : '更新者',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateTime',
+				// 	title : '更新时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'delFlag',
+				// 	title : '删除标志（0代表存在 2代表删除）,默认0',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'remark',
+				// 	title : '备注',
+				// 	sortable: true
+				// },
 		        {
 		            title: '操作',
 		            align: 'center',
