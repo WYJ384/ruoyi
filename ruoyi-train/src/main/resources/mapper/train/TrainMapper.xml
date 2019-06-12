@@ -38,10 +38,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTrainVo"/>
         <where>  
             <if test="id != null  and id != '' "> and id = #{id}</if>
-             <if test="userName != null  and userName != '' "> and user_name = #{userName}</if>
+             <if test="userName != null  and userName != '' "> and user_name like concat('%', #{userName}, '%') </if>
              <if test="userId != null "> and user_id = #{userId}</if>
-             <if test="startDate != null "> and start_date = #{startDate}</if>
-             <if test="endDate != null "> and end_date = #{endDate}</if>
+             <if test="startDate != null "> and start_date <![CDATA[>= ]]>  #{startDate}</if>
+             <if test="endDate != null "> and end_date   <![CDATA[<= ]]> #{endDate}</if>
              <if test="transportation != null  and transportation != '' "> and transportation = #{transportation}</if>
              <if test="trainType != null  and trainType != '' "> and train_type = #{trainType}</if>
              <if test="isFood != null  and isFood != '' "> and is_food = #{isFood}</if>
@@ -62,7 +62,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
          </where>
     </select>
-    
+    <select id="selectTrainByProcessInstanceId" parameterType="String" resultMap="TrainResult">
+        <include refid="selectTrainVo"/>
+        where  process_instance_id = #{processInstanceId}
+    </select>
     <select id="selectTrainById" parameterType="String" resultMap="TrainResult">
         <include refid="selectTrainVo"/>
         where id = #{id}

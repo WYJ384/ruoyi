@@ -50,5 +50,12 @@ public interface ITrainService
      * @return 结果
      */
 	public int deleteTrainByIds(String ids);
+
+	/**
+	 * 根据流程编号查询
+	 * @param processInstanceId
+	 * @return
+	 */
+	public Train selectTrainByProcessInstanceId(String processInstanceId);
 	
 }

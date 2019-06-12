@@ -35,7 +35,7 @@ function login() {
                     location.href = ctx + 'index';
                 }else {
                     var url = ctx + 'system/user/profile/resetPwd';
-                    $.modal.msg("您的密码强度较弱，密码中需带有大小写字母、数字、特殊字符");
+                    $.modal.msg("您的密码强度较弱，密码中必须包含数字、字母、特殊符号");
                     setTimeout(function () {
                         $.modal.open("修改密码", url, '600', '500');
                     },2000);

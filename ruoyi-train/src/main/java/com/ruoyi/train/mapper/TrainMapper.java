@@ -13,11 +13,19 @@ public interface TrainMapper
 {
 	/**
      * 查询培训审批信息
-     * 
+     *
      * @param id 培训审批ID
      * @return 培训审批信息
      */
 	public Train selectTrainById(String id);
+
+	/**
+	 * 根据流程编号查询
+	 * @param processInstanceId
+	 * @return
+	 */
+	public Train selectTrainByProcessInstanceId(String processInstanceId);
+
 	
 	/**
      * 查询培训审批列表

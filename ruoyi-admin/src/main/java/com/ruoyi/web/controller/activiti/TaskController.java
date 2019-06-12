@@ -83,6 +83,7 @@ public class TaskController extends BaseController {
         Integer pageSize = pageDomain.getPageSize();
         taskVO.paging()[0]=pageNum;
         taskVO.paging()[1]=pageSize;
+        taskVO.setProcessInstanceBusinessKey("1");
 //        taskVO.setCandidateUser(ShiroUtils.getLoginName());
         taskVO.setAssignee(ShiroUtils.getLoginName());
         List<TaskVO> taskVOS = actTaskService.taskCandidateOrAssigned(taskVO);

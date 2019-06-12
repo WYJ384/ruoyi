@@ -1,5 +1,6 @@
 package com.ruoyi.train.domain;
 
+import com.ruoyi.activiti.domain.TaskVO;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -61,8 +62,17 @@ public class Train extends BaseEntity
 	private String delFlag;
 	/** 备注 */
 	private String remark;
+	TaskVO task=new TaskVO();
 
-	public void setId(String id) 
+	public TaskVO getTask() {
+		return task;
+	}
+
+	public void setTask(TaskVO task) {
+		this.task = task;
+	}
+
+	public void setId(String id)
 	{
 		this.id = id;
 	}

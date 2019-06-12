@@ -244,7 +244,7 @@ public class WorkTaskActivityController extends BaseController {
             return AjaxResult.error("任务已经开始");
         }
         String businessTable = "work_task_activity";
-        String businessId = workTaskActivity.getId();
+        String businessId = "1";
         String title = "专项工作任务";
         String userId = ShiroUtils.getLoginName();
         Map<String, Object> vars = new HashMap<String, Object>();
@@ -254,16 +254,6 @@ public class WorkTaskActivityController extends BaseController {
         WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
         if (workTask != null) {
             String userIds = workTask.getUserIds();
-//            List<SysUser> sysUsers = userService.selectPostByDept(Long.valueOf(workTask.getLeadDeptId()));
-//            if (sysUsers == null || sysUsers.size() == 0) {
-//                return AjaxResult.error(1, "该部门没有主任");
-//            }
-//            Iterator<SysUser> userIterator = sysUsers.iterator();
-//            List<String> loginNames = new ArrayList<String>();
-//            while (userIterator.hasNext()) {
-//                SysUser sysUser = userIterator.next();
-//                loginNames.add(sysUser.getLoginName());
-//            }
             if(StringUtils.isEmpty(userIds)){
                 return AjaxResult.error(1, "请选择督办主任");
             }

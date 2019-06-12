@@ -79,5 +79,10 @@ public class TrainServiceImpl implements ITrainService
 	{
 		return trainMapper.deleteTrainByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public Train selectTrainByProcessInstanceId(String processInstanceId) {
+		return trainMapper.selectTrainByProcessInstanceId(processInstanceId);
+	}
+
 }
