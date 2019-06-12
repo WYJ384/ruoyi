@@ -4,6 +4,7 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
 	<div  th:include="train_comm::traincomm"></div>
+	<input type="hidden" id="taskId" th:value="${taskId}">
 	<div class="row">
 		<div class="col-sm-offset-5 col-sm-10">
 			<button type="button" class="btn btn-sm btn-primary" onclick="pass()"><i class="fa fa-check"></i>通过</button>&nbsp;
@@ -15,15 +16,33 @@
 	<script th:src="@{/ajax/libs/select/select2.js}"></script>
 	<script type="text/javascript">
 		var prefix = ctx + "train/train";
-
 		function pass() {
-			var data = { "result": 1,"id":$("#id").val() };
-			$.operate.submit(prefix+"/check", "post", "json", data);
+			submitCheck(1);
 		}
 		function noPass() {
-			var data = { "result": 1,"id":$("#id").val() };
-			$.operate.submit(prefix+"/check", "post", "json", data);
+			submitCheck(2);
 		}
+		function submitCheck(result) {
+			var data = { "result": result,"id":$("#id").val(),"taskId":$("#taskId").val() };
+			var config = {
+				url: prefix+"/check",
+				type: "post",
+				dataType: "json",
+				data: data,
+				beforeSend: function () {
+					$.modal.loading("正在处理中，请稍后...");
+				},
+				success: function(result) {
+					$.table.refresh();
+					$.modal.msgSuccess(result.msg);
+					$.modal.closeLoading();
+					location.reload()
+					closeItem();
+				}
+			};
+			$.ajax(config)
+		}
+
 	</script>
 </body>
 </html>

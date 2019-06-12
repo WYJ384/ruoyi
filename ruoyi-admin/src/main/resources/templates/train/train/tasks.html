@@ -74,7 +74,7 @@
                     formatter: function (value, row, index) {
                         var actions = [];
                         var title="培训审批";
-                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id+'/'+row.task.id + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
                         return actions.join('');
                     }
                 },
@@ -111,7 +111,7 @@
                     formatter: function (value, row, index) {
                         var actions = [];
                         var title="培训审批";
-                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id + '\')"><i class="fa fa-edit"></i>审核</a> ');
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id+'/'+row.task.id  + '\')"><i class="fa fa-edit"></i>审核</a> ');
                         return actions.join('');
 
                     }

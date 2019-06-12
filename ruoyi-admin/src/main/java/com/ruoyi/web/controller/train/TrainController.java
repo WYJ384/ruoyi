@@ -219,21 +219,34 @@ public class TrainController extends BaseController
 	@ResponseBody
 	public AjaxResult check(String result,String taskId,String id)
 	{
+		TaskVO taskVO = actTaskService.selectOneTask(taskId);
+		boolean pass=false;
 		Train train = trainService.selectTrainById(id);
 		if(result.equals("1")){//通过
-
-		}else if(result.equals("2")){//部通过
-
+			pass=true;
+			if(taskVO!=null&&taskVO.getKey().equals("zjlsh")){
+				train.setTrainStatus("3");
+				trainService.updateTrain(train);
+			}
+		}else if(result.equals("2")){//不通过
+			pass=false;
+			train.setTrainStatus("4");
+			trainService.updateTrain(train);
 		}
+
+
 		TaskVO taskVo=new TaskVO();
 		taskVo.setProcessInstanceId(train.getProcessInstanceId());
-		List<TaskVO> taskVOS = actTaskService.selectTaskList(taskVo);
-//
-//		taskService.setAssignee(taskId,ShiroUtils.getLoginName());
-//		taskService.setOwner(taskId,ShiroUtils.getLoginName());
-//		Map<String, Object> vars = new HashMap<String, Object>();
-//		vars.put("bgs", "");
-//		actTaskService.completeTask(taskId, vars);
+		taskService.setAssignee(taskId,ShiroUtils.getUserId()+"");
+		taskService.setOwner(taskId,ShiroUtils.getLoginName());
+		Map<String, Object> vars = new HashMap<String, Object>();
+		vars.put("bgs", train.getBgs());
+		vars.put("pxwyhbgs", train.getPxwyhbgs());
+		vars.put("jsfzr", train.getJsfzr());
+		vars.put("zfgzjl", train.getZfgzjl());
+		vars.put("zjl", train.getZjl());
+		vars.put("pass", pass);
+		actTaskService.completeTask(taskId, vars);
 		return toAjax(1);
 	}
 }
