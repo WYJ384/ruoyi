@@ -7,6 +7,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.train.domain.Train;
 import com.ruoyi.train.service.ITrainService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,7 +32,8 @@ import java.util.UUID;
 public class TrainController extends BaseController
 {
     private String prefix = "train/train";
-	
+	@Autowired
+	private ISysUserService userService;
 	@Autowired
 	private ITrainService trainService;
 	
@@ -72,8 +75,10 @@ public class TrainController extends BaseController
 	 * 新增培训审批
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap modelMap)
 	{
+		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+		modelMap.addAttribute("sysUsers",sysUsers);
 	    return prefix + "/add";
 	}
 	
@@ -100,6 +105,8 @@ public class TrainController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
+		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+		mmap.addAttribute("sysUsers",sysUsers);
 		Train train = trainService.selectTrainById(id);
 		mmap.put("train", train);
 	    return prefix + "/edit";

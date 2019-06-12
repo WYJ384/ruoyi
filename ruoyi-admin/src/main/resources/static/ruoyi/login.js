@@ -19,7 +19,7 @@ function login() {
     var password = $.common.trim($("input[name='password']").val());
     var validateCode = $("input[name='validateCode']").val();
     var rememberMe = $("input[name='rememberme']").is(':checked');
-    var	m =	/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,30}/;
+    var	m =	/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,20}$/;
     $.ajax({
         type: "post",
         url: ctx + "login",
@@ -35,8 +35,13 @@ function login() {
                     location.href = ctx + 'index';
                 }else {
                     var url = ctx + 'system/user/profile/resetPwd';
-                    $.modal.open("您的密码强度较弱，密码中需带有大小写字母、数字、特殊字符", url, '600', '500');
+                    $.modal.msg("您的密码强度较弱，密码中需带有大小写字母、数字、特殊字符");
+                    setTimeout(function () {
+                        $.modal.open("修改密码", url, '600', '500');
+                    },2000);
+
                 }
+                $.modal.closeLoading();
             } else {
             	$.modal.closeLoading();
             	$('.imgcode').click();
@@ -55,7 +60,7 @@ function validateRule() {
                 required: true
             },
             password: {
-                required: true
+                required: true,
             }
         },
         messages: {

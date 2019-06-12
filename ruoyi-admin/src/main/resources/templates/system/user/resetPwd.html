@@ -22,10 +22,15 @@
 	</div>
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript">
+		jQuery.validator.addMethod("isPassword", function(value, element) {
+			var reg = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,20}$/;
+			return reg.test(value);
+		}, "密码中必须包含含数字、字母、特殊符号");
+
 		$("#form-user-resetPwd").validate({
 			rules:{
 				password:{
-					required:true,
+					isPassword: true,
 					minlength: 5,
 					maxlength: 20
 				},
