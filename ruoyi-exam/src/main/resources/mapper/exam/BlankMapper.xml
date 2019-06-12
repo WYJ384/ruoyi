@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.exam.mapper.BlankMapper">
+    
+    <resultMap type="Blank" id="BlankResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="blankA"    column="blank_a"    />
+        <result property="blankB"    column="blank_b"    />
+        <result property="blankC"    column="blank_c"    />
+        <result property="blankD"    column="blank_d"    />
+        <result property="blankE"    column="blank_e"    />
+        <result property="blankF"    column="blank_f"    />
+        <result property="blankG"    column="blank_g"    />
+        <result property="blankH"    column="blank_h"    />
+        <result property="answerNum"    column="answer_num"    />
+        <result property="answerTip"    column="answer_tip"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="libId"    column="lib_id"    />
+    </resultMap>
+	
+	<sql id="selectBlankVo">
+        select id, title, blank_a, blank_b, blank_c, blank_d, blank_e, blank_f, blank_g, blank_h, answer_num, answer_tip, create_by, create_date, update_by, update_date, remark, del_flag, lib_id from exam_blank
+    </sql>
+	
+    <select id="selectBlankList" parameterType="Blank" resultMap="BlankResult">
+        <include refid="selectBlankVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="blankA != null  and blankA != '' "> and blank_a = #{blankA}</if>
+             <if test="blankB != null  and blankB != '' "> and blank_b = #{blankB}</if>
+             <if test="blankC != null  and blankC != '' "> and blank_c = #{blankC}</if>
+             <if test="blankD != null  and blankD != '' "> and blank_d = #{blankD}</if>
+             <if test="blankE != null  and blankE != '' "> and blank_e = #{blankE}</if>
+             <if test="blankF != null  and blankF != '' "> and blank_f = #{blankF}</if>
+             <if test="blankG != null  and blankG != '' "> and blank_g = #{blankG}</if>
+             <if test="blankH != null  and blankH != '' "> and blank_h = #{blankH}</if>
+             <if test="answerNum != null  and answerNum != '' "> and answer_num = #{answerNum}</if>
+             <if test="answerTip != null  and answerTip != '' "> and answer_tip = #{answerTip}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="libId != null  and libId != '' "> and lib_id = #{libId}</if>
+         </where>
+    </select>
+    
+    <select id="selectBlankById" parameterType="String" resultMap="BlankResult">
+        <include refid="selectBlankVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBlank" parameterType="Blank">
+        insert into exam_blank
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="blankA != null  and blankA != ''  ">blank_a,</if>
+			<if test="blankB != null  and blankB != ''  ">blank_b,</if>
+			<if test="blankC != null  and blankC != ''  ">blank_c,</if>
+			<if test="blankD != null  and blankD != ''  ">blank_d,</if>
+			<if test="blankE != null  and blankE != ''  ">blank_e,</if>
+			<if test="blankF != null  and blankF != ''  ">blank_f,</if>
+			<if test="blankG != null  and blankG != ''  ">blank_g,</if>
+			<if test="blankH != null  and blankH != ''  ">blank_h,</if>
+			<if test="answerNum != null  and answerNum != ''  ">answer_num,</if>
+			<if test="answerTip != null  and answerTip != ''  ">answer_tip,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="libId != null  and libId != ''  ">lib_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="blankA != null  and blankA != ''  ">#{blankA},</if>
+			<if test="blankB != null  and blankB != ''  ">#{blankB},</if>
+			<if test="blankC != null  and blankC != ''  ">#{blankC},</if>
+			<if test="blankD != null  and blankD != ''  ">#{blankD},</if>
+			<if test="blankE != null  and blankE != ''  ">#{blankE},</if>
+			<if test="blankF != null  and blankF != ''  ">#{blankF},</if>
+			<if test="blankG != null  and blankG != ''  ">#{blankG},</if>
+			<if test="blankH != null  and blankH != ''  ">#{blankH},</if>
+			<if test="answerNum != null  and answerNum != ''  ">#{answerNum},</if>
+			<if test="answerTip != null  and answerTip != ''  ">#{answerTip},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="libId != null  and libId != ''  ">#{libId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBlank" parameterType="Blank">
+        update exam_blank
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="blankA != null  and blankA != ''  ">blank_a = #{blankA},</if>
+            <if test="blankB != null  and blankB != ''  ">blank_b = #{blankB},</if>
+            <if test="blankC != null  and blankC != ''  ">blank_c = #{blankC},</if>
+            <if test="blankD != null  and blankD != ''  ">blank_d = #{blankD},</if>
+            <if test="blankE != null  and blankE != ''  ">blank_e = #{blankE},</if>
+            <if test="blankF != null  and blankF != ''  ">blank_f = #{blankF},</if>
+            <if test="blankG != null  and blankG != ''  ">blank_g = #{blankG},</if>
+            <if test="blankH != null  and blankH != ''  ">blank_h = #{blankH},</if>
+            <if test="answerNum != null  and answerNum != ''  ">answer_num = #{answerNum},</if>
+            <if test="answerTip != null  and answerTip != ''  ">answer_tip = #{answerTip},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="libId != null  and libId != ''  ">lib_id = #{libId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBlankById" parameterType="String">
+        delete from exam_blank where id = #{id}
+    </delete>
+	
+    <delete id="deleteBlankByIds" parameterType="String">
+        delete from exam_blank where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
