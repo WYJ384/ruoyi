@@ -1,6 +1,8 @@
 package com.ruoyi.exam.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.exam.domain.LibraryQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.exam.mapper.LibraryMapper;
@@ -79,5 +81,11 @@ public class LibraryServiceImpl implements ILibraryService
 	{
 		return libraryMapper.deleteLibraryByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<LibraryQuestion> selectLibraryQuestionList(LibraryQuestion libraryQuestion) {
+
+		return libraryMapper.selectLibraryQuestionList(libraryQuestion);
+	}
+
 }

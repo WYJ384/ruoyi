@@ -23,10 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateDate"    column="update_date"    />
         <result property="remark"    column="remark"    />
         <result property="delFlag"    column="del_flag"    />
+        <result property="libId"    column="lib_id"    />
     </resultMap>
 	
 	<sql id="selectSingleChoiceVo">
-        select id, title, choice_a, choice_b, choice_c, choice_d, choice_e, choice_f, choice_g, choice_h, answer, answer_tip, create_by, create_date, update_by, update_date, remark, del_flag from exam_single_choice
+        select id, title, choice_a, choice_b, choice_c, choice_d, choice_e, choice_f, choice_g, choice_h, answer, answer_tip, create_by, create_date, update_by, update_date, remark, del_flag, lib_id from exam_single_choice
     </sql>
 	
     <select id="selectSingleChoiceList" parameterType="SingleChoice" resultMap="SingleChoiceResult">
@@ -50,9 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateDate != null "> and update_date = #{updateDate}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="libId != null  and libId != '' "> and lib_id = #{libId}</if>
             and del_flag = '0'
          </where>
-
     </select>
     
     <select id="selectSingleChoiceById" parameterType="String" resultMap="SingleChoiceResult">
@@ -81,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateDate != null  ">update_date,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="libId != null  and libId != ''  ">lib_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
@@ -101,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateDate != null  ">#{updateDate},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="libId != null  and libId != ''  ">#{libId},</if>
          </trim>
     </insert>
 	 
@@ -124,6 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateDate != null  ">update_date = #{updateDate},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="libId != null  and libId != ''  ">lib_id = #{libId},</if>
         </trim>
         where id = #{id}
     </update>

@@ -1,6 +1,8 @@
 package com.ruoyi.exam.service;
 
 import com.ruoyi.exam.domain.Library;
+import com.ruoyi.exam.domain.LibraryQuestion;
+
 import java.util.List;
 
 /**
@@ -50,5 +52,6 @@ public interface ILibraryService
      * @return 结果
      */
 	public int deleteLibraryByIds(String ids);
-	
+
+	List<LibraryQuestion> selectLibraryQuestionList(LibraryQuestion libraryQuestion);
 }

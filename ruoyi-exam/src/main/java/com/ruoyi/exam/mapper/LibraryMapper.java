@@ -1,7 +1,9 @@
 package com.ruoyi.exam.mapper;
 
 import com.ruoyi.exam.domain.Library;
-import java.util.List;	
+import com.ruoyi.exam.domain.LibraryQuestion;
+
+import java.util.List;
 
 /**
  * 试题库 数据层
@@ -58,5 +60,7 @@ public interface LibraryMapper
      * @return 结果
      */
 	public int deleteLibraryByIds(String[] ids);
+
+	List<LibraryQuestion> selectLibraryQuestionList(LibraryQuestion libraryQuestion);
 	
 }

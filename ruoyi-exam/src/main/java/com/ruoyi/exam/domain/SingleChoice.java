@@ -9,7 +9,7 @@ import java.util.Date;
  * 单选题表 exam_single_choice
  * 
  * @author ruoyi
- * @date 2019-06-11
+ * @date 2019-06-13
  */
 public class SingleChoice extends BaseEntity
 {
@@ -51,6 +51,8 @@ public class SingleChoice extends BaseEntity
 	private String remark;
 	/** 删除标记 */
 	private String delFlag;
+	/** 题库 */
+	private String libId;
 
 	public void setId(String id) 
 	{
@@ -214,6 +216,15 @@ public class SingleChoice extends BaseEntity
 	{
 		return delFlag;
 	}
+	public void setLibId(String libId) 
+	{
+		this.libId = libId;
+	}
+
+	public String getLibId() 
+	{
+		return libId;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -235,6 +246,7 @@ public class SingleChoice extends BaseEntity
             .append("updateDate", getUpdateDate())
             .append("remark", getRemark())
             .append("delFlag", getDelFlag())
+            .append("libId", getLibId())
             .toString();
     }
 }
