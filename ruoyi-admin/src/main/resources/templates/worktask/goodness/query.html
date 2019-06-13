@@ -7,1034 +7,59 @@
       type="text/css"/>
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet"
       type="text/css"/>
+<link th:href="@{/css/uploadfile.css}" media="all" rel="stylesheet" type="text/css"/>
 <style type="text/css">
-    /* task */
-    .task-list-main {
-        padding: 15px 0 30px;
-    }
-
-    .task-progress {
-        width: 70px;
-        background: #e0e2e7;
-        border-radius: 5px;
-        margin: 0 auto;
-        overflow: hidden;
-    }
-
-    .task-progress-bar {
-        width: 0;
-        height: 8px;
-        background: #85c02a;
-        border-radius: 5px;
-        float: left;
-    }
-
-    .task-sub-split {
-        width: 27px;
-        height: 21px;
-        background: url(img/ioop-icon.png) -550px -70px no-repeat;
-        cursor: pointer;
-    }
-
-    .task-creator {
-        border-right: #ffd3b6 2px solid;
-        padding-top: 5px;
-    }
-
-    .task-creator dl {
-        width: 60px;
-        margin: 0 auto;
-    }
-
-    .task-creator dl dt {
-        text-align: center;
-        height: 26px;
-    }
-
-    .task-creator dl dt img {
-        width: 26px;
-        height: 26px;
-    }
-
-    .task-creator dl dd {
-        height: 20px;
-        line-height: 20px;
-        text-align: center;
-        color: #488ebc;
-        overflow: hidden;
-    }
-
-    .task-detail-operate {
-        height: 28px;
-        padding-top: 10px;
+    th {
         text-align: right;
-    }
-
-    .task-detail-operate b {
-        display: inline-block;
-        *display: inline;
-        *zoom: 1;
-        margin-right: 10px;
-        cursor: pointer;
-    }
-
-    .task-tree-main {
-        padding: 5px;
-        border: #d9d9d9 1px solid;
-    }
-
-    .task-tree-iframe {
-        width: 100%;
-        height: 600px;
-    }
-
-    .task-progress-cont {
-        width: 500px;
-        margin-top: 10px;
-        float: left;
-    }
-
-    /*.task-progress-current {*/
-    /*    height: 22px;*/
-    /*    line-height: 22px;*/
-    /*    margin: 5px 0 0 15px;*/
-    /*    float: left;*/
-    /*    width: 100px;*/
-    /*}*/
-
-    /*.task-progress-current span {*/
-    /*    color: #85c02a;*/
-    /*}*/
-
-    /*.task-progress-save {*/
-    /*    margin: 3px 0 0 10px;*/
-    /*    float: left;*/
-    /*}*/
-
-    .task-progress-items {
-        padding: 15px 0 10px;
-    }
-
-    .task-progress-items h5 {
-        height: 30px;
-        line-height: 30px;
-        padding: 0 10px;
-        border-top: #dcdcdc 1px solid;
-        border-bottom: #dcdcdc 1px solid;
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    .task-progress-items li {
-        border-bottom: #dcdcdc 1px solid;
-        padding: 5px 10px 10px 10px;
-    }
-
-    .task-pitem-info {
-        height: 24px;
-        line-height: 24px;
-        padding-bottom: 5px;
-    }
-
-    .task-pitem-info .task-pitems-user {
-        color: #0574d2;
-    }
-
-    .task-pitem-info .task-pitems-time {
-        color: #78b020;
-    }
-
-    .task-pitem-info .task-pitems-progress {
-        color: #ec6262;
-    }
-
-    .task-pitem-desc {
-        line-height: 20px;
-        color: #888;
-        word-break: break-all;
-    }
-
-    .d-task-nopass {
-        width: 320px;
-        height: 225px;
-    }
-
-    .task-remind {
-        width: 320px;
-        height: 196px;
-    }
-
-    .task-statis-main {
-        padding-top: 20px;
-    }
-
-    .task-statis-cont {
-        width: 500px;
-        margin: 0 auto;
-    }
-
-    .task-type-list {
-        margin-top: 20px;
-    }
-
-    .task-type-item {
-        float: left;
-        width: 148px;
-        height: 76px;
-        margin: 0 10px 20px;
-        border: #D9D9D9 1px solid;
-    }
-
-    .ttpe-item-cont {
-        padding: 11px 10px;
-    }
-
-    .ttpe-item-name {
-        height: 24px;
-        line-height: 24px;
-        font-size: 14px;
-        color: #000;
-    }
-
-    .ttpe-item-oper {
-        height: 14px;
-        padding: 7px 6px 8px 8px;
-        background: #F9F9F9;
-        border-top: #D9D9D9 1px solid;
-    }
-
-    .ttpe-item-oper input {
-        float: left;
-        width: 14px;
-        height: 14px;
-    }
-
-    .ttpe-item-oper a {
-        float: right;
-        height: 14px;
-        line-height: 14px;
-        margin-left: 18px;
-        cursor: pointer;
-    }
-
-    .ttpe-item-oper a.del {
-        color: #ff4747;
-    }
-
-    .task-type-item.add {
-        background: url(img/icon-plus-gray-40x40.png) center no-repeat;
-        cursor: pointer;
-    }
-
-    .task-type-item.add:hover {
-        background: #F0F9FF url(img/icon-plus-blue-40x40.png) center no-repeat;
-        border: #38ADFF 1px solid;
-    }
-
-    .ttim-add-layer {
-        width: 349px;
-        height: 199px;
-    }
-
-    .ttia-lyr-form {
-        padding: 8px 10px 0;
-    }
-
-    .ttia-lyr-name {
-        width: 96%;
-    }
-
-    .ttia-lyr-rmk {
-        line-height: 24px;
-        margin-top: 8px;
-        padding-left: 10px;
-        font-size: 14px;
-        color: #818181;
-    }
-
-    .ttia-lyr-btn {
-        display: block;
-        height: 24px;
-        line-height: 24px;
-        margin-top: 18px;
-        padding: 8px 0;
-        background: #3186F0;
-        border-radius: 4px;
-        text-align: center;
-        font-size: 18px;
-        color: #fff;
-        cursor: pointer;
-    }
-
-    .ttia-lyr-btn:hover {
-        background: #297be2;
-    }
-
-    /* task sub */
-    .task-sub-list h2 {
-        height: 32px;
-        line-height: 32px;
-        color: #b8b8b8;
-    }
-
-    .task-sub-list h2 span {
-        color: #6d6d6d;
-        margin-right: 10px;
-    }
-
-    .task-sub-items {
-        border-top: #dcdcdc 1px solid;
-        margin-top: 15px;
-    }
-
-    .task-sub-item {
-        vertical-align: middle;
-        border-bottom: #dcdcdc 1px solid;
-        padding: 10px 0 15px;
-    }
-
-    .task-sitem-label {
-        width: 80px;
-        line-height: 24px;
-        text-align: right;
-        float: left;
-    }
-
-    .task-sitem-text {
-        line-height: 24px;
-        color: #888;
-        word-break: break-all;
-        padding-left: 10px;
-        margin-left: 80px;
-    }
-
-    .task-sitem-middle, .task-sitem-lang {
-        width: 140px;
-        margin-left: 0;
-        float: left;
-    }
-
-    .task-sitem-lang {
-        width: 200px;
-    }
-
-    .task-sitem-flist {
-        padding-top: 5px;
-    }
-
-    .task-resolve {
-        display: inline-block;
-        margin-left: 10px;
-    }
-
-    .task-resolve.b-btn-disable {
-        border-color: #666;
-    }
-
-    .task-sub-edit {
-        color: #656565;
-    }
-
-    .task-sub-save {
-        background: #f8875b;
-        border: #d6704a 1px solid;
-    }
-
-    .task-sub-save:hover {
-        background: #f99f7b;
-    }
-
-    .module-to-task {
-        margin-top: 15px;
-    }
-
-    .moduto-task-head {
-        height: 30px;
-        border-top: #dcdcdc 1px solid;
-        border-bottom: #dcdcdc 1px solid;
-    }
-
-    .moduto-thead-title, .moduto-thead-worker, .moduto-thead-time, .moduto-thead-operate {
-        line-height: 30px;
-        font-size: 14px;
-        font-weight: bold;
-        text-align: center;
-        float: right;
-    }
-
-    .moduto-thead-title {
-        float: none;
-    }
-
-    .moduto-thead-worker {
-        width: 120px;
-        padding: 0 5px;
-    }
-
-    .moduto-thead-time {
-        width: 140px;
-    }
-
-    .moduto-thead-operate {
-        width: 100px;
-    }
-
-    .moduto-task-item {
-        height: 30px;
-        line-height: 30px;
-        padding: 10px 0;
-        font-size: 12px;
-        border-bottom: #cbcbcb 1px dotted;
-    }
-
-    .moduto-titem-title {
-        padding: 0 5px;
-    }
-
-    .moduto-titem-num {
-        width: 40px;
-        line-height: 30px;
-        color: #68a708;
-        font-weight: bold;
-        text-align: center;
-        float: left;
-    }
-
-    .moduto-titem-worker, .mditem-worker-edit, .moduto-titem-time, .mditem-time-edit, .moduto-titem-operate, .mditem-operate-edit {
-        line-height: 30px;
-        text-align: center;
-        float: right;
-    }
-
-    .moduto-titem-worker {
-        width: 110px;
-        padding: 0 5px;
-    }
-
-    .moduto-titem-time {
-        width: 140px;
-    }
-
-    .moduto-titem-operate {
-        width: 100px;
-        *padding-top: 4px;
-    }
-
-    .mditem-input-text {
-        padding: 5px;
-        line-height: 18px;
-        border: #e7e7e7 1px solid;
-    }
-
-    .mditem-input-text input {
-        width: 100%;
-        height: 18px;
-        line-height: 18px;
-        border: 0;
-    }
-
-    .mditem-input-text-time {
-        background: url(img/b-time-bg.png) 136px center no-repeat;
-    }
-
-    .mditem-worker-edit {
-        width: 182px;
-    }
-
-    .mditem-time-edit {
-        width: 165px;
-        padding: 0 5px;
-    }
-
-    .mditem-operate-edit {
-        width: 110px;
-        *padding-top: 4px;
-    }
-
-    .mditem-operate-edit .task-sub-save {
-        margin-right: 5px;
-    }
-
-    .mditem-worker-edit .list-users {
-        padding-top: 4px;
-        *padding-bottom: 4px;
-    }
-
-    .mditem-worker-edit .list-users a {
-        margin-bottom: 2px;
-        max-width: 85px;
-    }
-
-    .mditem-worker-edit .list-users a p {
-        line-height: 20px;
-        max-width: 70px;
-    }
-
-    .mditem-worker-edit .list-users a b.user-remove {
-        margin-top: 7px;
-    }
-
-    .mditem-worker-edit .list-users .add-user {
-        line-height: 22px;
-        margin-left: 0;
-        margin-bottom: 4px;
-    }
-
-    /* form */
-    .form-option {
-        padding: 5px 0;
-        font-size: 12px;
-        color: #333;
-        zoom: 1;
-    }
-
-    .form-option:after {
-        display: block;
-        clear: both;
-        content: "";
-        visibility: hidden;
-        height: 0;
-    }
-
-    .form-option.w50p, .form-option.w33p, .form-option.w25p, .form-option.w20p {
-        float: left;
-    }
-
-    .form-option.w50p {
-        width: 50%;
-    }
-
-    .form-option.w33p {
-        width: 33%;
-    }
-
-    .form-option.w25p {
-        width: 25%;
-    }
-
-    .form-option.w20p {
-        width: 20%;
-    }
-
-    .field-name {
-        display: block;
-        line-height: 34px;
-        text-align: right;
-        padding-right: 10px;
-    }
-
-    .field-name.require {
-        position: relative;
-    }
-
-    .field-name.require:after {
-        position: absolute;
-        top: 8px;
-        right: 2px;
-        height: 24px;
-        line-height: 24px;
-        content: "*";
-        font-size: 14px;
-        color: #ff3e3e;
-    }
-
-    .form-option .line-h-18 {
-        line-height: 18px;
-    }
-
-    .form-option .form-field-remark {
-        height: 16px;
-        line-height: 16px;
-        padding: 9px 5px;
-    }
-
-    .form-t-side {
-        height: 32px;
-        line-height: 32px;
-    }
-
-    .form-t-big {
-        width: 70%;
-    }
-
-    .form-t-big .b-text-input {
-        width: 96%;
-    }
-
-    .form-t-midle {
-        width: 60%;
-    }
-
-    .form-t-midle .b-text-input {
-        width: 94%;
-    }
-
-    .form-t-half {
-        width: 50%;
-    }
-
-    .form-t-half .b-text-input {
-        width: 92%;
-    }
-
-    .form-t-short {
-        width: 40%;
-    }
-
-    .form-t-short .b-text-input {
-        width: 96%;
-    }
-
-    .form-t-micro {
-        width: 30%;
-    }
-
-    .form-t-micro .b-text-input {
-        width: 92%;
-    }
-
-    .form-t-lang .b-text-input {
-        width: 98%;
-    }
-
-    .form-t-side .b-text-input {
-        width: 92%;
-    }
-
-    .form-t-text {
-        line-height: 34px;
-        word-break: break-all;
-    }
-
-    .form-t-input {
-        height: 32px;
-        line-height: 32px;
-    }
-
-    .form-t-input .b-text-input, .form-t-side .b-text-input {
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    .form-mg-lt-60 {
-        margin-left: 60px;
-    }
-
-    .form-t-lang.form-mg-lt-60 .b-text-input {
-        *margin-left: -60px;
-    }
-
-    .form-mg-lt-70 {
-        margin-left: 70px;
-    }
-
-    .form-t-lang.form-mg-lt-70 .b-text-input {
-        *margin-left: -70px;
-    }
-
-    .form-mg-lt-80 {
-        margin-left: 80px;
-    }
-
-    .form-t-lang.form-mg-lt-80 .b-text-input {
-        *margin-left: -80px;
-    }
-
-    .form-mg-lt-90 {
-        margin-left: 90px;
-    }
-
-    .form-t-lang.form-mg-lt-90 .b-text-input {
-        *margin-left: -90px;
-    }
-
-    .form-mg-lt-110 {
-        margin-left: 110px;
-    }
-
-    .form-t-lang.form-mg-lt-110 .b-text-input {
-        *margin-left: -110px;
-    }
-
-    .form-mg-lt-120 {
-        margin-left: 120px;
-    }
-
-    .form-t-lang.form-mg-lt-120 .b-text-input {
-        *margin-left: -120px;
-    }
-
-    .form-mg-lt-130 {
-        margin-left: 130px;
-    }
-
-    .form-t-lang.form-mg-lt-130 .b-text-input {
-        *margin-left: -130px;
-    }
-
-    .form-mg-lt-140 {
-        margin-left: 140px;
-    }
-
-    .form-t-lang.form-mg-lt-140 .b-text-input {
-        *margin-left: -140px;
-    }
-
-    .label-w-50 {
-        width: 50px;
-    }
-
-    .label-w-60 {
-        width: 60px;
-    }
-
-    .label-w-70 {
-        width: 70px;
-    }
-
-    .label-w-80 {
-        width: 80px;
-    }
-
-    .label-w-90 {
-        width: 90px;
-    }
-
-    .label-w-100 {
-        width: 100px;
-    }
-
-    .label-w-110 {
-        width: 110px;
-    }
-
-    .label-w-120 {
-        width: 120px;
-    }
-
-    .label-w-130 {
-        width: 130px;
-    }
-
-    .editor-main {
-        width: 100%;
-    }
-
-    .form-add-select {
-        width: 100%;
-    }
-
-    .has-select {
-        padding: 0;
-    }
-
-    .form-btn, .form-btn-short {
-        padding-top: 20px;
-    }
-
-    .form-btn a {
-        margin-right: 10px;
-        padding: 0 25px;
-    }
-
-    .form-btn-short a {
-        margin-right: 10px;
-        padding: 0 20px;
-    }
-
-    .font-bold, .not-read {
-        font-weight: bold;
-    }
-
-    .txt-left {
-        text-align: left;
-    }
-
-    .txt-cen {
-        text-align: center;
-    }
-
-    .opt-pd-z {
-        padding: 0;
-    }
-
-    .enable-open {
-        cursor: pointer;
-    }
-
-    .form-field-remark.form-tr-split {
-        padding-right: 10px;
-    }
-
-    .form-opt-remark {
-        line-height: 34px;
-        margin-left: 10px;
-        font-size: 12px;
-        color: #eeb4b4;
-    }
-
-    span.form-control, .single-line {
-        background: #FFFFFF none;
-        border: none;
-        border-radius: 1px;
-        color: inherit;
-        display: block;
-        padding: 6px 12px;
-        -webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-        width: 100%;
-        font-size: 14px;
-    }
-
-    /* attch */
-    .attch-list {
-        position: relative;
-        padding: 5px 0;
-        border-top: #d9d9d9 1px solid;
-        border-bottom: #d9d9d9 1px solid;
-        display: none;
-    }
-
-    .attch-item {
-        line-height: 28px;
-        color: #888;
-        overflow: hidden;
-    }
-
-    .atch-itm-icon {
-        float: left;
-        width: 20px;
-        height: 20px;
-        margin: 3px 5px 0 0;
-        background: url(../images/ioop-icon-3.5.png) 0 -165px no-repeat;
-    }
-
-    .atch-itm-icon.xls, .atch-itm-icon.xlsx {
-        background-position: -25px -165px;
-    }
-
-    .atch-itm-icon.doc, .atch-itm-icon.docx {
-        background-position: -50px -165px;
-    }
-
-    .atch-itm-icon.ppt, .atch-itm-icon.pptx {
-        background-position: -75px -165px;
-    }
-
-    .atch-itm-icon.txt {
-        background-position: -100px -165px;
-    }
-
-    .atch-itm-icon.rm, .atch-itm-icon.rmvb, .atch-itm-icon.swf, .atch-itm-icon.mp4, .atch-itm-icon.avi {
-        background-position: -125px -165px;
-    }
-
-    .atch-itm-icon.pdf {
-        background-position: -150px -165px;
-    }
-
-    .atch-itm-icon.rar, .atch-itm-icon.zip {
-        background-position: -175px -165px;
-    }
-
-    .atch-itm-icon.jpg, .atch-itm-icon.png, .atch-itm-icon.gif {
-        background-position: -200px -165px;
-    }
-
-    .atch-itm-icon.html {
-        background-position: -225px -165px;
-    }
-
-    .atch-itm-name, .atch-itm-size, .atch-itm-state, .atch-itm-upler {
-        float: left;
-        margin: 0 10px 0 0;
-    }
-
-    .atch-itm-name {
-        text-decoration: none;
-        color: #888;
-        cursor: pointer;
-    }
-
-    .atch-itm-name:hover {
-        text-decoration: underline;
-        color: #5184ec;
-    }
-
-    .atch-itm-view, .atch-itm-dload, .atch-itm-del, .atch-itm-trans {
-        margin: 0 0 0 10px;
-        text-decoration: none;
-        color: #5184ec;
-        cursor: pointer;
-    }
-
-    .atch-itm-view:hover, .atch-itm-dload:hover, .atch-itm-del:hover, .atch-itm-trans:hover {
-        text-decoration: underline;
-    }
-
-    .atch-itm-prog {
-        background-color: #fff;
-        border: #d6dee2 1px solid;
-    }
-
-    .aitm-prog-bar {
-        width: 0;
-        height: 6px;
-        background-color: #51a3d8;
-    }
-
-    .atch-dlad-all {
-        position: absolute;
-        top: 15px;
-        right: 0;
-    }
-
-    .atch-dlad-all a {
-        display: block;
-        width: 64px;
-        height: 24px;
-        line-height: 24px;
-        text-decoration: none;
-        padding: 3px 10px;
-        background: #74cc39;
-        text-align: center;
-        color: #fff;
-        cursor: pointer;
-    }
-
-    .atch-dlad-all a:hover {
-        background: #3cb536;
-    }
-
-    .attch-list {
-        position: relative;
-        padding: 5px 0;
-        border-top: #d9d9d9 1px solid;
-        border-bottom: #d9d9d9 1px solid;
-        display: none;
-    }
-
-    .attch-item {
-        line-height: 26px;
-        color: #888;
-        overflow: hidden;
-    }
-
-    .attch-itm-icon {
-        float: left;
-        width: 20px;
-        height: 20px;
-        margin: 3px 5px 0 0;
-        background: url(img/ioop-icon-3.5.png) 0 -165px no-repeat;
-    }
-
-    .attch-itm-icon.xls, .attch-itm-icon.xlsx {
-        background-position: -25px -165px;
-    }
-
-    .attch-itm-icon.doc, .attch-itm-icon.docx {
-        background-position: -50px -165px;
-    }
-
-    .attch-itm-icon.ppt, .attch-itm-icon.pptx {
-        background-position: -75px -165px;
-    }
-
-    .attch-itm-icon.txt {
-        background-position: -100px -165px;
-    }
-
-    .attch-itm-icon.rm, .attch-itm-icon.rmvb, .attch-itm-icon.swf, .attch-itm-icon.mp4, .attch-itm-icon.avi {
-        background-position: -125px -165px;
-    }
-
-    .attch-itm-icon.pdf {
-        background-position: -150px -165px;
-    }
-
-    .attch-itm-icon.rar, .attch-itm-icon.zip {
-        background-position: -175px -165px;
-    }
-
-    .attch-itm-icon.jpg, .attch-itm-icon.png, .attch-itm-icon.gif {
-        background-position: -200px -165px;
-    }
-
-    .attch-itm-icon.html {
-        background-position: -225px -165px;
-    }
-
-    .attch-itm-name, .attch-itm-size, .attch-itm-state, .attch-itm-upler {
-        float: left;
-        margin-right: 10px;
-    }
-
-    .attch-itm-name {
-        text-decoration: none;
-        color: #888;
-        cursor: pointer;
-    }
-
-    .attch-itm-name:hover {
-        text-decoration: underline;
-        color: #5184ec;
-    }
-
-    .attch-itm-view, .attch-itm-dload, .attch-itm-delete, .attch-itm-trans {
-        margin-left: 10px;
-        text-decoration: none;
-        color: #5184ec;
-        cursor: pointer;
-    }
-
-    .attch-itm-view:hover, .attch-itm-dload:hover, .attch-itm-delete:hover, .attch-itm-trans:hover {
-        text-decoration: underline;
-    }
-
-    .attch-itm-progs {
-        background-color: #fff;
-        border: #d6dee2 1px solid;
-    }
-
-    .aitm-progs-bar {
-        width: 0;
-        height: 6px;
-        background-color: #51a3d8;
-    }
-
-    .attch-dload-all {
-        position: absolute;
-        top: 15px;
-        right: 0;
-    }
-
-    .attch-dload-all a {
-        display: block;
-        width: 64px;
-        height: 14px;
-        line-height: 14px;
-        text-decoration: none;
-        padding: 8px 10px;
-        background-color: #74cc39;
-        text-align: center;
-        color: #fff;
-        cursor: pointer;
-    }
-
-    .attch-dload-all a:hover {
-        background-color: #3cb536;
     }
 </style>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
 
+
     <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
         <input id="id" name="id" th:field="*{id}" type="hidden">
         <div class="form-group">
-            <label class="col-sm-3 control-label">任务标题：</label>
+            <label class="col-sm-3 control-label">专业：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{remark4}"  class="form-control"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">分项：</label>
             <div class="col-sm-8">
                 <span th:text="*{taskTitle}" class="form-control"> </span>
-                <!--                <input id="taskTitle" name="taskTitle" th:field="*{taskTitle}" class="form-control" type="text">-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>具体问题：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{remark5}"  class="form-control"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>目标：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{remark1}"  class="form-control"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">措施及建议：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{taskContent}"  class="form-control"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>责任部门：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{remark2}"  class="form-control"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>配合部门 ：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{remark3}"  class="form-control"></span>
             </div>
         </div>
         <div class="form-group">
@@ -1051,16 +76,8 @@
                 <span th:text="${#dates.format(selfTask.requireTime, 'yyyy-MM-dd HH:mm:ss')}"
                       class="form-control"> </span>
 
-
             </div>
         </div>
-        <!--        <div class="form-group">-->
-        <!--            <label class="col-sm-3 control-label">任务类型：</label>-->
-        <!--            <div class="col-sm-8">-->
-        <!--                <input id="selvalTaskType" name="selvalTaskType" th:field="*{selvalTaskType}" class="form-control"-->
-        <!--                       type="text">-->
-        <!--            </div>-->
-        <!--        </div>-->
 
         <div class="form-group">
             <label class="col-sm-3 control-label">优先级：</label>
@@ -1085,27 +102,23 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">附件：</label>
             <div class="col-sm-8">
-                <input id="file" multiple name="file" class="form-control" type="file" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+                <input id="file" multiple name="file" class="form-control" type="file"
+                       th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
                 <ul id="task_file_list" class="attch-list" style="display: block;">
-                    <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i class="attch-itm-icon xlsx"></i><a
+                    <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i
+                            class="attch-itm-icon xlsx"></i><a
                             class="attch-itm-name"
                             th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
-                            target="_blank" th:text="${file.fileName}" th:title="${file.fileName}" ></a><span
+                            target="_blank" th:text="${file.fileName}" th:title="${file.fileName}"></a><span
                             class="attch-itm-size"></span><span class="attch-itm-state"></span><a
                             class="attch-itm-dload"
                             th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
                             target="_blank">下载</a>
-                        <a class="attch-itm-delete"  th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a></li>
+                        <a class="attch-itm-delete" th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a>
+                    </li>
                 </ul>
             </div>
         </div>
-        <!--        <div class="form-group">-->
-        <!--            <label class="col-sm-3 control-label">任务验收人：</label>-->
-        <!--            <div class="col-sm-8">-->
-        <!--                <input id="acceptorUser" name="acceptorUser" th:field="*{acceptorUser}" class="form-control"-->
-        <!--                       type="text">-->
-        <!--            </div>-->
-        <!--        </div>-->
         <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
             <label class="col-sm-3 control-label">任务进度：</label>
             <div class="col-sm-8">
@@ -1198,11 +211,7 @@
                                 <label class="task-sitem-label">任务执行人</label>
                                 <div class="task-sitem-text font-c-dgreen" th:text="${task.remark}"></div>
                             </div>
-                            <!--                            <div class="task-sitem-option clear">-->
 
-                            <!--                                <label class="task-sitem-label" th:text="${task.taskTitle}">任务验收人</label>-->
-                            <!--                                <div class="task-sitem-text task-sitem-long font-c-dgreen">马忠义</div>-->
-                            <!--                            </div>-->
                             <div class="task-sitem-flist" id="task_sitem_flist_ff8080816a8cd094016aa0706dc63278">
                                 <ul id="task_file_list_ff8080816a8cd094016aa0706dc63278" class="attch-list"></ul>
                             </div>
@@ -1239,7 +248,7 @@
         <!--			</div>-->
     </form>
 </div>
-<div class="row"  th:if="${taskType eq '3' && selfTask.taskStatus eq '1'}">
+<div class="row" th:if="${taskType eq '3' && selfTask.taskStatus eq '1'}">
     <div class="col-sm-offset-5 col-sm-10">
         <button type="button" class="btn btn-sm btn-primary" onclick="passCheck()"><i class="fa fa-check"></i>通过
         </button>
@@ -1278,13 +287,14 @@
         },
         focusCleanup: true
     });
+
     //通过
     function passCheck() {
         var config = {
             url: ctx + "worktask/goodness/edit",
             type: "post",
             dataType: "json",
-            data: {id:$("#id").val(),check:2},
+            data: {id: $("#id").val(), check: 2},
             beforeSend: function () {
                 $.modal.loading("正在处理中，请稍后...");
             },
@@ -1295,13 +305,14 @@
         };
         $.ajax(config)
     }
+
     //不通过
     function noPassCheck() {
         var config = {
             url: ctx + "worktask/goodness/edit",
             type: "post",
             dataType: "json",
-            data: {id:$("#id").val(),check:1},
+            data: {id: $("#id").val(), check: 1},
             beforeSend: function () {
                 $.modal.loading("正在处理中，请稍后...");
             },
@@ -1312,6 +323,7 @@
         };
         $.ajax(config)
     }
+
     function submitHandler() {
         if ($.validate.form()) {
             var config = {
@@ -1336,22 +348,23 @@
         $.modal.open("添加子任务", ctx + "worktask/goodness/addChild/" + $("#id").val())
     }
 
-    function deleteFile(id){
-        var data = { "ids": id };
+    function deleteFile(id) {
+        var data = {"ids": id};
         $.ajax({
-            url:ctx  + "worktask/workTaskFile/delete",
+            url: ctx + "worktask/workTaskFile/delete",
             type: "post",
             dataType: "json",
             data: data,
             beforeSend: function () {
                 $.modal.loading("正在处理中，请稍后...");
             },
-            success: function(result) {
+            success: function (result) {
                 $.modal.closeLoading();
                 window.location.reload()
             }
         })
     }
+
     $(function () {
 
         //通用初始化方法
