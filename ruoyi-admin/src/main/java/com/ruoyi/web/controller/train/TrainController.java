@@ -12,11 +12,14 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.train.domain.Train;
 import com.ruoyi.train.service.ITrainService;
 import com.ruoyi.worktask.domain.WorkTask;
 import com.ruoyi.worktask.domain.WorkTaskActivity;
+import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -46,6 +49,10 @@ public class TrainController extends BaseController
 	private ActTaskService actTaskService;
 	@Autowired
 	TaskService taskService;
+	@Autowired
+	private IWorkTaskFileService workTaskFileService;
+	@Autowired
+	private ISysDictDataService dictDataService;
 	@RequiresPermissions("train:train:view")
 	@GetMapping()
 	public String train()
@@ -84,10 +91,12 @@ public class TrainController extends BaseController
 	 * 新增培训审批
 	 */
 	@GetMapping("/add")
-	public String add(ModelMap modelMap)
+	public String add(ModelMap mmap,Train train)
 	{
+		train.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
-		modelMap.addAttribute("sysUsers",sysUsers);
+		mmap.addAttribute("sysUsers",sysUsers);
+		mmap.put("train", train);
 	    return prefix + "/add";
 	}
 	
@@ -100,7 +109,7 @@ public class TrainController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(Train train)
 	{
-		train.setId(UUID.randomUUID().toString().replaceAll("-",""));
+
 		train.setCreateBy(ShiroUtils.getUserId()+"");
 		train.setCreateTime(new Date());
 		train.setUserName(ShiroUtils.getSysUser().getUserName());
@@ -121,6 +130,10 @@ public class TrainController extends BaseController
 		mmap.addAttribute("sysUsers",sysUsers);
 		Train train = trainService.selectTrainById(id);
 		mmap.put("train", train);
+		WorkTaskFile activityFile=new WorkTaskFile();
+		activityFile.setWorkTaskId(id);
+		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
+		mmap.put("workTaskFiles", workTaskFiles);
 	    return prefix + "/edit";
 	}
 	@RequiresPermissions("train:train:view")
@@ -130,7 +143,13 @@ public class TrainController extends BaseController
 		mmap.addAttribute("sysUsers",sysUsers);
 		mmap.addAttribute("taskId",taskId);
 		Train train = trainService.selectTrainById(id);
+		train.setTransportation(dictDataService.selectDictLabel("transportation", train.getTransportation()));
+		train.setTrainType(dictDataService.selectDictLabel("trainType", train.getTrainType()));
 		mmap.put("train", train);
+		WorkTaskFile activityFile=new WorkTaskFile();
+		activityFile.setWorkTaskId(id);
+		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
+		mmap.put("workTaskFiles", workTaskFiles);
 		return prefix + "/shenhe";
 	}
 	@RequiresPermissions("train:train:view")
@@ -139,7 +158,13 @@ public class TrainController extends BaseController
 		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
 		mmap.addAttribute("sysUsers",sysUsers);
 		Train train = trainService.selectTrainById(id);
+		train.setTransportation(dictDataService.selectDictLabel("transportation", train.getTransportation()));
+		train.setTrainType(dictDataService.selectDictLabel("trainType", train.getTrainType()));
 		mmap.put("train", train);
+		WorkTaskFile activityFile=new WorkTaskFile();
+		activityFile.setWorkTaskId(id);
+		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
+		mmap.put("workTaskFiles", workTaskFiles);
 		return prefix + "/query";
 	}
 

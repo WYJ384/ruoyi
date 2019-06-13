@@ -1,6 +1,7 @@
 package com.ruoyi.train.domain;
 
 import com.ruoyi.activiti.domain.TaskVO;
+import com.ruoyi.system.domain.SysDept;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -62,6 +63,18 @@ public class Train extends BaseEntity
 	private String delFlag;
 	/** 备注 */
 	private String remark;
+
+	/** 牵头部门 */
+	private SysDept dept;
+
+	public SysDept getDept() {
+		return dept;
+	}
+
+	public void setDept(SysDept dept) {
+		this.dept = dept;
+	}
+
 	TaskVO task=new TaskVO();
 
 	public TaskVO getTask() {

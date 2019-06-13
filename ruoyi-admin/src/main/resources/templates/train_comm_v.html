@@ -1,0 +1,71 @@
+<div th:fragment="traincomm" class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+    <div class="container-div form-horizontal m">
+        <div class="row">
+            <div class="search-collapse" style="padding: 20px;" >
+                <table class="table table-condensed table-bordered table-hover table-striped"  th:object="${train}">
+                    <input id="trainStatus" name="trainStatus"  th:field="*{trainStatus}"  class="form-control" type="hidden">
+                    <input id="id" name="id" th:field="*{id}"  type="hidden">
+                    <tr>
+                        <th >培训人姓名</th>
+                        <td th:text="*{userName}"></td>
+                    </tr>
+                    <tr>
+                        <th>培训人部门</th>
+                        <td th:text="*{dept.deptName}"></td>
+                    </tr>
+                    <tr>
+                        <th>出发时间</th>
+                        <td th:text="${#dates.format(train.startDate, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <th>回程时间</th>
+                        <td th:text="${#dates.format(train.endDate, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <th >培训人姓名</th>
+                        <td th:text="*{userName}"></td>
+                    </tr>
+                    <tr>
+                        <th >出差依据</th>
+                        <td>
+                            <ul id="task_file_list" class="attch-list" style="display: block;">
+                                <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i
+                                        class="attch-itm-icon xlsx"></i><a
+                                        class="attch-itm-name"
+                                        th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                                        target="_blank" th:text="${file.fileName}" th:title="${file.fileName}"></a><span
+                                        class="attch-itm-size"></span><span class="attch-itm-state"></span>
+
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >途程及住勤地点</th>
+                        <td th:text="*{address}"></td>
+                    </tr>
+                    <tr>
+                        <th  >交通工具</th>
+                        <td th:text="*{transportation}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th  >出差类别</th>
+                        <td th:text="*{trainType}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th  >主办单位是否安排食宿</th>
+                        <td th:text="*{isFood}">
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

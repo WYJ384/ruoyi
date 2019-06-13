@@ -34,6 +34,10 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-activiti</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-system</artifactId>
+        </dependency>
 
     </dependencies>
 

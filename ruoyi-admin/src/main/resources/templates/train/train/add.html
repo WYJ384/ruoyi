@@ -2,9 +2,12 @@
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet" type="text/css"/>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css"/>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-train-add">
+			<input id="id" name="id" th:value="${train.id}"  type="hidden">
 			<input id="trainStatus" name="trainStatus" class="form-control" type="hidden">
 <!--			<div class="form-group">	-->
 <!--				<label class="col-sm-3 control-label">培训人员姓名：</label>-->
@@ -61,6 +64,23 @@
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>途程及住勤地点：</label>
 				<div class="col-sm-8">
 					<input id="address" name="address" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">出差依据：</label>
+				<div class="col-sm-8">
+					<input id="file" multiple name="file" class="form-control" type="file" >
+<!--					<ul id="task_file_list" class="attch-list" style="display: block;">-->
+<!--						<li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i class="attch-itm-icon xlsx"></i><a-->
+<!--								class="attch-itm-name"-->
+<!--								th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"-->
+<!--								target="_blank" th:text="${file.fileName}" th:title="${file.fileName}" ></a><span-->
+<!--								class="attch-itm-size"></span><span class="attch-itm-state"></span><a-->
+<!--								class="attch-itm-dload"-->
+<!--								th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"-->
+<!--								target="_blank">下载</a>-->
+<!--							<a class="attch-itm-delete"  th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a></li>-->
+<!--					</ul>-->
 				</div>
 			</div>
 			<div class="form-group">	
@@ -132,9 +152,26 @@
 		</div>
 	</div>
     <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
+	<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
 	<script th:src="@{/ajax/libs/select/select2.js}"></script>
     <script type="text/javascript">
+		$('#file').fileinput({
+			language: 'zh',
+			showPreview: false, //是否显示预览
+			showUpload: true, //是否显示上传按钮
+			showRemove: true, //显示移除按钮
+			enctype: 'multipart/form-data',
+			uploadUrl: ctx + 'worktask/workTaskFile/upload', // you must set a valid URL here else you will get an error
+			uploadExtraData: {"workTaskId": '[[${train.id}]]'},
+			// allowedFileExtensions: ['ppt', 'xls', 'xlsx', "doc", "docx", "pptx", "pdf"],
+			overwriteInitial: false,
+			maxFileSize: 10000,
+			maxFilesNum: 10,
+
+		});
 		var prefix = ctx + "train/train";
+
 		layui.use('laydate', function () {
 			var laydate = layui.laydate;
 			laydate.render({

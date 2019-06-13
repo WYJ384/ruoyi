@@ -3,6 +3,18 @@
         <input id="trainStatus" name="trainStatus"  th:field="*{trainStatus}"  class="form-control" type="hidden">
         <input id="id" name="id" th:field="*{id}"  type="hidden">
         <div class="form-group">
+            <label class="col-sm-3 control-label">培训人姓名：</label>
+            <div class="col-sm-8">
+                <input id="userName" name="userName" th:field="*{userName}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">培训人部门：</label>
+            <div class="col-sm-8">
+                <input  th:field="*{dept.deptName}" class="form-control" type="text" readonly>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-3 control-label">出发时间：</label>
             <div class="col-sm-8">
                 <input id="startDate" name="startDate" th:value="${#dates.format(train.startDate, 'yyyy-MM-dd')}" class="form-control" type="text">
@@ -38,13 +50,32 @@
                 <label class="radio-box"> <input type="radio" name="isFood" value="否" th:field="*{isFood}" /> 否 </label>
             </div>
         </div>
+
         <div class="form-group">
             <label class="col-sm-3 control-label">途程及住勤地点：</label>
             <div class="col-sm-8">
                 <input id="address" name="address" th:field="*{address}" class="form-control" type="text">
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="col-sm-3 control-label">出差依据：</label>
+            <div class="col-sm-8">
+                <input id="file" multiple name="file" class="form-control" type="file" >
+                <ul id="task_file_list" class="attch-list" style="display: block;">
+                    <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i
+                            class="attch-itm-icon xlsx"></i><a
+                            class="attch-itm-name"
+                            th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                            target="_blank" th:text="${file.fileName}" th:title="${file.fileName}"></a><span
+                            class="attch-itm-size"></span><span class="attch-itm-state"></span><a
+                            class="attch-itm-dload"
+                            th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                            target="_blank">下载</a>
+                        <a class="attch-itm-delete" th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>总经理：</label>
             <div class="col-sm-8">

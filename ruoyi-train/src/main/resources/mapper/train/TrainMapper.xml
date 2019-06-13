@@ -1,130 +1,165 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.train.mapper.TrainMapper">
-    
+
     <resultMap type="Train" id="TrainResult">
-        <result property="id"    column="id"    />
-        <result property="userName"    column="user_name"    />
-        <result property="userId"    column="user_id"    />
-        <result property="startDate"    column="start_date"    />
-        <result property="endDate"    column="end_date"    />
-        <result property="transportation"    column="transportation"    />
-        <result property="trainType"    column="train_type"    />
-        <result property="isFood"    column="is_food"    />
-        <result property="zjl"    column="zjl"    />
-        <result property="zfgzjl"    column="zfgzjl"    />
-        <result property="jsfzr"    column="jsfzr"    />
-        <result property="pxwyhbgs"    column="pxwyhbgs"    />
-        <result property="bgs"    column="bgs"    />
-        <result property="bmzr"    column="bmzr"    />
-        <result property="address"    column="address"    />
-        <result property="trainStatus"    column="train_status"    />
-        <result property="processInstanceId"    column="process_instance_id"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="delFlag"    column="del_flag"    />
-        <result property="remark"    column="remark"    />
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="transportation" column="transportation"/>
+        <result property="trainType" column="train_type"/>
+        <result property="isFood" column="is_food"/>
+        <result property="zjl" column="zjl"/>
+        <result property="zfgzjl" column="zfgzjl"/>
+        <result property="jsfzr" column="jsfzr"/>
+        <result property="pxwyhbgs" column="pxwyhbgs"/>
+        <result property="bgs" column="bgs"/>
+        <result property="bmzr" column="bmzr"/>
+        <result property="address" column="address"/>
+        <result property="trainStatus" column="train_status"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="remark" column="remark"/>
+        <association property="dept" column="leader_id" javaType="SysDept" resultMap="deptResult"/>
     </resultMap>
-	
-	<sql id="selectTrainVo">
-        select id, user_name, user_id, start_date, end_date, transportation, train_type, is_food, zjl, zfgzjl, jsfzr, pxwyhbgs, bgs, bmzr, address, train_status, process_instance_id, create_by, create_time, update_by, update_time, del_flag, remark from train
+    <resultMap id="deptResult" type="SysDept">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+    </resultMap>
+    <sql id="selectTrainVo">
+               SELECT
+            id,
+            t.user_name,
+            t.user_id,
+            start_date,
+            end_date,
+            transportation,
+            train_type,
+            is_food,
+            zjl,
+            zfgzjl,
+            jsfzr,
+            pxwyhbgs,
+            bgs,
+            bmzr,
+            address,
+            train_status,
+            process_instance_id,
+            t.create_by,
+            t.create_time,
+            t.update_by,
+            t.update_time,
+            t.del_flag,
+            t.remark,
+            d.dept_id,
+            d.dept_name
+        FROM
+            train t
+        LEFT JOIN sys_user u ON u.user_id = t.user_id
+        LEFT JOIN sys_dept d ON d.dept_id = u.dept_id
     </sql>
-	
+
     <select id="selectTrainList" parameterType="Train" resultMap="TrainResult">
         <include refid="selectTrainVo"/>
-        <where>  
-            <if test="id != null  and id != '' "> and id = #{id}</if>
-             <if test="userName != null  and userName != '' "> and user_name like concat('%', #{userName}, '%') </if>
-             <if test="userId != null "> and user_id = #{userId}</if>
-             <if test="startDate != null "> and start_date <![CDATA[>= ]]>  #{startDate}</if>
-             <if test="endDate != null "> and end_date   <![CDATA[<= ]]> #{endDate}</if>
-             <if test="transportation != null  and transportation != '' "> and transportation = #{transportation}</if>
-             <if test="trainType != null  and trainType != '' "> and train_type = #{trainType}</if>
-             <if test="isFood != null  and isFood != '' "> and is_food = #{isFood}</if>
-             <if test="zjl != null  and zjl != '' "> and zjl = #{zjl}</if>
-             <if test="zfgzjl != null  and zfgzjl != '' "> and zfgzjl = #{zfgzjl}</if>
-             <if test="jsfzr != null  and jsfzr != '' "> and jsfzr = #{jsfzr}</if>
-             <if test="pxwyhbgs != null  and pxwyhbgs != '' "> and pxwyhbgs = #{pxwyhbgs}</if>
-             <if test="bgs != null  and bgs != '' "> and bgs = #{bgs}</if>
-             <if test="bmzr != null  and bmzr != '' "> and bmzr = #{bmzr}</if>
-             <if test="address != null  and address != '' "> and address = #{address}</if>
-             <if test="trainStatus != null  and trainStatus != '' "> and train_status = #{trainStatus}</if>
-             <if test="processInstanceId != null  and processInstanceId != '' "> and process_instance_id = #{processInstanceId}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createTime != null "> and create_time = #{createTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateTime != null "> and update_time = #{updateTime}</if>
-             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
-             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-         </where>
+        <where>
+            <if test="id != null  and id != '' ">and id = #{id}</if>
+            <if test="userName != null  and userName != '' ">and user_name like concat('%', #{userName}, '%')</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="startDate != null ">and start_date <![CDATA[>= ]]>  #{startDate}</if>
+            <if test="endDate != null ">and end_date   <![CDATA[<= ]]> #{endDate}</if>
+            <if test="transportation != null  and transportation != '' ">and transportation = #{transportation}</if>
+            <if test="trainType != null  and trainType != '' ">and train_type = #{trainType}</if>
+            <if test="isFood != null  and isFood != '' ">and is_food = #{isFood}</if>
+            <if test="zjl != null  and zjl != '' ">and zjl = #{zjl}</if>
+            <if test="zfgzjl != null  and zfgzjl != '' ">and zfgzjl = #{zfgzjl}</if>
+            <if test="jsfzr != null  and jsfzr != '' ">and jsfzr = #{jsfzr}</if>
+            <if test="pxwyhbgs != null  and pxwyhbgs != '' ">and pxwyhbgs = #{pxwyhbgs}</if>
+            <if test="bgs != null  and bgs != '' ">and bgs = #{bgs}</if>
+            <if test="bmzr != null  and bmzr != '' ">and bmzr = #{bmzr}</if>
+            <if test="address != null  and address != '' ">and address = #{address}</if>
+            <if test="trainStatus != null  and trainStatus != '' ">and train_status = #{trainStatus}</if>
+            <if test="processInstanceId != null  and processInstanceId != '' ">and process_instance_id =
+                #{processInstanceId}
+            </if>
+            <if test="createBy != null  and createBy != '' ">and create_by = #{createBy}</if>
+            <if test="createTime != null ">and create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != '' ">and update_by = #{updateBy}</if>
+            <if test="updateTime != null ">and update_time = #{updateTime}</if>
+            <if test="delFlag != null  and delFlag != '' ">and del_flag = #{delFlag}</if>
+            <if test="remark != null  and remark != '' ">and remark = #{remark}</if>
+        </where>
     </select>
     <select id="selectTrainByProcessInstanceId" parameterType="String" resultMap="TrainResult">
         <include refid="selectTrainVo"/>
-        where  process_instance_id = #{processInstanceId}
+        where process_instance_id = #{processInstanceId}
     </select>
     <select id="selectTrainById" parameterType="String" resultMap="TrainResult">
         <include refid="selectTrainVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertTrain" parameterType="Train">
         insert into train
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null  and id != ''  ">id,</if>
-			<if test="userName != null  and userName != ''  ">user_name,</if>
-			<if test="userId != null  ">user_id,</if>
-			<if test="startDate != null  ">start_date,</if>
-			<if test="endDate != null  ">end_date,</if>
-			<if test="transportation != null  and transportation != ''  ">transportation,</if>
-			<if test="trainType != null  and trainType != ''  ">train_type,</if>
-			<if test="isFood != null  and isFood != ''  ">is_food,</if>
-			<if test="zjl != null  and zjl != ''  ">zjl,</if>
-			<if test="zfgzjl != null  and zfgzjl != ''  ">zfgzjl,</if>
-			<if test="jsfzr != null  and jsfzr != ''  ">jsfzr,</if>
-			<if test="pxwyhbgs != null  and pxwyhbgs != ''  ">pxwyhbgs,</if>
-			<if test="bgs != null  and bgs != ''  ">bgs,</if>
-			<if test="bmzr != null  and bmzr != ''  ">bmzr,</if>
-			<if test="address != null  and address != ''  ">address,</if>
-			<if test="trainStatus != null  and trainStatus != ''  ">train_status,</if>
-			<if test="processInstanceId != null  and processInstanceId != ''  ">process_instance_id,</if>
-			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createTime != null  ">create_time,</if>
-			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updateTime != null  ">update_time,</if>
-			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
-			<if test="remark != null  and remark != ''  ">remark,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''  ">id,</if>
+            <if test="userName != null  and userName != ''  ">user_name,</if>
+            <if test="userId != null  ">user_id,</if>
+            <if test="startDate != null  ">start_date,</if>
+            <if test="endDate != null  ">end_date,</if>
+            <if test="transportation != null  and transportation != ''  ">transportation,</if>
+            <if test="trainType != null  and trainType != ''  ">train_type,</if>
+            <if test="isFood != null  and isFood != ''  ">is_food,</if>
+            <if test="zjl != null  and zjl != ''  ">zjl,</if>
+            <if test="zfgzjl != null  and zfgzjl != ''  ">zfgzjl,</if>
+            <if test="jsfzr != null  and jsfzr != ''  ">jsfzr,</if>
+            <if test="pxwyhbgs != null  and pxwyhbgs != ''  ">pxwyhbgs,</if>
+            <if test="bgs != null  and bgs != ''  ">bgs,</if>
+            <if test="bmzr != null  and bmzr != ''  ">bmzr,</if>
+            <if test="address != null  and address != ''  ">address,</if>
+            <if test="trainStatus != null  and trainStatus != ''  ">train_status,</if>
+            <if test="processInstanceId != null  and processInstanceId != ''  ">process_instance_id,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
+            <if test="createTime != null  ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+            <if test="updateTime != null  ">update_time,</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+            <if test="remark != null  and remark != ''  ">remark,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null  and id != ''  ">#{id},</if>
-			<if test="userName != null  and userName != ''  ">#{userName},</if>
-			<if test="userId != null  ">#{userId},</if>
-			<if test="startDate != null  ">#{startDate},</if>
-			<if test="endDate != null  ">#{endDate},</if>
-			<if test="transportation != null  and transportation != ''  ">#{transportation},</if>
-			<if test="trainType != null  and trainType != ''  ">#{trainType},</if>
-			<if test="isFood != null  and isFood != ''  ">#{isFood},</if>
-			<if test="zjl != null  and zjl != ''  ">#{zjl},</if>
-			<if test="zfgzjl != null  and zfgzjl != ''  ">#{zfgzjl},</if>
-			<if test="jsfzr != null  and jsfzr != ''  ">#{jsfzr},</if>
-			<if test="pxwyhbgs != null  and pxwyhbgs != ''  ">#{pxwyhbgs},</if>
-			<if test="bgs != null  and bgs != ''  ">#{bgs},</if>
-			<if test="bmzr != null  and bmzr != ''  ">#{bmzr},</if>
-			<if test="address != null  and address != ''  ">#{address},</if>
-			<if test="trainStatus != null  and trainStatus != ''  ">#{trainStatus},</if>
-			<if test="processInstanceId != null  and processInstanceId != ''  ">#{processInstanceId},</if>
-			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createTime != null  ">#{createTime},</if>
-			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updateTime != null  ">#{updateTime},</if>
-			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
-			<if test="remark != null  and remark != ''  ">#{remark},</if>
-         </trim>
+            <if test="id != null  and id != ''  ">#{id},</if>
+            <if test="userName != null  and userName != ''  ">#{userName},</if>
+            <if test="userId != null  ">#{userId},</if>
+            <if test="startDate != null  ">#{startDate},</if>
+            <if test="endDate != null  ">#{endDate},</if>
+            <if test="transportation != null  and transportation != ''  ">#{transportation},</if>
+            <if test="trainType != null  and trainType != ''  ">#{trainType},</if>
+            <if test="isFood != null  and isFood != ''  ">#{isFood},</if>
+            <if test="zjl != null  and zjl != ''  ">#{zjl},</if>
+            <if test="zfgzjl != null  and zfgzjl != ''  ">#{zfgzjl},</if>
+            <if test="jsfzr != null  and jsfzr != ''  ">#{jsfzr},</if>
+            <if test="pxwyhbgs != null  and pxwyhbgs != ''  ">#{pxwyhbgs},</if>
+            <if test="bgs != null  and bgs != ''  ">#{bgs},</if>
+            <if test="bmzr != null  and bmzr != ''  ">#{bmzr},</if>
+            <if test="address != null  and address != ''  ">#{address},</if>
+            <if test="trainStatus != null  and trainStatus != ''  ">#{trainStatus},</if>
+            <if test="processInstanceId != null  and processInstanceId != ''  ">#{processInstanceId},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            <if test="createTime != null  ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+            <if test="updateTime != null  ">#{updateTime},</if>
+            <if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+            <if test="remark != null  and remark != ''  ">#{remark},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateTrain" parameterType="Train">
         update train
         <trim prefix="SET" suffixOverrides=",">
@@ -143,7 +178,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="bmzr != null  and bmzr != ''  ">bmzr = #{bmzr},</if>
             <if test="address != null  and address != ''  ">address = #{address},</if>
             <if test="trainStatus != null  and trainStatus != ''  ">train_status = #{trainStatus},</if>
-            <if test="processInstanceId != null  and processInstanceId != ''  ">process_instance_id = #{processInstanceId},</if>
+            <if test="processInstanceId != null  and processInstanceId != ''  ">process_instance_id =
+                #{processInstanceId},
+            </if>
             <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
             <if test="createTime != null  ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
@@ -154,15 +191,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-	<delete id="deleteTrainById" parameterType="String">
+    <delete id="deleteTrainById" parameterType="String">
         delete from train where id = #{id}
     </delete>
-	
+
     <delete id="deleteTrainByIds" parameterType="String">
-        delete from train where id in 
+        delete from train where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>
