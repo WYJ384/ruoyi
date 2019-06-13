@@ -1031,7 +1031,7 @@
     <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
         <input id="id" name="id" th:field="*{id}" type="hidden">
         <div class="form-group">
-            <label class="col-sm-3 control-label">项目名称：</label>
+            <label class="col-sm-3 control-label">任务标题：</label>
             <div class="col-sm-8">
                 <span th:text="*{taskTitle}" class="form-control"> </span>
                 <!--                <input id="taskTitle" name="taskTitle" th:field="*{taskTitle}" class="form-control" type="text">-->
@@ -1071,13 +1071,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">目标：</label>
+            <label class="col-sm-3 control-label">任务描述：</label>
             <div class="col-sm-8">
                 <span th:text="*{taskContent}" class="form-control"> </span>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">小组成员：</label>
+            <label class="col-sm-3 control-label">任务执行人：</label>
             <div class="col-sm-8">
                 <span th:text="*{remark}" class="form-control"> </span>
             </div>
@@ -1281,7 +1281,7 @@
     //通过
     function passCheck() {
         var config = {
-            url: ctx + "worktask/qc/edit",
+            url: ctx + "worktask/goodness/edit",
             type: "post",
             dataType: "json",
             data: {id:$("#id").val(),check:2},
@@ -1298,7 +1298,7 @@
     //不通过
     function noPassCheck() {
         var config = {
-            url: ctx + "worktask/qc/edit",
+            url: ctx + "worktask/goodness/edit",
             type: "post",
             dataType: "json",
             data: {id:$("#id").val(),check:1},
@@ -1333,7 +1333,7 @@
     }
 
     function addChildTask() {
-        $.modal.open("添加子任务", ctx + "worktask/qc/addChild/" + $("#id").val())
+        $.modal.open("添加子任务", ctx + "worktask/goodness/addChild/" + $("#id").val())
     }
 
     function deleteFile(id){

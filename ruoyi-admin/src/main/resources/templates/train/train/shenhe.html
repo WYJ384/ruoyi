@@ -4,6 +4,11 @@
 <head th:include="include :: header"></head>
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet" type="text/css"/>
 <link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+	th{
+		text-align: right;
+	}
+</style>
 <body class="white-bg">
 	<div  th:include="train_comm_v::traincomm"></div>
 	<input type="hidden" id="taskId" th:value="${taskId}">

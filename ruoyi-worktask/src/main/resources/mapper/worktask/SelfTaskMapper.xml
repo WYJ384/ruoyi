@@ -25,10 +25,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="createBy"    column="create_by"    />
         <result property="remark"    column="remark"    />
+        <result property="taskType"    column="task_type"    />
+        <result property="remark1"    column="remark1"    />
+        <result property="remark2"    column="remark2"    />
+        <result property="remark3"    column="remark3"    />
+        <result property="remark4"    column="remark4"    />
+        <result property="remark5"    column="remark5"    />
+        <result property="remark6"    column="remark6"    />
+        <result property="remark7"    column="remark7"    />
+        <result property="remark8"    column="remark8"    />
+        <result property="remark9"    column="remark9"    />
+        <result property="remark10"    column="remark10"    />
     </resultMap>
 	
 	<sql id="selectSelfTaskVo">
-        select id, task_level, pid, task_title, task_status, start_date, require_time, selval_task_type, priority, task_content, executor_user, acceptor_user, task_progress, share_user, is_share, create_time, update_by, update_time, create_by, remark from self_task
+        select id, task_level, pid, task_title, task_status, start_date, require_time, selval_task_type, priority, task_content, executor_user, acceptor_user, task_progress, share_user, is_share, create_time, update_by, update_time, create_by, remark, task_type, remark1, remark2, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10 from self_task
     </sql>
 	
     <select id="selectSelfTaskList" parameterType="SelfTask" resultMap="SelfTaskResult">
@@ -54,6 +65,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
              <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="taskType != null  and taskType != '' "> and task_type = #{taskType}</if>
+             <if test="remark1 != null  and remark1 != '' "> and remark1 = #{remark1}</if>
+             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
+             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
+             <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
+             <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
+             <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
+             <if test="remark7 != null  and remark7 != '' "> and remark7 = #{remark7}</if>
+             <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
+             <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
+             <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
          </where>
     </select>
     
@@ -85,6 +107,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateTime != null  ">update_time,</if>
 			<if test="createBy != null  and createBy != ''  ">create_by,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="taskType != null  and taskType != ''  ">task_type,</if>
+			<if test="remark1 != null  and remark1 != ''  ">remark1,</if>
+			<if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+			<if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+			<if test="remark4 != null  and remark4 != ''  ">remark4,</if>
+			<if test="remark5 != null  and remark5 != ''  ">remark5,</if>
+			<if test="remark6 != null  and remark6 != ''  ">remark6,</if>
+			<if test="remark7 != null  and remark7 != ''  ">remark7,</if>
+			<if test="remark8 != null  and remark8 != ''  ">remark8,</if>
+			<if test="remark9 != null  and remark9 != ''  ">remark9,</if>
+			<if test="remark10 != null  and remark10 != ''  ">remark10,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
@@ -107,6 +140,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateTime != null  ">#{updateTime},</if>
 			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="taskType != null  and taskType != ''  ">#{taskType},</if>
+			<if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
+			<if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+			<if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+			<if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
+			<if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
+			<if test="remark6 != null  and remark6 != ''  ">#{remark6},</if>
+			<if test="remark7 != null  and remark7 != ''  ">#{remark7},</if>
+			<if test="remark8 != null  and remark8 != ''  ">#{remark8},</if>
+			<if test="remark9 != null  and remark9 != ''  ">#{remark9},</if>
+			<if test="remark10 != null  and remark10 != ''  ">#{remark10},</if>
          </trim>
     </insert>
 	 
@@ -132,6 +176,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="taskType != null  and taskType != ''  ">task_type = #{taskType},</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''  ">remark7 = #{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''  ">remark8 = #{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
         </trim>
         where id = #{id}
     </update>

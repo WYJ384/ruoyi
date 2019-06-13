@@ -9,7 +9,7 @@ import java.util.Date;
  * 任务表 self_task
  * 
  * @author ruoyi
- * @date 2019-05-10
+ * @date 2019-06-13
  */
 public class SelfTask extends BaseEntity
 {
@@ -55,6 +55,28 @@ public class SelfTask extends BaseEntity
 	private String createBy;
 	/** 备注 */
 	private String remark;
+	/** 任务类型 */
+	private String taskType;
+	/** 扩展1 */
+	private String remark1;
+	/** 扩展2 */
+	private String remark2;
+	/** 扩展3 */
+	private String remark3;
+	/** 扩展4 */
+	private String remark4;
+	/** 扩展5 */
+	private String remark5;
+	/** 扩展6 */
+	private String remark6;
+	/** 扩展7 */
+	private String remark7;
+	/** 扩展8 */
+	private String remark8;
+	/** 扩展9 */
+	private String remark9;
+	/** 扩展10 */
+	private String remark10;
 
 	public void setId(String id) 
 	{
@@ -236,6 +258,105 @@ public class SelfTask extends BaseEntity
 	{
 		return remark;
 	}
+	public void setTaskType(String taskType) 
+	{
+		this.taskType = taskType;
+	}
+
+	public String getTaskType() 
+	{
+		return taskType;
+	}
+	public void setRemark1(String remark1) 
+	{
+		this.remark1 = remark1;
+	}
+
+	public String getRemark1() 
+	{
+		return remark1;
+	}
+	public void setRemark2(String remark2) 
+	{
+		this.remark2 = remark2;
+	}
+
+	public String getRemark2() 
+	{
+		return remark2;
+	}
+	public void setRemark3(String remark3) 
+	{
+		this.remark3 = remark3;
+	}
+
+	public String getRemark3() 
+	{
+		return remark3;
+	}
+	public void setRemark4(String remark4) 
+	{
+		this.remark4 = remark4;
+	}
+
+	public String getRemark4() 
+	{
+		return remark4;
+	}
+	public void setRemark5(String remark5) 
+	{
+		this.remark5 = remark5;
+	}
+
+	public String getRemark5() 
+	{
+		return remark5;
+	}
+	public void setRemark6(String remark6) 
+	{
+		this.remark6 = remark6;
+	}
+
+	public String getRemark6() 
+	{
+		return remark6;
+	}
+	public void setRemark7(String remark7) 
+	{
+		this.remark7 = remark7;
+	}
+
+	public String getRemark7() 
+	{
+		return remark7;
+	}
+	public void setRemark8(String remark8) 
+	{
+		this.remark8 = remark8;
+	}
+
+	public String getRemark8() 
+	{
+		return remark8;
+	}
+	public void setRemark9(String remark9) 
+	{
+		this.remark9 = remark9;
+	}
+
+	public String getRemark9() 
+	{
+		return remark9;
+	}
+	public void setRemark10(String remark10) 
+	{
+		this.remark10 = remark10;
+	}
+
+	public String getRemark10() 
+	{
+		return remark10;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -259,6 +380,17 @@ public class SelfTask extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("createBy", getCreateBy())
             .append("remark", getRemark())
+            .append("taskType", getTaskType())
+            .append("remark1", getRemark1())
+            .append("remark2", getRemark2())
+            .append("remark3", getRemark3())
+            .append("remark4", getRemark4())
+            .append("remark5", getRemark5())
+            .append("remark6", getRemark6())
+            .append("remark7", getRemark7())
+            .append("remark8", getRemark8())
+            .append("remark9", getRemark9())
+            .append("remark10", getRemark10())
             .toString();
     }
 }
