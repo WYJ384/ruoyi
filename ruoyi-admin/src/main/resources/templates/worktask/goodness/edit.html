@@ -98,7 +98,7 @@
                     <option value=""></option>
                     <option th:each="user:${sysUsers}" th:value="${user.userId}"
                             th:text="${user.userName}"
-                            th:selected="${selfTask.acceptorUser?.contains(user.userId.toString())}"></option>
+                            th:selected="${selfTask.acceptorUser eq user.userId.toString()}"></option>
                 </select>
             </div>
         </div>
