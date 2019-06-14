@@ -1,0 +1,31 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<div th:fragment="traincomm" class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+    <div class="container-div form-horizontal m">
+        <div class="row">
+            <div class="search-collapse" style="padding: 20px;">
+                <table  class="table table-condensed table-bordered table-hover table-striped">
+                    <tr>
+                        <th style="text-align: center">环节</th>
+                        <th style="text-align: center">处理人</th>
+                        <th style="text-align: center">处理时间</th>
+<!--                        <th style="text-align: center">基本操作</th>-->
+<!--                        <th style="text-align: center">处理机构</th>-->
+                        <th style="text-align: center">处理说明</th>
+                    </tr>
+                    <tr th:each="hi:${historyTaskVos}">
+                        <th style="text-align: center" th:text="${hi.name}"></th>
+                        <th style="text-align: center" th:text="${hi.assignee}"></th>
+                        <th style="text-align: center" th:text="${#dates.format(hi.endTime, 'yyyy-MM-dd HH:mm:ss')}"></th>
+<!--                        <th style="text-align: center" th:text="${hi.repContent}"></th>-->
+<!--                        <th style="text-align: center" th:text="${hi.endTime}"></th>-->
+                        <th style="text-align: center" th:text="${hi.repContent}"></th>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

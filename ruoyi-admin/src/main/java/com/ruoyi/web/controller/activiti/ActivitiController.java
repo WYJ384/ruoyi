@@ -4,10 +4,14 @@ import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableSupport;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.activiti.engine.*;
 import org.activiti.engine.history.*;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +33,8 @@ public class ActivitiController {
     TaskService taskService;
     @Autowired
     ActTaskService actTaskService;
+    @Autowired
+    ISysUserService sysUserService;
 
     @GetMapping("/startProcess")
     @ResponseBody
@@ -78,7 +84,9 @@ public class ActivitiController {
      */
     @GetMapping("/historyTaskList")
     @ResponseBody
-    public List<HistoricTaskInstance>  historyTaskList(String processInstanceId){
+    public Map  historyTaskList(String processInstanceId){
+        Map resultMap=new HashMap();
+        List<Comment> taskComments=new ArrayList<Comment>();
         List<HistoricTaskInstance> list= historyService // 历史相关Service
                 .createHistoricTaskInstanceQuery() // 创建历史任务实例查询
                 .processInstanceId(processInstanceId) // 用流程实例id查询
@@ -88,12 +96,26 @@ public class ActivitiController {
             System.out.println("任务ID:"+hti.getId());
             System.out.println("流程实例ID:"+hti.getProcessInstanceId());
             System.out.println("任务名称："+hti.getName());
-            System.out.println("办理人："+hti.getAssignee());
+            String assignee = hti.getAssignee();
+            if(StringUtils.isNotEmpty(assignee)){
+                SysUser sysUser = sysUserService.selectUserById(Long.valueOf(assignee));
+                if(sysUser!=null){
+                    System.out.println("办理人："+sysUser.getUserName());
+                }
+            }
+
+
             System.out.println("开始时间："+hti.getStartTime());
             System.out.println("结束时间："+hti.getEndTime());
+            String fullMessage = taskService.getTaskComments(hti.getId()).get(0).getFullMessage();
+            System.out.println(fullMessage);
             System.out.println("=================================");
+
         }
-        return list;
+        resultMap.put("taskComments",taskComments);
+        resultMap.put("list",list);
+
+        return resultMap;
     }
 
     @RequestMapping("/getfinishprocess")

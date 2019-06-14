@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.train;
 
+import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.annotation.Log;
@@ -9,9 +10,11 @@ import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.train.domain.Train;
@@ -20,9 +23,13 @@ import com.ruoyi.worktask.domain.WorkTask;
 import com.ruoyi.worktask.domain.WorkTaskActivity;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -53,6 +60,8 @@ public class TrainController extends BaseController
 	private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private ISysDictDataService dictDataService;
+	@Autowired
+	HistoryService historyService;
 	@RequiresPermissions("train:train:view")
 	@GetMapping()
 	public String train()
@@ -165,9 +174,37 @@ public class TrainController extends BaseController
 		activityFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
 		mmap.put("workTaskFiles", workTaskFiles);
+		List<HistoryTaskVo> historyTaskVos = historyTaskList(train.getProcessInstanceId());
+		mmap.put("historyTaskVos", historyTaskVos);
 		return prefix + "/query";
 	}
+	public List<HistoryTaskVo>  historyTaskList(String processInstanceId){
+		List<HistoryTaskVo> historyTaskVos=new ArrayList<HistoryTaskVo>();
+		List<HistoricTaskInstance> list= historyService // 历史相关Service
+				.createHistoricTaskInstanceQuery() // 创建历史任务实例查询
+				.processInstanceId(processInstanceId) // 用流程实例id查询
+				.finished() // 查询已经完成的任务
+				.list();
+		for(HistoricTaskInstance hti:list){
+			HistoryTaskVo historyTaskVo=new HistoryTaskVo();
+			BeanUtils.copyProperties(hti,historyTaskVo);
+			String assignee = hti.getAssignee();
+			if(StringUtils.isNotEmpty(assignee)){
+				SysUser sysUser = userService.selectUserById(Long.valueOf(assignee));
+				if(sysUser!=null){
+					historyTaskVo.setAssignee(sysUser.getUserName());
+				}
+			}
+			List<Comment> taskComments = taskService.getTaskComments(hti.getId());
+			if(taskComments!=null&&taskComments.size()>0){
+				String fullMessage = taskService.getTaskComments(hti.getId()).get(0).getFullMessage();
+				historyTaskVo.setRepContent(fullMessage);
+			}
+			historyTaskVos.add(historyTaskVo);
+		}
 
+		return historyTaskVos;
+	}
 	@Log(title = "培训审批开始", businessType = BusinessType.UPDATE)
 	public void startTrain(Train train){
 		String businessTable = "train";
@@ -223,6 +260,9 @@ public class TrainController extends BaseController
 		while (taskVOIterator.hasNext()){
 			TaskVO task = taskVOIterator.next();
 			Train train = trainService.selectTrainByProcessInstanceId(task.getProcessId());
+			if(train==null){
+				continue;
+			}
 			train.setTask(task);
 			list.add(train);
 		}
@@ -242,10 +282,11 @@ public class TrainController extends BaseController
 	@Log(title = "培训审核", businessType = BusinessType.DELETE)
 	@PostMapping( "/check")
 	@ResponseBody
-	public AjaxResult check(String result,String taskId,String id)
+	public AjaxResult check(String result,String taskId,String id,String comment)
 	{
 		TaskVO taskVO = actTaskService.selectOneTask(taskId);
 		boolean pass=false;
+
 		Train train = trainService.selectTrainById(id);
 		if(result.equals("1")){//通过
 			pass=true;
@@ -253,17 +294,23 @@ public class TrainController extends BaseController
 				train.setTrainStatus("3");
 				trainService.updateTrain(train);
 			}
+			if(StringUtils.isEmpty(comment)){
+				comment="同意";
+			}
 		}else if(result.equals("2")){//不通过
 			pass=false;
 			train.setTrainStatus("4");
 			trainService.updateTrain(train);
+			if(StringUtils.isEmpty(comment)){
+				comment="不同意";
+			}
 		}
 
 
 		TaskVO taskVo=new TaskVO();
 		taskVo.setProcessInstanceId(train.getProcessInstanceId());
 		taskService.setAssignee(taskId,ShiroUtils.getUserId()+"");
-		taskService.setOwner(taskId,ShiroUtils.getLoginName());
+		taskService.setOwner(taskId,ShiroUtils.getUserId()+"");
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("bgs", train.getBgs());
 		vars.put("pxwyhbgs", train.getPxwyhbgs());
@@ -271,7 +318,7 @@ public class TrainController extends BaseController
 		vars.put("zfgzjl", train.getZfgzjl());
 		vars.put("zjl", train.getZjl());
 		vars.put("pass", pass);
-		actTaskService.completeTask(taskId, vars);
+		actTaskService.complete(taskId,train.getProcessInstanceId(),comment,"",vars);
 		return toAjax(1);
 	}
 }

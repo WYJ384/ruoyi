@@ -10,18 +10,14 @@ public class HistoryTaskVo {
 
     //开始时间
     private Date startTime;
-
     //结束时间
     private Date endTime;
-
     //办理时长
     private Long durationInMillis;
-
     //节点名称
     private String activityName;
     //执行人
     private String assignee;
-
     //下一步任务执行人
     private String queryVariables;
     //节点id 如zhurenduban
@@ -31,6 +27,26 @@ public class HistoryTaskVo {
     private long datePoorHour;
     //领导批示意见
     private String repContent;
+    //节点名称
+    private String name;
+    //建议批示
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getRepContent() {
         return repContent;
