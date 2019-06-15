@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.exam;
 
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.exam.domain.Library;
 import com.ruoyi.exam.domain.LibraryQuestion;
@@ -68,5 +69,19 @@ public class LibraryQuestionController extends BaseController {
             return multChoiceServicePrefix + "/edit";
         }
         return prefix + "/edit";
+    }
+
+    /**
+     * 修改试题库
+     */
+    @PostMapping("/remove/{id}/{type}")
+    @ResponseBody
+    public AjaxResult remove(@PathVariable("id") String id, @PathVariable("type") String type, ModelMap mmap) {
+        if (type.equals("单选题")) {
+            toAjax(singleChoiceService.deleteSingleChoiceByIds(id));
+        } else if (type.equals("多选题")) {
+            toAjax(multChoiceService.deleteMultChoiceByIds(id));
+        }
+        return toAjax(1);
     }
 }

@@ -21,15 +21,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, name, permission, cate_id, create_by, create_date, update_by, update_date, remark, del_flag from exam_library
     </sql>
 	<select id="selectLibraryQuestionList" parameterType="LibraryQuestion" resultType="LibraryQuestion">
-        select * from (select id,title,'填空题' type,create_by,update_date,lib_id from exam_blank
+        select * from (select id,title,'填空题' type,create_by,update_date,lib_id from exam_blank where  del_flag = '0'
         UNION ALL
-        select id,title,'多选题' type,create_by,update_date,lib_id  from exam_mult_choice
+        select id,title,'多选题' type,create_by,update_date,lib_id  from exam_mult_choice where  del_flag = '0'
         UNION ALL
-        select id,title,'判断题' type,create_by,update_date,lib_id  from exam_judge
+        select id,title,'判断题' type,create_by,update_date,lib_id  from exam_judge where  del_flag = '0'
         UNION ALL
-        select id,title,'单选题' type,create_by,update_date,lib_id  from exam_single_choice
+        select id,title,'单选题' type,create_by,update_date,lib_id  from exam_single_choice where  del_flag = '0'
         UNION ALL
-        select id,title,'简答题' type,create_by,update_date,lib_id   from exam_qa) t where t.lib_id=#{libId}
+        select id,title,'简答题' type,create_by,update_date,lib_id   from exam_qa where  del_flag = '0') t where t.lib_id=#{libId}
     </select>
     <select id="selectLibraryList" parameterType="Library" resultMap="LibraryResult">
         <include refid="selectLibraryVo"/>
