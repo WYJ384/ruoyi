@@ -8,11 +8,13 @@
     }
 </style>
 <body class="white-bg">
+
 <div class="container-div form-horizontal m">
+    <div class="search-collapse" style="padding: 10px;">
+        <h4 th:text="${library.name}"></h4>
+    </div>
     <div class="row">
-        <div class="search-collapse" style="padding: 20px;">
-            <h4 th:text="${library.name}"></h4>
-        </div>
+
         <form class="form-horizontal m" id="form-add">
             <input id="libId" name="libId" type="hidden" th:value="${library.id}" class="form-control">
             <input id="prifix" name="prifix" type="hidden" class="form-control">
