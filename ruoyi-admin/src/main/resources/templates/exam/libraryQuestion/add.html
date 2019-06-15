@@ -50,7 +50,6 @@
 <!--多选题-->
 <div id="type2" class="type">
     <div th:include="exam/multChoice/add::multChoice"></div>
-
 </div>
 <!--填空题-->
 <div id="type3" class="type">
@@ -136,6 +135,9 @@
     $("#prifix").val(prefix);
     $("#form-add").validate({
         rules: {
+            type:{
+                required: true,
+            },
             title: {
                 required: true,
             },
