@@ -1,117 +1,47 @@
-<!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
-<meta charset="utf-8">
-<head th:include="include :: header"></head>
-<body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-singleChoice-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">题目：</label>
-				<div class="col-sm-8">
-					<input id="title" name="title" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项A：</label>
-				<div class="col-sm-8">
-					<input id="choiceA" name="choiceA" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项B：</label>
-				<div class="col-sm-8">
-					<input id="choiceB" name="choiceB" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项C：</label>
-				<div class="col-sm-8">
-					<input id="choiceC" name="choiceC" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项D：</label>
-				<div class="col-sm-8">
-					<input id="choiceD" name="choiceD" class="form-control" type="text">
-				</div>
-			</div>
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项E：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceE" name="choiceE" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项F：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceF" name="choiceF" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项G：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceG" name="choiceG" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项H：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceH" name="choiceH" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">答案：</label>
-				<div class="col-sm-8">
-					<input id="answer" name="answer" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">解析：</label>
-				<div class="col-sm-8">
-					<input id="answerTip" name="answerTip" class="form-control" type="text">
-				</div>
-			</div>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="choice" class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">题目：</label>
+        <div class="col-sm-8">
+            <input id="title" name="title" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">选项A：</label>
+        <div class="col-sm-8">
+            <input id="choiceA" name="choiceA" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">选项B：</label>
+        <div class="col-sm-8">
+            <input id="choiceB" name="choiceB" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">选项C：</label>
+        <div class="col-sm-8">
+            <input id="choiceC" name="choiceC" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">选项D：</label>
+        <div class="col-sm-8">
+            <input id="choiceD" name="choiceD" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">答案：</label>
+        <div class="col-sm-8">
+            <input id="answer" name="answer" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">解析：</label>
+        <div class="col-sm-8">
+            <input id="answerTip" name="answerTip" class="form-control" type="text">
+        </div>
+    </div>
+</div>
 
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="remark" name="remark" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="delFlag" name="delFlag" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-		</form>
-	</div>
-	<div class="row">
-		<div class="col-sm-offset-5 col-sm-10">
-			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
-			</button>
-			&nbsp;
-			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
-			</button>
-		</div>
-	</div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-		var prefix = ctx + "exam/singleChoice"
-		$("#form-singleChoice-add").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			},
-			focusCleanup: true
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.saveTab(prefix + "/add", $('#form-singleChoice-add').serialize());
-	        }
-	    }
-	</script>
-</body>
-</html>
+
