@@ -1,117 +1,261 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-singleChoice-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">题目：</label>
-				<div class="col-sm-8">
-					<input id="title" name="title" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项A：</label>
-				<div class="col-sm-8">
-					<input id="choiceA" name="choiceA" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项B：</label>
-				<div class="col-sm-8">
-					<input id="choiceB" name="choiceB" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项C：</label>
-				<div class="col-sm-8">
-					<input id="choiceC" name="choiceC" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项D：</label>
-				<div class="col-sm-8">
-					<input id="choiceD" name="choiceD" class="form-control" type="text">
-				</div>
-			</div>
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项E：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceE" name="choiceE" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项F：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceF" name="choiceF" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项G：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceG" name="choiceG" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">选项H：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="choiceH" name="choiceH" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">答案：</label>
-				<div class="col-sm-8">
-					<input id="answer" name="answer" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">解析：</label>
-				<div class="col-sm-8">
-					<input id="answerTip" name="answerTip" class="form-control" type="text">
-				</div>
-			</div>
+<div class="container-div form-horizontal m">
+    <div class="row">
+        <div class="search-collapse" style="padding: 20px;">
+            <h4 th:text="${library.name}"></h4>
+        </div>
+        <form class="form-horizontal m" id="form-add">
+            <input id="libId" name="libId" type="hidden" th:value="${library.id}" class="form-control" >
+            <input id="prifix" name="prifix" type="hidden"  class="form-control" >
+            <div class="form-group">
+                <label class="col-sm-3 control-label">题库类型：</label>
+                <div class="col-sm-8">
+                    <select  name="type" id="type"  class="form-control m-b" th:with="type=${@dict.getType('library_type')}">
+                        <option value=""></option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                    </select>
+                </div>
+            </div>
+            <!--单选题-->
+            <div id="type1" class="type">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">题目：</label>
+                    <div class="col-sm-8">
+                        <input id="title" name="title" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项A：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceA" name="choiceA" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项B：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceB" name="choiceB" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项C：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceC" name="choiceC" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项D：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceD" name="choiceD" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">答案：</label>
+                    <div class="col-sm-8">
+                        <input id="answer" name="answer" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">解析：</label>
+                    <div class="col-sm-8">
+                        <input id="answerTip" name="answerTip" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <!--多选题-->
+            <div id="type2" class="type">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">题目：</label>
+                    <div class="col-sm-8">
+                        <input id="title" name="title" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项A：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceA" name="choiceA" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项B：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceB" name="choiceB" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项C：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceC" name="choiceC" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项D：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceD" name="choiceD" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项E：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceD" name="choiceD" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项F：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceD" name="choiceD" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项G：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceD" name="choiceD" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项H：</label>
+                    <div class="col-sm-8">
+                        <input id="choiceD" name="choiceD" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">答案：</label>
+                    <div class="col-sm-8">
+                        <input id="answer" name="answer" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">解析：</label>
+                    <div class="col-sm-8">
+                        <input id="answerTip" name="answerTip" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <!--填空题-->
+            <div  id="type3" class="type">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">题目：</label>
+                    <div class="col-sm-8">
+                        <input id="title" name="title" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项A：</label>
+                    <div class="col-sm-8">
+                        <input id="blankA" name="blankA" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项B：</label>
+                    <div class="col-sm-8">
+                        <input id="blankB" name="blankB" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项C：</label>
+                    <div class="col-sm-8">
+                        <input id="blankC" name="blankC" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项D：</label>
+                    <div class="col-sm-8">
+                        <input id="blankD" name="blankD" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项E：</label>
+                    <div class="col-sm-8">
+                        <input id="blankE" name="blankE" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项F：</label>
+                    <div class="col-sm-8">
+                        <input id="blankF" name="blankF" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项G：</label>
+                    <div class="col-sm-8">
+                        <input id="blankG" name="blankG" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选项H：</label>
+                    <div class="col-sm-8">
+                        <input id="blankH" name="blankH" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">答案数量：</label>
+                    <div class="col-sm-8">
+                        <input id="answerNum" name="answerNum" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">解析：</label>
+                    <div class="col-sm-8">
+                        <input id="answerTip" name="answerTip" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <!--判断题-->
+            <div  id="type4" class="type">
+                判断题
+            </div>
+            <!--简答题-->
+            <div  id="type5" class="type">
+                简答题
+            </div>
+        </form>
 
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="remark" name="remark" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-<!--			<div class="form-group">	-->
-<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
-<!--				<div class="col-sm-8">-->
-<!--					<input id="delFlag" name="delFlag" class="form-control" type="text">-->
-<!--				</div>-->
-<!--			</div>-->
-		</form>
-	</div>
-	<div class="row">
-		<div class="col-sm-offset-5 col-sm-10">
-			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
-			</button>
-			&nbsp;
-			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
-			</button>
-		</div>
-	</div>
-    <div th:include="include::footer"></div>
-    <script type="text/javascript">
-		var prefix = ctx + "exam/singleChoice"
-		$("#form-singleChoice-add").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			},
-			focusCleanup: true
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.saveTab(prefix + "/add", $('#form-singleChoice-add').serialize());
-	        }
-	    }
-	</script>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+</div>
+<div class="row">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+        </button>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    var prefix = ctx + "exam/singleChoice";
+    $("#prifix").val(prefix);
+    $("#form-singleChoice-add").validate({
+        rules: {
+            xxxx: {
+                required: true,
+            },
+        },
+        focusCleanup: true
+    });
+    $(function(){
+        $(".type").hide();
+        //切换题型
+        $("#type").change(function(){
+            $(".type").hide();
+            $('#type'+$(this).val()).show();
+            if($(this).val()==2){
+                $("#prifix").val(ctx + "exam/multChoice");
+            }
+        })
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.saveTab( $("#prifix").val() + "/add", $('#form-add').serialize());
+        }
+    }
+</script>
 </body>
 </html>
