@@ -132,11 +132,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
 	<delete id="deleteBlankById" parameterType="String">
-        delete from exam_blank where id = #{id}
+       update exam_blank set del_flag=1    where id = #{id}
     </delete>
 	
     <delete id="deleteBlankByIds" parameterType="String">
-        delete from exam_blank where id in 
+        update exam_blank set del_flag=1   where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -2,19 +2,11 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.exam.mapper.MultChoiceMapper">
+<mapper namespace="com.ruoyi.exam.mapper.QaMapper">
     
-    <resultMap type="MultChoice" id="MultChoiceResult">
+    <resultMap type="Qa" id="QaResult">
         <result property="id"    column="id"    />
         <result property="title"    column="title"    />
-        <result property="choiceA"    column="choice_a"    />
-        <result property="choiceB"    column="choice_b"    />
-        <result property="choiceC"    column="choice_c"    />
-        <result property="choiceD"    column="choice_d"    />
-        <result property="choiceE"    column="choice_e"    />
-        <result property="choiceF"    column="choice_f"    />
-        <result property="choiceG"    column="choice_g"    />
-        <result property="choiceH"    column="choice_h"    />
         <result property="answer"    column="answer"    />
         <result property="answerTip"    column="answer_tip"    />
         <result property="createBy"    column="create_by"    />
@@ -26,23 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="libId"    column="lib_id"    />
     </resultMap>
 	
-	<sql id="selectMultChoiceVo">
-        select id, title, choice_a, choice_b, choice_c, choice_d, choice_e, choice_f, choice_g, choice_h, answer, answer_tip, create_by, create_date, update_by, update_date, remark, del_flag, lib_id from exam_mult_choice
+	<sql id="selectQaVo">
+        select id, title, answer, answer_tip, create_by, create_date, update_by, update_date, remark, del_flag, lib_id from exam_qa
     </sql>
 	
-    <select id="selectMultChoiceList" parameterType="MultChoice" resultMap="MultChoiceResult">
-        <include refid="selectMultChoiceVo"/>
+    <select id="selectQaList" parameterType="Qa" resultMap="QaResult">
+        <include refid="selectQaVo"/>
         <where>  
             <if test="id != null  and id != '' "> and id = #{id}</if>
              <if test="title != null  and title != '' "> and title = #{title}</if>
-             <if test="choiceA != null  and choiceA != '' "> and choice_a = #{choiceA}</if>
-             <if test="choiceB != null  and choiceB != '' "> and choice_b = #{choiceB}</if>
-             <if test="choiceC != null  and choiceC != '' "> and choice_c = #{choiceC}</if>
-             <if test="choiceD != null  and choiceD != '' "> and choice_d = #{choiceD}</if>
-             <if test="choiceE != null  and choiceE != '' "> and choice_e = #{choiceE}</if>
-             <if test="choiceF != null  and choiceF != '' "> and choice_f = #{choiceF}</if>
-             <if test="choiceG != null  and choiceG != '' "> and choice_g = #{choiceG}</if>
-             <if test="choiceH != null  and choiceH != '' "> and choice_h = #{choiceH}</if>
              <if test="answer != null  and answer != '' "> and answer = #{answer}</if>
              <if test="answerTip != null  and answerTip != '' "> and answer_tip = #{answerTip}</if>
              <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
@@ -55,24 +39,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     
-    <select id="selectMultChoiceById" parameterType="String" resultMap="MultChoiceResult">
-        <include refid="selectMultChoiceVo"/>
+    <select id="selectQaById" parameterType="String" resultMap="QaResult">
+        <include refid="selectQaVo"/>
         where id = #{id}
     </select>
         
-    <insert id="insertMultChoice" parameterType="MultChoice">
-        insert into exam_mult_choice
+    <insert id="insertQa" parameterType="Qa">
+        insert into exam_qa
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">id,</if>
 			<if test="title != null  and title != ''  ">title,</if>
-			<if test="choiceA != null  and choiceA != ''  ">choice_a,</if>
-			<if test="choiceB != null  and choiceB != ''  ">choice_b,</if>
-			<if test="choiceC != null  and choiceC != ''  ">choice_c,</if>
-			<if test="choiceD != null  and choiceD != ''  ">choice_d,</if>
-			<if test="choiceE != null  and choiceE != ''  ">choice_e,</if>
-			<if test="choiceF != null  and choiceF != ''  ">choice_f,</if>
-			<if test="choiceG != null  and choiceG != ''  ">choice_g,</if>
-			<if test="choiceH != null  and choiceH != ''  ">choice_h,</if>
 			<if test="answer != null  and answer != ''  ">answer,</if>
 			<if test="answerTip != null  and answerTip != ''  ">answer_tip,</if>
 			<if test="createBy != null  and createBy != ''  ">create_by,</if>
@@ -86,14 +62,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
 			<if test="title != null  and title != ''  ">#{title},</if>
-			<if test="choiceA != null  and choiceA != ''  ">#{choiceA},</if>
-			<if test="choiceB != null  and choiceB != ''  ">#{choiceB},</if>
-			<if test="choiceC != null  and choiceC != ''  ">#{choiceC},</if>
-			<if test="choiceD != null  and choiceD != ''  ">#{choiceD},</if>
-			<if test="choiceE != null  and choiceE != ''  ">#{choiceE},</if>
-			<if test="choiceF != null  and choiceF != ''  ">#{choiceF},</if>
-			<if test="choiceG != null  and choiceG != ''  ">#{choiceG},</if>
-			<if test="choiceH != null  and choiceH != ''  ">#{choiceH},</if>
 			<if test="answer != null  and answer != ''  ">#{answer},</if>
 			<if test="answerTip != null  and answerTip != ''  ">#{answerTip},</if>
 			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
@@ -106,18 +74,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 	 
-    <update id="updateMultChoice" parameterType="MultChoice">
-        update exam_mult_choice
+    <update id="updateQa" parameterType="Qa">
+        update exam_qa
         <trim prefix="SET" suffixOverrides=",">
             <if test="title != null  and title != ''  ">title = #{title},</if>
-            <if test="choiceA != null  and choiceA != ''  ">choice_a = #{choiceA},</if>
-            <if test="choiceB != null  and choiceB != ''  ">choice_b = #{choiceB},</if>
-            <if test="choiceC != null  and choiceC != ''  ">choice_c = #{choiceC},</if>
-            <if test="choiceD != null  and choiceD != ''  ">choice_d = #{choiceD},</if>
-            <if test="choiceE != null  and choiceE != ''  ">choice_e = #{choiceE},</if>
-            <if test="choiceF != null  and choiceF != ''  ">choice_f = #{choiceF},</if>
-            <if test="choiceG != null  and choiceG != ''  ">choice_g = #{choiceG},</if>
-            <if test="choiceH != null  and choiceH != ''  ">choice_h = #{choiceH},</if>
             <if test="answer != null  and answer != ''  ">answer = #{answer},</if>
             <if test="answerTip != null  and answerTip != ''  ">answer_tip = #{answerTip},</if>
             <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
@@ -131,12 +91,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-	<delete id="deleteMultChoiceById" parameterType="String">
-       update exam_mult_choice set del_flag=1    where id = #{id}
+	<delete id="deleteQaById" parameterType="String">
+        update exam_qa set del_flag=1  where id = #{id}
     </delete>
 	
-    <delete id="deleteMultChoiceByIds" parameterType="String">
-        update exam_mult_choice set del_flag=1  where id in
+    <delete id="deleteQaByIds" parameterType="String">
+        update exam_qa set del_flag=1    where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
