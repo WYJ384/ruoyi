@@ -24,7 +24,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>具体问题：</label>
             <div class="col-sm-8">
-                <textarea id="remark5" name="remark5" class="form-control"></textarea>
+                <textarea id="remark5"   th:field="*{remark5}" name="remark5" ></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -36,7 +36,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">措施及建议：</label>
             <div class="col-sm-8">
-                <textarea id="taskContent" name="taskContent" class="form-control"></textarea>
+                <textarea id="taskContent" name="taskContent" ></textarea>
             </div>
         </div>
 
@@ -105,7 +105,14 @@
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs/select/select2.js}"></script>
 
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"> </script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
 <script type="text/javascript">
+    $(function () {
+        UE.getEditor('taskContent');
+        UE.getEditor('remark5');
+    });
     var prefix = ctx + "worktask/goodness"
     $("#form-selfTask-add").validate({
         rules: {
