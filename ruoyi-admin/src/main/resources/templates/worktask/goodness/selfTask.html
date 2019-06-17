@@ -14,6 +14,7 @@
                             <li><a href="#" class="menu-item active" id="myTask">我的任务</a></li>
                             <li><a href="#" class="menu-item" id="myCreateTask">我分配的</a></li>
                             <li><a href="#" class="menu-item" id="myCheckTask">我验收的</a></li>
+                            <li><a href="#" class="menu-item" id="share">共享任务</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -112,6 +113,8 @@
                             title="我分配的任务"
                         }else  if(taskType==3){
                             title="我审核的任务"
+                        }else  if(taskType==4){
+                            title="共享任务"
                         }
                         actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/query/'+row.id+'/'+taskType + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
                         return actions.join('');
@@ -207,6 +210,12 @@
                 taskType=3;
                 options.url = prefix + '/myCheckTask';
             }
+            if (menu == 'share') {//我审核的任务
+                $("#toolbar").hide();
+                taskType=4;
+                options.url = prefix + '/shareList';
+            }
+
 
             $("#bootstrap-table").bootstrapTable('refreshOptions', options);
         });
