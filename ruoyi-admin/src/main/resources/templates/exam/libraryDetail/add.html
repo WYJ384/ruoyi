@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style type="text/css">
+	.type{
+		display: none;
+	}
+</style>
+<body class="white-bg">
+
+<div class="container-div form-horizontal m">
+	<div class="search-collapse" style="padding: 10px;">
+		<h4 th:text="${library.name}"></h4>
+	</div>
+	<div class="row">
+
+		<form class="form-horizontal m" id="form-add">
+			<input id="libId" name="libId" type="hidden" th:value="${library.id}" class="form-control">
+			<input id="libType" name="libType" class="form-control" type="hidden">
+			<input id="prifix" name="prifix" type="hidden" class="form-control">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">题库类型：</label>
+				<div class="col-sm-8">
+					<select name="type" id="type" class="form-control m-b"
+							th:with="type=${@dict.getType('library_type')}">
+						<option value=""></option>
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+								th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<div id="ques"></div>
+			<div class="row">
+				<div class="col-sm-offset-5 col-sm-10">
+					<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+					</button>
+					&nbsp;
+					<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+					</button>
+				</div>
+			</div>
+		</form>
+
+	</div>
+</div>
+
+
+<!--单选题-->
+<div id="type1" class="type">
+	<div th:include="exam/singleChoice/add::choice"></div>
+</div>
+<!--多选题-->
+<div id="type2" class="type">
+	<div th:include="exam/multChoice/add::multChoice"></div>
+</div>
+<!--填空题-->
+<div id="type3" class="type">
+	<div class="form-group">
+		<label class="col-sm-3 control-label">题目：</label>
+		<div class="col-sm-8">
+			<input id="title" name="title" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项A：</label>
+		<div class="col-sm-8">
+			<input id="blankA" name="blankA" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项B：</label>
+		<div class="col-sm-8">
+			<input id="blankB" name="blankB" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项C：</label>
+		<div class="col-sm-8">
+			<input id="blankC" name="blankC" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项D：</label>
+		<div class="col-sm-8">
+			<input id="blankD" name="blankD" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项E：</label>
+		<div class="col-sm-8">
+			<input id="blankE" name="blankE" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项F：</label>
+		<div class="col-sm-8">
+			<input id="blankF" name="blankF" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项G：</label>
+		<div class="col-sm-8">
+			<input id="blankG" name="blankG" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">选项H：</label>
+		<div class="col-sm-8">
+			<input id="blankH" name="blankH" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">答案数量：</label>
+		<div class="col-sm-8">
+			<input id="answerNum" name="answerNum" class="form-control" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">解析：</label>
+		<div class="col-sm-8">
+			<input id="answerTip" name="answerTip" class="form-control" type="text">
+		</div>
+	</div>
+</div>
+<!--判断题-->
+<div id="type4" class="type">
+	判断题
+</div>
+<!--简答题-->
+<div id="type5" class="type">
+	<div th:include="exam/qa/add::qa"></div>
+</div>
+
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+	var prefix = ctx + "exam/libraryDetail";
+	$("#prifix").val(prefix);
+	$("#form-add").validate({
+		rules: {
+			type:{
+				required: true,
+			},
+			title: {
+				required: true,
+			},
+			choiceA: {
+				required: true,
+			},
+			choiceB: {
+				required: true,
+			},
+			choiceC: {
+				required: true,
+			},
+			choiceD: {
+				required: true,
+			},
+			answer: {
+				required: true,
+			},
+		},
+		focusCleanup: true
+	});
+	$(function () {
+		$(".type").hide();
+		//切换题型
+		$("#type").change(function () {
+			var typeval=$(this).val();
+			$("#libType").val(typeval)
+			$("#ques").html($("#type"+typeval).html())
+		})
+	});
+
+	function submitHandler() {
+		if ($.validate.form()) {
+			$.operate.saveTab(prefix + "/add", $('#form-add').serialize());
+		}
+	}
+</script>
+</body>
+</html>
