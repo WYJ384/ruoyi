@@ -74,12 +74,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
              <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
              <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+            and del_flag = '0'
          </where>
     </select>
     
     <select id="selectLibraryDetailById" parameterType="String" resultMap="LibraryDetailResult">
         <include refid="selectLibraryDetailVo"/>
-        where id = #{id}
+        where id = #{id}  and del_flag = '0'
     </select>
         
     <insert id="insertLibraryDetail" parameterType="LibraryDetail">
@@ -187,11 +188,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
 	<delete id="deleteLibraryDetailById" parameterType="String">
-        delete from exam_library_detail where id = #{id}
+         update exam_library_detail set del_flag=1  where id = #{id}
     </delete>
 	
     <delete id="deleteLibraryDetailByIds" parameterType="String">
-        delete from exam_library_detail where id in 
+        update exam_library_detail set del_flag=1  where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

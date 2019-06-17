@@ -131,7 +131,9 @@ public class LibraryDetailController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(LibraryDetail libraryDetail)
-	{		
+	{
+		libraryDetail.setUpdateBy(ShiroUtils.getUserId()+"");
+		libraryDetail.setUpdateDate(new Date());
 		return toAjax(libraryDetailService.updateLibraryDetail(libraryDetail));
 	}
 	
