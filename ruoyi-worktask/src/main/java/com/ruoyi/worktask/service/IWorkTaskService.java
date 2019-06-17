@@ -1,5 +1,6 @@
 package com.ruoyi.worktask.service;
 
+import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.worktask.domain.WorkTask;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public interface IWorkTaskService
      * @return 工作任务信息
      */
 	public WorkTask selectWorkTaskById(String id);
+	public WorkTask selectWorkTaskByExt(String id);
 	
 	/**
      * 查询工作任务列表
@@ -59,5 +61,5 @@ public interface IWorkTaskService
 	 */
 	public List<WorkTask> selectWorkTaskListByUserId(WorkTask workTask);
 
-
+	public List<HistoryTaskVo>  historyTaskList(String processInstanceId);
 }

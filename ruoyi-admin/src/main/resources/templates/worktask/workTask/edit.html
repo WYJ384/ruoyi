@@ -568,63 +568,8 @@
             </div>
             <div class="ibox-content"
                  th:style="'display:' + @{(${workActivity.targetMonth==currMonth} ? 'block' : 'none')} + ''">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">任务目标：</label>
-                    <div class="col-sm-8">
-                        <div class="well" th:utext="${workActivity.target}"></div>
 
-<!--                        <textarea class="form-control" rows="5" disabled th:text="${workActivity.target}"></textarea>-->
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">要求完成时间：</label>
-                    <div class="col-sm-8">
-                        <input name="updateTime" readonly th:value="${#dates.format(workActivity?.updateTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
-                               type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">任务得分：</label>
-                    <div class="col-sm-8">
-                        <input name="targetScore" readonly th:value="${workActivity.targetScore}" class="form-control"
-                               type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">领导批示：</label>
-                    <div class="col-sm-8">
-                        <div class="well" th:utext="${workActivity.repContent}"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">汇报内容：</label>
-                    <div class="col-sm-8">
-                        <div class="well" th:utext="${workActivity.content}"></div>
-
-<!--                        <textarea name="content" rows="5" readonly th:text="${workActivity.content}" class="form-control"></textarea>-->
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">附件：</label>
-                    <div class="col-sm-8">
-<!--                        <p th:each="taskfile:${workActivity.workTaskFiles}">-->
-<!--                            <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"-->
-<!--                               th:text="${taskfile.fileName}"></a>-->
-<!--                        </p>-->
-                        <ul id="task_file_list" class="attch-list" style="display: block;">
-                            <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i class="attch-itm-icon xlsx"></i><a
-                                    class="attch-itm-name"
-                                    th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
-                                    target="_blank" th:text="${file.fileName}" th:title="${file.fileName}" ></a><span
-                                    class="attch-itm-size"></span><span class="attch-itm-state"></span><a
-                                    class="attch-itm-dload"
-                                    th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
-                                    target="_blank">下载</a>
-                                                        <a class="attch-itm-delete"  th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a></li>
-                        </ul>
-                    </div>
-                </div>
-
+                <div  th:include="worktask/workTask/workTask_v::workTaskDetailcomm"></div>
                 <div class="row" th:if='${workActivity.workStatus  eq "1" }'>
                     <div class="col-sm-offset-5 col-md-10">
                         <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary"
@@ -653,7 +598,11 @@
                             <i
                                     class="fa fa-check"></i>流程详情
                         </button>
-                        &nbsp;
+                        &nbsp;  <button th:data-id="${workActivity.id}" type="button"
+                                        onclick="deleteWorkActiviti(this.getAttribute('data-id'))"
+                                        class="btn btn-sm btn-danger"><i
+                            class="fa fa-reply-all"></i>删除目标
+                    </button>
                         <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary"
                                 onclick="workTaskActivityEdit(this.getAttribute('data-id'))"><i
                                 class="fa fa-check"></i>编辑
@@ -674,7 +623,11 @@
                                 onclick="workTaskActivityEdit(this.getAttribute('data-id'))"><i
                                 class="fa fa-check"></i>编辑
                         </button>
-                        &nbsp;
+                        &nbsp;  <button th:data-id="${workActivity.id}" type="button"
+                                        onclick="deleteWorkActiviti(this.getAttribute('data-id'))"
+                                        class="btn btn-sm btn-danger"><i
+                            class="fa fa-reply-all"></i>删除目标
+                    </button>
                         <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i
                                 class="fa fa-reply-all"></i>关 闭
                         </button>
@@ -856,7 +809,21 @@
     function deleteWorkActiviti(id) {
         $.modal.confirm("确定删除该条信息吗？", function () {
             var url = ctx + "worktask/workTaskActivity/remove";
-            $.operate.submit(url, "post", "json", {ids: id});
+
+            var config = {
+                url: url,
+                type: "post",
+                dataType: "json",
+                data: {ids: id},
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function(result) {
+                    $.modal.closeLoading();
+                    window.location.reload()
+                }
+            };
+            $.ajax(config)
         });
 
     }

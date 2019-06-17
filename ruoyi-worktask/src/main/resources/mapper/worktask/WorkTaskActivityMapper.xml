@@ -80,18 +80,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="orderNum != null "> and ac.order_num = #{orderNum}</if>
              <if test="process_instance_id != null "> and ac.process_instance_id = #{process_instance_id}</if>
             <if test="leadDeptId != null and leadDeptId != ''"> and work_task.lead_dept_id = #{leadDeptId}</if>
-
+            and ac.del_flag = '0'
          </where>
         ORDER BY  ac.target_month ASC, ac.order_num ASC
     </select>
 
     <select id="selectWorkTaskActivityById" parameterType="String" resultMap="WorkTaskActivityResult">
         <include refid="selectWorkTaskActivityVo"/>
-        where ac.id = #{id}
+        where ac.id = #{id} and ac.del_flag = '0'
     </select>
     <select id="selectWorkTaskActivityByProId" parameterType="String" resultMap="WorkTaskActivityResult">
         <include refid="selectWorkTaskActivityVo"/>
-        where process_instance_id = #{proId}
+        where process_instance_id = #{proId} and ac.del_flag = '0'
     </select>
 
 
@@ -157,11 +157,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
 	<delete id="deleteWorkTaskActivityById" parameterType="String">
-        delete from work_task_activity where id = #{id}
+       update work_task_activity set del_flag=1  where id = #{id}
     </delete>
 
     <delete id="deleteWorkTaskActivityByIds" parameterType="String">
-        delete from work_task_activity where id in
+        update work_task_activity set del_flag=1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

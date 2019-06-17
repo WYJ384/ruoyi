@@ -27,10 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /***
  * 代办任务
@@ -78,6 +75,7 @@ public class TaskController extends BaseController {
     @RequestMapping("/list")
     @ResponseBody
     TableDataInfo list(TaskVO taskVO) {
+        List<TaskVO> list=new ArrayList<TaskVO>();
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
@@ -97,11 +95,11 @@ public class TaskController extends BaseController {
                 WorkTask workTask = workTaskService.selectWorkTaskById(workTaskId);
                 taskV.setName(workTask.getWorkName()+"("+workTaskActivity.getTargetMonth()+"月)");
                 taskV.setProcessInstanceBusinessKey(workTaskActivity.getId());
+                list.add(taskV);
             }
         }
-        TableDataInfo dataTable = getDataTable(taskVOS);
-
-        dataTable.setTotal(taskVO.getCount());
+        TableDataInfo dataTable = getDataTable(list);
+        dataTable.setTotal(list.size());
         return dataTable;
     }
 

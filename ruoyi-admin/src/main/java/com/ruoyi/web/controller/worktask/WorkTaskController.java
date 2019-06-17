@@ -348,20 +348,11 @@ public class WorkTaskController extends BaseController
 	public String query(@PathVariable("id") String id, ModelMap mmap)
 	{
 		SysUser sysUser = new SysUser();
-		WorkTask workTask = workTaskService.selectWorkTaskById(id);
-
+		WorkTask workTask = workTaskService.selectWorkTaskByExt(id);
 		//附件
 		WorkTaskFile workTaskFile=new WorkTaskFile();
 		workTaskFile.setWorkTaskId(id);
 		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
-
-
-		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
-
-		if(leadDept!=null){
-			workTask.setLeadDeptName(leadDept.getDeptName());
-		}
-
 		//查询当前专项工作下的目标任务
 		WorkTaskActivity workTaskActivity=new WorkTaskActivity();
 		workTaskActivity.setWorkTaskId(id);
@@ -374,7 +365,10 @@ public class WorkTaskController extends BaseController
 			activityFile.setWorkTaskId(activityId);
 			activity.setWorkTaskFiles(workTaskFileService.selectWorkTaskFileList(activityFile));
 			String process_instance_id = activity.getProcess_instance_id();
+
+
 			if(StringUtils.isNotEmpty(process_instance_id)){
+				List<HistoryTaskVo> historyTaskVos = workTaskService.historyTaskList(process_instance_id);
 				List<HistoricActivityInstance> list=historyService // 历史相关Service
 						.createHistoricActivityInstanceQuery() // 创建历史活动实例查询
 						.processInstanceId(process_instance_id) // 执行流程实例id
@@ -393,9 +387,6 @@ public class WorkTaskController extends BaseController
 								.processInstanceId(process_instance_id)
 								.variableName("zhuren_users").singleResult();
 						historyTaskVo.setQueryVariables(zhuren_users.getValue().toString());
-
-
-
 					}else if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
 						HistoricVariableInstance yuangong_users = historyService.createHistoricVariableInstanceQuery()
 								.processInstanceId(process_instance_id)
@@ -449,6 +440,8 @@ public class WorkTaskController extends BaseController
 			}
 
 		}
+
+
 		mmap.put("currMonth",DateFormatUtils.format(new Date(),"MM"));
 		mmap.put("workTask", workTask);
 		mmap.put("workTaskFiles", workTaskFiles);

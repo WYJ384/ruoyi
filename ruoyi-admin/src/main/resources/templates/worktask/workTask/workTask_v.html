@@ -1,0 +1,140 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<div th:fragment="workTaskcomm" class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+    <div class="container-div form-horizontal m">
+        <div class="row">
+            <div class="search-collapse" style="padding: 20px;">
+                <table class="table table-condensed table-bordered table-hover table-striped" th:object="${workTask}">
+                    <input id="id" name="id" th:field="*{id}" type="hidden">
+                    <input id="pid" name="pid" th:field="*{pid}" type="hidden">
+                    <tr>
+                        <th width="10%">任务名称：</th>
+                        <td colspan="3" th:text="*{workName}"></td>
+                        <!--                        <th>任务进度：</th>-->
+                        <!--                        <td th:text="*{rateProgress}"></td>-->
+                    </tr>
+                    <tr>
+                        <th>牵头部门：</th>
+                        <td th:text="*{leadDeptName}"></td>
+                        <th>配合部门：</th>
+                        <td th:text="*{cooperateDeptName}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>分管领导：</th>
+                        <td th:text="${workTask.leaderId}"></td>
+                        <th>督办主任：</th>
+                        <td th:text="${workTask.userIds}"></td>
+                    </tr>
+                    <tr>
+                        <th>主要目标：</th>
+                        <td colspan="3" th:utext="*{description}"></td>
+                    </tr>
+                    <tr>
+                        <th>附件：</th>
+                        <td colspan="3">
+                            <ul id="task_file_list" class="attch-list" style="display: block;">
+                                <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i
+                                        class="attch-itm-icon xlsx"></i><a
+                                        class="attch-itm-name"
+                                        th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                                        target="_blank" th:text="${file.fileName}" th:title="${file.fileName}"></a><span
+                                        class="attch-itm-size"></span><span class="attch-itm-state"></span>
+
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div th:fragment="workTaskDetailcomm" class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+    <div class="container-div form-horizontal m">
+        <div class="row">
+            <div class="search-collapse" style="padding: 20px;">
+
+                <table class="table table-condensed table-bordered table-hover table-striped"
+                       th:object="${workActivity}">
+                    <tr>
+                        <th width="10%">目标月份：</th>
+                        <td colspan="3" th:utext="*{targetMonth}"></td>
+
+                    </tr>
+                    <tr>
+                        <th>任务得分：</th>
+                        <td  th:text="*{targetScore}"></td>
+                        <th width="10%">要求完成时间：</th>
+                        <td th:text="${#dates.format(workActivity?.updateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    </tr>
+                    <tr>
+                        <th width="10%">任务目标：</th>
+                        <td colspan="3"  th:utext="*{target}"></td>
+                    </tr>
+                    <tr>
+                        <th width="10%">汇报内容：</th>
+                        <td colspan="3" th:utext="*{content}"></td>
+                    </tr>
+                    <tr>
+                        <th>领导批示：</th>
+                        <td colspan="3" th:text="*{repContent}"></td>
+                    </tr>
+                    <tr>
+                        <th>附件：</th>
+                        <td colspan="3">
+                            <ul id="task_file_list" class="attch-list" style="display: block;">
+                                <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i
+                                        class="attch-itm-icon xlsx"></i><a
+                                        class="attch-itm-name"
+                                        th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                                        target="_blank" th:text="${file.fileName}" th:title="${file.fileName}"></a><span
+                                        class="attch-itm-size"></span><span class="attch-itm-state"></span>
+
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div th:fragment="lc_v" class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+    <div class="container-div form-horizontal m">
+        <div class="row">
+            <div class="search-collapse" style="padding: 20px;">
+                <table  class="table table-condensed table-bordered table-hover table-striped">
+                    <tr>
+                        <th style="text-align: center">环节</th>
+                        <th style="text-align: center">处理人</th>
+                        <th style="text-align: center">处理时间</th>
+                        <!--                        <th style="text-align: center">基本操作</th>-->
+                        <!--                        <th style="text-align: center">处理机构</th>-->
+                        <th style="text-align: center">处理说明</th>
+                    </tr>
+                    <tr th:each="hi:${historyTaskVos}">
+                        <th style="text-align: center" th:text="${hi.name}"></th>
+                        <th style="text-align: center" th:text="${hi.assignee}"></th>
+                        <th style="text-align: center" th:text="${#dates.format(hi.endTime, 'yyyy-MM-dd HH:mm:ss')}"></th>
+                        <!--                        <th style="text-align: center" th:text="${hi.repContent}"></th>-->
+                        <!--                        <th style="text-align: center" th:text="${hi.endTime}"></th>-->
+                        <th style="text-align: center" th:text="${hi.repContent}"></th>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>

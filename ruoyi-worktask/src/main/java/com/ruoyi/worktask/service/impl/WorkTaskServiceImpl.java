@@ -1,10 +1,24 @@
 package com.ruoyi.worktask.service.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.SysDept;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysDeptService;
+import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.service.IWorkTaskFileService;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.task.Comment;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.worktask.mapper.WorkTaskMapper;
@@ -22,8 +36,17 @@ import com.ruoyi.common.core.text.Convert;
 public class WorkTaskServiceImpl implements IWorkTaskService 
 {
 	@Autowired
+	private IWorkTaskFileService workTaskFileService;
+	@Autowired
+	private ISysUserService userService;
+	@Autowired
 	private WorkTaskMapper workTaskMapper;
-
+	@Autowired
+	private ISysDeptService deptService;
+	@Autowired
+	TaskService taskService;
+	@Autowired
+	HistoryService historyService;
 	/**
      * 查询工作任务信息
      * 
@@ -35,7 +58,49 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 	{
 	    return workTaskMapper.selectWorkTaskById(id);
 	}
-	
+
+	@Override
+	public WorkTask selectWorkTaskByExt(String id) {
+		WorkTask workTask = selectWorkTaskById(id);
+		//附件
+		WorkTaskFile workTaskFile=new WorkTaskFile();
+		workTaskFile.setWorkTaskId(id);
+		SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
+		if(leadDept!=null){
+			workTask.setLeadDeptName(leadDept.getDeptName());
+		}
+		String leaderId = workTask.getLeaderId();
+		if(StringUtils.isNotEmpty(leaderId)){
+			SysUser leadUser = userService.selectUserById(Long.valueOf(leaderId));
+			if(leadUser!=null){
+				workTask.setLeaderId(leadUser.getUserName());
+			}
+		}
+		String userIds = workTask.getUserIds();
+		if(StringUtils.isNotEmpty(userIds)){
+			SysUser userIdsUser = userService.selectUserById(Long.valueOf(userIds));
+			if(userIdsUser!=null){
+				workTask.setUserIds(userIdsUser.getUserName());
+			}
+		}
+		String cooperateDeptId = workTask.getCooperateDeptId();
+		String cooperateDeptName="";
+		if(StringUtils.isNotEmpty(cooperateDeptId)){
+			String[] cooperateDeptIds = cooperateDeptId.split(",");
+			for(String deptId:cooperateDeptIds){
+				if(StringUtils.isNotEmpty(deptId)){
+					SysDept sysDept = deptService.selectDeptById(Long.valueOf(deptId));
+					if(sysDept!=null){
+						cooperateDeptName+=sysDept.getDeptName()+",";
+					}
+				}
+			}
+
+		}
+		workTask.setCooperateDeptName(cooperateDeptName);
+		return workTask;
+	}
+
 	/**
      * 查询工作任务列表
      * 
@@ -117,6 +182,35 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 	public List<WorkTask> selectWorkTaskListByUserId(WorkTask workTask) {
 
 		return workTaskMapper.selectWorkTaskListByUserId(workTask);
+	}
+
+	@Override
+	public List<HistoryTaskVo> historyTaskList(String processInstanceId) {
+		List<HistoryTaskVo> historyTaskVos=new ArrayList<HistoryTaskVo>();
+		List<HistoricTaskInstance> list= historyService // 历史相关Service
+				.createHistoricTaskInstanceQuery() // 创建历史任务实例查询
+				.processInstanceId(processInstanceId) // 用流程实例id查询
+				.finished() // 查询已经完成的任务
+				.list();
+		for(HistoricTaskInstance hti:list){
+			HistoryTaskVo historyTaskVo=new HistoryTaskVo();
+			BeanUtils.copyProperties(hti,historyTaskVo);
+			String assignee = hti.getAssignee();
+			if(StringUtils.isNotEmpty(assignee)){
+				SysUser sysUser = userService.selectUserByLoginName(assignee);
+				if(sysUser!=null){
+					historyTaskVo.setAssignee(sysUser.getUserName());
+				}
+			}
+			List<Comment> taskComments = taskService.getTaskComments(hti.getId());
+			if(taskComments!=null&&taskComments.size()>0){
+				String fullMessage = taskService.getTaskComments(hti.getId()).get(0).getFullMessage();
+				historyTaskVo.setRepContent(fullMessage);
+			}
+			historyTaskVos.add(historyTaskVo);
+		}
+
+		return historyTaskVos;
 	}
 
 }

@@ -292,21 +292,12 @@ public class WorkTaskActivityController extends BaseController {
     {
 
         WorkTaskActivity workTaskActivity= workTaskActivityService.selectWorkTaskActivityById(id);
-
         SysUser sysUser = new SysUser();
-        WorkTask workTask = workTaskService.selectWorkTaskById(workTaskActivity.getWorkTaskId());
-
+        WorkTask workTask = workTaskService.selectWorkTaskByExt(workTaskActivity.getWorkTaskId());
         //附件
         WorkTaskFile workTaskFile=new WorkTaskFile();
         workTaskFile.setWorkTaskId(id);
         List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(workTaskFile);
-
-
-        SysDept leadDept = deptService.selectDeptById(Long.valueOf(workTask.getLeadDeptId()));
-
-        if(leadDept!=null){
-            workTask.setLeadDeptName(leadDept.getDeptName());
-        }
 
         //查询当前专项工作下的目标任务
         String activityId = workTaskActivity.getId();
