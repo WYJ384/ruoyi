@@ -45,6 +45,7 @@
 	</div>
 </div>
 
+<div th:include="include::footer"></div>
 
 <!--单选题-->
 <div id="type1" class="type">
@@ -56,72 +57,7 @@
 </div>
 <!--填空题-->
 <div id="type3" class="type">
-	<div class="form-group">
-		<label class="col-sm-3 control-label">题目：</label>
-		<div class="col-sm-8">
-			<input id="title" name="title" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项A：</label>
-		<div class="col-sm-8">
-			<input id="blankA" name="blankA" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项B：</label>
-		<div class="col-sm-8">
-			<input id="blankB" name="blankB" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项C：</label>
-		<div class="col-sm-8">
-			<input id="blankC" name="blankC" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项D：</label>
-		<div class="col-sm-8">
-			<input id="blankD" name="blankD" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项E：</label>
-		<div class="col-sm-8">
-			<input id="blankE" name="blankE" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项F：</label>
-		<div class="col-sm-8">
-			<input id="blankF" name="blankF" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项G：</label>
-		<div class="col-sm-8">
-			<input id="blankG" name="blankG" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">选项H：</label>
-		<div class="col-sm-8">
-			<input id="blankH" name="blankH" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">答案数量：</label>
-		<div class="col-sm-8">
-			<input id="answerNum" name="answerNum" class="form-control" type="text">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">解析：</label>
-		<div class="col-sm-8">
-			<input id="answerTip" name="answerTip" class="form-control" type="text">
-		</div>
-	</div>
+	<div th:include="exam/blank/add::blank"></div>
 </div>
 <!--判断题-->
 <div id="type4" class="type">
@@ -132,7 +68,6 @@
 	<div th:include="exam/qa/add::qa"></div>
 </div>
 
-<div th:include="include::footer"></div>
 <script type="text/javascript">
 	var prefix = ctx + "exam/libraryDetail";
 	$("#prifix").val(prefix);
@@ -169,7 +104,9 @@
 			var typeval=$(this).val();
 			$("#libType").val(typeval)
 			$("#ques").html($("#type"+typeval).html())
-		})
+		});
+
+
 	});
 
 	function submitHandler() {

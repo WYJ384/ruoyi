@@ -1,137 +1,85 @@
-<!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
-<meta charset="utf-8">
-<head th:include="include :: header"></head>
-<body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-blank-add">
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">题目：</label>
-				<div class="col-sm-8">
-					<input id="title" name="title" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项A：</label>
-				<div class="col-sm-8">
-					<input id="blankA" name="blankA" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项B：</label>
-				<div class="col-sm-8">
-					<input id="blankB" name="blankB" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项C：</label>
-				<div class="col-sm-8">
-					<input id="blankC" name="blankC" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项D：</label>
-				<div class="col-sm-8">
-					<input id="blankD" name="blankD" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项E：</label>
-				<div class="col-sm-8">
-					<input id="blankE" name="blankE" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项F：</label>
-				<div class="col-sm-8">
-					<input id="blankF" name="blankF" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项G：</label>
-				<div class="col-sm-8">
-					<input id="blankG" name="blankG" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">选项H：</label>
-				<div class="col-sm-8">
-					<input id="blankH" name="blankH" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">答案数量：</label>
-				<div class="col-sm-8">
-					<input id="answerNum" name="answerNum" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">解析：</label>
-				<div class="col-sm-8">
-					<input id="answerTip" name="answerTip" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建者：</label>
-				<div class="col-sm-8">
-					<input id="createBy" name="createBy" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建时间：</label>
-				<div class="col-sm-8">
-					<input id="createDate" name="createDate" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新者：</label>
-				<div class="col-sm-8">
-					<input id="updateBy" name="updateBy" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新时间：</label>
-				<div class="col-sm-8">
-					<input id="updateDate" name="updateDate" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注信息：</label>
-				<div class="col-sm-8">
-					<input id="remark" name="remark" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">删除标记：</label>
-				<div class="col-sm-8">
-					<input id="delFlag" name="delFlag" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">题库：</label>
-				<div class="col-sm-8">
-					<input id="libId" name="libId" class="form-control" type="text">
-				</div>
-			</div>
-		</form>
-	</div>
-    <div th:include="include::footer"></div>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="blank" class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">题目：</label>
+        <div class="col-sm-8">
+            <textarea id="title" name="title" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">答案数量：</label>
+        <div class="col-sm-8">
+            <select name="remark1" id="remark1" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group blank">
+        <label class="col-sm-3 control-label">空1：</label>
+        <div class="col-sm-8">
+            <input id="choiceA" name="choiceA" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group blank">
+        <label class="col-sm-3 control-label">空2：</label>
+        <div class="col-sm-8">
+            <input id="choiceB" name="choiceB" class="form-control " type="text">
+        </div>
+    </div>
+    <div class="form-group blank">
+        <label class="col-sm-3 control-label">空3：</label>
+        <div class="col-sm-8">
+            <input id="choiceC" name="choiceC" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group blank">
+        <label class="col-sm-3 control-label">空4：</label>
+        <div class="col-sm-8">
+            <input id="choiceD" name="choiceD" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group blank">
+        <label class="col-sm-3 control-label">空5：</label>
+        <div class="col-sm-8">
+            <input id="choiceE" name="choiceE" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group blank">
+        <label class="col-sm-3 control-label">空6：</label>
+        <div class="col-sm-8">
+            <input id="choiceF" name="choiceF" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group  blank">
+        <label class="col-sm-3 control-label">空7：</label>
+        <div class="col-sm-8">
+            <input id="choiceG" name="choiceG" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group blank">
+        <label class="col-sm-3 control-label">空8：</label>
+        <div class="col-sm-8">
+            <input id="choiceH" name="choiceG" class="form-control" type="text">
+        </div>
+    </div>
     <script type="text/javascript">
-		var prefix = ctx + "exam/blank"
-		$("#form-blank-add").validate({
-			rules:{
-				xxxx:{
-					required:true,
-				},
-			},
-			focusCleanup: true
-		});
-		
-		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-blank-add').serialize());
-	        }
-	    }
-	</script>
-</body>
-</html>
+        $(function () {
+            $(".blank").hide();
+            $(".blank").eq(0).show();
+            //切换题型
+            $("#remark1").change(function () {
+                $(".blank").hide();
+                $(".blank:lt("+$(this).val()+")").show()
+            })
+
+        });
+    </script>
+</div>
+
+
