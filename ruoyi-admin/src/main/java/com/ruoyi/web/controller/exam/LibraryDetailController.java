@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.ruoyi.exam.domain.Library;
 import com.ruoyi.exam.service.ILibraryService;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 题库内容 信息操作处理
@@ -136,6 +138,28 @@ public class LibraryDetailController extends BaseController
 		libraryDetail.setUpdateDate(new Date());
 		return toAjax(libraryDetailService.updateLibraryDetail(libraryDetail));
 	}
+
+    @Log(title = "题库导入", businessType = BusinessType.IMPORT)
+    @RequiresPermissions("exam:libraryDetail:import")
+    @PostMapping("/importData")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file,String libId) throws Exception
+    {
+        ExcelUtil<LibraryDetail> util = new ExcelUtil<LibraryDetail>(LibraryDetail.class);
+        List<LibraryDetail> libraryDetails = util.importExcel(file.getInputStream());
+        String operName = ShiroUtils.getSysUser().getUserId()+"";
+        String message = libraryDetailService.importLibraryDetail(libraryDetails, libId, operName);
+        return AjaxResult.success(message);
+    }
+
+    @RequiresPermissions("exam:libraryDetail:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<LibraryDetail> util = new ExcelUtil<LibraryDetail>(LibraryDetail.class);
+        return util.importTemplateExcel("题库数据");
+    }
 	
 	/**
 	 * 删除题库内容

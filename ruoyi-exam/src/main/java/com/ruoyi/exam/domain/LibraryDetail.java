@@ -1,5 +1,6 @@
 package com.ruoyi.exam.domain;
 
+import com.ruoyi.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -17,29 +18,42 @@ public class LibraryDetail extends BaseEntity
 	
 	/** 单选题ID */
 	private String id;
+	@Excel(name = "题型", prompt = "题型")
 	/** 题型 */
 	private String libType;
+	@Excel(name = "题目", prompt = "题目")
 	/** 题目 */
 	private String title;
+
 	/** 选项A */
+	@Excel(name = "选项A", prompt = "选项A")
 	private String choiceA;
+	@Excel(name = "选项B", prompt = "选项B")
 	/** 选项B */
 	private String choiceB;
 	/** 选项C */
+	@Excel(name = "选项C", prompt = "choiceC")
 	private String choiceC;
 	/** 选项D */
+	@Excel(name = "选项D", prompt = "choiceD")
 	private String choiceD;
 	/** 选项E */
+	@Excel(name = "选项E", prompt = "choiceE")
 	private String choiceE;
 	/** 选项F */
+	@Excel(name = "选项F", prompt = "choiceE")
 	private String choiceF;
 	/** 选项G */
+	@Excel(name = "选项G", prompt = "choiceG")
 	private String choiceG;
 	/** 选项H */
+	@Excel(name = "选项H", prompt = "choiceH")
 	private String choiceH;
 	/** 答案 */
+	@Excel(name = "答案", prompt = "answer")
 	private String answer;
 	/** 解析 */
+	@Excel(name = "解析", prompt = "answerTip")
 	private String answerTip;
 	/** 创建者 */
 	private String createBy;

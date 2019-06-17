@@ -214,7 +214,7 @@
             			}
             			var index = layer.load(2, {shade: false});
             			$.modal.disable();
-            			var formData = new FormData();
+            			var formData = new FormData(document.getElementById("importForm"));
             			formData.append("file", $('#file')[0].files[0]);
             			formData.append("updateSupport", $("input[name='updateSupport']").is(':checked'));
             			$.ajax({

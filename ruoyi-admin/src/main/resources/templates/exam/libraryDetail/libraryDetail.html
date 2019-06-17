@@ -37,6 +37,9 @@
                shiro:hasPermission="exam:libraryDetail:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
+            <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="exam:libraryDetail:import">
+                <i class="fa fa-upload"></i> 导入
+            </a>
             <a class="btn btn-primary " href="/exam/library">
                 <i class="fa fa-edit"></i> 返回题库
             </a>
@@ -63,6 +66,8 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
+            importUrl: prefix + "/importData",
+            importTemplateUrl: prefix + "/importTemplate",
             modalName: "题库内容",
             showExport: true,
             columns: [{
@@ -96,141 +101,7 @@
                     }
                 },
 
-                // {
-                // 	field : 'choiceA',
-                // 	title : '选项A',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'choiceB',
-                // 	title : '选项B',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'choiceC',
-                // 	title : '选项C',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'choiceD',
-                // 	title : '选项D',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'choiceE',
-                // 	title : '选项E',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'choiceF',
-                // 	title : '选项F',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'choiceG',
-                // 	title : '选项G',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'choiceH',
-                // 	title : '选项H',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'answer',
-                // 	title : '答案',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'answerTip',
-                // 	title : '解析',
-                // 	sortable: true
-                // },
-                // {
-                //     field: 'createBy',
-                //     title: '创建者',
-                //     sortable: true
-                // },
-                // {
-                // 	field : 'createDate',
-                // 	title : '创建时间',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'updateBy',
-                // 	title : '更新者',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'updateDate',
-                // 	title : '更新时间',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark',
-                // 	title : '备注信息',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'delFlag',
-                // 	title : '删除标记',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'libId',
-                // 	title : '题库',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark1',
-                // 	title : '扩展1',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark2',
-                // 	title : '扩展2',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark3',
-                // 	title : '扩展3',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark4',
-                // 	title : '扩展4',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark5',
-                // 	title : '扩展5',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark6',
-                // 	title : '扩展6',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark7',
-                // 	title : '扩展7',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark8',
-                // 	title : '扩展8',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark9',
-                // 	title : '扩展9',
-                // 	sortable: true
-                // },
-                // {
-                // 	field : 'remark10',
-                // 	title : '扩展10',
-                // 	sortable: true
-                // },
+
                 {
                     title: '操作',
                     align: 'center',
@@ -246,4 +117,16 @@
     });
 </script>
 </body>
+<form id="importForm" enctype="multipart/form-data" class="mt20 mb10" style="display: none;">
+    <div class="col-xs-offset-1">
+        <input type="file" id="file" name="file"/>
+        <input id="libId" name="libId" type="hidden" th:value="${library.id}" class="form-control">
+        <div class="mt10 pt5">
+            &nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+        </div>
+        <font color="red" class="pull-left mt10">
+            提示：仅允许导入“xls”或“xlsx”格式文件！
+        </font>
+    </div>
+</form>
 </html>

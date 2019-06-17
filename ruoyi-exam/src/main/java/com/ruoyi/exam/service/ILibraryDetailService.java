@@ -50,5 +50,6 @@ public interface ILibraryDetailService
      * @return 结果
      */
 	public int deleteLibraryDetailByIds(String ids);
-	
+
+    String importLibraryDetail(List<LibraryDetail> libraryDetails, String libId, String operName);
 }
