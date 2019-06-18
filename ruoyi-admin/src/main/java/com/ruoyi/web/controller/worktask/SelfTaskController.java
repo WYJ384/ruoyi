@@ -71,19 +71,6 @@ public class SelfTaskController extends BaseController
 		return getDataTable(list);
 	}
 	/**
-	 * 共享任务
-	 */
-	@RequiresPermissions("worktask:goodness:list")
-	@PostMapping("shareList")
-	@ResponseBody
-	public TableDataInfo shareList(SelfTask selfTask)
-	{
-		startPage();
-		selfTask.setSelvalTaskType(seTaskType);
-		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
-		return getDataTable(list);
-	}
-	/**
 	 * 我的任务
 	 */
 	@RequiresPermissions("worktask:selfTask:list")

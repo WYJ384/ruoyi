@@ -9,6 +9,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.worktask.domain.Goodness;
 import com.ruoyi.worktask.domain.SelfTask;
 import com.ruoyi.worktask.domain.SelfTaskProcess;
 import com.ruoyi.worktask.domain.WorkTaskFile;
@@ -58,12 +59,12 @@ public class GoodnessController extends BaseController
 	@RequiresPermissions("worktask:goodness:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(SelfTask selfTask)
+	public TableDataInfo list(Goodness selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
 		selfTask.setCreateBy(ShiroUtils.getUserId()+"");
-		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
+		List<Goodness> list = selfTaskService.goodnessTaskList(selfTask);
 		return getDataTable(list);
 	}
 	/**
@@ -72,11 +73,11 @@ public class GoodnessController extends BaseController
 	@RequiresPermissions("worktask:goodness:list")
 	@PostMapping("shareList")
 	@ResponseBody
-	public TableDataInfo shareList(SelfTask selfTask)
+	public TableDataInfo shareList(Goodness selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
-		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
+		List<Goodness> list = selfTaskService.goodnessTaskList(selfTask);
 		return getDataTable(list);
 	}
 	/**
@@ -85,12 +86,12 @@ public class GoodnessController extends BaseController
 	@RequiresPermissions("worktask:goodness:list")
 	@PostMapping("/myTask")
 	@ResponseBody
-	public TableDataInfo myTask(SelfTask selfTask)
+	public TableDataInfo myTask(Goodness selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
 		selfTask.setExecutorUser(ShiroUtils.getUserId()+"");
-		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
+		List<Goodness> list = selfTaskService.goodnessTaskList(selfTask);
 		return getDataTable(list);
 	}
 	/**
@@ -99,12 +100,12 @@ public class GoodnessController extends BaseController
 	@RequiresPermissions("worktask:goodness:list")
 	@PostMapping("/myCheckTask")
 	@ResponseBody
-	public TableDataInfo myCheckTask(SelfTask selfTask)
+	public TableDataInfo myCheckTask(Goodness selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
 		selfTask.setAcceptorUser(ShiroUtils.getUserId()+"");
-		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
+		List<Goodness> list = selfTaskService.goodnessTaskList(selfTask);
 		return getDataTable(list);
 	}
 
@@ -114,10 +115,10 @@ public class GoodnessController extends BaseController
 	@RequiresPermissions("worktask:goodness:export")
 	@PostMapping("/export")
 	@ResponseBody
-	public AjaxResult export(SelfTask selfTask)
+	public AjaxResult export(Goodness selfTask)
 	{
-		List<SelfTask> list = selfTaskService.selectSelfTaskList(selfTask);
-		ExcelUtil<SelfTask> util = new ExcelUtil<SelfTask>(SelfTask.class);
+		List<Goodness> list = selfTaskService.goodnessTaskList(selfTask);
+		ExcelUtil<Goodness> util = new ExcelUtil<Goodness>(Goodness.class);
 		return util.exportExcel(list, "selfTask");
 	}
 
@@ -165,7 +166,7 @@ public class GoodnessController extends BaseController
 	{
 		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
 		mmap.addAttribute("sysUsers",sysUsers);
-		SelfTask selfTask = selfTaskService.selectSelfTaskById(id);
+		Goodness selfTask = selfTaskService.selectGoodnessTaskById(id);
 		SelfTaskProcess selfTaskProcess=new SelfTaskProcess();
 		selfTaskProcess.setId(id);
 		List<SelfTaskProcess> processList = selfTaskProcessService.selectSelfTaskProcessList(selfTaskProcess);
@@ -178,13 +179,13 @@ public class GoodnessController extends BaseController
 	{
 		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
 		mmap.addAttribute("sysUsers",sysUsers);
-		SelfTask selfTask = selfTaskService.selectSelfTaskById(id);
+		Goodness selfTask = selfTaskService.selectGoodnessTaskById(id);
 		SelfTaskProcess selfTaskProcess=new SelfTaskProcess();
 		selfTaskProcess.setId(id);
 		List<SelfTaskProcess> processList = selfTaskProcessService.selectSelfTaskProcessList(selfTaskProcess);
-		SelfTask childSelfTask=new SelfTask();
+		Goodness childSelfTask=new Goodness();
 		childSelfTask.setPid(id);
-		List<SelfTask> childSelfTasks = selfTaskService.selectSelfTaskList(childSelfTask);
+		List<Goodness> childSelfTasks = selfTaskService.goodnessTaskList(childSelfTask);
 
 		WorkTaskFile activityFile=new WorkTaskFile();
 		activityFile.setWorkTaskId(id);

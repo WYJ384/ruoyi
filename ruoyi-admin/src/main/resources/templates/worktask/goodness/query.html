@@ -34,26 +34,26 @@
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>具体问题：</label>
             <div class="col-sm-8">
-                <span  th:text="*{remark5}"  class="form-control"></span>
+                <span  th:utext="*{remark5}"  class="form-control"></span>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>目标：</label>
             <div class="col-sm-8">
-                <span  th:text="*{remark1}"  class="form-control"></span>
+                <span  th:utext="*{remark1}"  class="form-control"></span>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">措施及建议：</label>
             <div class="col-sm-8">
-                <span  th:text="*{taskContent}"  class="form-control"></span>
+                <span  th:utext="*{taskContent}"  class="form-control"></span>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>责任部门：</label>
             <div class="col-sm-8">
-                <span  th:text="*{remark2}"  class="form-control"></span>
+                <span  th:text="*{leadDept.deptName}"  class="form-control"></span>
             </div>
         </div>
         <div class="form-group">
@@ -90,7 +90,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">任务描述：</label>
             <div class="col-sm-8">
-                <span th:text="*{taskContent}" class="form-control"> </span>
+                <span th:utext="*{taskContent}" class="form-control"> </span>
             </div>
         </div>
         <div class="form-group">

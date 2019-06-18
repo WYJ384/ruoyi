@@ -1,5 +1,6 @@
 package com.ruoyi.worktask.service;
 
+import com.ruoyi.worktask.domain.Goodness;
 import com.ruoyi.worktask.domain.SelfTask;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public interface ISelfTaskService
      * @return 任务信息
      */
 	public SelfTask selectSelfTaskById(String id);
+	public Goodness selectGoodnessTaskById(String id);
 	
 	/**
      * 查询任务列表
@@ -26,6 +28,15 @@ public interface ISelfTaskService
      * @return 任务集合
      */
 	public List<SelfTask> selectSelfTaskList(SelfTask selfTask);
+
+	/**
+	 * 查询固优势补短板
+	 *
+	 * @param goodness 任务信息
+	 * @return 任务集合
+	 */
+	public List<Goodness> goodnessTaskList(Goodness goodness);
+
 	
 	/**
      * 新增任务

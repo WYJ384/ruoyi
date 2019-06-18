@@ -1,6 +1,8 @@
 package com.ruoyi.worktask.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.worktask.domain.Goodness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.worktask.mapper.SelfTaskMapper;
@@ -31,7 +33,13 @@ public class SelfTaskServiceImpl implements ISelfTaskService
 	{
 	    return selfTaskMapper.selectSelfTaskById(id);
 	}
-	
+
+	@Override
+	public Goodness selectGoodnessTaskById(String id) {
+
+		return selfTaskMapper.selectGoodnessTaskById(id);
+	}
+
 	/**
      * 查询任务列表
      * 
@@ -43,8 +51,14 @@ public class SelfTaskServiceImpl implements ISelfTaskService
 	{
 	    return selfTaskMapper.selectSelfTaskList(selfTask);
 	}
-	
-    /**
+
+	@Override
+	public List<Goodness> goodnessTaskList(Goodness goodness) {
+
+		return selfTaskMapper.goodnessTaskList(goodness);
+	}
+
+	/**
      * 新增任务
      * 
      * @param selfTask 任务信息

@@ -28,6 +28,12 @@
                             任务标题：<input type="text" name="taskTitle"/>
                         </li>
                         <li>
+                            <input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
+                                    placeholder="请选择归牵头部门" class="form-control" required>
+                            <input name="remark2" type="hidden" id="leadDeptId"/>
+
+                        </li>
+                        <li>
                             任务状态：
                             <select name="taskStatus" id="taskStatus" >
                                 <option value=""></option>
@@ -48,18 +54,18 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="worktask:selfTask:add">
+            <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="worktask:goodness:add">
                 <i class="fa fa-plus"></i> 添加
             </a>
             <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()"
-               shiro:hasPermission="worktask:selfTask:edit">
+               shiro:hasPermission="worktask:goodness:edit">
                 <i class="fa fa-edit"></i> 修改
             </a>
             <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
-               shiro:hasPermission="worktask:selfTask:remove">
+               shiro:hasPermission="worktask:goodness:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="worktask:selfTask:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="worktask:goodness:export">
                 <i class="fa fa-download"></i> 导出
             </a>
         </div>
@@ -220,6 +226,29 @@
             $("#bootstrap-table").bootstrapTable('refreshOptions', options);
         });
     });
+    function selectLeadDeptTree() {
+        var leadDeptId = $("#leadDeptId").val();
+        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
+        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var options = {
+            title: '选择部门',
+            width: "380",
+            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            callBack: doSubmitLeadDept
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmitLeadDept(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#leadDeptId").val(body.find('#treeId').val());
+        $("#leadDeptName").val(body.find('#treeName').val());
+        layer.close(index);
+    }
 </script>
 </body>
 </html>
