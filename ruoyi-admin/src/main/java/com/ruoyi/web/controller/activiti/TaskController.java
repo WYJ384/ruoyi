@@ -52,17 +52,29 @@ public class TaskController extends BaseController {
     }
 
     /**
-     * 查询待办工作数
+     * 查询待办的专项工作
      * @return
      */
     @PostMapping("/getTaskToDoCount")
     @ResponseBody
-    public AjaxResult getTaskToDoCount()
+    public AjaxResult getTaskToDoCount(TaskVO taskVO)
     {
-        TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned((ShiroUtils.getLoginName()));
-        long count = taskQuery.count();
+        List<TaskVO> list=new ArrayList<TaskVO>();
+        taskVO.setAssignee(ShiroUtils.getLoginName());
+        List<TaskVO> taskVOS = actTaskService.taskCandidateOrAssigned(taskVO);
+        Iterator<TaskVO> taskVOIterator = taskVOS.iterator();
+        while (taskVOIterator.hasNext()){
+            TaskVO taskV = taskVOIterator.next();
+            String processId = taskV.getProcessId();
+            WorkTaskActivity workTaskActivity = workTaskActivityService.selectWorkTaskActivityByProId(processId);
+            if(workTaskActivity!=null){
+                list.add(taskV);
+            }
+        }
+//        TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned((ShiroUtils.getLoginName()));
+//        long count = taskQuery.count();
         AjaxResult ajaxResult=new AjaxResult();
-        ajaxResult.put("data",count);
+        ajaxResult.put("data",list.size());
         return ajaxResult;
     }
 

@@ -15,6 +15,7 @@ import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.web.controller.MailSendService;
 import com.ruoyi.worktask.domain.WorkTask;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
@@ -30,6 +31,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,6 +80,8 @@ public class WorkTaskActivityController extends BaseController {
     private IWorkTaskActivityService workTaskActivityService;
     @Autowired
     private IWorkTaskFileService workTaskFileService;
+    @Autowired
+    private MailSendService mailSendService;
 
     @RequiresPermissions("worktask:workTaskActivity:view")
     @GetMapping()
@@ -196,6 +201,13 @@ public class WorkTaskActivityController extends BaseController {
                 Map<String, Object> vars = new HashMap<String, Object>();
                 vars.put("yuangong_users", userIds);
                 actTaskService.completeTask(taskId, vars);
+                try {
+                    mailSendService.sendSimpleMails(userIds,"请完成NOC办公系统专项工作任务");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
             } else if (taskKey.equals("gerentijiao")) {
                 taskService.setAssignee(taskId,ShiroUtils.getLoginName());
                 taskService.setOwner(taskId,ShiroUtils.getLoginName());
@@ -206,6 +218,15 @@ public class WorkTaskActivityController extends BaseController {
                 Map<String, Object> vars = new HashMap<String, Object>();
                 vars.put("fenguan_users", sysUser.getLoginName());
                 actTaskService.completeTask(taskId, vars);
+                try {
+                    if(StringUtils.isNotEmpty(sysUser.getEmail())){
+                        mailSendService.sendSimpleMail(sysUser.getEmail(),"NOC办公系统发送","请查看办公系的专项工作:"+workTask.getWorkName());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
             } else if (taskKey.equals("lingdaopingfen")) {
                 taskService.setAssignee(taskId,ShiroUtils.getLoginName());
                 taskService.setOwner(taskId,ShiroUtils.getLoginName());

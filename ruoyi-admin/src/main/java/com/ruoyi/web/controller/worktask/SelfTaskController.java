@@ -1,11 +1,13 @@
 package com.ruoyi.web.controller.worktask;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.web.controller.MailSendService;
 import com.ruoyi.worktask.domain.SelfTaskProcess;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.ISelfTaskProcessService;
@@ -13,6 +15,7 @@ import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +51,8 @@ public class SelfTaskController extends BaseController
 	private ISelfTaskProcessService selfTaskProcessService;
 	@Autowired
 	private ISysUserService userService;
+	@Autowired
+	private MailSendService mailSendService;
 	String seTaskType="1";
 	@RequiresPermissions("worktask:selfTask:view")
 	@GetMapping()
@@ -153,11 +158,17 @@ public class SelfTaskController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(SelfTask selfTask)
 	{
+
 		selfTask.setSelvalTaskType(seTaskType);
 		selfTask.setTaskStatus("0");
         selfTask.setTaskLevel("0");
 		selfTask.setCreateBy(ShiroUtils.getUserId()+"");
 		selfTask.setId(UUID.randomUUID().toString().replaceAll("-",""));
+		try {
+			mailSendService.sendSimpleMailsByUserIds(selfTask.getExecutorUser(),"新任务分配："+selfTask.getTaskTitle());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return toAjax(selfTaskService.insertSelfTask(selfTask));
 	}
 

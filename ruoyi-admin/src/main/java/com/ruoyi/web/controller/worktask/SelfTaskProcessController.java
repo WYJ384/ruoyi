@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.web.controller.MailSendService;
 import com.ruoyi.worktask.domain.SelfTask;
 import com.ruoyi.worktask.service.ISelfTaskService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -34,6 +35,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 @RequestMapping("/worktask/selfTaskProcess")
 public class SelfTaskProcessController extends BaseController
 {
+	@Autowired
+	private MailSendService mailSendService;
     private String prefix = "worktask/selfTaskProcess";
 	@Autowired
 	private ISelfTaskService selfTaskService;
@@ -96,10 +99,13 @@ public class SelfTaskProcessController extends BaseController
 		if(selfTaskProcess.getPercentAge().equals("100")){
 			selfTask.setTaskStatus("1");
 		}
+		String acceptorUser = selfTask.getAcceptorUser();
+		mailSendService.sendMailByUserId(acceptorUser,ShiroUtils.getSysUser().getUserName()+"更新任务："+selfTask.getTaskTitle());
 		selfTaskService.updateSelfTask(selfTask);
 		selfTaskProcess.setCreateBy(ShiroUtils.getSysUser().getUserName());
 		selfTaskProcess.setCreateTime(new Date());
 		selfTaskProcess.setUpdateBy(ShiroUtils.getLoginName());
+
 		return toAjax(selfTaskProcessService.insertSelfTaskProcess(selfTaskProcess));
 	}
 
