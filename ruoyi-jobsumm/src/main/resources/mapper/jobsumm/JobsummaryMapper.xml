@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.jobsumm.mapper.JobsummaryMapper">
+    
+    <resultMap type="Jobsummary" id="JobsummaryResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="stratTime"    column="strat_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="jobType"    column="job_type"    />
+        <result property="jobContent"    column="job_content"    />
+        <result property="jobSumm"    column="job_summ"    />
+        <result property="jobPlan"    column="job_plan"    />
+        <result property="submitBy"    column="submit_by"    />
+        <result property="remark"    column="remark"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+	
+	<sql id="selectJobsummaryVo">
+        select id, create_by, create_date, strat_time, end_time, job_type, job_content, job_summ, job_plan, submit_by, remark, update_by, update_date, del_flag from jobsummary
+    </sql>
+	
+    <select id="selectJobsummaryList" parameterType="Jobsummary" resultMap="JobsummaryResult">
+        <include refid="selectJobsummaryVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="stratTime != null "> and strat_time >= #{stratTime}</if>
+             <if test="endTime != null "> and end_time <![CDATA[<= ]]> #{endTime}</if>
+             <if test="jobType != null  and jobType != '' "> and job_type = #{jobType}</if>
+             <if test="jobContent != null  and jobContent != '' "> and job_content = #{jobContent}</if>
+             <if test="jobSumm != null  and jobSumm != '' "> and job_summ = #{jobSumm}</if>
+             <if test="jobPlan != null  and jobPlan != '' "> and job_plan = #{jobPlan}</if>
+             <if test="submitBy != null  and submitBy != '' "> and submit_by = #{submitBy}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+         </where>
+    </select>
+
+
+    <select id="selectJobsummaryById" parameterType="String" resultMap="JobsummaryResult">
+        <include refid="selectJobsummaryVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectJobsummaryListDesc" parameterType="String" resultMap="JobsummaryResult">
+        <include refid="selectJobsummaryVo"/>
+        <!--<where>
+            <if test="jobType != null  and jobType != '' "> and job_type = #{jobType}</if>
+        </where>-->
+        order by create_date DESC LIMIT 1
+    </select>
+        
+    <insert id="insertJobsummary" parameterType="Jobsummary">
+        insert into jobsummary
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="stratTime != null  ">strat_time,</if>
+			<if test="endTime != null  ">end_time,</if>
+			<if test="jobType != null  and jobType != ''  ">job_type,</if>
+			<if test="jobContent != null  and jobContent != ''  ">job_content,</if>
+			<if test="jobSumm != null  and jobSumm != ''  ">job_summ,</if>
+			<if test="jobPlan != null  and jobPlan != ''  ">job_plan,</if>
+			<if test="submitBy != null  and submitBy != ''  ">submit_by,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="stratTime != null  ">#{stratTime},</if>
+			<if test="endTime != null  ">#{endTime},</if>
+			<if test="jobType != null  and jobType != ''  ">#{jobType},</if>
+			<if test="jobContent != null  and jobContent != ''  ">#{jobContent},</if>
+			<if test="jobSumm != null  and jobSumm != ''  ">#{jobSumm},</if>
+			<if test="jobPlan != null  and jobPlan != ''  ">#{jobPlan},</if>
+			<if test="submitBy != null  and submitBy != ''  ">#{submitBy},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateJobsummary" parameterType="Jobsummary">
+        update jobsummary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="stratTime != null  ">strat_time = #{stratTime},</if>
+            <if test="endTime != null  ">end_time = #{endTime},</if>
+            <if test="jobType != null  and jobType != ''  ">job_type = #{jobType},</if>
+            <if test="jobContent != null  and jobContent != ''  ">job_content = #{jobContent},</if>
+            <if test="jobSumm != null  and jobSumm != ''  ">job_summ = #{jobSumm},</if>
+            <if test="jobPlan != null  and jobPlan != ''  ">job_plan = #{jobPlan},</if>
+            <if test="submitBy != null  and submitBy != ''  ">submit_by = #{submitBy},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteJobsummaryById" parameterType="String">
+        delete from jobsummary where id = #{id}
+    </delete>
+	
+    <delete id="deleteJobsummaryByIds" parameterType="String">
+        delete from jobsummary where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
