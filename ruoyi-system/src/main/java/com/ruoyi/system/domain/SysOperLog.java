@@ -71,6 +71,18 @@ public class SysOperLog extends BaseEntity
     @Excel(name = "操作时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date operTime;
 
+
+    @Excel(name = "用户姓名", type = Excel.Type.EXPORT)
+    private SysUser sysUser;
+
+    public SysUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SysUser sysUser) {
+        this.sysUser = sysUser;
+    }
+
     public Long getOperId()
     {
         return operId;

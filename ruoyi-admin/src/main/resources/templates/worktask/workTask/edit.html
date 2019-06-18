@@ -591,13 +591,13 @@
 
                 <div class="row" th:if='${workActivity.workStatus  eq "2" }'>
                     <div class="col-sm-offset-5 col-md-10">
-                        <button th:data-processDefinitionId="${workActivity.taskVO.processDefinitionId}"
-                                th:data-instanceid="${workActivity.process_instance_id}"
-                                type="button" class="btn btn-sm btn-primary"
-                                onclick="workProcessDetail(this.getAttribute('data-processDefinitionId'),this.getAttribute('data-instanceid'))">
-                            <i
-                                    class="fa fa-check"></i>流程详情
-                        </button>
+<!--                        <button th:data-processDefinitionId="${workActivity.taskVO.processDefinitionId}"-->
+<!--                                th:data-instanceid="${workActivity.process_instance_id}"-->
+<!--                                type="button" class="btn btn-sm btn-primary"-->
+<!--                                onclick="workProcessDetail(this.getAttribute('data-processDefinitionId'),this.getAttribute('data-instanceid'))">-->
+<!--                            <i-->
+<!--                                    class="fa fa-check"></i>流程详情-->
+<!--                        </button>-->
                         &nbsp;  <button th:data-id="${workActivity.id}" type="button"
                                         onclick="deleteWorkActiviti(this.getAttribute('data-id'))"
                                         class="btn btn-sm btn-danger"><i
@@ -614,10 +614,10 @@
                 </div>
                 <div class="row" th:if='${workActivity.workStatus eq "3"}'>
                     <div class="col-sm-offset-5 col-md-10">
-                        <button th:data-id="${workActivity.process_instance_id}" type="button"
-                                class="btn btn-sm btn-primary" onclick="workDetail(this.getAttribute('data-id'))"><i
-                                class="fa fa-check"></i>查看详情
-                        </button>
+<!--                        <button th:data-id="${workActivity.process_instance_id}" type="button"-->
+<!--                                class="btn btn-sm btn-primary" onclick="workDetail(this.getAttribute('data-id'))"><i-->
+<!--                                class="fa fa-check"></i>查看详情-->
+<!--                        </button>-->
 
                         <button th:data-id="${workActivity.id}" type="button" class="btn btn-sm btn-primary"
                                 onclick="workTaskActivityEdit(this.getAttribute('data-id'))"><i

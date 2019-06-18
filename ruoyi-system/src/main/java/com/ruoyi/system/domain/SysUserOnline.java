@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain;
 
 import java.util.Date;
+
+import com.ruoyi.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -47,6 +49,16 @@ public class SysUserOnline extends BaseEntity
 
     /** 在线状态 */
     private OnlineStatus status = OnlineStatus.on_line;
+    @Excel(name = "用户姓名", type = Excel.Type.EXPORT)
+    private SysUser sysUser;
+
+    public SysUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SysUser sysUser) {
+        this.sysUser = sysUser;
+    }
 
     public String getSessionId()
     {

@@ -14,15 +14,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="os"            column="os"                />
 		<result property="msg"           column="msg"               />
 		<result property="loginTime"     column="login_time"        />
+		<association property="sysUser"    column="login_name" javaType="SysUser" resultMap="userResult" />
 	</resultMap>
-
+	<resultMap id="userResult" type="SysUser">
+		<id     property="userId"       column="user_id"      />
+		<result property="loginName"    column="login_name"   />
+		<result property="userName"     column="user_name"    />
+	</resultMap>
 	<insert id="insertLogininfor" parameterType="SysLogininfor">
 		insert into sys_logininfor (login_name, status, ipaddr, login_location, browser, os, msg, login_time)
 		values (#{loginName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate())
 	</insert>
 	
 	<select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
-		select info_id,login_name,ipaddr,login_location,browser,os,status,msg,login_time from sys_logininfor
+		SELECT
+		info_id,
+		sys_logininfor.login_name,
+		ipaddr,
+		login_location,
+		browser,
+		os,
+		sys_logininfor.STATUS,
+		msg,
+		login_time,
+		sys_user.user_name,
+		sys_user.user_id
+		FROM
+		sys_logininfor
+		INNER JOIN sys_user ON sys_user.login_name = sys_logininfor.login_name
 		<where>
 			<if test="ipaddr != null and ipaddr != ''">
 				AND ipaddr like concat('%', #{ipaddr}, '%')

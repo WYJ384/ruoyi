@@ -16,11 +16,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="startTimestamp"    column="start_timestamp"   />
 		<result property="lastAccessTime"    column="last_access_time"  />
 		<result property="expireTime"        column="expire_time"       />
+		<association property="sysUser"    column="login_name" javaType="SysUser" resultMap="userResult" />
 	</resultMap>
-	
+	<resultMap id="userResult" type="SysUser">
+		<id     property="userId"       column="user_id"      />
+		<result property="loginName"    column="login_name"   />
+		<result property="userName"     column="user_name"    />
+	</resultMap>
 	<sql id="selectOnlineVo">
-       select sessionId, login_name, dept_name, ipaddr, login_location, browser, os, status, status, start_timestamp, last_access_time, expire_time 
-	   from sys_user_online
+      SELECT
+	sessionId,
+	sys_user_online.login_name,
+	dept_name,
+	ipaddr,
+	login_location,
+	browser,
+	os,
+		sys_user_online.STATUS,
+	start_timestamp,
+	last_access_time,
+	expire_time,
+	sys_user.user_name,
+	sys_user.user_id
+FROM
+	sys_user_online
+INNER JOIN sys_user ON sys_user.login_name = sys_user_online.login_name
     </sql>
     
 	<select id="selectOnlineById" parameterType="String" resultMap="SysUserOnlineResult">
