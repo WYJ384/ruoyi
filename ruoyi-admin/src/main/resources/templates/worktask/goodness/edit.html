@@ -90,7 +90,7 @@
                         multiple="">
                     <option th:each="user:${sysUsers}" th:value="${user.userId}"
                             th:text="${user.userName}"
-                            th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
+                            th:selected="${selfTask.executorUser.contains(user.userId.toString()) and user.userId.toString()!='1'}"></option>
                 </select>
             </div>
         </div>

@@ -69,7 +69,7 @@ public class QCController extends BaseController
 	/**
 	 * 共享任务
 	 */
-	@RequiresPermissions("worktask:goodness:list")
+	@RequiresPermissions("worktask:selfTask:list")
 	@PostMapping("shareList")
 	@ResponseBody
 	public TableDataInfo shareList(SelfTask selfTask)
