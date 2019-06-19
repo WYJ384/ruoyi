@@ -69,15 +69,9 @@
 	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
     <script type="text/javascript">
 		$(function () {
-			UE.getEditor('jobPlan', {
-				autoHeight: false
-			});
-			UE.getEditor('jobSumm', {
-				autoHeight: false
-			});
-			UE.getEditor('jobContent', {
-				autoHeight: false
-			});
+			UE.getEditor('jobPlan');
+			UE.getEditor('jobSumm');
+			UE.getEditor('jobContent');
 		});
 		var prefix = ctx + "jobsumm/jobsummary"
 		$("#form-jobsummary-add").validate({
