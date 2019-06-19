@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-paper-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">试卷名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" class="form-control" type="text">
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">权限设置0私密1公开：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="permission" name="permission" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否公开：</label>
+				<div class="col-sm-8">
+					<label class="radio-box"> <input type="radio" name="permission" value="0" checked/> 私密 </label>
+					<label class="radio-box"> <input type="radio" name="permission" value="1"/> 公开 </label>
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">0固定出题、1随机出题：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="questionMethod" name="questionMethod" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">出题方式：</label>
+				<div class="col-sm-8">
+					<label class="radio-box"> <input type="radio" name="questionMethod" value="0" checked/> 固定出题 </label>
+					<label class="radio-box"> <input type="radio" name="questionMethod" value="1"/> 随机出题 </label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+					<label class="radio-box"> <input type="radio" name="status" value="0" checked/> 启用 </label>
+					<label class="radio-box"> <input type="radio" name="status" value="1"/> 禁用 </label>
+				</div>
+			</div>
+<!--			<div class="form-group">-->
+<!--				<label class="col-sm-3 control-label">状态：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="status" name="status" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">总题数：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="totalQuestion" name="totalQuestion" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">总分：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="totalSore" name="totalSore" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createDate" name="createDate" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateDate" name="updateDate" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remark" name="remark" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+
+		</form>
+	</div>
+	<div class="container-div form-horizontal m">
+
+		<div class="row">
+			<div class="search-collapse" style="padding: 20px;">
+				<div class="btn-group-sm" id="toolbar" role="group">
+					<a class="btn btn-success pull-right" onclick="addQuestion()">
+						<i class="fa fa-plus"></i> 选择试题
+					</a>
+
+				</div>
+				<table class="table" id="chooseTable">
+					<tr>
+						<th>序号</th>
+						<th>试题名称</th>
+						<th>题型</th>
+						<th>分值</th>
+						<th>操作</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>网络路径状况查询主要用到的是（ ）。 </td>
+						<td>填空题</td>
+						<td>1</td>
+						<td><a href="">上移</a> <a href="">下移</a> <a href="">移除</a></td>
+					</tr>
+				</table>
+				<div class="row">
+					<div class="col-sm-offset-5 col-sm-10">
+						<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+						</button>
+						&nbsp;
+						<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "exam/paper"
+		$("#form-paper-add").validate({
+			rules:{
+				name:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.saveTab(prefix + "/add", $('#form-paper-add').serialize());
+	        }
+	    }
+	    function addQuestion() {
+			// $.modal.open("选择试题", "/exam/library", "1000", "600");
+			layer.open({
+				type: 2,
+				area: [1000 + 'px', 600 + 'px'],
+				fix: false,
+				//不固定
+				maxmin: true,
+				shade: 0.3,
+				title: "选择试题",
+				content: prefix+"/chooseLibrary",
+				btn: ['确定', '关闭'],
+				// 弹层外区域关闭
+				shadeClose: false,
+				yes: function(index, layero) {
+					var iframeWin = layero.find('iframe')[0];
+					iframeWin.contentWindow.submitHandler();
+				},
+				cancel: function(index) {
+					return true;
+				}
+			});
+
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.exam.mapper.PaperMapper">
+    
+    <resultMap type="Paper" id="PaperResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="permission"    column="permission"    />
+        <result property="questionMethod"    column="question_method"    />
+        <result property="totalQuestion"    column="total_question"    />
+        <result property="totalSore"    column="total_sore"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+	
+	<sql id="selectPaperVo">
+        select id, name, permission, question_method, total_question, total_sore, create_by, create_date, update_by, update_date, remark, del_flag, status from exam_paper
+    </sql>
+	
+    <select id="selectPaperList" parameterType="Paper" resultMap="PaperResult">
+        <include refid="selectPaperVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="permission != null  and permission != '' "> and permission = #{permission}</if>
+             <if test="questionMethod != null  and questionMethod != '' "> and question_method = #{questionMethod}</if>
+             <if test="totalQuestion != null "> and total_question = #{totalQuestion}</if>
+             <if test="totalSore != null "> and total_sore = #{totalSore}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+         </where>
+    </select>
+    
+    <select id="selectPaperById" parameterType="String" resultMap="PaperResult">
+        <include refid="selectPaperVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPaper" parameterType="Paper">
+        insert into exam_paper
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="permission != null  and permission != ''  ">permission,</if>
+			<if test="questionMethod != null  and questionMethod != ''  ">question_method,</if>
+			<if test="totalQuestion != null  ">total_question,</if>
+			<if test="totalSore != null  ">total_sore,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="permission != null  and permission != ''  ">#{permission},</if>
+			<if test="questionMethod != null  and questionMethod != ''  ">#{questionMethod},</if>
+			<if test="totalQuestion != null  ">#{totalQuestion},</if>
+			<if test="totalSore != null  ">#{totalSore},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePaper" parameterType="Paper">
+        update exam_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="permission != null  and permission != ''  ">permission = #{permission},</if>
+            <if test="questionMethod != null  and questionMethod != ''  ">question_method = #{questionMethod},</if>
+            <if test="totalQuestion != null  ">total_question = #{totalQuestion},</if>
+            <if test="totalSore != null  ">total_sore = #{totalSore},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deletePaperById" parameterType="String">
+        delete from exam_paper where id = #{id}
+    </delete>
+	
+    <delete id="deletePaperByIds" parameterType="String">
+        delete from exam_paper where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

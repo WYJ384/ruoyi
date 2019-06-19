@@ -30,16 +30,17 @@ public class MailSendService {
      * @throws Exception
      */
     public void sendSimpleMail(String to,String subject,String text) throws Exception {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(mailUserName);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        mailSender.send(message);
+        return;
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setFrom(mailUserName);
+//        message.setTo(to);
+//        message.setSubject(subject);
+//        message.setText(text);
+//        mailSender.send(message);
     }
     public void sendSimpleMail(  SimpleMailMessage message) throws Exception {
-
-        mailSender.send(message);
+       return;
+//        mailSender.send(message);
     }
     /**
      * 批量发送邮件
@@ -47,7 +48,8 @@ public class MailSendService {
      * @throws Exception
      */
     public void sendSimpleMails(SimpleMailMessage[] simpleMailMessages) throws Exception {
-        mailSender.send(simpleMailMessages);
+        return;
+//        mailSender.send(simpleMailMessages);
     }
 
     /**
@@ -57,30 +59,31 @@ public class MailSendService {
      * @throws Exception
      */
     public void sendSimpleMails(String loginNames,String text) throws Exception {
-        String[] userArr = loginNames.split(",");
-        List<SimpleMailMessage> simpleMailMessageList=new ArrayList<SimpleMailMessage>();
-        for (int i = 0; i < userArr.length; i++) {
-            String loginName=userArr[i];
-            if(org.apache.commons.lang3.StringUtils.isNotEmpty(loginName)){
-                SysUser sysUser = userService.selectUserByLoginName(loginName);
-                if(sysUser!=null&& org.apache.commons.lang3.StringUtils.isNotEmpty(sysUser.getEmail())){
-                    String userEmail = sysUser.getEmail();
-                    SimpleMailMessage message = new SimpleMailMessage();
-                    message.setFrom(mailUserName);
-                    message.setTo(userEmail);
-                    message.setSubject("NOC办公系统发送");
-                    message.setText(text);
-                    simpleMailMessageList.add(message);
-                }
-            }
-        }
-        SimpleMailMessage[] simpleMailMessages = new SimpleMailMessage[simpleMailMessageList.size()];
-        simpleMailMessageList.toArray(simpleMailMessages);
-        try {
-           sendSimpleMails(simpleMailMessages);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return;
+//        String[] userArr = loginNames.split(",");
+//        List<SimpleMailMessage> simpleMailMessageList=new ArrayList<SimpleMailMessage>();
+//        for (int i = 0; i < userArr.length; i++) {
+//            String loginName=userArr[i];
+//            if(org.apache.commons.lang3.StringUtils.isNotEmpty(loginName)){
+//                SysUser sysUser = userService.selectUserByLoginName(loginName);
+//                if(sysUser!=null&& org.apache.commons.lang3.StringUtils.isNotEmpty(sysUser.getEmail())){
+//                    String userEmail = sysUser.getEmail();
+//                    SimpleMailMessage message = new SimpleMailMessage();
+//                    message.setFrom(mailUserName);
+//                    message.setTo(userEmail);
+//                    message.setSubject("NOC办公系统发送");
+//                    message.setText(text);
+//                    simpleMailMessageList.add(message);
+//                }
+//            }
+//        }
+//        SimpleMailMessage[] simpleMailMessages = new SimpleMailMessage[simpleMailMessageList.size()];
+//        simpleMailMessageList.toArray(simpleMailMessages);
+//        try {
+//           sendSimpleMails(simpleMailMessages);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -90,31 +93,32 @@ public class MailSendService {
      * @throws Exception
      */
     public void sendSimpleMailsByUserIds(String userIds,String text) throws Exception {
-        String[] userArr = userIds.split(",");
-        List<SimpleMailMessage> simpleMailMessageList=new ArrayList<SimpleMailMessage>();
-        for (int i = 0; i < userArr.length; i++) {
-            String userId=userArr[i];
-            if(org.apache.commons.lang3.StringUtils.isNotEmpty(userId)){
-                SysUser sysUser = userService.selectUserById(Long.valueOf(userId));
-                if(sysUser!=null&& org.apache.commons.lang3.StringUtils.isNotEmpty(sysUser.getEmail())){
-                    String userEmail = sysUser.getEmail();
-                    SimpleMailMessage message = new SimpleMailMessage();
-                    message.setFrom(mailUserName);
-                    message.setTo(userEmail);
-                    message.setSubject("NOC办公系统发送");
-                    message.setText(text);
-                    message.setSentDate(new Date());
-                    simpleMailMessageList.add(message);
-                }
-            }
-        }
-        SimpleMailMessage[] simpleMailMessages = new SimpleMailMessage[simpleMailMessageList.size()];
-        simpleMailMessageList.toArray(simpleMailMessages);
-        try {
-            sendSimpleMails(simpleMailMessages);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return;
+//        String[] userArr = userIds.split(",");
+//        List<SimpleMailMessage> simpleMailMessageList=new ArrayList<SimpleMailMessage>();
+//        for (int i = 0; i < userArr.length; i++) {
+//            String userId=userArr[i];
+//            if(org.apache.commons.lang3.StringUtils.isNotEmpty(userId)){
+//                SysUser sysUser = userService.selectUserById(Long.valueOf(userId));
+//                if(sysUser!=null&& org.apache.commons.lang3.StringUtils.isNotEmpty(sysUser.getEmail())){
+//                    String userEmail = sysUser.getEmail();
+//                    SimpleMailMessage message = new SimpleMailMessage();
+//                    message.setFrom(mailUserName);
+//                    message.setTo(userEmail);
+//                    message.setSubject("NOC办公系统发送");
+//                    message.setText(text);
+//                    message.setSentDate(new Date());
+//                    simpleMailMessageList.add(message);
+//                }
+//            }
+//        }
+//        SimpleMailMessage[] simpleMailMessages = new SimpleMailMessage[simpleMailMessageList.size()];
+//        simpleMailMessageList.toArray(simpleMailMessages);
+//        try {
+//            sendSimpleMails(simpleMailMessages);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -123,14 +127,15 @@ public class MailSendService {
      * @param text
      */
     public void sendMailByUserId(String userId,String text){
-        SysUser sysUser = userService.selectUserById(Long.valueOf(userId));
-        if(sysUser!=null&& org.apache.commons.lang3.StringUtils.isNotEmpty(sysUser.getEmail())){
-            try {
-                sendSimpleMail(sysUser.getEmail(),"NOC办公系统发送",text);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        return;
+//        SysUser sysUser = userService.selectUserById(Long.valueOf(userId));
+//        if(sysUser!=null&& org.apache.commons.lang3.StringUtils.isNotEmpty(sysUser.getEmail())){
+//            try {
+//                sendSimpleMail(sysUser.getEmail(),"NOC办公系统发送",text);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
     }
 

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
+<link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
+<body>
+<div class="ui-layout-west">
+    左侧
+</div>
+<div class="container-div  ui-layout-center">
+    <div class="btn-group-sm" id="toolbar" role="group">
+
+    </div>
+    <div class="col-sm-12 select-table table-striped">
+        <table id="bootstrap-table" data-mobile-responsive="true"></table>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
+<script>
+    $(function () {
+        var options = {
+            url: ctx + "exam/libraryDetail" + "/list",
+            modalName: "题库内容",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '单选题ID',
+                    visible: false
+                },
+                {
+                    field: 'title',
+                    title: '题目',
+                    sortable: true
+                },
+                {
+                    field: 'libType',
+                    title: '题型',
+                    sortable: true, formatter: function (value, row, index) {
+                        if (value == 1) {
+                            return "单选题";
+                        } else if (value == 2) {
+                            return "多选题";
+                        }
+                        if (value == 3) {
+                            return "填空题";
+                        }
+                        if (value == 4) {
+                            return "判断题";
+                        }
+                        if (value == 5) {
+                            return "简答题";
+                        }
+                    }
+                },
+
+            ]
+        };
+        var defaults = {
+            id: "bootstrap-table",
+            type: 0, // 0 代表bootstrapTable 1代表bootstrapTreeTable
+            height: undefined,
+            sidePagination: "server",
+            pagination: true,
+            pageSize: 10,
+            toolbar: "toolbar",
+            striped: false,
+            escape: false,
+            showFooter: false,
+        };
+        var options = $.extend(defaults, options);
+        $.table._option = options;
+        $('#' + options.id).bootstrapTable({
+            url: options.url,                                   // 请求后台的URL（*）
+            contentType: "application/x-www-form-urlencoded",   // 编码类型
+            method: 'post',                                     // 请求方式（*）
+            cache: false,                                       // 是否使用缓存
+            height: options.height,                             // 表格的高度
+            pagination: options.pagination,                     // 是否显示分页（*）
+            pageNumber: 1,                                      // 初始化加载第一页，默认第一页
+            pageSize: options.pageSize,                         // 每页的记录行数（*）
+            pageList: [10, 25, 50],                             // 可供选择的每页的行数（*）
+            escape: options.escape,                             // 转义HTML字符串
+            showFooter: options.showFooter,                     // 是否显示表尾
+            iconSize: 'outline',                                // 图标大小：undefined默认的按钮尺寸 xs超小按钮sm小按钮lg大按钮
+            toolbar: '#' + options.toolbar,                     // 指定工作栏
+            sidePagination: options.sidePagination,             // server启用服务端分页client客户端分页
+            columns: options.columns,                           // 显示列信息（*）
+            responseHandler: $.table.responseHandler,           // 在加载服务器发送来的数据之前处理函数
+            onLoadSuccess: $.table.onLoadSuccess,               // 当所有数据被加载时触发处理函数
+        });
+    });
+    var panehHidden = false;
+    if ($(this).width() < 769) {
+        panehHidden = true;
+    }
+    $('body').layout({initClosed: panehHidden, west__size: 185});
+
+    function submitHandler() {
+        var rows = $.map($('#bootstrap-table').bootstrapTable('getSelections'), function (row) {
+            return row;
+        });
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        var html = "";
+        for ( i = 0; i < rows.length; i++) {
+            var title = rows[i].title;
+            var libType = rows[i].libType;
+            html += ' <tr>';
+            html += ' <td>' + (i + 1) + '</td>';
+            html += ' <td>' + title + '</td>';
+            html += ' <td>' + libType + '</td>';
+            html += ' <td>1</td>';
+            html += ' <td><a href="">上移</a> <a href="">下移</a> <a href="">移除</a></td>';
+            html += ' </tr>';
+        }
+
+        parent.$('#chooseTable').append(html);
+        parent.layer.close(index);
+    }
+
+</script>
+</body>
+</html>
