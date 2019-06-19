@@ -59,6 +59,10 @@
                shiro:hasPermission="worktask:selfTask:remove">
                 <i class="fa fa-remove"></i> 删除
             </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="cuibanpl()"
+               shiro:hasPermission="worktask:selfTask:remove">
+                <i class="fa fa-envelope-o"></i> 一键催办
+            </a>
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="worktask:selfTask:export">
                 <i class="fa fa-download"></i> 导出
             </a>
@@ -177,7 +181,7 @@
                         var actions = [];
                         if(taskType==2){
                             actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="cuiban(\'' + row.id + '\')"><i class="fa fa-edit"></i>催办</a> ');
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="cuiban(\'' + row.id + '\')"><i class="fa fa-envelope-o"></i>催办</a> ');
                             actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         }
 
@@ -220,6 +224,27 @@
             type: "post",
             dataType: "json",
             data: {"ids":id},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                $.operate.ajaxSuccess(result);
+            }
+        };
+        $.ajax(config)
+    }
+    function cuibanpl() {
+        var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+        if (rows.length == 0) {
+            $.modal.alertWarning("请至少选择一条记录");
+            return;
+        }
+        var data = { "ids": rows.join() };
+        var config = {
+            url: prefix+"/cuiban",
+            type: "post",
+            dataType: "json",
+            data: data,
             beforeSend: function () {
                 $.modal.loading("正在处理中，请稍后...");
             },
