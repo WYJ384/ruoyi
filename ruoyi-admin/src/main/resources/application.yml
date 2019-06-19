@@ -75,12 +75,19 @@ spring:
     static-locations: file:${ruoyi.profile},classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/
 
   mail:
-#    host: smtp.qq.com
-#    username: 1192016076@qq.com
-#    password: brmdkwrevdbcgcic
-    host: smtp.163.com
-    username: gsncmzy@163.com
-    password: gsnoc123
+    host: smtp.qq.com
+    username: mazhongyi.ma@foxmail.com
+    password: brmdkwrevdbcgcic
+#    host: smtp.163.com
+#    username: gsncmzy@163.com
+#    password: gsnoc123
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+          enable: true
+          required: true
 
   # MyBatis
 mybatis:

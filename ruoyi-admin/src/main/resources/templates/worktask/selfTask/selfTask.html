@@ -177,6 +177,7 @@
                         var actions = [];
                         if(taskType==2){
                             actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="cuiban(\'' + row.id + '\')"><i class="fa fa-edit"></i>催办</a> ');
                             actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         }
 
@@ -212,6 +213,22 @@
             $("#bootstrap-table").bootstrapTable('refreshOptions', options);
         });
     });
+    function cuiban(id) {
+
+        var config = {
+            url: prefix+"/cuiban",
+            type: "post",
+            dataType: "json",
+            data: {"ids":id},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function(result) {
+                $.operate.ajaxSuccess(result);
+            }
+        };
+        $.ajax(config)
+    }
 </script>
 </body>
 </html>

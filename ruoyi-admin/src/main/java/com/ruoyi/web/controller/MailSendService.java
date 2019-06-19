@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,7 +37,10 @@ public class MailSendService {
         message.setText(text);
         mailSender.send(message);
     }
+    public void sendSimpleMail(  SimpleMailMessage message) throws Exception {
 
+        mailSender.send(message);
+    }
     /**
      * 批量发送邮件
      * @param simpleMailMessages
@@ -99,6 +103,7 @@ public class MailSendService {
                     message.setTo(userEmail);
                     message.setSubject("NOC办公系统发送");
                     message.setText(text);
+                    message.setSentDate(new Date());
                     simpleMailMessageList.add(message);
                 }
             }

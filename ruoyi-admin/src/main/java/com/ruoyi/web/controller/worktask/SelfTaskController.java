@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.worktask;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -242,5 +243,27 @@ public class SelfTaskController extends BaseController
 	{		
 		return toAjax(selfTaskService.deleteSelfTaskByIds(ids));
 	}
-	
+
+
+	/**
+	 * 任务催办
+	 */
+	@PostMapping("/cuiban")
+	@ResponseBody
+	public AjaxResult cuiban(String ids)
+	{
+		Integer result=1;
+		String[] arrId = ids.split(",");
+		for (int i = 0; i < arrId.length; i++) {
+			String id=arrId[i];
+			SelfTask selfTask = selfTaskService.selectSelfTaskById(id);
+			try {
+				mailSendService.sendSimpleMailsByUserIds(selfTask.getExecutorUser(),"请尽快完成任务:"+selfTask.getTaskTitle());
+			} catch (Exception e) {
+				e.printStackTrace();
+				result=0;
+			}
+		}
+		return toAjax(result);
+	}
 }
