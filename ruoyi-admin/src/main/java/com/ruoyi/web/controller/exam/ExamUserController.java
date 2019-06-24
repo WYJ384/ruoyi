@@ -1,6 +1,10 @@
 package com.ruoyi.web.controller.exam;
 
+import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.exam.domain.PaperQuestion;
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,16 +81,26 @@ public class ExamUserController extends BaseController
 	    return prefix + "/add";
 	}
 	
+
 	/**
-	 * 新增保存考试人员
+	 * 新增保存试卷-试题
 	 */
-	@RequiresPermissions("exam:examUser:add")
+	@RequiresPermissions("exam:paperQuestion:add")
 	@Log(title = "考试人员", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(ExamUser examUser)
-	{		
-		return toAjax(examUserService.insertExamUser(examUser));
+	public AjaxResult addSave(ExamUser examUser, String ids)
+	{
+		String[] userIds = ids.split(",");
+		for (int i = 0; i < userIds.length; i++) {
+			String userId=userIds[i];
+			examUser.setCreateBy(ShiroUtils.getUserId()+"");
+			examUser.setCreateDate(new Date());
+			examUser.setUserId(userId);
+			int ret = examUserService.insertExamUser(examUser);
+
+		}
+		return toAjax(1);
 	}
 
 	/**

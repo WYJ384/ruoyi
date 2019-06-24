@@ -90,9 +90,16 @@ public class ExamController extends BaseController
 		List<SysUser> users = userService.selectUserList(sysUser);
 		mmap.addAttribute("users",users);
 		mmap.addAttribute("papers",papers);
+		mmap.addAttribute("id",UUID.randomUUID().toString().replaceAll("-",""));
 	    return prefix + "/add";
 	}
-	
+	@GetMapping("/examUser/{id}")
+	public String examUser(@PathVariable("id") String id, ModelMap mmap)
+	{
+
+		mmap.addAttribute("id",id);
+		return prefix + "/examUser";
+	}
 	/**
 	 * 新增保存考试
 	 */

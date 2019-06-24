@@ -36,28 +36,28 @@
 				<input type="hidden" id="parentId" name="parentId">
 				<div class="select-list">
 					<ul>
-						<li>
-							登录名称：<input type="text" name="loginName"/>
-						</li>
+<!--						<li>-->
+<!--							登录名称：<input type="text" name="loginName"/>-->
+<!--						</li>-->
 						<li>
 							姓名：<input type="text" name="userName"/>
 						</li>
 
-						<li>
-							手机号码：<input type="text" name="phonenumber"/>
-						</li>
-						<li>
-							用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
-							<option value="">所有</option>
-							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-						</select>
-						</li>
-						<!--<li class="select-time">-->
-						<!--<label>创建时间： </label>-->
-						<!--<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>-->
-						<!--<span>-</span>-->
-						<!--<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>-->
-						<!--</li>-->
+<!--						<li>-->
+<!--							手机号码：<input type="text" name="phonenumber"/>-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">-->
+<!--							<option value="">所有</option>-->
+<!--							<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+<!--						</select>-->
+<!--						</li>-->
+<!--						&lt;!&ndash;<li class="select-time">&ndash;&gt;-->
+<!--						&lt;!&ndash;<label>创建时间： </label>&ndash;&gt;-->
+<!--						&lt;!&ndash;<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>&ndash;&gt;-->
+<!--						&lt;!&ndash;<span>-</span>&ndash;&gt;-->
+<!--						&lt;!&ndash;<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>&ndash;&gt;-->
+<!--						&lt;!&ndash;</li>&ndash;&gt;-->
 						<li>
 							<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 							<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -67,23 +67,23 @@
 			</form>
 		</div>
 
-		<div class="btn-group-sm" id="toolbar" role="group">
-			<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">
-				<i class="fa fa-plus"></i> 新增
-			</a>
-			<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">
-				<i class="fa fa-edit"></i> 修改
-			</a>
-			<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">
-				<i class="fa fa-remove"></i> 删除
-			</a>
-			<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
-				<i class="fa fa-upload"></i> 导入
-			</a>
-			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">
-				<i class="fa fa-download"></i> 导出
-			</a>
-		</div>
+<!--		<div class="btn-group-sm" id="toolbar" role="group">-->
+<!--			<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">-->
+<!--				<i class="fa fa-plus"></i> 新增-->
+<!--			</a>-->
+<!--			<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">-->
+<!--				<i class="fa fa-edit"></i> 修改-->
+<!--			</a>-->
+<!--			<a class="btn btn-danger btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">-->
+<!--				<i class="fa fa-remove"></i> 删除-->
+<!--			</a>-->
+<!--			<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">-->
+<!--				<i class="fa fa-upload"></i> 导入-->
+<!--			</a>-->
+<!--			<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">-->
+<!--				<i class="fa fa-download"></i> 导出-->
+<!--			</a>-->
+<!--		</div>-->
 
 		<div class="col-sm-12 select-table table-striped">
 			<table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -173,41 +173,33 @@
 	$('#btnRefresh').click(function() {
 		queryDeptTree();
 	});
-
-	/* 用户管理-部门 */
-	function dept() {
-		var url = ctx + "system/dept";
-		createMenuItem(url, "部门管理");
-	}
-
-	/* 用户管理-重置密码 */
-	function resetPwd(userId) {
-		var url = prefix + '/resetPwd/' + userId;
-		$.modal.open("重置密码", url, '800', '300');
-	}
-
-	/* 用户状态显示 */
-	function statusTools(row) {
-		if (row.status == 1) {
-			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
-		} else {
-			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
+	function submitHandler() {
+		var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+		if (rows.length == 0) {
+			$.modal.alertWarning("请至少选择一条记录");
+			return;
 		}
+		var data = { "ids": rows.join(),"examId":[[${id}]] };
+		var config = {
+			url: ctx+"exam/examUser/add",
+			type: "post",
+			dataType: "json",
+			data: data,
+			beforeSend: function () {
+				$.modal.loading("正在处理中，请稍后...");
+			},
+			success: function(result) {
+				$.operate.ajaxSuccess(result);
+				parent.$('#examUser').value(1);
+			}
+		};
+		$.ajax(config)
+		parent.layer.close(index);
+
+
 	}
 
-	/* 用户管理-停用 */
-	function disable(userId) {
-		$.modal.confirm("确认要停用用户吗？", function() {
-			$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 1 });
-		})
-	}
 
-	/* 用户管理启用 */
-	function enable(userId) {
-		$.modal.confirm("确认要启用用户吗？", function() {
-			$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 0 });
-		})
-	}
 </script>
 </body>
 <form id="importForm" enctype="multipart/form-data" class="mt20 mb10" style="display: none;">
