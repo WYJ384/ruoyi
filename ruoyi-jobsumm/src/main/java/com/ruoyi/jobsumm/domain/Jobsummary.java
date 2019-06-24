@@ -7,14 +7,14 @@ import java.util.Date;
 
 /**
  * 工作总结表 jobsummary
- * 
+ *
  * @author ruoyi
- * @date 2019-06-14
+ * @date 2019-06-19
  */
 public class Jobsummary extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	/** 工作总结ID */
 	private String id;
 	/** 创建者 */
@@ -35,6 +35,8 @@ public class Jobsummary extends BaseEntity
 	private String jobPlan;
 	/** 提交人 */
 	private String submitBy;
+	/** 总结验收人 */
+	private String acceptorUser;
 	/** 备注信息 */
 	private String remark;
 	/** 更新者 */
@@ -44,149 +46,159 @@ public class Jobsummary extends BaseEntity
 	/** 删除标记 */
 	private String delFlag;
 
-	public void setId(String id) 
+	public void setId(String id)
 	{
 		this.id = id;
 	}
 
-	public String getId() 
+	public String getId()
 	{
 		return id;
 	}
-	public void setCreateBy(String createBy) 
+	public void setCreateBy(String createBy)
 	{
 		this.createBy = createBy;
 	}
 
-	public String getCreateBy() 
+	public String getCreateBy()
 	{
 		return createBy;
 	}
-	public void setCreateDate(Date createDate) 
+	public void setCreateDate(Date createDate)
 	{
 		this.createDate = createDate;
 	}
 
-	public Date getCreateDate() 
+	public Date getCreateDate()
 	{
 		return createDate;
 	}
-	public void setStratTime(Date stratTime) 
+	public void setStratTime(Date stratTime)
 	{
 		this.stratTime = stratTime;
 	}
 
-	public Date getStratTime() 
+	public Date getStratTime()
 	{
 		return stratTime;
 	}
-	public void setEndTime(Date endTime) 
+	public void setEndTime(Date endTime)
 	{
 		this.endTime = endTime;
 	}
 
-	public Date getEndTime() 
+	public Date getEndTime()
 	{
 		return endTime;
 	}
-	public void setJobType(String jobType) 
+	public void setJobType(String jobType)
 	{
 		this.jobType = jobType;
 	}
 
-	public String getJobType() 
+	public String getJobType()
 	{
 		return jobType;
 	}
-	public void setJobContent(String jobContent) 
+	public void setJobContent(String jobContent)
 	{
 		this.jobContent = jobContent;
 	}
 
-	public String getJobContent() 
+	public String getJobContent()
 	{
 		return jobContent;
 	}
-	public void setJobSumm(String jobSumm) 
+	public void setJobSumm(String jobSumm)
 	{
 		this.jobSumm = jobSumm;
 	}
 
-	public String getJobSumm() 
+	public String getJobSumm()
 	{
 		return jobSumm;
 	}
-	public void setJobPlan(String jobPlan) 
+	public void setJobPlan(String jobPlan)
 	{
 		this.jobPlan = jobPlan;
 	}
 
-	public String getJobPlan() 
+	public String getJobPlan()
 	{
 		return jobPlan;
 	}
-	public void setSubmitBy(String submitBy) 
+	public void setSubmitBy(String submitBy)
 	{
 		this.submitBy = submitBy;
 	}
 
-	public String getSubmitBy() 
+	public String getSubmitBy()
 	{
 		return submitBy;
 	}
-	public void setRemark(String remark) 
+	public void setAcceptorUser(String acceptorUser)
+	{
+		this.acceptorUser = acceptorUser;
+	}
+
+	public String getAcceptorUser()
+	{
+		return acceptorUser;
+	}
+	public void setRemark(String remark)
 	{
 		this.remark = remark;
 	}
 
-	public String getRemark() 
+	public String getRemark()
 	{
 		return remark;
 	}
-	public void setUpdateBy(String updateBy) 
+	public void setUpdateBy(String updateBy)
 	{
 		this.updateBy = updateBy;
 	}
 
-	public String getUpdateBy() 
+	public String getUpdateBy()
 	{
 		return updateBy;
 	}
-	public void setUpdateDate(Date updateDate) 
+	public void setUpdateDate(Date updateDate)
 	{
 		this.updateDate = updateDate;
 	}
 
-	public Date getUpdateDate() 
+	public Date getUpdateDate()
 	{
 		return updateDate;
 	}
-	public void setDelFlag(String delFlag) 
+	public void setDelFlag(String delFlag)
 	{
 		this.delFlag = delFlag;
 	}
 
-	public String getDelFlag() 
+	public String getDelFlag()
 	{
 		return delFlag;
 	}
 
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("createBy", getCreateBy())
-            .append("createDate", getCreateDate())
-            .append("stratTime", getStratTime())
-            .append("endTime", getEndTime())
-            .append("jobType", getJobType())
-            .append("jobContent", getJobContent())
-            .append("jobSumm", getJobSumm())
-            .append("jobPlan", getJobPlan())
-            .append("submitBy", getSubmitBy())
-            .append("remark", getRemark())
-            .append("updateBy", getUpdateBy())
-            .append("updateDate", getUpdateDate())
-            .append("delFlag", getDelFlag())
-            .toString();
-    }
+	public String toString() {
+		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+				.append("id", getId())
+				.append("createBy", getCreateBy())
+				.append("createDate", getCreateDate())
+				.append("stratTime", getStratTime())
+				.append("endTime", getEndTime())
+				.append("jobType", getJobType())
+				.append("jobContent", getJobContent())
+				.append("jobSumm", getJobSumm())
+				.append("jobPlan", getJobPlan())
+				.append("submitBy", getSubmitBy())
+				.append("acceptorUser", getAcceptorUser())
+				.append("remark", getRemark())
+				.append("updateBy", getUpdateBy())
+				.append("updateDate", getUpdateDate())
+				.append("delFlag", getDelFlag())
+				.toString();
+	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 
+
 /**
  * 工作总结 信息操作处理
  *
@@ -37,6 +40,8 @@ public class JobsummaryController extends BaseController
 
 	@Autowired
 	private IJobsummaryService jobsummaryService;
+    @Autowired
+    private ISysUserService userService;
 
 	@RequiresPermissions("jobsumm:jobsummary:view")
 	@GetMapping()
@@ -56,6 +61,8 @@ public class JobsummaryController extends BaseController
 	public TableDataInfo list(Jobsummary jobsummary)
 	{
 		startPage();
+		jobsummary.setCreateBy(ShiroUtils.getUserId().toString());
+		jobsummary.setAcceptorUser(ShiroUtils.getUserId().toString());
 		List<Jobsummary> list = jobsummaryService.selectJobsummaryList(jobsummary);
 		return getDataTable(list);
 	}
@@ -85,10 +92,10 @@ public class JobsummaryController extends BaseController
 	 * 新增工作总结
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap modelMap)
 	{
-		/*List<SysUser> sysUsers = userService.selectUserList(new SysUser());
-		modelMap.addAttribute("sysUsers",sysUsers);*/
+        List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+        modelMap.addAttribute("sysUsers",sysUsers);
 		return prefix + "/add";
 	}
 
@@ -104,7 +111,7 @@ public class JobsummaryController extends BaseController
 		jobsummary.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		jobsummary.setCreateBy(ShiroUtils.getUserId()+"");
 		jobsummary.setCreateDate(new Date());
-		jobsummary.setSubmitBy(ShiroUtils.getLoginName());
+		jobsummary.setSubmitBy(ShiroUtils.getSysUser().getUserName());
 		return toAjax(jobsummaryService.insertJobsummary(jobsummary));
 	}
 
@@ -114,8 +121,11 @@ public class JobsummaryController extends BaseController
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") String id, ModelMap mmap)
 	{
-		Jobsummary jobsummary = jobsummaryService.selectJobsummaryById(id);
-		mmap.put("jobsummary", jobsummary);
+
+        List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+        mmap.addAttribute("sysUsers",sysUsers);
+        Jobsummary jobsummary = jobsummaryService.selectJobsummaryById(id);
+        mmap.put("jobsummary", jobsummary);
 		return prefix + "/edit" ;
 	}
 

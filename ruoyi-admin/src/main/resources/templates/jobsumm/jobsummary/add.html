@@ -53,6 +53,15 @@
 					<textarea  id="remark" name="remark" class="form-control"></textarea>
 				</div>
 			</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>总结验收人：</label>
+                <div class="col-sm-8">
+                    <select id="acceptorUser" name="acceptorUser" class="form-control">
+                        <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                                th:text="${user.userName}"></option>
+                    </select>
+                </div>
+            </div>
 		</form>
 	</div>
 	<div class="row">
@@ -116,7 +125,7 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/add", $('#form-jobsummary-add').serialize());
+	            $.operate.saveTab(prefix + "/add", $('#form-jobsummary-add').serialize());
 	        }
 	    }
 	</script>

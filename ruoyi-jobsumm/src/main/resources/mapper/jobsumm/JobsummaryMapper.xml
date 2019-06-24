@@ -15,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="jobSumm"    column="job_summ"    />
         <result property="jobPlan"    column="job_plan"    />
         <result property="submitBy"    column="submit_by"    />
+        <result property="acceptorUser"    column="acceptor_user"    />
         <result property="remark"    column="remark"    />
         <result property="updateBy"    column="update_by"    />
         <result property="updateDate"    column="update_date"    />
@@ -22,14 +23,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectJobsummaryVo">
-        select id, create_by, create_date, strat_time, end_time, job_type, job_content, job_summ, job_plan, submit_by, remark, update_by, update_date, del_flag from jobsummary
+        select id, create_by, create_date, strat_time, end_time, job_type, job_content, job_summ, job_plan, submit_by, acceptor_user, remark, update_by, update_date, del_flag from jobsummary
     </sql>
 	
     <select id="selectJobsummaryList" parameterType="Jobsummary" resultMap="JobsummaryResult">
         <include refid="selectJobsummaryVo"/>
         <where>  
             <if test="id != null  and id != '' "> and id = #{id}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+<!--             <if test="createBy != null  and createBy != '' "> or create_by = #{createBy}</if>-->
+            <if test="acceptorUser != null  and acceptorUser != '' and createBy != null  and createBy != ''  "> and create_by = #{createBy} or acceptor_user = #{acceptorUser}</if>
              <if test="createDate != null "> and create_date = #{createDate}</if>
              <if test="stratTime != null "> and strat_time >= #{stratTime}</if>
              <if test="endTime != null "> and end_time <![CDATA[<= ]]> #{endTime}</if>
@@ -38,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="jobSumm != null  and jobSumm != '' "> and job_summ = #{jobSumm}</if>
              <if test="jobPlan != null  and jobPlan != '' "> and job_plan = #{jobPlan}</if>
              <if test="submitBy != null  and submitBy != '' "> and submit_by = #{submitBy}</if>
+<!--             <if test="acceptorUser != null  and acceptorUser != '' "> or acceptor_user = #{acceptorUser}</if>-->
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
              <if test="updateDate != null "> and update_date = #{updateDate}</if>
@@ -72,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="jobSumm != null  and jobSumm != ''  ">job_summ,</if>
 			<if test="jobPlan != null  and jobPlan != ''  ">job_plan,</if>
 			<if test="submitBy != null  and submitBy != ''  ">submit_by,</if>
+            <if test="acceptorUser != null  and acceptorUser != ''  ">acceptor_user,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
 			<if test="updateDate != null  ">update_date,</if>
@@ -88,6 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="jobSumm != null  and jobSumm != ''  ">#{jobSumm},</if>
 			<if test="jobPlan != null  and jobPlan != ''  ">#{jobPlan},</if>
 			<if test="submitBy != null  and submitBy != ''  ">#{submitBy},</if>
+            <if test="acceptorUser != null  and acceptorUser != ''  ">#{acceptorUser},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
 			<if test="updateDate != null  ">#{updateDate},</if>
@@ -107,6 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="jobSumm != null  and jobSumm != ''  ">job_summ = #{jobSumm},</if>
             <if test="jobPlan != null  and jobPlan != ''  ">job_plan = #{jobPlan},</if>
             <if test="submitBy != null  and submitBy != ''  ">submit_by = #{submitBy},</if>
+            <if test="acceptorUser != null  and acceptorUser != ''  ">acceptor_user = #{acceptorUser},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
             <if test="updateDate != null  ">update_date = #{updateDate},</if>

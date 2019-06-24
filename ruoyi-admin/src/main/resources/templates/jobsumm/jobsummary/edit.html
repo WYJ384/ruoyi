@@ -68,6 +68,15 @@
 					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
 				</div>
 			</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>总结验收人：</label>
+                <div class="col-sm-8">
+                    <select id="acceptorUser" name="acceptorUser" class="form-control">
+                        <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                                th:text="${user.userName}" th:selected="${jobsummary.acceptorUser?.contains(user.userId.toString())}"></option>
+                    </select>
+                </div>
+            </div>
 <!--			<div class="form-group">
 				<label class="col-sm-3 control-label">更新者：</label>
 				<div class="col-sm-8">
@@ -128,6 +137,9 @@
 				jobPlan:{
 					required:true,
 				},
+                acceptorUser: {
+                    required: true,
+                },
 			},
 			focusCleanup: true
 		});
@@ -161,7 +173,7 @@
 
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-jobsummary-edit').serialize());
+	            $.operate.saveTab(prefix + "/edit", $('#form-jobsummary-edit').serialize());
 	        }
 	    }
 	</script>
