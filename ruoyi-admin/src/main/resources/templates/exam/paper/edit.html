@@ -12,19 +12,29 @@
 					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">权限设置0私密1公开：</label>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否公开：</label>
 				<div class="col-sm-8">
-					<input id="permission" name="permission" th:field="*{permission}" class="form-control" type="text">
+					<label class="radio-box"> <input type="radio" th:field="*{permission}"  name="permission" value="0" checked/> 私密 </label>
+					<label class="radio-box"> <input type="radio" th:field="*{permission}"  name="permission" value="1"/> 公开 </label>
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">0固定出题、1随机出题：</label>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">出题方式：</label>
 				<div class="col-sm-8">
-					<input id="questionMethod" name="questionMethod" th:field="*{questionMethod}" class="form-control" type="text">
+					<label class="radio-box"> <input type="radio"  th:field="*{questionMethod}"  name="questionMethod" value="0" checked/> 固定出题 </label>
+					<label class="radio-box"> <input type="radio"  th:field="*{questionMethod}"  name="questionMethod" value="1"/> 随机出题 </label>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+					<label class="radio-box"> <input th:field="*{status}" type="radio" name="status" value="0" checked/> 启用 </label>
+					<label class="radio-box"> <input th:field="*{status}" type="radio" name="status" value="1"/> 禁用 </label>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-3 control-label">总题数：</label>
 				<div class="col-sm-8">
 					<input id="totalQuestion" name="totalQuestion" th:field="*{totalQuestion}" class="form-control" type="text">
@@ -34,48 +44,6 @@
 				<label class="col-sm-3 control-label">总分：</label>
 				<div class="col-sm-8">
 					<input id="totalSore" name="totalSore" th:field="*{totalSore}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建者：</label>
-				<div class="col-sm-8">
-					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">创建时间：</label>
-				<div class="col-sm-8">
-					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新者：</label>
-				<div class="col-sm-8">
-					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">更新时间：</label>
-				<div class="col-sm-8">
-					<input id="updateDate" name="updateDate" th:field="*{updateDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">备注信息：</label>
-				<div class="col-sm-8">
-					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">删除标记：</label>
-				<div class="col-sm-8">
-					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">状态：</label>
-				<div class="col-sm-8">
-					<input id="status" name="status" th:field="*{status}" class="form-control" type="text">
 				</div>
 			</div>
 		</form>

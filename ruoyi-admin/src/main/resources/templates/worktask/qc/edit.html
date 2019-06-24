@@ -57,7 +57,7 @@
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>小组成员：</label>
             <div class="col-sm-8">
                 <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible"
-                        multiple="">-->
+                        multiple="">
                     <option th:each="user:${sysUsers}" th:value="${user.userId}"
                             th:text="${user.userName}"
                             th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>

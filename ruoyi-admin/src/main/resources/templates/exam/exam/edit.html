@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-exam-edit" th:object="${exam}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label"> 考试名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>试卷：</label>
+				<div class="col-sm-8">
+					<select id="examPaperId" name="examPaperId" class="form-control select2-hidden-accessible" >
+						<option th:each="paper:${papers}" th:value="${paper.id}"
+								th:text="${paper.name}" th:selected="${exam.examPaperId eq paper.id}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>试卷批阅人：</label>
+				<div class="col-sm-8">
+				<!--	<select id="readUserId" name="readUserId" class="form-control select2-hidden-accessible" multiple="">
+						<option th:each="user:${users}" th:value="${user.userId}"
+								th:text="${user.userName}"></option>
+					</select>-->
+					<select id="readUserId" name="readUserId" class="form-control select2-hidden-accessible"
+							multiple="">
+						<option th:each="user:${users}" th:value="${user.userId}"
+								th:text="${user.userName}"
+								th:selected="${exam.readUserId eq user.userId.toString() and user.userId.toString()!='1'}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">有效期开始：</label>
+				<div class="col-sm-8">
+					<input id="beginTime" name="beginTime"  th:value="${#dates.format(exam.beginTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">有效期结束：</label>
+				<div class="col-sm-8">
+					<input id="endTime" name="endTime" th:value="${#dates.format(exam.endTime, 'yyyy-MM-dd HH:mm:ss')}"  class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">单次限时：</label>
+				<div class="col-sm-8">
+					<input id="time" name="time" th:field="*{time}" class="form-control" type="number">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">考试说明：</label>
+				<div class="col-sm-8">
+					<textarea id="description" name="description" th:field="*{description}" class="form-control" ></textarea>
+
+				</div>
+			</div>
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">创建时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新者：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">更新时间：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="updateDate" name="updateDate" th:field="*{updateDate}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">备注信息：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">删除标记：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">-->
+<!--				</div>-->
+<!--			</div>-->
+		</form>
+    </div>
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+			</button>
+			&nbsp;
+			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+			</button>
+		</div>
+	</div>
+    <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+	<script type="text/javascript">
+		var prefix = ctx + "exam/exam";
+		$("#form-exam-edit").validate({
+			rules:{
+				name:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.saveTab(prefix + "/edit", $('#form-exam-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

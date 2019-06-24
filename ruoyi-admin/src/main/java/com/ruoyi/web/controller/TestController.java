@@ -75,4 +75,9 @@ public class TestController {
         }
         return compilationResult;
     }
+
+    public static void main(String[] args){
+        System.out.println("d是是是");
+    }
+
 }

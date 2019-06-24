@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<style type="text/css">
+    .title{
+        background: rgb(247,247,247);
+        line-height: 30px;
+    }
+</style>
+<head th:include="include :: header"></head>
+
+<body >
+<div class="container-div form-horizontal m">
+    <div class="row">
+        <div class="search-collapse" style="padding: 40px;background: #fff">
+            <ul>
+                <li th:each="question,questionStat:${paperQuestions}">
+
+                    <div class="title">
+                         <span th:if="${question.libraryDetail.libType eq '1'}"
+                               style="background: rgb(226,237,247);color:rgb(51,153,255) ">单选题</span>
+                        <span th:if="${question.libraryDetail.libType eq '2'}"
+                              style="background: rgb(226,237,247);color: rgb(119,187,17)">多选题</span>
+                        <span th:if="${question.libraryDetail.libType eq '4'}"
+                              style="background: #fff;color: rgb(255,102,0)">判断题</span>
+                        <h4 style="display: inline-block"
+                            th:text="${(questionStat.index+1)+'.'+question.libraryDetail.title}"></h4>
+                    </div>
+                    <span th:if="${question.libraryDetail.libType eq '1'}"></span>
+                    <ul th:if="${question.libraryDetail.libType eq '1'}">
+                        <li>
+                            <h5><input type="radio" name="choice" th:text="${question.libraryDetail.choiceA}"></h5>
+                            <h5><input type="radio" name="choice" th:text="${question.libraryDetail.choiceB}"></h5>
+                            <h5><input type="radio" name="choice" th:text="${question.libraryDetail.choiceC}"></h5>
+                            <h5><input type="radio" name="choice" th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}" th:text="${question.libraryDetail.choiceD}"></h5>
+                            <h5><input type="radio" name="choice" th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}" th:text="${question.libraryDetail.choiceE}"></h5>
+                            <h5><input type="radio" name="choice" th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" th:text="${question.libraryDetail.choiceF}"></h5>
+
+
+                        </li>
+                    </ul>
+                    <ul th:if="${question.libraryDetail.libType eq '2'}">
+                        <li>
+                            <h5><input type="checkbox"  name="choiceA" th:text="${question.libraryDetail.choiceA}"></h5>
+                            <h5><input type="checkbox"  name="choiceA"  th:text="${question.libraryDetail.choiceB}"></h5>
+                            <h5><input type="checkbox"  name="choiceA"  th:text="${question.libraryDetail.choiceC}"></h5>
+                            <h5><input type="checkbox" name="choiceA" th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}" th:text="${question.libraryDetail.choiceD}"></h5>
+                            <h5><input type="checkbox" name="choiceA" th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}" th:text="${question.libraryDetail.choiceE}"></h5>
+                            <h5><input type="checkbox" name="choiceA" th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" th:text="${question.libraryDetail.choiceF}"></h5>
+                        </li>
+                    </ul>
+                    <ul th:if="${question.libraryDetail.libType eq '4'}">
+                        <li>
+                            <h5><input type="radio" name="choiceA" th:text="${question.libraryDetail.choiceA}"></h5>
+                            <h5><input type="radio" name="choiceA" th:text="${question.libraryDetail.choiceB}"></h5>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

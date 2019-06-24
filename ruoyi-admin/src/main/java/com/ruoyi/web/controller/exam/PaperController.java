@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.ruoyi.exam.domain.Library;
+import com.ruoyi.exam.domain.PaperQuestion;
+import com.ruoyi.exam.service.ILibraryService;
+import com.ruoyi.exam.service.IPaperQuestionService;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +38,12 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 public class PaperController extends BaseController
 {
     private String prefix = "exam/paper";
-	
+	@Autowired
+	private ILibraryService libraryService;
 	@Autowired
 	private IPaperService paperService;
-	
+	@Autowired
+	private IPaperQuestionService paperQuestionService;
 	@RequiresPermissions("exam:paper:view")
 	@GetMapping()
 	public String paper()
@@ -133,9 +139,25 @@ public class PaperController extends BaseController
 	/**
 	 * 修改试卷
 	 */
-	@GetMapping("/chooseLibrary")
-	public String chooseLibrary( ModelMap mmap)
+	@GetMapping("/chooseLibrary/{id}")
+	public String chooseLibrary(ModelMap mmap,@PathVariable("id") String id)
 	{
+		Library library=new Library();
+		List<Library> libraryList = libraryService.selectLibraryList(library);
+		Paper paper = paperService.selectPaperById(id);
+		mmap.addAttribute("paper",paper);
+		mmap.addAttribute("libraryList",libraryList);
 		return prefix + "/chooseLibrary";
+	}
+
+	/**
+	 * 修改试卷
+	 */
+	@GetMapping("/query/{id}")
+	public String query(ModelMap mmap,@PathVariable("id") String id)
+	{
+		List<PaperQuestion>  paperQuestions = paperQuestionService.selectPaperQuestionById(id);
+		mmap.addAttribute("paperQuestions",paperQuestions);
+		return prefix + "/query";
 	}
 }

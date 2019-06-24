@@ -51,7 +51,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务执行人：</label>
 				<div class="col-sm-8">
-					<select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible" multiple="">-->
+					<select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible" multiple="">
 						        <option th:each="user:${sysUsers}" th:value="${user.userId}"
 						        th:text="${user.userName}"></option>
 					</select>
@@ -60,7 +60,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务验收人：</label>
 				<div class="col-sm-8">
-					<select id="acceptorUser" name="acceptorUser" class="form-control select2-hidden-accessible">-->
+					<select id="acceptorUser" name="acceptorUser" class="form-control select2-hidden-accessible">
 						<option th:each="user:${sysUsers}" th:value="${user.userId}"
 								th:text="${user.userName}"></option>
 					</select>

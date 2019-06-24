@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.exam.mapper.PaperQuestionMapper">
+    
+    <resultMap type="PaperQuestion" id="PaperQuestionResult">
+        <result property="examPaperId"    column="exam_paper_id"    />
+        <result property="questionId"    column="question_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark2"    column="remark2"    />
+        <result property="remark3"    column="remark3"    />
+        <result property="remark4"    column="remark4"    />
+        <result property="remark5"    column="remark5"    />
+        <result property="remark6"    column="remark6"    />
+        <result property="orderNum"    column="order_num"    />
+        <association property="libraryDetail" column="questionId" javaType="libraryDetail" resultMap="libraryDetailResult"/>
+    </resultMap>
+    <resultMap id="libraryDetailResult" type="libraryDetail">
+        <result property="id"    column="id"    />
+        <result property="libType"    column="lib_type"    />
+        <result property="title"    column="title"    />
+        <result property="choiceA"    column="choice_a"    />
+        <result property="choiceB"    column="choice_b"    />
+        <result property="choiceC"    column="choice_c"    />
+        <result property="choiceD"    column="choice_d"    />
+        <result property="choiceE"    column="choice_e"    />
+        <result property="choiceF"    column="choice_f"    />
+        <result property="choiceG"    column="choice_g"    />
+        <result property="choiceH"    column="choice_h"    />
+        <result property="answer"    column="answer"    />
+    </resultMap>
+
+    <sql id="selectPaperQuestionVo">
+SELECT
+	exam_paper_id,
+	question_id,
+	paper.create_by,
+	paper.create_date,
+	paper.update_by,
+	paper.update_date,
+	paper.remark,
+	paper.del_flag,
+	paper.remark2,
+	paper.remark3,
+	paper.remark4,
+	paper.remark5,
+	paper.remark6,
+	order_num,
+	lib_type,
+	title,
+	choice_a,
+	choice_b,
+	choice_c,
+	choice_d,
+	choice_e,
+	choice_f,
+	choice_g,
+	choice_h,
+	answer,
+	answer_tip
+FROM
+	exam_paper_question paper
+INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
+    </sql>
+	
+    <select id="selectPaperQuestionList" parameterType="PaperQuestion" resultMap="PaperQuestionResult">
+        <include refid="selectPaperQuestionVo"/>
+        <where>  
+            <if test="examPaperId != null  and examPaperId != '' "> and exam_paper_id = #{examPaperId}</if>
+             <if test="questionId != null  and questionId != '' "> and question_id = #{questionId}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
+             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
+             <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
+             <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
+             <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
+             <if test="orderNum != null "> and order_num = #{orderNum}</if>
+         </where>
+    </select>
+
+    <select id="selectPaperQuestionById" parameterType="String" resultMap="PaperQuestionResult">
+        <include refid="selectPaperQuestionVo"/>
+        where exam_paper_id = #{examPaperId}
+        order  by lib_type
+    </select>
+        
+    <insert id="insertPaperQuestion" parameterType="PaperQuestion">
+        insert into exam_paper_question
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="examPaperId != null  and examPaperId != ''  ">exam_paper_id,</if>
+			<if test="questionId != null  and questionId != ''  ">question_id,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+			<if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+			<if test="remark4 != null  and remark4 != ''  ">remark4,</if>
+			<if test="remark5 != null  and remark5 != ''  ">remark5,</if>
+			<if test="remark6 != null  and remark6 != ''  ">remark6,</if>
+			<if test="orderNum != null  ">order_num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="examPaperId != null  and examPaperId != ''  ">#{examPaperId},</if>
+			<if test="questionId != null  and questionId != ''  ">#{questionId},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+			<if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+			<if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
+			<if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
+			<if test="remark6 != null  and remark6 != ''  ">#{remark6},</if>
+			<if test="orderNum != null  ">#{orderNum},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePaperQuestion" parameterType="PaperQuestion">
+        update exam_paper_question
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="questionId != null  and questionId != ''  ">question_id = #{questionId},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
+        </trim>
+        where exam_paper_id = #{examPaperId}
+    </update>
+
+	<delete id="deletePaperQuestionById" parameterType="String">
+        delete from exam_paper_question where exam_paper_id = #{examPaperId}
+    </delete>
+	
+    <delete id="deletePaperQuestionByIds" parameterType="String">
+        delete from exam_paper_question where exam_paper_id in 
+        <foreach item="examPaperId" collection="array" open="(" separator="," close=")">
+            #{examPaperId}
+        </foreach>
+    </delete>
+    
+</mapper>
