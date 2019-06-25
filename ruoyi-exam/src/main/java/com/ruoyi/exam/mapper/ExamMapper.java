@@ -26,6 +26,8 @@ public interface ExamMapper
      * @return 考试集合
      */
 	public List<Exam> selectExamList(Exam exam);
+	public List<Exam> myExamList(Exam exam);
+
 	
 	/**
      * 新增考试

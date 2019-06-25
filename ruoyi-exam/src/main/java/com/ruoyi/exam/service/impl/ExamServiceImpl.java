@@ -43,8 +43,14 @@ public class ExamServiceImpl implements IExamService
 	{
 	    return examMapper.selectExamList(exam);
 	}
-	
-    /**
+
+	@Override
+	public List<Exam> myExamList(Exam exam) {
+
+		return examMapper.myExamList(exam);
+	}
+
+	/**
      * 新增考试
      * 
      * @param exam 考试信息

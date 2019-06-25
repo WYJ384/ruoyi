@@ -43,8 +43,17 @@ public class Exam extends BaseEntity
 	private String remark;
 	/** 删除标记 */
 	private String delFlag;
+	private String userId;
 
-	public void setId(String id) 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public void setId(String id)
 	{
 		this.id = id;
 	}

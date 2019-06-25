@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            考试名称：<input type="text" name="name"/>
+                        </li>
+
+                        <!--							<li>-->
+                        <!--								考试说明：<input type="text" name="description"/>-->
+                        <!--							</li>-->
+
+                        <!--							<li>-->
+                        <!--								试卷：<input type="text" name="examPaperId"/>-->
+                        <!--							</li>-->
+
+                        <!--							<li>-->
+                        <!--								试卷批阅人：<input type="text" name="readUserId"/>-->
+                        <!--							</li>-->
+
+                        <!--							<li>-->
+                        <!--								有效期开始：<input type="text" name="beginTime"/>-->
+                        <!--							</li>-->
+
+                        <!--							<li>-->
+                        <!--								有效期结束：<input type="text" name="endTime"/>-->
+                        <!--							</li>-->
+
+
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('exam:exam:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('exam:exam:remove')}]];
+    var prefix = ctx + "exam/exam";
+
+    $(function() {
+        var options = {
+            url: prefix + "/myExamList",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "考试",
+            showExport: true,
+            columns: [
+
+                {
+                    field : 'id',
+                    title : '',
+                    visible: false
+                },
+                {
+                    field : 'name',
+                    title : ' 考试名称',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+row.name+'\',\'' +prefix +'/query/'+row.id + '\')"><i class="fa fa-edit"></i>'+row.name+'</a> ');
+                        return actions.join('');
+                    }
+                },
+
+                {
+                    field : 'beginTime',
+                    title : '有效期开始',
+                    sortable: true
+                },
+                {
+                    field : 'endTime',
+                    title : '有效期结束',
+                    sortable: true
+                },
+                {
+                    field : 'time',
+                    title : '单次限时',
+                    sortable: true
+                },
+
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        // actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        // actions.push('<a class=" ' + editFlag + '" href="#" onclick="addUser(\'' + row.id + '\')"><i class="fa fa-edit"></i>指定考试人员</a> ');
+                        // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+    function addUser(id) {
+        $.modal.open("指定考试人员",prefix+"/examUser/"+id);
+    }
+</script>
+</body>
+</html>

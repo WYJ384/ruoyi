@@ -44,7 +44,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
          </where>
     </select>
-    
+    <select id="myExamList" parameterType="Exam" resultMap="ExamResult">
+    SELECT
+        id,
+        NAME,
+        description,
+        exam_paper_id,
+        read_user_id,
+        begin_time,
+        end_time,
+        time,
+        exam_exam.create_by,
+        exam_exam.create_date,
+        exam_exam.update_by,
+        exam_exam.update_date,
+        exam_exam.remark,
+        exam_exam.del_flag
+    FROM
+        exam_exam
+        INNER JOIN exam_exam_user u on u.exam_id=exam_exam.id
+    WHERE u.user_id=#{userId}
+    </select>
     <select id="selectExamById" parameterType="String" resultMap="ExamResult">
         <include refid="selectExamVo"/>
         where id = #{id}

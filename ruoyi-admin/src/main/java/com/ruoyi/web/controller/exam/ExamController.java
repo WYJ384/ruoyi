@@ -106,6 +106,26 @@ public class ExamController extends BaseController
 		mmap.addAttribute("id",id);
 		return prefix + "/examUser";
 	}
+	@GetMapping("/myExam")
+	public String myExam(ModelMap mmap)
+	{
+
+		return prefix + "/myExam";
+	}
+
+	/**
+	 * 查询考试列表
+	 */
+	@PostMapping("/myExamList")
+	@ResponseBody
+	public TableDataInfo myExamList(Exam exam)
+	{
+		startPage();
+		exam.setUserId(ShiroUtils.getUserId()+"");
+		List<Exam> list = examService.myExamList(exam);
+		return getDataTable(list);
+	}
+
 	@GetMapping("/query/{id}")
 	public String query(@PathVariable("id") String id, ModelMap mmap)
 	{
