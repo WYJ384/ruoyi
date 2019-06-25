@@ -73,27 +73,27 @@
                                                         <input th:text="${question.libraryDetail.choiceA}" type="radio"
                                                                class="validate[required] qk-choice"
                                                                value="A"
-                                                               th:name="${'single-'+question.questionId}">
+                                                               th:name="${'single-'+question.questionId}" th:data-qid="${question.questionId}">
 
                                                     </li>
                                                      <li>
                                                         <input th:text="${question.libraryDetail.choiceB}" type="radio" class="validate[required] qk-choice"
                                                                value="B"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'single-'+question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:text="${question.libraryDetail.choiceC}" type="radio"
                                                                class="validate[required] qk-choice"
                                                                value="C"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'single-'+question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}" th:text="${question.libraryDetail.choiceD}" type="radio"
                                                                class="validate[required] qk-choice"
                                                                value="D"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'single-'+question.questionId}">
                                                     </li>
 
@@ -101,7 +101,7 @@
                                                         <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}" th:text="${question.libraryDetail.choiceE}" type="radio"
                                                                class="validate[required] qk-choice"
                                                                value="E"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'single-'+question.questionId}">
                                                     </li>
 
@@ -109,7 +109,7 @@
                                                         <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" th:text="${question.libraryDetail.choiceF}" type="radio"
                                                                class="validate[required] qk-choice"
                                                                value="F"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'single-'+question.questionId}">
                                                     </li>
                                                 </ul>
@@ -149,27 +149,28 @@
                                                         <input th:text="${question.libraryDetail.choiceA}" type="checkbox"
                                                                class="validate[required] qk-choice"
                                                                value="A"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'mult-'+question.questionId}">
 
                                                     </li>
                                                      <li>
                                                         <input th:text="${question.libraryDetail.choiceB}" type="checkbox" class="validate[required] qk-choice"
                                                                value="B"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'mult-'+question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:text="${question.libraryDetail.choiceC}" type="checkbox"
                                                                class="validate[required] qk-choice"
                                                                value="C"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'mult-'+question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}" th:text="${question.libraryDetail.choiceD}" type="checkbox"
                                                                class="validate[required] qk-choice"
                                                                value="D"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'mult-'+question.questionId}">
                                                     </li>
 
@@ -177,7 +178,7 @@
                                                         <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}" th:text="${question.libraryDetail.choiceE}" type="checkbox"
                                                                class="validate[required] qk-choice"
                                                                value="E"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'mult-'+question.questionId}">
                                                     </li>
 
@@ -185,7 +186,7 @@
                                                         <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" th:text="${question.libraryDetail.choiceF}" type="checkbox"
                                                                class="validate[required] qk-choice"
                                                                value="F"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'mult-'+question.questionId}">
                                                     </li>
                                                 </ul>
@@ -226,13 +227,14 @@
                                                         <input th:text="${question.libraryDetail.choiceA}" type="radio"
                                                                class="validate[required] qk-choice"
                                                                value="A"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'judge-'+question.questionId}">
 
                                                     </li>
                                                      <li>
                                                         <input th:text="${question.libraryDetail.choiceB}" type="radio" class="validate[required] qk-choice"
                                                                value="B"
-                                                               data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                                               th:data-qid="${question.questionId}"
                                                                th:name="${'judge-'+question.questionId}">
                                                     </li>
 
@@ -456,7 +458,7 @@
             <dd>
                 <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '1'}" href="javascript:void(0);"
                    th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
-                    th:text="${state.index+1}">1</a>
+                    th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
 
                 <div class="tm_clear"></div>
             </dd>
@@ -466,7 +468,7 @@
             <dd>
                 <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '2'}" href="javascript:void(0);"
                    th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
-                    th:text="${state.index+1}">1</a>
+                    th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
 
                 <div class="tm_clear"></div>
             </dd>
@@ -476,7 +478,7 @@
             <dd>
                 <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '4'}" href="javascript:void(0);"
                    th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
-                   th:text="${state.index+1}">1</a>
+                   th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
 
                 <div class="tm_clear"></div>
             </dd>
@@ -543,6 +545,23 @@
             $("html:not(:animated),body:not(:animated)").animate({scrollTop: thetop}, 500);
         }
     };
+
+    $(".qk-choice").click(function(){
+        var thename = $(this).attr("name");
+        var theqid = $(this).data("qid");
+        var chval = "";
+
+        $.each($('input[name='+thename+']:checked'), function(idx, item){
+            chval += $(this).val();
+        });
+
+        if(chval!=""){
+            $("#fast_"+theqid).css({"background-color":"#0f0","color":"#000"});
+        }else{
+            $("#fast_"+theqid).css("background-color","none");
+        }
+
+    });
 
 
 </script>
