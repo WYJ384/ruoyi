@@ -76,12 +76,7 @@
                 {
                     field : 'name',
                     title : ' 考试名称',
-                    sortable: true,
-                    formatter: function (value, row, index) {
-                        var actions = [];
-                        actions.push('<a class=" ' + 1 + '" href="#" onclick="$.operate.addSubTab(\''+row.name+'\',\'' +prefix +'/query/'+row.examPaperId + '\')"><i class="fa fa-edit"></i>'+row.name+'</a> ');
-                        return actions.join('');
-                    }
+                    sortable: true
                 },
 
                 {
