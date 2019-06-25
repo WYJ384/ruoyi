@@ -1,0 +1,123 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body>
+
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-exam-edit" th:object="${exam}">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label"> 考试名称：</label>
+            <div class="col-sm-8">
+                <input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>试卷：</label>
+            <div class="col-sm-8">
+                <select id="examPaperId" name="examPaperId" class="form-control select2-hidden-accessible">
+                    <option th:each="paper:${papers}" th:value="${paper.id}"
+                            th:text="${paper.name}" th:selected="${exam.examPaperId eq paper.id}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>试卷批阅人：</label>
+            <div class="col-sm-8">
+                <!--	<select id="readUserId" name="readUserId" class="form-control select2-hidden-accessible" multiple="">
+                        <option th:each="user:${users}" th:value="${user.userId}"
+                                th:text="${user.userName}"></option>
+                    </select>-->
+                <select id="readUserId" name="readUserId" class="form-control select2-hidden-accessible"
+                        multiple="">
+                    <option th:each="user:${users}" th:value="${user.userId}"
+                            th:text="${user.userName}"
+                            th:selected="${exam.readUserId eq user.userId.toString() and user.userId.toString()!='1'}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">有效期开始：</label>
+            <div class="col-sm-8">
+                <input id="beginTime" name="beginTime"
+                       th:value="${#dates.format(exam.beginTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">有效期结束：</label>
+            <div class="col-sm-8">
+                <input id="endTime" name="endTime" th:value="${#dates.format(exam.endTime, 'yyyy-MM-dd HH:mm:ss')}"
+                       class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">单次限时：</label>
+            <div class="col-sm-8">
+                <input id="time" name="time" th:field="*{time}" class="form-control" type="number">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">考试说明：</label>
+            <div class="col-sm-8">
+                <textarea id="description" name="description" th:field="*{description}" class="form-control"></textarea>
+
+            </div>
+        </div>
+        <div class="col-sm-8 select-table table-striped">
+
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </form>
+
+</div>
+
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+<script>
+    var prefix = ctx + "exam/examUser";
+    $(function () {
+        var options = {
+            url: ctx + "exam/examUser" + "/list?examId=" + $("#id").val(),
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "考试人员",
+            showExport: true,
+            columns: [{
+                checkbox: true
+            },
+                // {
+                //     field : 'examId',
+                //     title : 'examId',
+                // },
+                {
+                    field: 'sysUser.userName',
+                    title: '姓名',
+                    sortable: true
+                },
+                {
+                    field: 'sysUser.dept.deptName',
+                    title: '部门',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-danger btn-xs ' + 1 + '" href="#" onclick="$.operate.remove(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    })
+</script>
+</body>
+</html>

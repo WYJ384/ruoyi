@@ -13,10 +13,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateDate"    column="update_date"    />
         <result property="remark"    column="remark"    />
         <result property="delFlag"    column="del_flag"    />
+        <association property="sysUser"    column="user_id" javaType="SysUser" resultMap="SysUserResult" />
     </resultMap>
-	
-	<sql id="selectExamUserVo">
-        select exam_id, user_id, create_by, create_date, update_by, update_date, remark, del_flag from exam_exam_user
+    <resultMap type="SysUser" id="SysUserResult">
+        <id     property="userId"       column="user_id"      />
+        <result property="deptId"       column="dept_id"      />
+        <result property="userName"     column="user_name"    />
+        <association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
+    </resultMap>
+    <resultMap id="deptResult" type="SysDept">
+        <id     property="deptId"   column="dept_id"     />
+        <result property="parentId" column="parent_id"   />
+        <result property="deptName" column="dept_name"   />
+        <result property="orderNum" column="order_num"   />
+        <result property="status"   column="dept_status" />
+    </resultMap>
+    <sql id="selectExamUserVo">
+        SELECT
+            exam_id,
+            exam_exam_user.user_id,
+            exam_exam_user.create_by,
+            exam_exam_user.create_date,
+            exam_exam_user.update_by,
+            exam_exam_user.update_date,
+            exam_exam_user.remark,
+            exam_exam_user.del_flag,
+            sys_user.user_name,
+            sys_user.dept_id,
+            d.dept_name
+        FROM
+            exam_exam_user
+            INNER JOIN sys_user on sys_user.user_id= exam_exam_user.user_id
+            LEFT JOIN sys_dept d on sys_user.dept_id = d.dept_id
     </sql>
 	
     <select id="selectExamUserList" parameterType="ExamUser" resultMap="ExamUserResult">
@@ -77,11 +105,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
 	<delete id="deleteExamUserById" parameterType="String">
-        delete from exam_exam_user where exam_id = #{examId}
+        delete from exam_exam_user where user_id = #{examId}
     </delete>
 	
     <delete id="deleteExamUserByIds" parameterType="String">
-        delete from exam_exam_user where exam_id in 
+        delete from exam_exam_user where user_id in
         <foreach item="examId" collection="array" open="(" separator="," close=")">
             #{examId}
         </foreach>

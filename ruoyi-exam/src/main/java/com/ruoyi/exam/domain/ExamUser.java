@@ -1,5 +1,6 @@
 package com.ruoyi.exam.domain;
 
+import com.ruoyi.system.domain.SysUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -31,8 +32,17 @@ public class ExamUser extends BaseEntity
 	private String remark;
 	/** 删除标记 */
 	private String delFlag;
+	private SysUser sysUser;
 
-	public void setExamId(String examId) 
+	public SysUser getSysUser() {
+		return sysUser;
+	}
+
+	public void setSysUser(SysUser sysUser) {
+		this.sysUser = sysUser;
+	}
+
+	public void setExamId(String examId)
 	{
 		this.examId = examId;
 	}

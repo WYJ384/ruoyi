@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.ruoyi.exam.domain.ExamUser;
 import com.ruoyi.exam.domain.Paper;
+import com.ruoyi.exam.service.IExamUserService;
 import com.ruoyi.exam.service.IPaperService;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
@@ -44,6 +46,10 @@ public class ExamController extends BaseController
 	private IExamService examService;
 	@Autowired
 	private ISysUserService userService;
+
+	@Autowired
+	private IExamUserService examUserService;
+
 	@RequiresPermissions("exam:exam:view")
 	@GetMapping()
 	public String exam()
@@ -99,6 +105,25 @@ public class ExamController extends BaseController
 
 		mmap.addAttribute("id",id);
 		return prefix + "/examUser";
+	}
+	@GetMapping("/query/{id}")
+	public String query(@PathVariable("id") String id, ModelMap mmap)
+	{
+
+		ExamUser examUser=new ExamUser();
+		examUser.setExamId(id);
+		List<ExamUser> examUserList = examUserService.selectExamUserList(examUser);
+		mmap.addAttribute("examUserList",examUserList);
+
+		Exam exam = examService.selectExamById(id);
+		mmap.put("exam", exam);
+		Paper paper=new Paper();
+		List<Paper> papers = paperService.selectPaperList(paper);
+		SysUser sysUser=new SysUser();
+		List<SysUser> users = userService.selectUserList(sysUser);
+		mmap.addAttribute("users",users);
+		mmap.addAttribute("papers",papers);
+		return prefix + "/query";
 	}
 	/**
 	 * 新增保存考试

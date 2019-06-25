@@ -65,30 +65,7 @@
     </form>
 
 </div>
-<div class="container">
-    <div class="row">
-        <h4 style="display: inline-block">指定考试人员：</h4>
 
-        <div class="btn-group-sm pull-right" >
-            <a class="btn btn-success" onclick="addUser()">
-                <i class="fa fa-plus"></i> 添加人员
-            </a>
-
-        </div>
-        <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="exam:examUser:add">
-                <i class="fa fa-plus"></i> 添加
-            </a>
-
-            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="exam:examUser:remove">
-                <i class="fa fa-remove"></i> 删除
-            </a>
-
-        </div>
-        <table id="bootstrap-table" data-mobile-responsive="true"></table>
-    </div>
-
-</div>
 
 <div class="row">
     <div class="col-sm-offset-5 col-sm-10">
@@ -109,16 +86,22 @@
             name: {
                 required: true,
             },
+            time:{
+                required: true,
+            },
+            beginTime:{
+                required: true,
+            },
+            endTime:{
+                required: true,
+            }
+
         },
         focusCleanup: true
     });
 
     function submitHandler() {
         if ($.validate.form()) {
-            if($("#examUser").val()==""){
-                $.modal.msgError("请指定考试人员");
-                return;
-            }
             $.operate.saveTab(prefix + "/add", $('#form-exam-add').serialize());
         }
     }

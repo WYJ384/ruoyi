@@ -90,7 +90,12 @@
 				{
 					field : 'name', 
 					title : ' 考试名称',
-					sortable: true
+					sortable: true,
+					formatter: function (value, row, index) {
+						var actions = [];
+						actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+row.name+'\',\'' +prefix +'/query/'+row.id + '\')"><i class="fa fa-edit"></i>'+row.name+'</a> ');
+						return actions.join('');
+					}
 				},
 				// {
 				// 	field : 'description',
@@ -158,6 +163,7 @@
 		            formatter: function(value, row, index) {
 		            	var actions = [];
 		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+						actions.push('<a class=" ' + editFlag + '" href="#" onclick="addUser(\'' + row.id + '\')"><i class="fa fa-edit"></i>指定考试人员</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
@@ -165,6 +171,9 @@
             };
             $.table.init(options);
         });
+		function addUser(id) {
+			$.modal.open("指定考试人员",prefix+"/examUser/"+id);
+		}
     </script>
 </body>
 </html>
