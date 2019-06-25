@@ -79,7 +79,7 @@
                     sortable: true,
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+row.name+'\',\'' +prefix +'/query/'+row.id + '\')"><i class="fa fa-edit"></i>'+row.name+'</a> ');
+                        actions.push('<a class=" ' + 1 + '" href="#" onclick="$.operate.addSubTab(\''+row.name+'\',\'' +prefix +'/query/'+row.examPaperId + '\')"><i class="fa fa-edit"></i>'+row.name+'</a> ');
                         return actions.join('');
                     }
                 },
@@ -106,7 +106,7 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         // actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        // actions.push('<a class=" ' + editFlag + '" href="#" onclick="addUser(\'' + row.id + '\')"><i class="fa fa-edit"></i>指定考试人员</a> ');
+                        actions.push('<a class=" ' + 1 + '" href="#" onclick="addUser(\'' + row.examPaperId + '\')"><i class="fa fa-edit"></i>考试</a> ');
                         // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
@@ -115,7 +115,8 @@
         $.table.init(options);
     });
     function addUser(id) {
-        $.modal.open("指定考试人员",prefix+"/examUser/"+id);
+        // $.modal.open("指定考试人员",prefix+"/examing/"+id);
+        window.location.href=prefix+"/examing/"+id
     }
 </script>
 </body>

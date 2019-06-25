@@ -6,7 +6,9 @@ import java.util.UUID;
 
 import com.ruoyi.exam.domain.ExamUser;
 import com.ruoyi.exam.domain.Paper;
+import com.ruoyi.exam.domain.PaperQuestion;
 import com.ruoyi.exam.service.IExamUserService;
+import com.ruoyi.exam.service.IPaperQuestionService;
 import com.ruoyi.exam.service.IPaperService;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
@@ -46,7 +48,8 @@ public class ExamController extends BaseController
 	private IExamService examService;
 	@Autowired
 	private ISysUserService userService;
-
+	@Autowired
+	private IPaperQuestionService paperQuestionService;
 	@Autowired
 	private IExamUserService examUserService;
 
@@ -109,8 +112,14 @@ public class ExamController extends BaseController
 	@GetMapping("/myExam")
 	public String myExam(ModelMap mmap)
 	{
-
 		return prefix + "/myExam";
+	}
+	@GetMapping("/examing/{id}")
+	public String examing(@PathVariable("id") String id,ModelMap mmap)
+	{
+		List<PaperQuestion>  paperQuestions = paperQuestionService.selectPaperQuestionById(id);
+		mmap.addAttribute("paperQuestions",paperQuestions);
+		return prefix + "/examing";
 	}
 
 	/**
