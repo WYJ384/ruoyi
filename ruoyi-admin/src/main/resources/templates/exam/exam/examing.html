@@ -5,7 +5,11 @@
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="stylesheet" type="text/css" th:href="@{/exam/skins/default/style.css?v=20170616}">
 
-
+<style type="text/css">
+    .error{
+        color: #f00;
+    }
+</style>
 </head>
 
 <body onbeforeunload="return tm_checkUnsubmit();" marginwidth="0" marginheight="0" style="">
@@ -71,46 +75,51 @@
 
                                                     <li>
                                                         <input th:text="${question.libraryDetail.choiceA}" type="radio"
-                                                               class="validate[required] qk-choice"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="A"
-                                                               th:name="${'single-'+question.questionId}" th:data-qid="${question.questionId}">
+                                                               th:name="${question.questionId}"
+                                                               th:data-qid="${question.questionId}" >
 
                                                     </li>
                                                      <li>
-                                                        <input th:text="${question.libraryDetail.choiceB}" type="radio" class="validate[required] qk-choice"
+                                                        <input th:text="${question.libraryDetail.choiceB}" type="radio"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="B"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'single-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
                                                        <li>
                                                         <input th:text="${question.libraryDetail.choiceC}" type="radio"
-                                                               class="validate[required] qk-choice"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="C"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'single-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
                                                        <li>
-                                                        <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}" th:text="${question.libraryDetail.choiceD}" type="radio"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}"
+                                                               th:text="${question.libraryDetail.choiceD}" type="radio"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="D"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'single-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
 
                                                        <li>
-                                                        <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}" th:text="${question.libraryDetail.choiceE}" type="radio"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}"
+                                                               th:text="${question.libraryDetail.choiceE}" type="radio"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="E"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'single-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
 
                                                     <li>
-                                                        <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" th:text="${question.libraryDetail.choiceF}" type="radio"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}"
+                                                               th:text="${question.libraryDetail.choiceF}" type="radio"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="F"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'single-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
                                                 </ul>
 
@@ -146,48 +155,57 @@
                                                 <ul>
 
                                                     <li>
-                                                        <input th:text="${question.libraryDetail.choiceA}" type="checkbox"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:text="${question.libraryDetail.choiceA}"
+                                                               type="checkbox"
+                                                               class="validate[required] qk-choice single_choice"
                                                                value="A"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'mult-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
 
                                                     </li>
                                                      <li>
-                                                        <input th:text="${question.libraryDetail.choiceB}" type="checkbox" class="validate[required] qk-choice"
+                                                        <input th:text="${question.libraryDetail.choiceB}"
+                                                               type="checkbox" class="validate[required] single_choice qk-choice"
                                                                value="B"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'mult-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
                                                        <li>
-                                                        <input th:text="${question.libraryDetail.choiceC}" type="checkbox"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:text="${question.libraryDetail.choiceC}"
+                                                               type="checkbox"
+                                                               class="validate[required] qk-choice single_choice"
                                                                value="C"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'mult-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
                                                        <li>
-                                                        <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}" th:text="${question.libraryDetail.choiceD}" type="checkbox"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}"
+                                                               th:text="${question.libraryDetail.choiceD}"
+                                                               type="checkbox"
+                                                               class="validate[required] qk-choice single_choice"
                                                                value="D"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'mult-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
 
                                                        <li>
-                                                        <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}" th:text="${question.libraryDetail.choiceE}" type="checkbox"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}"
+                                                               th:text="${question.libraryDetail.choiceE}"
+                                                               type="checkbox"
+                                                               class="validate[required] qk-choice single_choice"
                                                                value="E"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'mult-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
 
                                                     <li>
-                                                        <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" th:text="${question.libraryDetail.choiceF}" type="checkbox"
-                                                               class="validate[required] qk-choice"
+                                                        <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}"
+                                                               th:text="${question.libraryDetail.choiceF}"
+                                                               type="checkbox"
+                                                               class="validate[required] qk-choice single_choice"
                                                                value="F"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'mult-'+question.questionId}">
+                                                               th:name="${question.questionId}" >
                                                     </li>
                                                 </ul>
 
@@ -225,17 +243,18 @@
 
                                                     <li>
                                                         <input th:text="${question.libraryDetail.choiceA}" type="radio"
-                                                               class="validate[required] qk-choice"
+                                                               class="validate[required] single_choice  qk-choice"
                                                                value="A"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'judge-'+question.questionId}">
+                                                               th:name="${question.questionId}">
 
                                                     </li>
                                                      <li>
-                                                        <input th:text="${question.libraryDetail.choiceB}" type="radio" class="validate[required] qk-choice"
+                                                        <input th:text="${question.libraryDetail.choiceB}" type="radio"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="B"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${'judge-'+question.questionId}">
+                                                               th:name="${question.questionId}">
                                                     </li>
 
                                                 </ul>
@@ -248,186 +267,185 @@
                                         </span>
                                 </div>
 
-<!--                                <div class="tm_paper_section">-->
-<!--                                    <h1>填空题</h1>-->
-<!--                                    <span class="span-quick-nav" data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
-<!--                                          id="quick-Q-419eee52-b74b-41ce-86d0-7d994522786c"></span>-->
+                                <!--                                <div class="tm_paper_section">-->
+                                <!--                                    <h1>填空题</h1>-->
+                                <!--                                    <span class="span-quick-nav" data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
+                                <!--                                          id="quick-Q-419eee52-b74b-41ce-86d0-7d994522786c"></span>-->
 
-<!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
-<!--                                           style="table-layout:fixed;">-->
-<!--                                        <thead>-->
-<!--                                        <tr>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"><cite>101</cite></th>-->
-<!--                                            <td class="tm_question_lineheight">-->
+                                <!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
+                                <!--                                           style="table-layout:fixed;">-->
+                                <!--                                        <thead>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"><cite>101</cite></th>-->
+                                <!--                                            <td class="tm_question_lineheight">-->
 
-<!--                                                16、中国共产党的思想路线是 <input type="text"-->
-<!--                                                                      name="Q-419eee52-b74b-41ce-86d0-7d994522786c"-->
-<!--                                                                      data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
-<!--                                                                      class="validate[required] tm_txt qk-blank"> 。-->
+                                <!--                                                16、中国共产党的思想路线是 <input type="text"-->
+                                <!--                                                                      name="Q-419eee52-b74b-41ce-86d0-7d994522786c"-->
+                                <!--                                                                      data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
+                                <!--                                                                      class="validate[required] tm_txt qk-blank"> 。-->
 
-<!--                                            </td>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"-->
-<!--                                                style="text-align:center; font-weight:normal">1分-->
-<!--                                            </th>-->
-<!--                                        </tr>-->
-<!--                                        </thead>-->
-<!--                                        <tbody>-->
-<!--                                        <tr>-->
-<!--                                            <td colspan="3">-->
+                                <!--                                            </td>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"-->
+                                <!--                                                style="text-align:center; font-weight:normal">1分-->
+                                <!--                                            </th>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </thead>-->
+                                <!--                                        <tbody>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <td colspan="3">-->
 
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        </tbody>-->
-<!--                                    </table>-->
+                                <!--                                            </td>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </tbody>-->
+                                <!--                                    </table>-->
 
-<!--                                    <span class="span-quick-nav" data-qid="2010dc7b-5110-45b9-a312-fafeed4928f7"-->
-<!--                                          id="quick-Q-2010dc7b-5110-45b9-a312-fafeed4928f7"></span>-->
+                                <!--                                    <span class="span-quick-nav" data-qid="2010dc7b-5110-45b9-a312-fafeed4928f7"-->
+                                <!--                                          id="quick-Q-2010dc7b-5110-45b9-a312-fafeed4928f7"></span>-->
 
-<!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
-<!--                                           style="table-layout:fixed;">-->
-<!--                                        <thead>-->
-<!--                                        <tr>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"><cite>102</cite></th>-->
-<!--                                            <td class="tm_question_lineheight">-->
+                                <!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
+                                <!--                                           style="table-layout:fixed;">-->
+                                <!--                                        <thead>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"><cite>102</cite></th>-->
+                                <!--                                            <td class="tm_question_lineheight">-->
 
-<!--                                                4、2014年10月23日党的十八大四中全会提出全面推进依法治国的总目标是 <input type="text"-->
-<!--                                                                                             name="Q-2010dc7b-5110-45b9-a312-fafeed4928f7"-->
-<!--                                                                                             data-qid="2010dc7b-5110-45b9-a312-fafeed4928f7"-->
-<!--                                                                                             class="validate[required] tm_txt qk-blank">-->
-<!--                                                。-->
+                                <!--                                                4、2014年10月23日党的十八大四中全会提出全面推进依法治国的总目标是 <input type="text"-->
+                                <!--                                                                                             name="Q-2010dc7b-5110-45b9-a312-fafeed4928f7"-->
+                                <!--                                                                                             data-qid="2010dc7b-5110-45b9-a312-fafeed4928f7"-->
+                                <!--                                                                                             class="validate[required] tm_txt qk-blank">-->
+                                <!--                                                。-->
 
-<!--                                            </td>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"-->
-<!--                                                style="text-align:center; font-weight:normal">1分-->
-<!--                                            </th>-->
-<!--                                        </tr>-->
-<!--                                        </thead>-->
-<!--                                        <tbody>-->
-<!--                                        <tr>-->
-<!--                                            <td colspan="3">-->
+                                <!--                                            </td>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"-->
+                                <!--                                                style="text-align:center; font-weight:normal">1分-->
+                                <!--                                            </th>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </thead>-->
+                                <!--                                        <tbody>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <td colspan="3">-->
 
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        </tbody>-->
-<!--                                    </table>-->
+                                <!--                                            </td>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </tbody>-->
+                                <!--                                    </table>-->
 
 
-<!--                                </div>-->
+                                <!--                                </div>-->
 
-<!--                                <div class="tm_paper_section">-->
-<!--                                    <h1>问答题</h1>-->
-<!--                                    <span class="span-quick-nav" data-qid="eeb2eb88-97f6-49cc-b009-f159ebde36d8"-->
-<!--                                          id="quick-Q-eeb2eb88-97f6-49cc-b009-f159ebde36d8"></span>-->
-<!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
-<!--                                           style="table-layout:fixed;">-->
-<!--                                        <thead>-->
-<!--                                        <tr>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"><cite>126</cite></th>-->
-<!--                                            <td class="tm_question_lineheight">-->
+                                <!--                                <div class="tm_paper_section">-->
+                                <!--                                    <h1>问答题</h1>-->
+                                <!--                                    <span class="span-quick-nav" data-qid="eeb2eb88-97f6-49cc-b009-f159ebde36d8"-->
+                                <!--                                          id="quick-Q-eeb2eb88-97f6-49cc-b009-f159ebde36d8"></span>-->
+                                <!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
+                                <!--                                           style="table-layout:fixed;">-->
+                                <!--                                        <thead>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"><cite>126</cite></th>-->
+                                <!--                                            <td class="tm_question_lineheight">-->
 
-<!--                                                1、中国共产党的性质？-->
+                                <!--                                                1、中国共产党的性质？-->
 
-<!--                                            </td>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"-->
-<!--                                                style="text-align:center; font-weight:normal">1分-->
-<!--                                            </th>-->
-<!--                                        </tr>-->
-<!--                                        </thead>-->
-<!--                                        <tbody>-->
-<!--                                        <tr>-->
-<!--                                            <td colspan="3">-->
+                                <!--                                            </td>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"-->
+                                <!--                                                style="text-align:center; font-weight:normal">1分-->
+                                <!--                                            </th>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </thead>-->
+                                <!--                                        <tbody>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <td colspan="3">-->
 
-<!--                                                <div class="tm_marleft20"><textarea rows="5" cols="80"-->
-<!--                                                                                    data-qid="eeb2eb88-97f6-49cc-b009-f159ebde36d8"-->
-<!--                                                                                    name="Q-eeb2eb88-97f6-49cc-b009-f159ebde36d8"-->
-<!--                                                                                    class="validate[required] tm_txtx qk-txt"></textarea>-->
-<!--                                                </div>-->
+                                <!--                                                <div class="tm_marleft20"><textarea rows="5" cols="80"-->
+                                <!--                                                                                    data-qid="eeb2eb88-97f6-49cc-b009-f159ebde36d8"-->
+                                <!--                                                                                    name="Q-eeb2eb88-97f6-49cc-b009-f159ebde36d8"-->
+                                <!--                                                                                    class="validate[required] tm_txtx qk-txt"></textarea>-->
+                                <!--                                                </div>-->
 
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        </tbody>-->
-<!--                                    </table>-->
+                                <!--                                            </td>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </tbody>-->
+                                <!--                                    </table>-->
 
-<!--                                    <span class="span-quick-nav" data-qid="ea81a38a-df69-48c7-b33d-37f552af3d02"-->
-<!--                                          id="quick-Q-ea81a38a-df69-48c7-b33d-37f552af3d02"></span>-->
+                                <!--                                    <span class="span-quick-nav" data-qid="ea81a38a-df69-48c7-b33d-37f552af3d02"-->
+                                <!--                                          id="quick-Q-ea81a38a-df69-48c7-b33d-37f552af3d02"></span>-->
 
-<!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
-<!--                                           style="table-layout:fixed;">-->
-<!--                                        <thead>-->
-<!--                                        <tr>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"><cite>127</cite></th>-->
-<!--                                            <td class="tm_question_lineheight">-->
+                                <!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
+                                <!--                                           style="table-layout:fixed;">-->
+                                <!--                                        <thead>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"><cite>127</cite></th>-->
+                                <!--                                            <td class="tm_question_lineheight">-->
 
-<!--                                                3、党的十八大提出的两个“五位一体”，内容是什么？-->
+                                <!--                                                3、党的十八大提出的两个“五位一体”，内容是什么？-->
 
-<!--                                            </td>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"-->
-<!--                                                style="text-align:center; font-weight:normal">1分-->
-<!--                                            </th>-->
-<!--                                        </tr>-->
-<!--                                        </thead>-->
-<!--                                        <tbody>-->
-<!--                                        <tr>-->
-<!--                                            <td colspan="3">-->
+                                <!--                                            </td>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"-->
+                                <!--                                                style="text-align:center; font-weight:normal">1分-->
+                                <!--                                            </th>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </thead>-->
+                                <!--                                        <tbody>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <td colspan="3">-->
 
-<!--                                                <div class="tm_marleft20"><textarea rows="5" cols="80"-->
-<!--                                                                                    data-qid="ea81a38a-df69-48c7-b33d-37f552af3d02"-->
-<!--                                                                                    name="Q-ea81a38a-df69-48c7-b33d-37f552af3d02"-->
-<!--                                                                                    class="validate[required] tm_txtx qk-txt"></textarea>-->
-<!--                                                </div>-->
+                                <!--                                                <div class="tm_marleft20"><textarea rows="5" cols="80"-->
+                                <!--                                                                                    data-qid="ea81a38a-df69-48c7-b33d-37f552af3d02"-->
+                                <!--                                                                                    name="Q-ea81a38a-df69-48c7-b33d-37f552af3d02"-->
+                                <!--                                                                                    class="validate[required] tm_txtx qk-txt"></textarea>-->
+                                <!--                                                </div>-->
 
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        </tbody>-->
-<!--                                    </table>-->
+                                <!--                                            </td>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </tbody>-->
+                                <!--                                    </table>-->
 
-<!--                                    <span class="span-quick-nav" data-qid="408cc92b-4e1d-4b8d-b60e-04639ac89387"-->
-<!--                                          id="quick-Q-408cc92b-4e1d-4b8d-b60e-04639ac89387"></span>-->
+                                <!--                                    <span class="span-quick-nav" data-qid="408cc92b-4e1d-4b8d-b60e-04639ac89387"-->
+                                <!--                                          id="quick-Q-408cc92b-4e1d-4b8d-b60e-04639ac89387"></span>-->
 
-<!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
-<!--                                           style="table-layout:fixed;">-->
-<!--                                        <thead>-->
-<!--                                        <tr>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"><cite>128</cite></th>-->
-<!--                                            <td class="tm_question_lineheight">-->
+                                <!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
+                                <!--                                           style="table-layout:fixed;">-->
+                                <!--                                        <thead>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"><cite>128</cite></th>-->
+                                <!--                                            <td class="tm_question_lineheight">-->
 
-<!--                                                2、党的基本路线？-->
+                                <!--                                                2、党的基本路线？-->
 
-<!--                                            </td>-->
-<!--                                            <th valign="top" class="tm_question_lineheight"-->
-<!--                                                style="text-align:center; font-weight:normal">1分-->
-<!--                                            </th>-->
-<!--                                        </tr>-->
-<!--                                        </thead>-->
-<!--                                        <tbody>-->
-<!--                                        <tr>-->
-<!--                                            <td colspan="3">-->
+                                <!--                                            </td>-->
+                                <!--                                            <th valign="top" class="tm_question_lineheight"-->
+                                <!--                                                style="text-align:center; font-weight:normal">1分-->
+                                <!--                                            </th>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </thead>-->
+                                <!--                                        <tbody>-->
+                                <!--                                        <tr>-->
+                                <!--                                            <td colspan="3">-->
 
-<!--                                                <div class="tm_marleft20"><textarea rows="5" cols="80"-->
-<!--                                                                                    data-qid="408cc92b-4e1d-4b8d-b60e-04639ac89387"-->
-<!--                                                                                    name="Q-408cc92b-4e1d-4b8d-b60e-04639ac89387"-->
-<!--                                                                                    class="validate[required] tm_txtx qk-txt"></textarea>-->
-<!--                                                </div>-->
+                                <!--                                                <div class="tm_marleft20"><textarea rows="5" cols="80"-->
+                                <!--                                                                                    data-qid="408cc92b-4e1d-4b8d-b60e-04639ac89387"-->
+                                <!--                                                                                    name="Q-408cc92b-4e1d-4b8d-b60e-04639ac89387"-->
+                                <!--                                                                                    class="validate[required] tm_txtx qk-txt"></textarea>-->
+                                <!--                                                </div>-->
 
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        </tbody>-->
-<!--                                    </table>-->
+                                <!--                                            </td>-->
+                                <!--                                        </tr>-->
+                                <!--                                        </tbody>-->
+                                <!--                                    </table>-->
 
-<!--                                </div>-->
+                                <!--                                </div>-->
 
                             </div>
                             <!-- /tm_paper_body -->
 
                             <div class="tm_adm_paper_foot">
                                 <button class="tm_btn tm_btn_primary" type="button"
-                                        onclick="tmUserPaper.submitPaper();">提交
+                                        onclick="submitPaper();">提交
                                 </button>
                                 <button class="tm_btn" type="button" onclick="javascript:history.go(-1);">取消</button>
                             </div>
 
-                            <input type="hidden" name="e_pid" value="4aced2c9-9829-460e-97e3-bb9e4bf9b7f6">
-                            <input type="hidden" name="e_uid" value="6fcb9dcd-702c-4a21-8a0e-6ab69a7d82c4">
+
 
                         </div>
                     </form>
@@ -456,9 +474,10 @@
         <dl>
             <dt>选择题</dt>
             <dd>
-                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '1'}" href="javascript:void(0);"
+                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '1'}"
+                   href="javascript:void(0);"
                    th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
-                    th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
+                   th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
 
                 <div class="tm_clear"></div>
             </dd>
@@ -466,9 +485,10 @@
         <dl>
             <dt>多选题</dt>
             <dd>
-                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '2'}" href="javascript:void(0);"
+                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '2'}"
+                   href="javascript:void(0);"
                    th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
-                    th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
+                   th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
 
                 <div class="tm_clear"></div>
             </dd>
@@ -476,7 +496,8 @@
         <dl>
             <dt>判断题</dt>
             <dd>
-                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '4'}" href="javascript:void(0);"
+                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '4'}"
+                   href="javascript:void(0);"
                    th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
                    th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
 
@@ -485,38 +506,38 @@
         </dl>
 
 
-<!--        <dl>-->
-<!--            <dt>填空题</dt>-->
-<!--            <dd>-->
-<!--                <a href="javascript:void(0);"-->
-<!--                   onclick="tmUserPaper.moveToQuestion('419eee52-b74b-41ce-86d0-7d994522786c')"-->
-<!--                   id="fast_419eee52-b74b-41ce-86d0-7d994522786c">101</a>-->
-<!--                <a href="javascript:void(0);"-->
-<!--                   onclick="tmUserPaper.moveToQuestion('2010dc7b-5110-45b9-a312-fafeed4928f7')"-->
-<!--                   id="fast_2010dc7b-5110-45b9-a312-fafeed4928f7">102</a>-->
-<!--                <div class="tm_clear"></div>-->
-<!--            </dd>-->
-<!--        </dl>-->
+        <!--        <dl>-->
+        <!--            <dt>填空题</dt>-->
+        <!--            <dd>-->
+        <!--                <a href="javascript:void(0);"-->
+        <!--                   onclick="tmUserPaper.moveToQuestion('419eee52-b74b-41ce-86d0-7d994522786c')"-->
+        <!--                   id="fast_419eee52-b74b-41ce-86d0-7d994522786c">101</a>-->
+        <!--                <a href="javascript:void(0);"-->
+        <!--                   onclick="tmUserPaper.moveToQuestion('2010dc7b-5110-45b9-a312-fafeed4928f7')"-->
+        <!--                   id="fast_2010dc7b-5110-45b9-a312-fafeed4928f7">102</a>-->
+        <!--                <div class="tm_clear"></div>-->
+        <!--            </dd>-->
+        <!--        </dl>-->
 
-<!--        <dl>-->
-<!--            <dt>问答题</dt>-->
-<!--            <dd>-->
-<!--                <a href="javascript:void(0);"-->
-<!--                   onclick="tmUserPaper.moveToQuestion('eeb2eb88-97f6-49cc-b009-f159ebde36d8')"-->
-<!--                   id="fast_eeb2eb88-97f6-49cc-b009-f159ebde36d8">126</a>-->
-<!--                <a href="javascript:void(0);"-->
-<!--                   onclick="tmUserPaper.moveToQuestion('ea81a38a-df69-48c7-b33d-37f552af3d02')"-->
-<!--                   id="fast_ea81a38a-df69-48c7-b33d-37f552af3d02">127</a>-->
-<!--                <a href="javascript:void(0);"-->
-<!--                   onclick="tmUserPaper.moveToQuestion('408cc92b-4e1d-4b8d-b60e-04639ac89387')"-->
-<!--                   id="fast_408cc92b-4e1d-4b8d-b60e-04639ac89387">128</a>-->
-<!--                <div class="tm_clear"></div>-->
-<!--            </dd>-->
-<!--        </dl>-->
+        <!--        <dl>-->
+        <!--            <dt>问答题</dt>-->
+        <!--            <dd>-->
+        <!--                <a href="javascript:void(0);"-->
+        <!--                   onclick="tmUserPaper.moveToQuestion('eeb2eb88-97f6-49cc-b009-f159ebde36d8')"-->
+        <!--                   id="fast_eeb2eb88-97f6-49cc-b009-f159ebde36d8">126</a>-->
+        <!--                <a href="javascript:void(0);"-->
+        <!--                   onclick="tmUserPaper.moveToQuestion('ea81a38a-df69-48c7-b33d-37f552af3d02')"-->
+        <!--                   id="fast_ea81a38a-df69-48c7-b33d-37f552af3d02">127</a>-->
+        <!--                <a href="javascript:void(0);"-->
+        <!--                   onclick="tmUserPaper.moveToQuestion('408cc92b-4e1d-4b8d-b60e-04639ac89387')"-->
+        <!--                   id="fast_408cc92b-4e1d-4b8d-b60e-04639ac89387">128</a>-->
+        <!--                <div class="tm_clear"></div>-->
+        <!--            </dd>-->
+        <!--        </dl>-->
 
     </div>
     <div id="div_processor_ops">
-        <input type="button" value="提交" class="tm_btn" onclick="tmUserPaper.submitPaper();">
+        <input type="button" value="提交" class="tm_btn" onclick="submitPaper();">
     </div>
 </div>
 <div th:include="include :: footer"></div>
@@ -546,19 +567,19 @@
         }
     };
 
-    $(".qk-choice").click(function(){
+    $(".qk-choice").click(function () {
         var thename = $(this).attr("name");
         var theqid = $(this).data("qid");
         var chval = "";
 
-        $.each($('input[name='+thename+']:checked'), function(idx, item){
+        $.each($('input[name=' + thename + ']:checked'), function (idx, item) {
             chval += $(this).val();
         });
 
-        if(chval!=""){
-            $("#fast_"+theqid).css({"background-color":"#0f0","color":"#000"});
-        }else{
-            $("#fast_"+theqid).css("background-color","none");
+        if (chval != "") {
+            $("#fast_" + theqid).css({"background-color": "#0f0", "color": "#000"});
+        } else {
+            $("#fast_" + theqid).css("background-color", "none");
         }
 
     });
@@ -571,8 +592,80 @@
     function tm_checkUnsubmit() {
 
     }
+    function singleValid(name) {
+        var flag=true;
+        var len_a886f197e97c492b902542efa480caf7= $("input[name="+name+"]").length;
+        var count_a886f197e97c492b902542efa480caf7=0;
+        $("input[name="+name+"]").each(function (a,b) {
+            if(b.checked==false){
+                count_a886f197e97c492b902542efa480caf7++;
+            }
+        });
+        if(len_a886f197e97c492b902542efa480caf7==count_a886f197e97c492b902542efa480caf7){
+            $("#fast_"+name ).css({"background-color": "#f00", "color": "#000"});
+            flag=false;
+        }
+        return flag;
+    }
+    function submitPaper() {
+        var flag=true;
+        $(".single_choice").each(function (index,ele) {
+            flag=singleValid($(ele).attr("name"))
+        });
+        if(flag){
+            console.log($("#form_paper_detail").serialize())
+            alert()
+        }
+
+
+        // $("#form_paper_detail").attr("action", "${tm_base}user/paper/submitPaper.do");
+        // $("#form_paper_detail").submit();
+        // var wcm = window.confirm('<tomtag:Message key="txt.user.paper.start.submit" />');
+        // if (!wcm) {
+        //     return;
+        // }
+        //
+        // var formcheck = $("#form_paper_detail").validationEngine('validate', {
+        //     validateNonVisibleFields: true,
+        //     showPrompts: false
+        // });
+        // if (formcheck) {
+        //     $(".tm_btn").attr("disabled", "disabled");
+        //     $(".tm_btn").val('<tomtag:Message key="txt.user.paper.tips.submiting" />');
+        //
+        //     window.onbeforeunload = null;
+        //     tm_page_confirm = true;
+        //
+        //
+        //
+        // } else {
+        //     var wcm = window.confirm('<tomtag:Message key="message.user.paper.submit.notfinish" />');
+        //     if (!wcm) {
+        //         return;
+        //     }
+        //
+        //     $(".tm_btn").attr("disabled", "disabled");
+        //     $(".tm_btn").val('<tomtag:Message key="txt.user.paper.tips.submiting" />');
+        //
+        //     window.onbeforeunload = null;
+        //     tm_page_confirm = true;
+        //
+        //     $("#form_paper_detail").attr("action", "${tm_base}user/paper/submitPaper.do");
+        //     $("#form_paper_detail").submit();
+        //
+        // }
+    }
 
     // document.oncontextmenu= function(){return false;}
+    $("#form_paper_detail").validate({
+        rules: {
+            name: {
+                required: true,
+            }
+
+        },
+        focusCleanup: true
+    });
 
 </script>
 </body>
