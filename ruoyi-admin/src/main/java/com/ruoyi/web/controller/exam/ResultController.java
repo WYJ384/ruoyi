@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.exam.domain.Exam;
 import com.ruoyi.exam.domain.LibraryDetail;
+import com.ruoyi.exam.domain.PaperQuestion;
+import com.ruoyi.exam.service.IExamService;
 import com.ruoyi.exam.service.ILibraryDetailService;
+import com.ruoyi.exam.service.IPaperQuestionService;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +45,10 @@ public class ResultController extends BaseController {
     private ILibraryDetailService libraryDetailService;
     @Autowired
     private IResultService resultService;
-
+    @Autowired
+    private IExamService examService;
+    @Autowired
+    private IPaperQuestionService paperQuestionService;
     @RequiresPermissions("exam:result:view")
     @GetMapping()
     public String result() {
@@ -89,8 +96,10 @@ public class ResultController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Result result, HttpServletRequest request,String examId) {
+        Exam exam = examService.selectExamById(examId);
         String strResult = "";
         Map<String, String[]> parameterMap = request.getParameterMap();
+        Double score=0D;
         int i=0;
         for (String key : parameterMap.keySet()) {
             LibraryDetail libraryDetail = libraryDetailService.selectLibraryDetailById(key);
@@ -101,6 +110,16 @@ public class ResultController extends BaseController {
             String answer = libraryDetail.getAnswer();
             //用户答案
             String userAnswer = StringUtils.join(parameterMap.get(key));
+
+            if(answer.equals(userAnswer)){
+                PaperQuestion paperQuestion=new PaperQuestion();
+                paperQuestion.setQuestionId(key);
+                paperQuestion.setExamPaperId(exam.getExamPaperId());
+                List<PaperQuestion> paperQuestions = paperQuestionService.selectPaperQuestionList(paperQuestion);
+                PaperQuestion question = paperQuestions.get(0);
+                score+=Double.valueOf(question.getRemark4());
+            }
+
             strResult+=key+":"+userAnswer;
             if(i<parameterMap.size()-2){
                strResult+=",";
@@ -110,6 +129,7 @@ public class ResultController extends BaseController {
         result.setUserId(ShiroUtils.getUserId()+"");
         result.setCreateBy(ShiroUtils.getUserId()+"");
         result.setExamId(examId);
+        result.setScore(score);
         result.setQuestionAnwser(strResult);
 		resultService.insertResult(result);
         return toAjax(1);
