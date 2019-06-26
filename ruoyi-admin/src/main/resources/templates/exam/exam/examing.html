@@ -667,6 +667,60 @@
         focusCleanup: true
     });
 
+    var tm_cost_seconds = 0;
+    var tm_maxtime = eval("1") * 60;
+    var tm_timer = null;
+    tm_timer = setInterval(function(){
+        tm_countdown();
+    }, 1000);
+    function tm_fn_formatSeconds(value) {
+        var theTime = parseInt(value);// 秒
+        var theTime1 = 0;// 分
+        var theTime2 = 0;// 小时
+        // alert(theTime);
+        if(theTime > 60) {
+            theTime1 = parseInt(theTime/60);
+            theTime = parseInt(theTime%60);
+            // alert(theTime1+"-"+theTime);
+            if(theTime1 > 60) {
+                theTime2 = parseInt(theTime1/60);
+                theTime1 = parseInt(theTime1%60);
+            }
+        }
+        var the_second = parseInt(theTime) < 10? "0" + theTime : theTime;
+        var the_minute = parseInt(theTime1) < 10? "0" + theTime1 : theTime1;
+        var result = theTime2 + ":" + the_minute + ":" + the_second;
+        return result;
+    }
+
+    function tm_countdown(){
+        //记录消耗的时间
+        tm_cost_seconds = tm_cost_seconds + 1;
+        $("#t_timecost").val(parseInt(tm_cost_seconds/60));
+
+        //倒计时牌
+        var tm_msg;
+        if(tm_maxtime>0){
+            tm_msg = "<span class='tm_label'>"+ tm_fn_formatSeconds(tm_maxtime) + "</span>";
+            if(tm_maxtime <= 30){
+                var ss = '<tomtag:Message key="txt.user.paper.tips.submiting" />';
+                tm_msg += "<br/><font color='red'><b>"+ss+"</b></font>";
+            }
+
+            $("#div_processor_timer").html(tm_msg);
+
+            if(tm_maxtime == 5*60) {
+                alert('<tomtag:Message key="txt.user.paper.tips.five_minute_warn" />');
+            }
+
+            --tm_maxtime;
+
+        }else{
+            clearInterval(tm_timer);
+            $("#div_processor_timer").html('<tomtag:Message key="txt.user.paper.tips.time_is_up" />');
+            submitPaper()
+        }
+    }
 </script>
 </body>
 
