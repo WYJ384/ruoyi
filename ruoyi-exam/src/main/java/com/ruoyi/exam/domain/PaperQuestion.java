@@ -44,6 +44,7 @@ public class PaperQuestion extends BaseEntity
 	/** 排序 */
 	private Integer orderNum;
 
+
 	public Integer getOrderNum() {
 		return orderNum;
 	}

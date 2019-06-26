@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.ruoyi.exam.domain.Library;
 import com.ruoyi.exam.domain.PaperQuestion;
+import com.ruoyi.exam.domain.PaperScore;
 import com.ruoyi.exam.service.ILibraryService;
 import com.ruoyi.exam.service.IPaperQuestionService;
 import com.ruoyi.framework.util.ShiroUtils;
@@ -112,7 +113,38 @@ public class PaperController extends BaseController
 		mmap.put("paper", paper);
 	    return prefix + "/edit";
 	}
-	
+	/**
+	 * 设置分数
+	 */
+	@GetMapping("/settingScore/{id}")
+	public String settingScore(@PathVariable("id") String id, ModelMap mmap)
+	{
+		Paper paper = paperService.selectPaperById(id);
+		mmap.put("paper", paper);
+		return prefix + "/settingScore";
+	}
+	@Log(title = "修改分值", businessType = BusinessType.UPDATE)
+	@PostMapping("/settingScore")
+	@ResponseBody
+	public AjaxResult settingScore(PaperScore paperScore,PaperQuestion paperQuestion)
+	{
+		paperQuestion.setRemark4(paperScore.getSingeChoice());
+		paperQuestion.setRemark3("1");
+		paperQuestionService.updatePaperQuestionScore(paperQuestion);
+		paperQuestion.setRemark4(paperScore.getMultChoice());
+		paperQuestion.setRemark3("2");
+		paperQuestionService.updatePaperQuestionScore(paperQuestion);
+		paperQuestion.setRemark4(paperScore.getBlank());
+		paperQuestion.setRemark3("3");
+		paperQuestionService.updatePaperQuestionScore(paperQuestion);
+		paperQuestion.setRemark4(paperScore.getJudge());
+		paperQuestion.setRemark3("4");
+		paperQuestionService.updatePaperQuestionScore(paperQuestion);
+		paperQuestion.setRemark4(paperScore.getQa());
+		paperQuestion.setRemark3("5");
+		paperQuestionService.updatePaperQuestionScore(paperQuestion);
+		return toAjax(1);
+	}
 	/**
 	 * 修改保存试卷
 	 */

@@ -29,6 +29,7 @@
                               style="background: #fff;color: rgb(255,102,0)">判断题</span>
                         <h4 style="display: inline-block"
                             th:text="${(questionStat.index+1)+'.'+question.libraryDetail.title}"></h4>
+                        <h4 style="display: inline-block" th:text="${question.remark4+'（分）'}"></h4>
                     </div>
                     <span th:if="${question.libraryDetail.libType eq '1'}"></span>
                     <ul th:if="${question.libraryDetail.libType eq '1'}">

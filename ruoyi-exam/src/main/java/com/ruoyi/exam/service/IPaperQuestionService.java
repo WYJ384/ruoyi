@@ -42,6 +42,7 @@ public interface IPaperQuestionService
      * @return 结果
      */
 	public int updatePaperQuestion(PaperQuestion paperQuestion);
+	public int updatePaperQuestionScore(PaperQuestion paperQuestion);
 		
 	/**
      * 删除试卷-试题信息

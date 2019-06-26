@@ -68,6 +68,11 @@ public class PaperQuestionServiceImpl implements IPaperQuestionService
 	    return paperQuestionMapper.updatePaperQuestion(paperQuestion);
 	}
 
+	@Override
+	public int updatePaperQuestionScore(PaperQuestion paperQuestion) {
+		return  paperQuestionMapper.updatePaperQuestionScore(paperQuestion);
+	}
+
 	/**
      * 删除试卷-试题对象
      * 

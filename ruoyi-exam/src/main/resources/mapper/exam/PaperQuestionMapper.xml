@@ -150,6 +150,18 @@ INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
         </trim>
         where exam_paper_id = #{examPaperId}
     </update>
+    <update id="updatePaperQuestionScore" parameterType="PaperQuestion">
+	  UPDATE exam_paper_question
+        SET remark4 = #{remark4} WHERE question_id IN (
+		select question_id from (SELECT
+			paper.question_id
+		FROM
+			exam_paper_question paper
+		INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
+		WHERE
+			paper.exam_paper_id = #{examPaperId}
+		AND lib_type = #{remark3}) as a)
+    </update>
 
 	<delete id="deletePaperQuestionById" parameterType="String">
         delete from exam_paper_question where exam_paper_id = #{examPaperId}
