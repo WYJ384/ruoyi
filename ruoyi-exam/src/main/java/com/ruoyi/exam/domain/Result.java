@@ -9,7 +9,7 @@ import java.util.Date;
  * 考试成绩表 exam_result
  * 
  * @author ruoyi
- * @date 2019-06-25
+ * @date 2019-06-26
  */
 public class Result extends BaseEntity
 {
@@ -22,7 +22,7 @@ public class Result extends BaseEntity
 	/**  */
 	private String userId;
 	/** 成绩 */
-	private String score;
+	private Double score;
 	/** 创建者 */
 	private String createBy;
 	/** 创建时间 */
@@ -65,12 +65,12 @@ public class Result extends BaseEntity
 	{
 		return userId;
 	}
-	public void setScore(String score) 
+	public void setScore(Double score) 
 	{
 		this.score = score;
 	}
 
-	public String getScore() 
+	public Double getScore() 
 	{
 		return score;
 	}

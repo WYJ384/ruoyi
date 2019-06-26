@@ -12,7 +12,7 @@ import com.ruoyi.common.core.text.Convert;
  * 考试成绩 服务层实现
  * 
  * @author ruoyi
- * @date 2019-06-25
+ * @date 2019-06-26
  */
 @Service
 public class ResultServiceImpl implements IResultService 

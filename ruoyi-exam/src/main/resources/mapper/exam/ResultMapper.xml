@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="examId != null  and examId != '' "> and exam_id = #{examId}</if>
              <if test="questionId != null  and questionId != '' "> and question_id = #{questionId}</if>
              <if test="userId != null  and userId != '' "> and user_id = #{userId}</if>
-             <if test="score != null  and score != '' "> and score = #{score}</if>
+             <if test="score != null "> and score = #{score}</if>
              <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
              <if test="createDate != null "> and create_date = #{createDate}</if>
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="examId != null  and examId != ''  ">exam_id,</if>
 			<if test="questionId != null  and questionId != ''  ">question_id,</if>
 			<if test="userId != null  and userId != ''  ">user_id,</if>
-			<if test="score != null  and score != ''  ">score,</if>
+			<if test="score != null  ">score,</if>
 			<if test="createBy != null  and createBy != ''  ">create_by,</if>
 			<if test="createDate != null  ">create_date,</if>
 			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="examId != null  and examId != ''  ">#{examId},</if>
 			<if test="questionId != null  and questionId != ''  ">#{questionId},</if>
 			<if test="userId != null  and userId != ''  ">#{userId},</if>
-			<if test="score != null  and score != ''  ">#{score},</if>
+			<if test="score != null  ">#{score},</if>
 			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
 			<if test="createDate != null  ">#{createDate},</if>
 			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="questionId != null  and questionId != ''  ">question_id = #{questionId},</if>
             <if test="userId != null  and userId != ''  ">user_id = #{userId},</if>
-            <if test="score != null  and score != ''  ">score = #{score},</if>
+            <if test="score != null  ">score = #{score},</if>
             <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
             <if test="createDate != null  ">create_date = #{createDate},</if>
             <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>

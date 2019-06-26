@@ -10,45 +10,17 @@
 				<form id="formId">
 					<div class="select-list">
 						<ul>
-							<li>
-								试题：<input type="text" name="questionId"/>
-							</li>
+
 
 							<li>
-								：<input type="text" name="userId"/>
+								用户：<input type="text" name="userId"/>
 							</li>
 
 							<li>
 								成绩：<input type="text" name="score"/>
 							</li>
 
-							<li>
-								创建者：<input type="text" name="createBy"/>
-							</li>
 
-							<li>
-								创建时间：<input type="text" name="createDate"/>
-							</li>
-
-							<li>
-								更新者：<input type="text" name="updateBy"/>
-							</li>
-
-							<li>
-								更新时间：<input type="text" name="updateDate"/>
-							</li>
-
-							<li>
-								备注信息：<input type="text" name="remark"/>
-							</li>
-
-							<li>
-								删除标记：<input type="text" name="delFlag"/>
-							</li>
-
-							<li>
-								考生答案：<input type="text" name="questionAnwser"/>
-							</li>
 
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -98,17 +70,16 @@
 		        },
 				{
 					field : 'examId', 
-					title : '',
-					visible: false
+					title : '考试',
 				},
-				{
-					field : 'questionId', 
-					title : '试题',
-					sortable: true
-				},
+				// {
+				// 	field : 'questionId',
+				// 	title : '试题',
+				// 	sortable: true
+				// },
 				{
 					field : 'userId', 
-					title : '',
+					title : '用户',
 					sortable: true
 				},
 				{
@@ -116,41 +87,41 @@
 					title : '成绩',
 					sortable: true
 				},
-				{
-					field : 'createBy', 
-					title : '创建者',
-					sortable: true
-				},
-				{
-					field : 'createDate', 
-					title : '创建时间',
-					sortable: true
-				},
-				{
-					field : 'updateBy', 
-					title : '更新者',
-					sortable: true
-				},
-				{
-					field : 'updateDate', 
-					title : '更新时间',
-					sortable: true
-				},
-				{
-					field : 'remark', 
-					title : '备注信息',
-					sortable: true
-				},
-				{
-					field : 'delFlag', 
-					title : '删除标记',
-					sortable: true
-				},
-				{
-					field : 'questionAnwser', 
-					title : '考生答案',
-					sortable: true
-				},
+				// {
+				// 	field : 'createBy',
+				// 	title : '创建者',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'createDate',
+				// 	title : '创建时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateBy',
+				// 	title : '更新者',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'updateDate',
+				// 	title : '更新时间',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'remark',
+				// 	title : '备注信息',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'delFlag',
+				// 	title : '删除标记',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'questionAnwser',
+				// 	title : '考生答案',
+				// 	sortable: true
+				// },
 		        {
 		            title: '操作',
 		            align: 'center',

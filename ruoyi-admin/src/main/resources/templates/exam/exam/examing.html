@@ -27,21 +27,12 @@
                     <form method="post" id="form_paper_detail">
                         <div class="tm_paper">
                             <div class="tm_paper_head">
-                                <h1>2019入党积极分子考试</h1>
-
-                                <h2 style="background:#ddd; padding:5px 0;">
-                                    11
-                                </h2>
-
+                                <h1 th:text="${exam.name}"></h1>
                                 <h2>
-                                    <b>时间设定</b> :
-                                    2019-06-09 20:02:00 --
-                                    2019-06-28 20:02:00 &nbsp;&nbsp;
-                                    <b>考试时长</b> : 90 分钟
+                                    <b>考试时长</b> : <span th:text="${exam.time}"></span> 分钟
                                 </h2>
                                 <h3>
                                     <b>卷面总分</b> : 128
-                                    &nbsp;&nbsp;
                                     <b>及格分数</b> : 77
                                 </h3>
                             </div>
@@ -614,46 +605,8 @@
         });
         if(flag){
             console.log($("#form_paper_detail").serialize())
-            alert()
+            submitHandler();
         }
-
-
-        // $("#form_paper_detail").attr("action", "${tm_base}user/paper/submitPaper.do");
-        // $("#form_paper_detail").submit();
-        // var wcm = window.confirm('<tomtag:Message key="txt.user.paper.start.submit" />');
-        // if (!wcm) {
-        //     return;
-        // }
-        //
-        // var formcheck = $("#form_paper_detail").validationEngine('validate', {
-        //     validateNonVisibleFields: true,
-        //     showPrompts: false
-        // });
-        // if (formcheck) {
-        //     $(".tm_btn").attr("disabled", "disabled");
-        //     $(".tm_btn").val('<tomtag:Message key="txt.user.paper.tips.submiting" />');
-        //
-        //     window.onbeforeunload = null;
-        //     tm_page_confirm = true;
-        //
-        //
-        //
-        // } else {
-        //     var wcm = window.confirm('<tomtag:Message key="message.user.paper.submit.notfinish" />');
-        //     if (!wcm) {
-        //         return;
-        //     }
-        //
-        //     $(".tm_btn").attr("disabled", "disabled");
-        //     $(".tm_btn").val('<tomtag:Message key="txt.user.paper.tips.submiting" />');
-        //
-        //     window.onbeforeunload = null;
-        //     tm_page_confirm = true;
-        //
-        //     $("#form_paper_detail").attr("action", "${tm_base}user/paper/submitPaper.do");
-        //     $("#form_paper_detail").submit();
-        //
-        // }
     }
 
     // document.oncontextmenu= function(){return false;}
@@ -668,7 +621,7 @@
     });
 
     var tm_cost_seconds = 0;
-    var tm_maxtime = eval("1") * 60;
+    var tm_maxtime = eval('[[${exam.time}]]') * 60;
     var tm_timer = null;
     tm_timer = setInterval(function(){
         tm_countdown();
@@ -718,8 +671,13 @@
         }else{
             clearInterval(tm_timer);
             $("#div_processor_timer").html('<tomtag:Message key="txt.user.paper.tips.time_is_up" />');
-            submitPaper()
+
+            submitHandler();
         }
+    }
+
+    function submitHandler() {
+        $.operate.save(ctx + "exam/result/add", $('#form_paper_detail').serialize()+"&examId="+'[[${examId}]]');
     }
 </script>
 </body>

@@ -7,7 +7,7 @@ import java.util.List;
  * 考试成绩 数据层
  * 
  * @author ruoyi
- * @date 2019-06-25
+ * @date 2019-06-26
  */
 public interface ResultMapper 
 {

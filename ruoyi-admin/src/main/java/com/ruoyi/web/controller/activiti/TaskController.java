@@ -216,6 +216,7 @@ public class TaskController extends BaseController {
         task.paging()[1]=pageSize;
 //        task.setAssignee(ShiroUtils.getLoginName());
         task.setOwner(ShiroUtils.getLoginName());
+        task.setProcessInstanceBusinessKey("1");
         List<TaskVO> taskVOs = actTaskService.selectFinishedTask(task);
         Iterator<TaskVO> taskVOIterator = taskVOs.iterator();
         while (taskVOIterator.hasNext()){

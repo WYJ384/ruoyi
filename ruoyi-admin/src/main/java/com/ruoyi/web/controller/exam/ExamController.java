@@ -114,11 +114,15 @@ public class ExamController extends BaseController
 	{
 		return prefix + "/myExam";
 	}
-	@GetMapping("/examing/{id}")
-	public String examing(@PathVariable("id") String id,ModelMap mmap)
+	@GetMapping("/examing/{examPaperId}/{examId}")
+	public String examing(@PathVariable("examPaperId") String examPaperId,@PathVariable("examId") String examId ,ModelMap mmap)
 	{
-		List<PaperQuestion>  paperQuestions = paperQuestionService.selectPaperQuestionById(id);
+		List<PaperQuestion>  paperQuestions = paperQuestionService.selectPaperQuestionById(examPaperId);
 		mmap.addAttribute("paperQuestions",paperQuestions);
+		Exam exam = examService.selectExamById(examId);
+		mmap.addAttribute("examId",examId);
+		mmap.addAttribute("exam",exam);
+
 		return prefix + "/examing";
 	}
 
