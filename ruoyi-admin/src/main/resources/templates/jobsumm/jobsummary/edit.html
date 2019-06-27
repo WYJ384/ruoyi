@@ -113,7 +113,7 @@
 		$(function () {
 			UE.getEditor('jobPlan');
 			UE.getEditor('jobSumm');
-			UE.getEditor('jobContent');
+		    UE.getEditor('jobContent');
 		});
 
 		var prefix = ctx + "jobsumm/jobsummary";
@@ -126,15 +126,6 @@
 					required:true,
 				},
 				jobType:{
-					required:true,
-				},
-				jobContent:{
-					required:true,
-				},
-				jobSumm:{
-					required:true,
-				},
-				jobPlan:{
 					required:true,
 				},
                 acceptorUser: {
@@ -172,10 +163,10 @@
 		});
 
 		function submitHandler() {
-	        if ($.validate.form()) {
-	            $.operate.saveTab(prefix + "/edit", $('#form-jobsummary-edit').serialize());
-	        }
-	    }
+			if ($.validate.form()) {
+				$.operate.saveTab(prefix + "/edit", $('#form-jobsummary-edit').serialize());
+			}
+		}
 	</script>
 </body>
 </html>
