@@ -96,6 +96,8 @@ public class PaperQuestionController extends BaseController
 			paperQuestion.setCreateBy(ShiroUtils.getUserId()+"");
 			paperQuestion.setCreateDate(new Date());
 			paperQuestion.setQuestionId(questtionId);
+			paperQuestion.setRemark4("1");
+			paperQuestion.setOrderNum(1);
 			int ret = paperQuestionService.insertPaperQuestion(paperQuestion);
 
 		}

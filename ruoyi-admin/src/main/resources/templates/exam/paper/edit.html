@@ -181,7 +181,7 @@
                 {
                     field: 'a',
                     title: '题目',
-                    // visible: false,
+                    visible: false,
                     formatter: function (value, row, index) {
                         return row.examPaperId + '_' + row.questionId;
                     }
@@ -219,14 +219,24 @@
                 {
                     field: 'remark4',
                     title: '分值',
-                    sortable: true
+                    sortable: true, formatter: function (value, row, index) {
+                        return '<input type="number" value="'+value+'" onchange="changeScore(this,\''+ row.examPaperId + '_' + row.questionId+'\')">'
+                    }
                 },
+                {
+                    field: 'orderNum',
+                    title: '排序',
+                    sortable: true, formatter: function (value, row, index) {
+                        return '<input type="number" value="'+value+'" onchange="changeOrderNum(this,\''+ row.examPaperId + '_' + row.questionId+'\')">'
+                    }
+                },
+
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="edit(\'' + row.examPaperId + '_' + row.questionId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        // actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="edit(\'' + row.examPaperId + '_' + row.questionId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="remove(\'' + row.examPaperId + '_' + row.questionId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
@@ -247,6 +257,47 @@
             $.operate.submit(url, "post", "json", data);
         });
     }
+    function changeScore(obj, id) {
+        var url=prefixpaperQuestion + "/edit";
+        var config = {
+            url: url,
+            type: "post",
+            dataType: "json",
+            data: {"remark4":obj.value,"examPaperId":id},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+                $.modal.disable();
+            },
+            success: function(result) {
+                $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                $.modal.closeLoading();
+                $.modal.enable();
+                window.location.reload()
+            }
+        };
+        $.ajax(config)
+    }
+    function changeOrderNum(obj, id) {
+        var url=prefixpaperQuestion + "/edit";
+        var config = {
+            url: url,
+            type: "post",
+            dataType: "json",
+            data: {"orderNum":obj.value,"examPaperId":id},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+                $.modal.disable();
+            },
+            success: function(result) {
+                $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
+                $.modal.closeLoading();
+                $.modal.enable();
+                window.location.reload()
+            }
+        };
+        $.ajax(config)
+    }
+
 
     function removeAll() {
         var rows= $("#bootstrap-table").bootstrapTable('getSelections');

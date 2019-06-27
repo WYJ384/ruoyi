@@ -150,7 +150,7 @@ INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
             <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
             <if test="orderNum != null  ">order_num = #{orderNum},</if>
         </trim>
-        where exam_paper_id = #{examPaperId}
+        where concat(exam_paper_id,'_',question_id) = #{examPaperId}
     </update>
     <update id="updatePaperQuestionScore" parameterType="PaperQuestion">
 	  UPDATE exam_paper_question
