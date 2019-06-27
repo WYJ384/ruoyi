@@ -679,6 +679,11 @@
     function submitHandler() {
         $.operate.save(ctx + "exam/result/add", $('#form_paper_detail').serialize()+"&examId="+'[[${examId}]]');
     }
+
+    var count = 0;
+    window.onblur = function(){
+        submitHandler();
+    }
 </script>
 </body>
 

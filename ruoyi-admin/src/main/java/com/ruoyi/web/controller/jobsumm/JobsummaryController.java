@@ -45,10 +45,10 @@ public class JobsummaryController extends BaseController
 
 	@RequiresPermissions("jobsumm:jobsummary:view")
 	@GetMapping()
-	public String jobsummary()
+	public String jobsummary(ModelMap mmap)
 	{
 //		Jobsummary jobsummary = jobsummaryService.selectJobsummaryById(id);
-//		mmap.put("jobsummary", jobsummary);
+		mmap.put("userId", ShiroUtils.getUserId());
 		return prefix + "/jobsummary";
 	}
 
