@@ -41,9 +41,19 @@ public class PaperQuestion extends BaseEntity
 	private String remark5;
 	/** 备注信息 */
 	private String remark6;
+	private String title;
 	/** 排序 */
 	private Integer orderNum;
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	private LibraryDetail libraryDetail;
 
 	public Integer getOrderNum() {
 		return orderNum;
@@ -53,7 +63,7 @@ public class PaperQuestion extends BaseEntity
 		this.orderNum = orderNum;
 	}
 
-	private LibraryDetail libraryDetail;
+
 
 	public LibraryDetail getLibraryDetail() {
 		return libraryDetail;
