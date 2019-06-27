@@ -87,6 +87,7 @@ INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
              <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
              <if test="orderNum != null "> and order_num = #{orderNum}</if>
          </where>
+        order  by lib_type
     </select>
 
     <select id="selectPaperQuestionById" parameterType="String" resultMap="PaperQuestionResult">

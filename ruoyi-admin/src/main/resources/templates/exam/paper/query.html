@@ -60,11 +60,36 @@
                             <h5><input type="radio" name="choiceA" th:text="${question.libraryDetail.choiceB}"></h5>
                         </li>
                     </ul>
+                    <div>
+                        <div class="btn-group-sm" id="toolbar" role="group">
+<!--                            <a class="btn btn-success" >-->
+<!--                                <i class="fa fa-plus"></i> 添加-->
+<!--                            </a>-->
+                            <input type="number"  th:value="${question.remark4}" th:id="${question.questionId}">
+                            <a class="btn btn-primary btn-edit " th:onclick="updateScore([[${question.questionId}]],[[${question.examPaperId}]])">
+                                <i class="fa fa-edit"></i> 保存分值
+                            </a>
+                            <a class="btn btn-danger btn-del btn-del "  th:onclick="deleteQuestion([[${question.questionId}]],[[${question.examPaperId}]])">
+                                <i class="fa fa-remove"></i> 删除
+                            </a>
+
+                        </div>
+                    </div>
 
                 </li>
             </ul>
         </div>
     </div>
 </div>
+<div th:include="include::footer"></div>
+<script>
+    function deleteQuestion(questionId,examPaperId) {
+
+    }
+    function updateScore(questionId,examPaperId) {
+        alert($("#"+questionId).val())
+    }
+
+</script>
 </body>
 </html>
