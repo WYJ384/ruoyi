@@ -645,7 +645,7 @@
             $("#fast_" + theqid).css("background-color", "none");
         }
     });
-    $(".blank_choice").blur(function () {
+    $(".blank_choice").keyup(function () {
         var thename = $(this).attr("name");
         var theqid = $(this).data("qid");
         var chval = "";
@@ -658,7 +658,7 @@
             $("#fast_" + theqid).css("background-color", "none");
         }
     });
-    $(".qa_choice").blur(function () {
+    $(".qa_choice").keyup(function () {
         var thename = $(this).attr("name");
         var theqid = $(this).data("qid");
         var chval = "";
@@ -715,13 +715,14 @@
     function submitPaper() {
         var flag = true;
         var blankFlag=true;
-        $(".qk-choice").each(function (index, ele) {
+        $(".single_choice").each(function (index, ele) {
             flag = singleValid($(ele).attr("name"))
         });
-        // $(".blank_choice").each(function (index, ele) {
-        //     blankFlag = blankValid($(ele).attr("name"))
-        // });
+        $(".blank_choice").each(function (index, ele) {
+            blankFlag = blankValid($(ele).attr("name"))
+        });
         console.log("blankFlag=="+blankFlag)
+        console.log("flag=="+flag+"$.validate.form()"+$.validate.form())
         if (flag==true&&blankFlag==true) {
             if ($.validate.form()) {
                 submitHandler();
