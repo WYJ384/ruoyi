@@ -51,5 +51,19 @@ public interface IPaperQuestionService
      * @return 结果
      */
 	public int deletePaperQuestionByIds(String ids);
+
+	/**
+	 * 重新计算分数
+	 * @param paperQuestion
+	 * @return
+	 */
+	int reUpdateSore(PaperQuestion paperQuestion);
+
+	/**
+	 * 查询试题是否已存在
+	 * @param id
+	 * @return
+	 */
+	Integer getQustionCount(String id);
 	
 }

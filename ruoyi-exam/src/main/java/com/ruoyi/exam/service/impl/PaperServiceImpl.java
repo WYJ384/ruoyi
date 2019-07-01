@@ -79,5 +79,10 @@ public class PaperServiceImpl implements IPaperService
 	{
 		return paperMapper.deletePaperByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public int updatePaperScore(Paper paper) {
+		return paperMapper.updatePaperScore(paper);
+	}
+
 }

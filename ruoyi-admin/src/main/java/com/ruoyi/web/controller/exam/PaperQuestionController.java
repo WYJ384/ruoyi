@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.ruoyi.exam.domain.Paper;
+import com.ruoyi.exam.service.IPaperService;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 public class PaperQuestionController extends BaseController
 {
     private String prefix = "exam/paperQuestion";
-	
+	@Autowired
+	private IPaperService paperService;
 	@Autowired
 	private IPaperQuestionService paperQuestionService;
 	
@@ -98,8 +101,15 @@ public class PaperQuestionController extends BaseController
 			paperQuestion.setQuestionId(questtionId);
 			paperQuestion.setRemark4("1");
 			paperQuestion.setOrderNum(1);
+			//1.添加之前检测试题是否已添加
+			Integer qustionCount = paperQuestionService.getQustionCount(paperQuestion.getExamPaperId() + "_" + questtionId);
+			if(qustionCount!=0){
+				continue;
+			}
 			int ret = paperQuestionService.insertPaperQuestion(paperQuestion);
-
+			//2.重新计算试卷总数和总分
+			Paper paper=new Paper();
+			paper.setId(paperQuestion.getExamPaperId());
 		}
 
 		return toAjax(1);
@@ -115,8 +125,14 @@ public class PaperQuestionController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(PaperQuestion paperQuestion)
-	{		
-		return toAjax(paperQuestionService.updatePaperQuestion(paperQuestion));
+	{
+		AjaxResult ajaxResult = toAjax(paperQuestionService.updatePaperQuestion(paperQuestion));
+		//2.重新计算试卷总数和总分
+		Paper paper=new Paper();
+		paper.setId(paperQuestion.getExamPaperId().split("_")[0]);
+		int i = paperService.updatePaperScore(paper);
+		System.out.println(i);
+		return ajaxResult;
 	}
 	
 	/**
@@ -127,7 +143,7 @@ public class PaperQuestionController extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
+	{
 		return toAjax(paperQuestionService.deletePaperQuestionByIds(ids));
 	}
 	

@@ -143,6 +143,13 @@ public class PaperController extends BaseController
 		paperQuestion.setRemark4(paperScore.getQa());
 		paperQuestion.setRemark3("5");
 		paperQuestionService.updatePaperQuestionScore(paperQuestion);
+
+
+		//2.重新计算试卷总数和总分
+		Paper paper=new Paper();
+		paper.setId(paperQuestion.getExamPaperId());
+		paperService.updatePaperScore(paper);
+
 		return toAjax(1);
 	}
 	/**

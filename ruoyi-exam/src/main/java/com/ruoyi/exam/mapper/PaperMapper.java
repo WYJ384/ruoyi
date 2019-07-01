@@ -58,5 +58,11 @@ public interface PaperMapper
      * @return 结果
      */
 	public int deletePaperByIds(String[] ids);
-	
+
+	/**
+	 * 更新试卷分数和总分
+	 * @param paper
+	 * @return
+	 */
+	public int updatePaperScore(Paper paper);
 }

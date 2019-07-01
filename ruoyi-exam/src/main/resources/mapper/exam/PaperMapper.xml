@@ -111,5 +111,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+
+
+
+    <update id="updatePaperScore"  parameterType="Paper">
+    UPDATE exam_paper
+        <trim prefix="SET" suffixOverrides=",">
+            total_question = (
+            SELECT
+            count(*)
+            FROM
+            exam_paper_question
+            WHERE
+            exam_paper_id =  #{id}
+            AND del_flag = 0
+            ),
+            total_sore = (
+            SELECT
+            SUM(remark4)
+            FROM
+            exam_paper_question
+            WHERE
+            exam_paper_id =  #{id}
+            AND del_flag = 0
+            )
+        </trim>
+        WHERE  id =  #{id}
+    </update>
     
 </mapper>

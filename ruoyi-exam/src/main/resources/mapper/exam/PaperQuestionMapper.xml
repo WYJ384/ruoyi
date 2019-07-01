@@ -175,5 +175,12 @@ INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
             #{examPaperId}
         </foreach>
     </delete>
+
+
+
+    <select id="getQustionCount" parameterType="String"  resultType="Integer">
+        select count(1) from exam_paper_question where concat(exam_paper_id,'_',question_id) = #{examPaperId}
+    </select>
+
     
 </mapper>

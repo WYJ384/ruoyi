@@ -84,5 +84,17 @@ public class PaperQuestionServiceImpl implements IPaperQuestionService
 	{
 		return paperQuestionMapper.deletePaperQuestionByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public int reUpdateSore(PaperQuestion paperQuestion) {
+
+
+		return 0;
+	}
+
+	@Override
+	public Integer getQustionCount(String id) {
+		return paperQuestionMapper.getQustionCount(id);
+	}
+
 }

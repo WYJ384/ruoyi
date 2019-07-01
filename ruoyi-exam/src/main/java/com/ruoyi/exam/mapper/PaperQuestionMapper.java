@@ -60,5 +60,13 @@ public interface PaperQuestionMapper
      * @return 结果
      */
 	public int deletePaperQuestionByIds(String[] examPaperIds);
+
+
+	/**
+	 * 查询试题是否已存在
+	 * @param id
+	 * @return
+	 */
+	Integer getQustionCount(String id);
 	
 }
