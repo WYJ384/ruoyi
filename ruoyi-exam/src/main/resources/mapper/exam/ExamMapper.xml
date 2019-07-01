@@ -136,5 +136,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+    <select id="getExamByExamPaperId" parameterType="String"  resultType="Integer">
+       SELECT COUNT(*) FROM exam_exam WHERE exam_paper_id = #{examPaperId}
+    </select>
     
 </mapper>

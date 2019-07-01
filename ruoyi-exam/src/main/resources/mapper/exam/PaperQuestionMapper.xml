@@ -184,5 +184,11 @@ INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
         select count(1) from exam_paper_question where concat(exam_paper_id,'_',question_id) = #{examPaperId}
     </select>
 
-    
+    <select id="getQustionCountByQuestionId" parameterType="String"  resultType="Integer">
+        SELECT COUNT(*) FROM exam_paper_question WHERE question_id = #{questionId}
+    </select>
+
+
+
+
 </mapper>

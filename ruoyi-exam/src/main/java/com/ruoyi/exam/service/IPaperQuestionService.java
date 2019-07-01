@@ -65,5 +65,10 @@ public interface IPaperQuestionService
 	 * @return
 	 */
 	Integer getQustionCount(String id);
+	/*
+	根据试题编号查询试卷内是否存在试题
+	 */
+	Integer getQustionCountByQuestionId(String questionId);
+
 	
 }

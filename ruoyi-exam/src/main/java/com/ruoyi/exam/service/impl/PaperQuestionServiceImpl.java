@@ -15,7 +15,7 @@ import com.ruoyi.common.core.text.Convert;
  * @date 2019-06-24
  */
 @Service
-public class PaperQuestionServiceImpl implements IPaperQuestionService 
+public class PaperQuestionServiceImpl implements IPaperQuestionService
 {
 	@Autowired
 	private PaperQuestionMapper paperQuestionMapper;
@@ -95,6 +95,11 @@ public class PaperQuestionServiceImpl implements IPaperQuestionService
 	@Override
 	public Integer getQustionCount(String id) {
 		return paperQuestionMapper.getQustionCount(id);
+	}
+
+	@Override
+	public Integer getQustionCountByQuestionId(String questionId) {
+		return paperQuestionMapper.getQustionCountByQuestionId(questionId);
 	}
 
 }

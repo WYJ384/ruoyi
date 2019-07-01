@@ -50,5 +50,12 @@ public interface IExamService
      * @return 结果
      */
 	public int deleteExamByIds(String ids);
-	
+
+	/*
+	根据试题编号查询试卷内是否存在试题
+	 */
+	Integer getExamByExamPaperId(String examPaperId);
+
+
+
 }

@@ -85,5 +85,10 @@ public class ExamServiceImpl implements IExamService
 	{
 		return examMapper.deleteExamByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public Integer getExamByExamPaperId(String examPaperId) {
+		return examMapper.getExamByExamPaperId(examPaperId);
+	}
+
 }
