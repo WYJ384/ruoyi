@@ -108,21 +108,17 @@ public class ResultController extends BaseController {
             }
             //试题答案
             String answer = libraryDetail.getAnswer();
-            if(StringUtils.isEmpty(answer)){
-                continue;
-            }
             //用户答案
             String userAnswer = StringUtils.join(parameterMap.get(key));
-            if(StringUtils.isEmpty(userAnswer)){
-                continue;
-            }
-            if(answer.equals(userAnswer)){
-                PaperQuestion paperQuestion=new PaperQuestion();
-                paperQuestion.setQuestionId(key);
-                paperQuestion.setExamPaperId(exam.getExamPaperId());
-                List<PaperQuestion> paperQuestions = paperQuestionService.selectPaperQuestionList(paperQuestion);
-                PaperQuestion question = paperQuestions.get(0);
-                score+=Double.valueOf(question.getRemark4());
+            if(StringUtils.isNotEmpty(answer)&&StringUtils.isNotEmpty(userAnswer)){
+                if(answer.equals(userAnswer)){
+                    PaperQuestion paperQuestion=new PaperQuestion();
+                    paperQuestion.setQuestionId(key);
+                    paperQuestion.setExamPaperId(exam.getExamPaperId());
+                    List<PaperQuestion> paperQuestions = paperQuestionService.selectPaperQuestionList(paperQuestion);
+                    PaperQuestion question = paperQuestions.get(0);
+                    score+=Double.valueOf(question.getRemark4());
+                }
             }
 
             strResult+=key+":"+userAnswer;

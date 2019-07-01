@@ -425,7 +425,7 @@
 			tt:     [],
 			u:      [],
 			ul:     ['class', 'style'],
-			video:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width', 'class', 'style'],
+			video:  ['autoplay', 'controls', 'loop','poster', 'preload', 'src', 'height', 'width', 'class', 'style'],
 			source: ['src', 'type'],
 			embed: ['type', 'class', 'pluginspage', 'src', 'width', 'height', 'align', 'style', 'wmode', 'play',
 				'loop', 'menu', 'allowscriptaccess', 'allowfullscreen']
