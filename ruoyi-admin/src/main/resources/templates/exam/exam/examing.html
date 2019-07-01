@@ -6,13 +6,13 @@
 <link rel="stylesheet" type="text/css" th:href="@{/exam/skins/default/style.css?v=20170616}">
 
 <style type="text/css">
-    .error{
+    .error {
         color: #f00;
     }
 </style>
 </head>
 
-<body onbeforeunload="return tm_checkUnsubmit();" marginwidth="0" marginheight="0" style="">
+<body onbeforeunload="return false;" marginwidth="0" marginheight="0" style="">
 
 <div class="tm_main">
 
@@ -56,7 +56,8 @@
                                                 th:text="${question.libraryDetail.title}">
                                             </td>
                                             <th valign="top" class="tm_question_lineheight"
-                                                style="text-align:center; font-weight:normal" th:text="${question.remark4+'分'}">1分</th>
+                                                style="text-align:center; font-weight:normal"
+                                                th:text="${question.remark4+'分'}">1分</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -69,7 +70,7 @@
                                                                class="validate[required] single_choice qk-choice"
                                                                value="A"
                                                                th:name="${question.questionId}"
-                                                               th:data-qid="${question.questionId}" >
+                                                               th:data-qid="${question.questionId}">
 
                                                     </li>
                                                      <li>
@@ -77,14 +78,14 @@
                                                                class="validate[required] single_choice qk-choice"
                                                                value="B"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:text="${question.libraryDetail.choiceC}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="C"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}"
@@ -92,7 +93,7 @@
                                                                class="validate[required] single_choice qk-choice"
                                                                value="D"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
 
                                                        <li>
@@ -101,7 +102,7 @@
                                                                class="validate[required] single_choice qk-choice"
                                                                value="E"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
 
                                                     <li>
@@ -110,7 +111,7 @@
                                                                class="validate[required] single_choice qk-choice"
                                                                value="F"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
                                                 </ul>
 
@@ -137,7 +138,8 @@
                                                 th:text="${question.libraryDetail.title}">
                                             </td>
                                             <th valign="top" class="tm_question_lineheight"
-                                                style="text-align:center; font-weight:normal" th:text="${question.remark4+'分'}">1分</th>
+                                                style="text-align:center; font-weight:normal"
+                                                th:text="${question.remark4+'分'}">1分</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -151,15 +153,16 @@
                                                                class="validate[required] qk-choice single_choice"
                                                                value="A"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
 
                                                     </li>
                                                      <li>
                                                         <input th:text="${question.libraryDetail.choiceB}"
-                                                               type="checkbox" class="validate[required] single_choice qk-choice"
+                                                               type="checkbox"
+                                                               class="validate[required] single_choice qk-choice"
                                                                value="B"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:text="${question.libraryDetail.choiceC}"
@@ -167,7 +170,7 @@
                                                                class="validate[required] qk-choice single_choice"
                                                                value="C"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}"
@@ -176,7 +179,7 @@
                                                                class="validate[required] qk-choice single_choice"
                                                                value="D"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
 
                                                        <li>
@@ -186,7 +189,7 @@
                                                                class="validate[required] qk-choice single_choice"
                                                                value="E"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
                                                     </li>
 
                                                     <li>
@@ -196,7 +199,80 @@
                                                                class="validate[required] qk-choice single_choice"
                                                                value="F"
                                                                th:data-qid="${question.questionId}"
-                                                               th:name="${question.questionId}" >
+                                                               th:name="${question.questionId}">
+                                                    </li>
+                                                </ul>
+
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                        </span>
+                                </div>
+<!--                                <div class="tm_paper_section">-->
+<!--                                    <h1>填空题</h1>-->
+<!--                                    <span class="span-quick-nav" data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
+<!--                                          id="quick-Q-419eee52-b74b-41ce-86d0-7d994522786c"></span>-->
+
+<!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
+<!--                                           style="table-layout:fixed;">-->
+<!--                                        <thead>-->
+<!--                                        <tr>-->
+<!--                                            <th valign="top" class="tm_question_lineheight"><cite>101</cite></th>-->
+<!--                                            <td class="tm_question_lineheight">-->
+
+<!--                                                16、中国共产党的思想路线是 <input type="text"-->
+<!--                                                                      name="Q-419eee52-b74b-41ce-86d0-7d994522786c"-->
+<!--                                                                      data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
+<!--                                                                      class="validate[required] tm_txt qk-blank"> 。-->
+
+<!--                                            </td>-->
+<!--                                            <th valign="top" class="tm_question_lineheight"-->
+<!--                                                style="text-align:center; font-weight:normal">1分-->
+<!--                                            </th>-->
+<!--                                        </tr>-->
+<!--                                        </thead>-->
+<!--                                        <tbody>-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="3">-->
+
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        </tbody>-->
+<!--                                    </table>-->
+<!--                                </div>-->
+
+                                <div class="tm_paper_section">
+                                    <h1>填空题</h1>
+                                    <span th:each="question,questionStat:${paperQuestions}"
+                                          th:if="${question.libraryDetail.libType eq '3'}">
+                                    <span class="span-quick-nav" data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                          th:id="${'quick-Q-'+question.questionId}"></span>
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"
+                                           style="table-layout:fixed;">
+                                        <thead>
+                                        <tr>
+                                            <th valign="top" class="tm_question_lineheight"><cite
+                                                    th:text="${(questionStat.index+1)}"></cite></th>
+                                            <td class="tm_question_lineheight"
+                                                th:text="${question.libraryDetail.title}">
+                                            </td>
+                                            <th valign="top" class="tm_question_lineheight"
+                                                style="text-align:center; font-weight:normal"
+                                                th:text="${question.remark4+'分'}">1分</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="3">
+                                                <ul>
+
+
+                                                    <li th:each="dayCyc : ${#numbers.sequence(1,question.libraryDetail.remark1)}">
+                                                         <input  type="text"
+                                                                class="validate[required]  blank_choice qk-choice"
+                                                                th:data-qid="${question.questionId}"
+                                                                th:name="${question.questionId}">
                                                     </li>
                                                 </ul>
 
@@ -207,7 +283,7 @@
 
                                         </span>
                                 </div>
-
+                                
                                 <div class="tm_paper_section">
                                     <h1>判断题</h1>
                                     <span th:each="question,questionStat:${paperQuestions}"
@@ -224,7 +300,8 @@
                                                 th:text="${question.libraryDetail.title}">
                                             </td>
                                             <th valign="top" class="tm_question_lineheight"
-                                                style="text-align:center; font-weight:normal" th:text="${question.remark4+'分'}">1分</th>
+                                                style="text-align:center; font-weight:normal"
+                                                th:text="${question.remark4+'分'}">1分</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -258,71 +335,47 @@
                                         </span>
                                 </div>
 
-                                <!--                                <div class="tm_paper_section">-->
-                                <!--                                    <h1>填空题</h1>-->
-                                <!--                                    <span class="span-quick-nav" data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
-                                <!--                                          id="quick-Q-419eee52-b74b-41ce-86d0-7d994522786c"></span>-->
+                                <div class="tm_paper_section">
+                                    <h1>简答题</h1>
+                                    <span th:each="question,questionStat:${paperQuestions}"
+                                          th:if="${question.libraryDetail.libType eq '5'}">
+                                    <span class="span-quick-nav" data-qid="d73fe867-8810-4412-82d7-9390edce32ba"
+                                          th:id="${'quick-Q-'+question.questionId}"></span>
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"
+                                           style="table-layout:fixed;">
+                                        <thead>
+                                        <tr>
+                                            <th valign="top" class="tm_question_lineheight"><cite
+                                                    th:text="${(questionStat.index+1)}"></cite></th>
+                                            <td class="tm_question_lineheight"
+                                                th:text="${question.libraryDetail.title}">
+                                            </td>
+                                            <th valign="top" class="tm_question_lineheight"
+                                                style="text-align:center; font-weight:normal"
+                                                th:text="${question.remark4+'分'}">1分</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="3">
+                                                <ul>
+                                                    <li>
+                                                           <textarea rows="10" cols="80"
+                                                                     class="validate[required]  qa_choice qk-choice"
+                                                                     th:data-qid="${question.questionId}"
+                                                                     th:name="${question.questionId}" required></textarea>
+                                                    </li>
+                                                </ul>
 
-                                <!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
-                                <!--                                           style="table-layout:fixed;">-->
-                                <!--                                        <thead>-->
-                                <!--                                        <tr>-->
-                                <!--                                            <th valign="top" class="tm_question_lineheight"><cite>101</cite></th>-->
-                                <!--                                            <td class="tm_question_lineheight">-->
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
 
-                                <!--                                                16、中国共产党的思想路线是 <input type="text"-->
-                                <!--                                                                      name="Q-419eee52-b74b-41ce-86d0-7d994522786c"-->
-                                <!--                                                                      data-qid="419eee52-b74b-41ce-86d0-7d994522786c"-->
-                                <!--                                                                      class="validate[required] tm_txt qk-blank"> 。-->
-
-                                <!--                                            </td>-->
-                                <!--                                            <th valign="top" class="tm_question_lineheight"-->
-                                <!--                                                style="text-align:center; font-weight:normal">1分-->
-                                <!--                                            </th>-->
-                                <!--                                        </tr>-->
-                                <!--                                        </thead>-->
-                                <!--                                        <tbody>-->
-                                <!--                                        <tr>-->
-                                <!--                                            <td colspan="3">-->
-
-                                <!--                                            </td>-->
-                                <!--                                        </tr>-->
-                                <!--                                        </tbody>-->
-                                <!--                                    </table>-->
-
-                                <!--                                    <span class="span-quick-nav" data-qid="2010dc7b-5110-45b9-a312-fafeed4928f7"-->
-                                <!--                                          id="quick-Q-2010dc7b-5110-45b9-a312-fafeed4928f7"></span>-->
-
-                                <!--                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question"-->
-                                <!--                                           style="table-layout:fixed;">-->
-                                <!--                                        <thead>-->
-                                <!--                                        <tr>-->
-                                <!--                                            <th valign="top" class="tm_question_lineheight"><cite>102</cite></th>-->
-                                <!--                                            <td class="tm_question_lineheight">-->
-
-                                <!--                                                4、2014年10月23日党的十八大四中全会提出全面推进依法治国的总目标是 <input type="text"-->
-                                <!--                                                                                             name="Q-2010dc7b-5110-45b9-a312-fafeed4928f7"-->
-                                <!--                                                                                             data-qid="2010dc7b-5110-45b9-a312-fafeed4928f7"-->
-                                <!--                                                                                             class="validate[required] tm_txt qk-blank">-->
-                                <!--                                                。-->
-
-                                <!--                                            </td>-->
-                                <!--                                            <th valign="top" class="tm_question_lineheight"-->
-                                <!--                                                style="text-align:center; font-weight:normal">1分-->
-                                <!--                                            </th>-->
-                                <!--                                        </tr>-->
-                                <!--                                        </thead>-->
-                                <!--                                        <tbody>-->
-                                <!--                                        <tr>-->
-                                <!--                                            <td colspan="3">-->
-
-                                <!--                                            </td>-->
-                                <!--                                        </tr>-->
-                                <!--                                        </tbody>-->
-                                <!--                                    </table>-->
+                                        </span>
+                                </div>
 
 
-                                <!--                                </div>-->
 
                                 <!--                                <div class="tm_paper_section">-->
                                 <!--                                    <h1>问答题</h1>-->
@@ -437,7 +490,6 @@
                             </div>
 
 
-
                         </div>
                     </form>
                 </td>
@@ -485,6 +537,17 @@
             </dd>
         </dl>
         <dl>
+            <dt>填空题</dt>
+            <dd>
+                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '3'}"
+                   href="javascript:void(0);"
+                   th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
+                   th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
+
+                <div class="tm_clear"></div>
+            </dd>
+        </dl>
+        <dl>
             <dt>判断题</dt>
             <dd>
                 <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '4'}"
@@ -495,36 +558,47 @@
                 <div class="tm_clear"></div>
             </dd>
         </dl>
+        <dl>
+            <dt>简答题</dt>
+            <dd>
+                <a th:each="question,state:${paperQuestions}" th:if="${question.libraryDetail.libType eq '5'}"
+                   href="javascript:void(0);"
+                   th:onclick="javascript:tmUserPaper.moveToQuestion([[${question.questionId}]])"
+                   th:text="${state.index+1}" th:id="${'fast_'+question.questionId}">1</a>
+
+                <div class="tm_clear"></div>
+            </dd>
+        </dl>
 
 
-        <!--        <dl>-->
-        <!--            <dt>填空题</dt>-->
-        <!--            <dd>-->
-        <!--                <a href="javascript:void(0);"-->
-        <!--                   onclick="tmUserPaper.moveToQuestion('419eee52-b74b-41ce-86d0-7d994522786c')"-->
-        <!--                   id="fast_419eee52-b74b-41ce-86d0-7d994522786c">101</a>-->
-        <!--                <a href="javascript:void(0);"-->
-        <!--                   onclick="tmUserPaper.moveToQuestion('2010dc7b-5110-45b9-a312-fafeed4928f7')"-->
-        <!--                   id="fast_2010dc7b-5110-45b9-a312-fafeed4928f7">102</a>-->
-        <!--                <div class="tm_clear"></div>-->
-        <!--            </dd>-->
-        <!--        </dl>-->
+<!--        <dl>-->
+<!--            <dt>填空题</dt>-->
+<!--            <dd>-->
+<!--                <a href="javascript:void(0);"-->
+<!--                   onclick="tmUserPaper.moveToQuestion('419eee52-b74b-41ce-86d0-7d994522786c')"-->
+<!--                   id="fast_419eee52-b74b-41ce-86d0-7d994522786c">101</a>-->
+<!--                <a href="javascript:void(0);"-->
+<!--                   onclick="tmUserPaper.moveToQuestion('2010dc7b-5110-45b9-a312-fafeed4928f7')"-->
+<!--                   id="fast_2010dc7b-5110-45b9-a312-fafeed4928f7">102</a>-->
+<!--                <div class="tm_clear"></div>-->
+<!--            </dd>-->
+<!--        </dl>-->
 
-        <!--        <dl>-->
-        <!--            <dt>问答题</dt>-->
-        <!--            <dd>-->
-        <!--                <a href="javascript:void(0);"-->
-        <!--                   onclick="tmUserPaper.moveToQuestion('eeb2eb88-97f6-49cc-b009-f159ebde36d8')"-->
-        <!--                   id="fast_eeb2eb88-97f6-49cc-b009-f159ebde36d8">126</a>-->
-        <!--                <a href="javascript:void(0);"-->
-        <!--                   onclick="tmUserPaper.moveToQuestion('ea81a38a-df69-48c7-b33d-37f552af3d02')"-->
-        <!--                   id="fast_ea81a38a-df69-48c7-b33d-37f552af3d02">127</a>-->
-        <!--                <a href="javascript:void(0);"-->
-        <!--                   onclick="tmUserPaper.moveToQuestion('408cc92b-4e1d-4b8d-b60e-04639ac89387')"-->
-        <!--                   id="fast_408cc92b-4e1d-4b8d-b60e-04639ac89387">128</a>-->
-        <!--                <div class="tm_clear"></div>-->
-        <!--            </dd>-->
-        <!--        </dl>-->
+<!--        <dl>-->
+<!--            <dt>问答题</dt>-->
+<!--            <dd>-->
+<!--                <a href="javascript:void(0);"-->
+<!--                   onclick="tmUserPaper.moveToQuestion('eeb2eb88-97f6-49cc-b009-f159ebde36d8')"-->
+<!--                   id="fast_eeb2eb88-97f6-49cc-b009-f159ebde36d8">126</a>-->
+<!--                <a href="javascript:void(0);"-->
+<!--                   onclick="tmUserPaper.moveToQuestion('ea81a38a-df69-48c7-b33d-37f552af3d02')"-->
+<!--                   id="fast_ea81a38a-df69-48c7-b33d-37f552af3d02">127</a>-->
+<!--                <a href="javascript:void(0);"-->
+<!--                   onclick="tmUserPaper.moveToQuestion('408cc92b-4e1d-4b8d-b60e-04639ac89387')"-->
+<!--                   id="fast_408cc92b-4e1d-4b8d-b60e-04639ac89387">128</a>-->
+<!--                <div class="tm_clear"></div>-->
+<!--            </dd>-->
+<!--        </dl>-->
 
     </div>
     <div id="div_processor_ops">
@@ -558,23 +632,45 @@
         }
     };
 
-    $(".qk-choice").click(function () {
+    $(".single_choice").click(function () {
         var thename = $(this).attr("name");
         var theqid = $(this).data("qid");
         var chval = "";
-
         $.each($('input[name=' + thename + ']:checked'), function (idx, item) {
             chval += $(this).val();
         });
-
         if (chval != "") {
             $("#fast_" + theqid).css({"background-color": "#0f0", "color": "#000"});
         } else {
             $("#fast_" + theqid).css("background-color", "none");
         }
-
     });
-
+    $(".blank_choice").blur(function () {
+        var thename = $(this).attr("name");
+        var theqid = $(this).data("qid");
+        var chval = "";
+        $.each($('input[name=' + thename + ']'), function (idx, item) {
+            chval += $(this).val();
+        });
+        if (chval != "") {
+            $("#fast_" + theqid).css({"background-color": "#0f0", "color": "#000"});
+        } else {
+            $("#fast_" + theqid).css("background-color", "none");
+        }
+    });
+    $(".qa_choice").blur(function () {
+        var thename = $(this).attr("name");
+        var theqid = $(this).data("qid");
+        var chval = "";
+        $.each($('textarea[name=' + thename + ']'), function (idx, item) {
+            chval += $(this).val();
+        });
+        if (chval != "") {
+            $("#fast_" + theqid).css({"background-color": "#0f0", "color": "#000"});
+        } else {
+            $("#fast_" + theqid).css("background-color", "none");
+        }
+    });
 
 </script>
 <script type="text/javascript">
@@ -583,29 +679,53 @@
     function tm_checkUnsubmit() {
 
     }
+
     function singleValid(name) {
-        var flag=true;
-        var len_a886f197e97c492b902542efa480caf7= $("input[name="+name+"]").length;
-        var count_a886f197e97c492b902542efa480caf7=0;
-        $("input[name="+name+"]").each(function (a,b) {
-            if(b.checked==false){
+        var flag = true;
+        var len_a886f197e97c492b902542efa480caf7 = $("input[name=" + name + "]").length;
+        var count_a886f197e97c492b902542efa480caf7 = 0;
+        $("input[name=" + name + "]").each(function (a, b) {
+            if (b.checked == false||b.value == "") {
                 count_a886f197e97c492b902542efa480caf7++;
             }
         });
-        if(len_a886f197e97c492b902542efa480caf7==count_a886f197e97c492b902542efa480caf7){
-            $("#fast_"+name ).css({"background-color": "#f00", "color": "#000"});
-            flag=false;
+        if (len_a886f197e97c492b902542efa480caf7 == count_a886f197e97c492b902542efa480caf7) {
+            $("#fast_" + name).css({"background-color": "#f00", "color": "#000"});
+            flag = false;
         }
         return flag;
     }
-    function submitPaper() {
-        var flag=true;
-        $(".single_choice").each(function (index,ele) {
-            flag=singleValid($(ele).attr("name"))
+
+    function blankValid(name) {
+        var flag = true;
+        var len_a886f197e97c492b902542efa480caf7 = $("input[name=" + name + "]").length;
+        var count_a886f197e97c492b902542efa480caf7 = 0;
+        $("input[name=" + name + "]").each(function (a, b) {
+            if (b.value == "") {
+                count_a886f197e97c492b902542efa480caf7++;
+            }
         });
-        if(flag){
-            console.log($("#form_paper_detail").serialize())
-            submitHandler();
+        if (len_a886f197e97c492b902542efa480caf7 == count_a886f197e97c492b902542efa480caf7) {
+            $("#fast_" + name).css({"background-color": "#f00", "color": "#000"});
+            flag = false;
+        }
+        return flag;
+    }
+
+    function submitPaper() {
+        var flag = true;
+        var blankFlag=true;
+        $(".qk-choice").each(function (index, ele) {
+            flag = singleValid($(ele).attr("name"))
+        });
+        // $(".blank_choice").each(function (index, ele) {
+        //     blankFlag = blankValid($(ele).attr("name"))
+        // });
+        console.log("blankFlag=="+blankFlag)
+        if (flag==true&&blankFlag==true) {
+            if ($.validate.form()) {
+                submitHandler();
+            }
         }
     }
 
@@ -623,52 +743,53 @@
     var tm_cost_seconds = 0;
     var tm_maxtime = eval('[[${exam.time}]]') * 60;
     var tm_timer = null;
-    tm_timer = setInterval(function(){
+    tm_timer = setInterval(function () {
         tm_countdown();
     }, 1000);
+
     function tm_fn_formatSeconds(value) {
         var theTime = parseInt(value);// 秒
         var theTime1 = 0;// 分
         var theTime2 = 0;// 小时
         // alert(theTime);
-        if(theTime > 60) {
-            theTime1 = parseInt(theTime/60);
-            theTime = parseInt(theTime%60);
+        if (theTime > 60) {
+            theTime1 = parseInt(theTime / 60);
+            theTime = parseInt(theTime % 60);
             // alert(theTime1+"-"+theTime);
-            if(theTime1 > 60) {
-                theTime2 = parseInt(theTime1/60);
-                theTime1 = parseInt(theTime1%60);
+            if (theTime1 > 60) {
+                theTime2 = parseInt(theTime1 / 60);
+                theTime1 = parseInt(theTime1 % 60);
             }
         }
-        var the_second = parseInt(theTime) < 10? "0" + theTime : theTime;
-        var the_minute = parseInt(theTime1) < 10? "0" + theTime1 : theTime1;
+        var the_second = parseInt(theTime) < 10 ? "0" + theTime : theTime;
+        var the_minute = parseInt(theTime1) < 10 ? "0" + theTime1 : theTime1;
         var result = theTime2 + ":" + the_minute + ":" + the_second;
         return result;
     }
 
-    function tm_countdown(){
+    function tm_countdown() {
         //记录消耗的时间
         tm_cost_seconds = tm_cost_seconds + 1;
-        $("#t_timecost").val(parseInt(tm_cost_seconds/60));
+        $("#t_timecost").val(parseInt(tm_cost_seconds / 60));
 
         //倒计时牌
         var tm_msg;
-        if(tm_maxtime>0){
-            tm_msg = "<span class='tm_label'>"+ tm_fn_formatSeconds(tm_maxtime) + "</span>";
-            if(tm_maxtime <= 30){
+        if (tm_maxtime > 0) {
+            tm_msg = "<span class='tm_label'>" + tm_fn_formatSeconds(tm_maxtime) + "</span>";
+            if (tm_maxtime <= 30) {
                 var ss = '<tomtag:Message key="txt.user.paper.tips.submiting" />';
-                tm_msg += "<br/><font color='red'><b>"+ss+"</b></font>";
+                tm_msg += "<br/><font color='red'><b>" + ss + "</b></font>";
             }
 
             $("#div_processor_timer").html(tm_msg);
 
-            if(tm_maxtime == 5*60) {
+            if (tm_maxtime == 5 * 60) {
                 alert('<tomtag:Message key="txt.user.paper.tips.five_minute_warn" />');
             }
 
             --tm_maxtime;
 
-        }else{
+        } else {
             clearInterval(tm_timer);
             $("#div_processor_timer").html('<tomtag:Message key="txt.user.paper.tips.time_is_up" />');
 
@@ -677,13 +798,15 @@
     }
 
     function submitHandler() {
-        $.operate.save(ctx + "exam/result/add", $('#form_paper_detail').serialize()+"&examId="+'[[${examId}]]');
+
+        $.operate.save(ctx + "exam/result/add", $('#form_paper_detail').serialize() + "&examId=" + '[[${examId}]]');
     }
 
     var count = 0;
-    window.onblur = function(){
-        submitHandler();
+    window.onblur = function () {
+       // submitHandler();
     }
+
 </script>
 </body>
 

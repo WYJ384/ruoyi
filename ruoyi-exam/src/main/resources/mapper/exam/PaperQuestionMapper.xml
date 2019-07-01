@@ -33,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="choiceF"    column="choice_f"    />
         <result property="choiceG"    column="choice_g"    />
         <result property="choiceH"    column="choice_h"    />
+        <result property="remark1"    column="remark1"    />
         <result property="answer"    column="answer"    />
     </resultMap>
 
@@ -63,7 +64,8 @@ SELECT
 	choice_g,
 	choice_h,
 	answer,
-	answer_tip
+	answer_tip,
+	libDetail.remark1
 FROM
 	exam_paper_question paper
 INNER JOIN exam_library_detail libDetail ON paper.question_id = libDetail.id
