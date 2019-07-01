@@ -33,6 +33,15 @@ public class ExamUser extends BaseEntity
 	/** 删除标记 */
 	private String delFlag;
 	private SysUser sysUser;
+	private String userName;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public SysUser getSysUser() {
 		return sysUser;

@@ -58,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateDate != null "> and update_date = #{updateDate}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+            <if test="userName != null  and userName != '' "> and sys_user.user_name like concat('%',#{userName},'%') </if>
          </where>
     </select>
     
