@@ -2,6 +2,16 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<style type="text/css">
+	table td {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	table {
+		table-layout: fixed;
+	}
+</style>
 <body class="gray-bg">
     
      <div class="container-div">
@@ -26,7 +36,7 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="knowledge:guestbook:add">
+				<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="knowledge:guestbook:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
 				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="knowledge:guestbook:edit">
@@ -67,11 +77,11 @@
 					title : '编号',
 					visible: false
 				},
-				{
-					field : 'type', 
-					title : '留言分类',
-					sortable: true
-				},
+				// {
+				// 	field : 'type',
+				// 	title : '留言分类',
+				// 	sortable: true
+				// },
 				{
 					field : 'content', 
 					title : '留言内容',
@@ -82,26 +92,26 @@
 					title : '姓名',
 					sortable: true
 				},
-				{
-					field : 'email', 
-					title : '邮箱',
-					sortable: true
-				},
-				{
-					field : 'phone', 
-					title : '电话',
-					sortable: true
-				},
-				{
-					field : 'workunit', 
-					title : '单位',
-					sortable: true
-				},
-				{
-					field : 'ip', 
-					title : 'IP',
-					sortable: true
-				},
+				// {
+				// 	field : 'email',
+				// 	title : '邮箱',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'phone',
+				// 	title : '电话',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'workunit',
+				// 	title : '单位',
+				// 	sortable: true
+				// },
+				// {
+				// 	field : 'ip',
+				// 	title : 'IP',
+				// 	sortable: true
+				// },
 				// {
 				// 	field : 'reUserId',
 				// 	title : '回复人',

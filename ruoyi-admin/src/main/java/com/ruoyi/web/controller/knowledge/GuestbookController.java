@@ -1,6 +1,12 @@
 package com.ruoyi.web.controller.knowledge;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +91,17 @@ public class GuestbookController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Guestbook guestbook)
-	{		
+	{
+		guestbook.setId(UUID.randomUUID().toString().replaceAll("-",""));
+		guestbook.setCreateBy(ShiroUtils.getUserId()+"");
+		guestbook.setCreateDate(new Date());
+		guestbook.setName(ShiroUtils.getSysUser().getUserName());
+		try {
+			guestbook.setIp(InetAddress.getLocalHost().getHostName());
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		guestbook.setWorkunit(ShiroUtils.getSysUser().getDept().getDeptName());
 		return toAjax(guestbookService.insertGuestbook(guestbook));
 	}
 

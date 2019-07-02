@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           create_by, create_date, update_by, update_date, remarks, del_flag from cms_category
     </sql>
 	<select id="selectCountCategoryByParentId" resultType="Integer">
-          select count(1) from cms_category where parent_id=#{id} and  del_flag='0'
+          select count(1) from cms_category where parent_id=#{id} and  del_flag='0' order by sort
     </select>
     <select id="selectCategoryByName" parameterType="CmsCategory" resultMap="CmsCategoryResult">
         <include refid="selectCmsCategoryVo"/>
@@ -80,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
          </where>
+        order by sort
     </select>
     
     <select id="selectCmsCategoryById" parameterType="String" resultMap="CmsCategoryResult">

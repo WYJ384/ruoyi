@@ -3,3 +3,13 @@
 `AND u.login_name like concat('%', #{loginName}, '%')`
 
 <![CDATA[>= ]]>
+
+
+ table td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    table {
+        table-layout: fixed;
+    }

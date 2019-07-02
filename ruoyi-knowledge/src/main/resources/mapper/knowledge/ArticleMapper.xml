@@ -56,13 +56,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateDate != null "> and update_date = #{updateDate}</if>
              <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+            and del_flag = '0'
          </where>
+
          order by weight desc
     </select>
     
     <select id="selectArticleById" parameterType="String" resultMap="ArticleResult">
         <include refid="selectArticleVo"/>
-        where id = #{id}
+        where id = #{id}   and del_flag = '0'
     </select>
         
     <insert id="insertArticle" parameterType="Article">
@@ -140,11 +142,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
 	<delete id="deleteArticleById" parameterType="String">
-        delete from cms_article where id = #{id}
+          update cms_article set del_flag=1  where id = #{id}
     </delete>
 	
     <delete id="deleteArticleByIds" parameterType="String">
-        delete from cms_article where id in 
+        update cms_article set del_flag=1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
