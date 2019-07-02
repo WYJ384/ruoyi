@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.knowledge.mapper.GuestbookMapper">
+    
+    <resultMap type="Guestbook" id="GuestbookResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="content"    column="content"    />
+        <result property="name"    column="name"    />
+        <result property="email"    column="email"    />
+        <result property="phone"    column="phone"    />
+        <result property="workunit"    column="workunit"    />
+        <result property="ip"    column="ip"    />
+        <result property="reUserId"    column="re_user_id"    />
+        <result property="reDate"    column="re_date"    />
+        <result property="reContent"    column="re_content"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark1"    column="remark1"    />
+        <result property="remark2"    column="remark2"    />
+        <result property="remark3"    column="remark3"    />
+        <result property="remark4"    column="remark4"    />
+        <result property="remark5"    column="remark5"    />
+        <result property="remark6"    column="remark6"    />
+        <result property="remark7"    column="remark7"    />
+        <result property="remark8"    column="remark8"    />
+        <result property="remark9"    column="remark9"    />
+        <result property="remark10"    column="remark10"    />
+    </resultMap>
+	
+	<sql id="selectGuestbookVo">
+        select id, type, content, name, email, phone, workunit, ip, re_user_id, re_date, re_content, create_by, create_date, update_by, update_date, remark, del_flag, remark1, remark2, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10 from cms_guestbook
+    </sql>
+	
+    <select id="selectGuestbookList" parameterType="Guestbook" resultMap="GuestbookResult">
+        <include refid="selectGuestbookVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="type != null  and type != '' "> and type = #{type}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="email != null  and email != '' "> and email = #{email}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="workunit != null  and workunit != '' "> and workunit = #{workunit}</if>
+             <if test="ip != null  and ip != '' "> and ip = #{ip}</if>
+             <if test="reUserId != null  and reUserId != '' "> and re_user_id = #{reUserId}</if>
+             <if test="reDate != null "> and re_date = #{reDate}</if>
+             <if test="reContent != null  and reContent != '' "> and re_content = #{reContent}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remark1 != null  and remark1 != '' "> and remark1 = #{remark1}</if>
+             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
+             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
+             <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
+             <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
+             <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
+             <if test="remark7 != null  and remark7 != '' "> and remark7 = #{remark7}</if>
+             <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
+             <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
+             <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+         </where>
+    </select>
+    
+    <select id="selectGuestbookById" parameterType="String" resultMap="GuestbookResult">
+        <include refid="selectGuestbookVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGuestbook" parameterType="Guestbook">
+        insert into cms_guestbook
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="type != null  and type != ''  ">type,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="email != null  and email != ''  ">email,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="workunit != null  and workunit != ''  ">workunit,</if>
+			<if test="ip != null  and ip != ''  ">ip,</if>
+			<if test="reUserId != null  and reUserId != ''  ">re_user_id,</if>
+			<if test="reDate != null  ">re_date,</if>
+			<if test="reContent != null  and reContent != ''  ">re_content,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remark1 != null  and remark1 != ''  ">remark1,</if>
+			<if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+			<if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+			<if test="remark4 != null  and remark4 != ''  ">remark4,</if>
+			<if test="remark5 != null  and remark5 != ''  ">remark5,</if>
+			<if test="remark6 != null  and remark6 != ''  ">remark6,</if>
+			<if test="remark7 != null  and remark7 != ''  ">remark7,</if>
+			<if test="remark8 != null  and remark8 != ''  ">remark8,</if>
+			<if test="remark9 != null  and remark9 != ''  ">remark9,</if>
+			<if test="remark10 != null  and remark10 != ''  ">remark10,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="type != null  and type != ''  ">#{type},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="email != null  and email != ''  ">#{email},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="workunit != null  and workunit != ''  ">#{workunit},</if>
+			<if test="ip != null  and ip != ''  ">#{ip},</if>
+			<if test="reUserId != null  and reUserId != ''  ">#{reUserId},</if>
+			<if test="reDate != null  ">#{reDate},</if>
+			<if test="reContent != null  and reContent != ''  ">#{reContent},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
+			<if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+			<if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+			<if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
+			<if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
+			<if test="remark6 != null  and remark6 != ''  ">#{remark6},</if>
+			<if test="remark7 != null  and remark7 != ''  ">#{remark7},</if>
+			<if test="remark8 != null  and remark8 != ''  ">#{remark8},</if>
+			<if test="remark9 != null  and remark9 != ''  ">#{remark9},</if>
+			<if test="remark10 != null  and remark10 != ''  ">#{remark10},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGuestbook" parameterType="Guestbook">
+        update cms_guestbook
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null  and type != ''  ">type = #{type},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="workunit != null  and workunit != ''  ">workunit = #{workunit},</if>
+            <if test="ip != null  and ip != ''  ">ip = #{ip},</if>
+            <if test="reUserId != null  and reUserId != ''  ">re_user_id = #{reUserId},</if>
+            <if test="reDate != null  ">re_date = #{reDate},</if>
+            <if test="reContent != null  and reContent != ''  ">re_content = #{reContent},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''  ">remark7 = #{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''  ">remark8 = #{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteGuestbookById" parameterType="String">
+        delete from cms_guestbook where id = #{id}
+    </delete>
+	
+    <delete id="deleteGuestbookByIds" parameterType="String">
+        delete from cms_guestbook where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
