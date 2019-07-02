@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 import com.ruoyi.common.config.Global;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.knowledge.domain.ArticleData;
 import com.ruoyi.knowledge.domain.CmsCategory;
@@ -73,6 +74,11 @@ public class ArticleController extends BaseController
 	public TableDataInfo list(Article article)
 	{
 		startPage();
+//		if (StringUtils.isNotNull(ShiroUtils.getUserId()) && SysUser.isAdmin(ShiroUtils.getUserId()))
+//		{
+//		}else{
+//			article.setCreateBy(ShiroUtils.getUserId()+"");
+//		}
         List<Article> list = articleService.selectArticleList(article);
 		return getDataTable(list);
 	}
