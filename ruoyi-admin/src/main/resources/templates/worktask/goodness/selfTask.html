@@ -181,7 +181,8 @@
                     title: '任务进度',
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value+"%";
+                        var html = ' <small>完成度: '+value+'%</small> <div class="progress progress-mini"><div style="width: '+value+'%;" class="progress-bar"></div>  </div>';
+                        return html;
                     }
                 },
 
