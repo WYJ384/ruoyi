@@ -111,7 +111,7 @@
         <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
             <label class="col-sm-3 control-label">进度描述：</label>
             <div class="col-sm-8">
-                <textarea id="processText" name="processText" class="form-control"></textarea>
+                <textarea  id="processText" name="processText" ></textarea>
             </div>
         </div>
         <label class="col-sm-3 control-label"></label>
@@ -128,7 +128,7 @@
                                     th:text="${#dates.format(process.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-05-09 16:58:40 </span>提交任务进度，完成<span
                                     class="task-pitems-progress" th:text="${process.percentAge}+'%'">50%</span>
                             </div>
-                            <div class="task-pitem-desc" th:text="'进度描述:'+${process.processText}">进度描述：222</div>
+                            <div class="task-pitem-desc" th:utext="'进度描述:'+${process.processText}">进度描述：222</div>
                         </li>
 
 
@@ -172,7 +172,7 @@
                             </div>
                             <div class="task-sitem-option clear">
                                 <label class="task-sitem-label">任务描述</label>
-                                <div class="task-sitem-text" th:text="${task.taskContent}"></div>
+                                <div class="task-sitem-text" th:utext="${task.taskContent}"></div>
                             </div>
                             <div class="task-sitem-option clear">
                                 <label class="task-sitem-label">任务进度</label>
@@ -213,6 +213,10 @@
 <script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
 <script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"> </script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
 <script th:src="@{/ajax/libs/select/select2.js}"></script>
 
 <script type="text/javascript">
@@ -230,6 +234,10 @@
         maxFilesNum: 10,
 
     });
+    $(function () {
+        UE.getEditor('processText');
+    });
+
     var prefix = ctx + "worktask/selfTaskProcess";
     $("#form-selfTask-edit").validate({
         rules: {
@@ -275,6 +283,11 @@
     }
     function submitHandler() {
         if ($.validate.form()) {
+           var editor= UE.getEditor('processText');
+           if(editor.getPlainTxt().trim()==""||editor.getPlainTxt()==null){
+               $.modal.msgError("请输入进度");
+               return;
+           }
             var config = {
                 url: prefix + "/add",
                 type: "post",
