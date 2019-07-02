@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.exam;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -129,6 +130,8 @@ public class ResultController extends BaseController {
         }
         result.setUserId(ShiroUtils.getUserId()+"");
         result.setCreateBy(ShiroUtils.getUserId()+"");
+
+        result.setCreateDate(new Date());
         result.setExamId(examId);
         result.setScore(score);
         result.setQuestionAnwser(strResult);

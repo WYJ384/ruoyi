@@ -1,79 +1,162 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.exam.mapper.ResultMapper">
-    
+
     <resultMap type="Result" id="ResultResult">
-        <result property="examId"    column="exam_id"    />
-        <result property="questionId"    column="question_id"    />
-        <result property="userId"    column="user_id"    />
-        <result property="score"    column="score"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createDate"    column="create_date"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateDate"    column="update_date"    />
-        <result property="remark"    column="remark"    />
-        <result property="delFlag"    column="del_flag"    />
-        <result property="questionAnwser"    column="question_anwser"    />
+        <result property="examId" column="exam_id"/>
+        <result property="questionId" column="question_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="score" column="score"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="remark" column="remark"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="questionAnwser" column="question_anwser"/>
+        <result property="remark1" column="remark1"/>
+        <result property="remark2" column="remark2"/>
+        <result property="remark3" column="remark3"/>
+        <result property="remark4" column="remark4"/>
+        <result property="remark5" column="remark5"/>
+        <result property="remark6" column="remark6"/>
+        <result property="remark7" column="remark7"/>
+        <result property="remark8" column="remark8"/>
+        <result property="remark9" column="remark9"/>
+        <result property="remark10" column="remark10"/>
+        <association property="sysUser" column="user_id" javaType="SysUser" resultMap="SysUserResult"/>
+        <association property="exam" column="exam_id" javaType="Exam" resultMap="ExamResult"/>
     </resultMap>
-	
-	<sql id="selectResultVo">
-        select exam_id, question_id, user_id, score, create_by, create_date, update_by, update_date, remark, del_flag, question_anwser from exam_result
+    <resultMap type="SysUser" id="SysUserResult">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+    <resultMap type="Exam" id="ExamResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="beginTime" column="begin_time"/>
+        <result property="endTime" column="end_time"/>
+    </resultMap>
+    <sql id="selectResultVo">
+            SELECT
+                exam_result.exam_id,
+                sys_user.user_name,
+                exam_exam.`name`,
+                exam_exam.begin_time,
+                exam_exam.end_time,
+                exam_result.question_id,
+                exam_result.user_id,
+                exam_result.score,
+                exam_result.create_by,
+                exam_result.create_date,
+                exam_result.update_by,
+                exam_result.update_date,
+                exam_result.remark,
+                exam_result.del_flag,
+                question_anwser,
+                exam_result.remark1,
+                exam_result.remark2,
+                exam_result.remark3,
+                exam_result.remark4,
+                exam_result.remark5,
+                exam_result.remark6,
+                exam_result.remark7,
+                exam_result.remark8,
+                exam_result.remark9,
+                exam_result.remark10
+            FROM
+                exam_result
+            INNER JOIN sys_user ON sys_user.user_id = exam_result.user_id
+            INNER JOIN exam_exam ON exam_exam.id = exam_result.exam_id
     </sql>
-	
+
     <select id="selectResultList" parameterType="Result" resultMap="ResultResult">
         <include refid="selectResultVo"/>
-        <where>  
-            <if test="examId != null  and examId != '' "> and exam_id = #{examId}</if>
-             <if test="questionId != null  and questionId != '' "> and question_id = #{questionId}</if>
-             <if test="userId != null  and userId != '' "> and user_id = #{userId}</if>
-             <if test="score != null "> and score = #{score}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
-             <if test="createDate != null "> and create_date = #{createDate}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateDate != null "> and update_date = #{updateDate}</if>
-             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
-             <if test="questionAnwser != null  and questionAnwser != '' "> and question_anwser = #{questionAnwser}</if>
-         </where>
+        <where>
+            <if test="examId != null  and examId != '' ">and exam_result.exam_id = #{examId}</if>
+            <if test="questionId != null  and questionId != '' ">and exam_result.question_id = #{questionId}</if>
+            <if test="userId != null  and userId != '' ">and exam_result.user_id = #{userId}</if>
+            <if test="score != null ">and exam_result.score = #{score}</if>
+            <if test="createBy != null  and createBy != '' ">and exam_result.create_by = #{createBy}</if>
+            <if test="createDate != null ">and exam_result.create_date = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != '' ">and exam_result.update_by = #{updateBy}</if>
+            <if test="updateDate != null ">and exam_result.update_date = #{updateDate}</if>
+            <if test="remark != null  and remark != '' ">and exam_result.remark = #{remark}</if>
+            <if test="delFlag != null  and delFlag != '' ">and exam_result.del_flag = #{delFlag}</if>
+            <if test="questionAnwser != null  and questionAnwser != '' ">and exam_result.question_anwser =
+                #{questionAnwser}
+            </if>
+            <if test="remark1 != null  and remark1 != '' ">and exam_result.remark1 = #{remark1}</if>
+            <if test="remark2 != null  and remark2 != '' ">and exam_result.remark2 = #{remark2}</if>
+            <if test="remark3 != null  and remark3 != '' ">and exam_result.remark3 = #{remark3}</if>
+            <if test="remark4 != null  and remark4 != '' ">and exam_result.remark4 = #{remark4}</if>
+            <if test="remark5 != null  and remark5 != '' ">and exam_result.remark5 = #{remark5}</if>
+            <if test="remark6 != null  and remark6 != '' ">and exam_result.remark6 = #{remark6}</if>
+            <if test="remark7 != null  and remark7 != '' ">and exam_result.remark7 = #{remark7}</if>
+            <if test="remark8 != null  and remark8 != '' ">and exam_result.remark8 = #{remark8}</if>
+            <if test="remark9 != null  and remark9 != '' ">and exam_result.remark9 = #{remark9}</if>
+            <if test="remark10 != null  and remark10 != '' ">and exam_result.remark10 = #{remark10}</if>
+        </where>
     </select>
-    
+
     <select id="selectResultById" parameterType="String" resultMap="ResultResult">
         <include refid="selectResultVo"/>
         where exam_id = #{examId}
     </select>
-        
+
     <insert id="insertResult" parameterType="Result">
         insert into exam_result
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="examId != null  and examId != ''  ">exam_id,</if>
-			<if test="questionId != null  and questionId != ''  ">question_id,</if>
-			<if test="userId != null  and userId != ''  ">user_id,</if>
-			<if test="score != null  ">score,</if>
-			<if test="createBy != null  and createBy != ''  ">create_by,</if>
-			<if test="createDate != null  ">create_date,</if>
-			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updateDate != null  ">update_date,</if>
-			<if test="remark != null  and remark != ''  ">remark,</if>
-			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
-			<if test="questionAnwser != null  and questionAnwser != ''  ">question_anwser,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="examId != null  and examId != ''  ">exam_id,</if>
+            <if test="questionId != null  and questionId != ''  ">question_id,</if>
+            <if test="userId != null  and userId != ''  ">user_id,</if>
+            <if test="score != null  ">score,</if>
+            <if test="createBy != null  and createBy != ''  ">create_by,</if>
+            <if test="createDate != null  ">create_date,</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+            <if test="updateDate != null  ">update_date,</if>
+            <if test="remark != null  and remark != ''  ">remark,</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+            <if test="questionAnwser != null  and questionAnwser != ''  ">question_anwser,</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1,</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4,</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5,</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6,</if>
+            <if test="remark7 != null  and remark7 != ''  ">remark7,</if>
+            <if test="remark8 != null  and remark8 != ''  ">remark8,</if>
+            <if test="remark9 != null  and remark9 != ''  ">remark9,</if>
+            <if test="remark10 != null  and remark10 != ''  ">remark10,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="examId != null  and examId != ''  ">#{examId},</if>
-			<if test="questionId != null  and questionId != ''  ">#{questionId},</if>
-			<if test="userId != null  and userId != ''  ">#{userId},</if>
-			<if test="score != null  ">#{score},</if>
-			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
-			<if test="createDate != null  ">#{createDate},</if>
-			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updateDate != null  ">#{updateDate},</if>
-			<if test="remark != null  and remark != ''  ">#{remark},</if>
-			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
-			<if test="questionAnwser != null  and questionAnwser != ''  ">#{questionAnwser},</if>
-         </trim>
+            <if test="examId != null  and examId != ''  ">#{examId},</if>
+            <if test="questionId != null  and questionId != ''  ">#{questionId},</if>
+            <if test="userId != null  and userId != ''  ">#{userId},</if>
+            <if test="score != null  ">#{score},</if>
+            <if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+            <if test="createDate != null  ">#{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+            <if test="updateDate != null  ">#{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">#{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+            <if test="questionAnwser != null  and questionAnwser != ''  ">#{questionAnwser},</if>
+            <if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">#{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''  ">#{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''  ">#{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''  ">#{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''  ">#{remark10},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateResult" parameterType="Result">
         update exam_result
         <trim prefix="SET" suffixOverrides=",">
@@ -87,19 +170,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
             <if test="questionAnwser != null  and questionAnwser != ''  ">question_anwser = #{questionAnwser},</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''  ">remark7 = #{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''  ">remark8 = #{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
         </trim>
         where exam_id = #{examId}
     </update>
 
-	<delete id="deleteResultById" parameterType="String">
+    <delete id="deleteResultById" parameterType="String">
         delete from exam_result where exam_id = #{examId}
     </delete>
-	
+
     <delete id="deleteResultByIds" parameterType="String">
-        delete from exam_result where exam_id in 
+        delete from exam_result where exam_id in
         <foreach item="examId" collection="array" open="(" separator="," close=")">
             #{examId}
         </foreach>
     </delete>
-    
+
 </mapper>
