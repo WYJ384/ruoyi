@@ -699,12 +699,16 @@
 
         $.operate.save(ctx + "exam/result/add", $('#form_paper_detail').serialize() + "&examId=" + '[[${examId}]]');
     }
-
-    var count = 0;
+    //防作弊，倒计时五秒提交
+    var inter;
     window.onblur = function () {
-       submitHandler();
+        inter= window.setInterval(function(){
+            submitHandler();
+        },5000)
     }
-
+    window.onfocus = function () {
+        window.clearInterval(inter)
+    }
 </script>
 </body>
 
