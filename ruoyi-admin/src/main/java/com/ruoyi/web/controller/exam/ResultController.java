@@ -5,12 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.exam.domain.Exam;
-import com.ruoyi.exam.domain.LibraryDetail;
-import com.ruoyi.exam.domain.PaperQuestion;
-import com.ruoyi.exam.service.IExamService;
-import com.ruoyi.exam.service.ILibraryDetailService;
-import com.ruoyi.exam.service.IPaperQuestionService;
+import com.ruoyi.exam.domain.*;
+import com.ruoyi.exam.service.*;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.exam.domain.Result;
-import com.ruoyi.exam.service.IResultService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -48,6 +42,8 @@ public class ResultController extends BaseController {
     private IResultService resultService;
     @Autowired
     private IExamService examService;
+    @Autowired
+    private IExamUserService examUserService;
     @Autowired
     private IPaperQuestionService paperQuestionService;
     @RequiresPermissions("exam:result:view")
@@ -130,12 +126,24 @@ public class ResultController extends BaseController {
         }
         result.setUserId(ShiroUtils.getUserId()+"");
         result.setCreateBy(ShiroUtils.getUserId()+"");
-
         result.setCreateDate(new Date());
         result.setExamId(examId);
         result.setScore(score);
         result.setQuestionAnwser(strResult);
 		resultService.insertResult(result);
+
+
+        ExamUser examUser=new ExamUser();
+        examUser.setUserId(ShiroUtils.getUserId()+"");
+        examUser.setExamId(examId);
+        List<ExamUser> examUsers = examUserService.selectExamUserList(examUser);
+        if(examUsers!=null&&examUsers.size()>0){
+            ExamUser examUser1 = examUsers.get(0);
+            examUser1.setRemark("1");
+            examUser1.setExamId(examId);
+            examUser1.setUserId(ShiroUtils.getUserId()+"");
+            examUserService.updateExamUser(examUser1);
+        }
         return toAjax(1);
     }
 

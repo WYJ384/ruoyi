@@ -102,7 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
         </trim>
-        where exam_id = #{examId}
+        where exam_id = #{examId} and user_id = #{userId}
     </update>
 
 	<delete id="deleteExamUserById" parameterType="String">

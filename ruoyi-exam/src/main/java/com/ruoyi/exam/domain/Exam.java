@@ -41,9 +41,18 @@ public class Exam extends BaseEntity
 	private Date updateDate;
 	/** 备注信息 */
 	private String remark;
+	private String userRemark;
 	/** 删除标记 */
 	private String delFlag;
 	private String userId;
+
+	public String getUserRemark() {
+		return userRemark;
+	}
+
+	public void setUserRemark(String userRemark) {
+		this.userRemark = userRemark;
+	}
 
 	public String getUserId() {
 		return userId;

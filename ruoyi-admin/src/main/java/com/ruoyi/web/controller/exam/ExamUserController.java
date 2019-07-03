@@ -97,6 +97,7 @@ public class ExamUserController extends BaseController
 			examUser.setCreateBy(ShiroUtils.getUserId()+"");
 			examUser.setCreateDate(new Date());
 			examUser.setUserId(userId);
+			examUser.setRemark("0"); //标记未考试状态
 			int ret = examUserService.insertExamUser(examUser);
 
 		}

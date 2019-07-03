@@ -28,7 +28,7 @@ public class ExamUser extends BaseEntity
 	private String updateBy;
 	/** 更新时间 */
 	private Date updateDate;
-	/** 备注信息 */
+	/** 考试状态 */
 	private String remark;
 	/** 删除标记 */
 	private String delFlag;
