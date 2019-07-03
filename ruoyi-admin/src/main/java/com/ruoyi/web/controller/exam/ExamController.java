@@ -122,7 +122,8 @@ public class ExamController extends BaseController
 		Exam exam = examService.selectExamById(examId);
 		mmap.addAttribute("examId",examId);
 		mmap.addAttribute("exam",exam);
-
+		Paper paper = paperService.selectPaperById(exam.getExamPaperId());
+		mmap.addAttribute("paper",paper);
 		return prefix + "/examing";
 	}
 
