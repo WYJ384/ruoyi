@@ -102,6 +102,19 @@ public class LibraryDetailServiceImpl implements ILibraryDetailService
 
 			try
 			{
+				String libType = libraryDetail.getLibType();
+				if(libType.equals("单选题")){
+					libType="1";
+				}else if(libType.equals("多选题")){
+					libType="2";
+				}else if(libType.equals("判断题")){
+					libType="4";
+				}else if(libType.equals("填空题")){
+					libType="3";
+				}else if(libType.equals("简答题")){
+					libType="5";
+				}
+				libraryDetail.setLibType(libType);
 				libraryDetail.setLibId(libId);
 				libraryDetail.setId(UUID.randomUUID().toString().replaceAll("-",""));
 				libraryDetail.setCreateBy(operName);
