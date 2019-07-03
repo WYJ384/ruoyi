@@ -70,6 +70,7 @@ public class FArticleController extends FBaseController
 		getMenu(modelMap);
 		CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(article.getCategoryId());
 		String customContentView = cmsCategory.getCustomContentView();
+		modelMap.put("cmsCategory", cmsCategory);
 		if(StringUtils.isNotEmpty(customContentView)){
 			return "/front/"+prefix + "/"+customContentView;
 		}else{

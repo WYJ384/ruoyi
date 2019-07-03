@@ -18,7 +18,10 @@
 <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
 <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
 <!--    </div>-->
-
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/f/fIndexController/index">首页</a></li>
+        <li class="breadcrumb-item"><a href="#" th:text="${cmsCategory.name}">Library</a></li>
+    </ol>
 
     <div class="text-center article-title">
         <span class="text-muted" ><i class="fa fa-clock-o"></i> <span th:text="${#dates.format(article.createDate, 'yyyy年MM月dd日')}">2017年10月28日</span> </span>
