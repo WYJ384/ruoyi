@@ -134,11 +134,15 @@ public class WorkTaskController extends BaseController
 
 				}
 			}
-			SysDept leadDept = deptService.selectDeptById(Long.valueOf(task.getLeadDeptId()));
-
-			if(leadDept!=null){
-				task.setLeadDeptName(leadDept.getDeptName());
+			if(task!=null){
+				SysDept leadDept = deptService.selectDeptById(Long.valueOf(task.getLeadDeptId()));
+				if(leadDept!=null){
+					task.setLeadDeptName(leadDept.getDeptName());
+				}
 			}
+
+
+
 
 		}
 		return getDataTable(list);
