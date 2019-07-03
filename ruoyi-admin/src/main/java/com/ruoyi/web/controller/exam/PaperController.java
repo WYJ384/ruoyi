@@ -50,9 +50,7 @@ public class PaperController extends BaseController {
 
     @RequiresPermissions("exam:paper:view")
     @GetMapping()
-    public String paper() {
-        return prefix + "/paper";
-    }
+    public String paper() { return prefix + "/paper"; }
 
     /**
      * 查询试卷列表
@@ -62,6 +60,7 @@ public class PaperController extends BaseController {
     @ResponseBody
     public TableDataInfo list(Paper paper) {
         startPage();
+        paper.setCreateBy(ShiroUtils.getUserId()+"");
         List<Paper> list = paperService.selectPaperList(paper);
         return getDataTable(list);
     }
