@@ -698,7 +698,7 @@
     function submitHandler() {
 
         $.operate.save(ctx + "exam/result/add", $('#form_paper_detail').serialize() + "&examId=" + '[[${examId}]]');
-    }
+    }   
     //防作弊，倒计时五秒提交
     var inter;
     window.onblur = function () {
