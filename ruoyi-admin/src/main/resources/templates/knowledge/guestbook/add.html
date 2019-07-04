@@ -11,6 +11,12 @@
 <!--					<input id="type" name="type" class="form-control" type="text">-->
 <!--				</div>-->
 <!--			</div>-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">问题描述：</label>
+				<div class="col-sm-8">
+					<textarea id="remark1" name="remark1" class="form-control" required placeholder="问题描述"></textarea>
+				</div>
+			</div>
 			<script id="content" name="content" type="text/plain" style="width:100%;height:300px;"></script>
 <!--			<div class="form-group">	-->
 <!--				<label class="col-sm-3 control-label">姓名：</label>-->
@@ -174,9 +180,10 @@
 		var prefix = ctx + "knowledge/guestbook"
 		$("#form-guestbook-add").validate({
 			rules:{
-				content:{
+				remark1:{
 					required:true,
 				},
+
 			},
 			focusCleanup: true
 		});
