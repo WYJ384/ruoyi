@@ -5,8 +5,8 @@
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form class="form-horizontal m" id="form-exam-add">
-        <input id="id" name="id" th:value="${id}"  type="hidden">
-        <input id="examUser" name="examUser"  type="hidden">
+        <input id="id" name="id" th:value="${id}" type="hidden">
+        <input id="examUser" name="examUser" type="hidden">
 
         <div class="form-group">
             <label class="col-sm-3 control-label"> 考试名称：</label>
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>试卷批阅人：</label>
             <div class="col-sm-8">
-                <select id="readUserId" name="readUserId" class="form-control select2-hidden-accessible">
+                <select id="readUserId" name="readUserId" class="form-control select2-hidden-accessible" multiple>
                     <option th:each="user:${users}" th:value="${user.userId}"
                             th:text="${user.userName}"></option>
                 </select>
@@ -81,21 +81,35 @@
 
 <script type="text/javascript">
     var prefix = ctx + "exam/exam"
+    jQuery.validator.methods.compareDate = function (value, element, param) {
+        var startDate = jQuery(param).val();
+        var date1 = new Date(Date.parse(startDate.replace("-", "/")));
+        var date2 = new Date(Date.parse(value.replace("-", "/")));
+        return date1 < date2;
+    };
     $("#form-exam-add").validate({
         rules: {
             name: {
                 required: true,
             },
-            time:{
+            time: {
                 required: true,
             },
-            beginTime:{
+            beginTime: {
                 required: true,
             },
-            endTime:{
-                required: true,
+            endTime: {
+                compareDate: "#beginTime"
             }
 
+        }, messages: {
+            "beginTime": {
+                required: "开始时间不能为空!"
+            },
+            "endTime": {
+                required: "结束时间不能为空!",
+                compareDate: "结束时间必须大于开始时间!"
+            }
         },
         focusCleanup: true
     });
@@ -123,12 +137,14 @@
         });
 
     });
+
     function addUser() {
-        $.modal.open("指定考试人员",prefix+"/examUser/"+$("#id").val());
+        $.modal.open("指定考试人员", prefix + "/examUser/" + $("#id").val());
     }
+
     $(function () {
         var options = {
-            url: ctx + "exam/examUser" + "/list?examId="+$("#id").val(),
+            url: ctx + "exam/examUser" + "/list?examId=" + $("#id").val(),
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
@@ -139,19 +155,19 @@
                 checkbox: true
             },
                 {
-                    field : 'examId',
-                    title : 'examId',
+                    field: 'examId',
+                    title: 'examId',
                     visible: false
                 },
                 {
-                    field : 'userId',
-                    title : 'userId',
+                    field: 'userId',
+                    title: 'userId',
                     sortable: true
                 },
                 {
                     title: '操作',
                     align: 'center',
-                    formatter: function(value, row, index) {
+                    formatter: function (value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + 1 + '" href="#" onclick="$.operate.edit(\'' + row.examId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + 1 + '" href="#" onclick="$.operate.remove(\'' + row.examId + '\')"><i class="fa fa-remove"></i>删除</a>');
