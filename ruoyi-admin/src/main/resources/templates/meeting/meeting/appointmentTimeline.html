@@ -164,7 +164,12 @@
 <script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-timegrid/main.js}'></script>
 <script type="text/javascript" th:src="@{/week/js/week.js}"></script>
 <script type="text/javascript">
-
+    jQuery.validator.methods.compareDate = function (value, element, param) {
+        var startDate = jQuery(param).val();
+        var date1 = new Date(Date.parse(startDate.replace("-", "/")));
+        var date2 = new Date(Date.parse(value.replace("-", "/")));
+        return date1 < date2;
+    };
     var prefix = ctx + "meeting/meeting"
     $("#form-meeting-add").validate({
         rules: {
@@ -172,12 +177,22 @@
                 required: true,
             },
             meetingBeginTime: {
+
                 required: true,
             },
             meetingEndTime: {
-                required: true,
+                compareDate: "#meetingBeginTime"
             },
 
+        },
+        messages: {
+            "meetingBeginTime": {
+                required: "开始时间不能为空!"
+            },
+            "meetingEndTime": {
+                required: "结束时间不能为空!",
+                compareDate: "完成时间必须大于开始时间!"
+            }
         },
         focusCleanup: true
     });

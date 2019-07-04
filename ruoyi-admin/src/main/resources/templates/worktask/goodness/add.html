@@ -115,6 +115,12 @@
         UE.getEditor('taskContent');
         UE.getEditor('remark5');
     });
+    jQuery.validator.methods.compareDate = function (value, element, param) {
+        var startDate = jQuery(param).val();
+        var date1 = new Date(Date.parse(startDate.replace("-", "/")));
+        var date2 = new Date(Date.parse(value.replace("-", "/")));
+        return date1 < date2;
+    };
     var prefix = ctx + "worktask/goodness"
     $("#form-selfTask-add").validate({
         rules: {
@@ -138,7 +144,7 @@
                 required: true,
             },
             requireTime: {
-                required: true,
+                compareDate: "#startDate"
             },
             executorUser: {
                 required: true,
@@ -146,6 +152,15 @@
             acceptorUser: {
                 required: true,
             },
+        },
+        messages: {
+            "startDate": {
+                required: "开始时间不能为空!"
+            },
+            "requireTime": {
+                required: "完成时间不能为空!",
+                compareDate: "完成时间必须大于开始时间!"
+            }
         },
         focusCleanup: true
     });

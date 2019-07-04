@@ -98,6 +98,13 @@
 	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"> </script>
 	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
 	<script type="text/javascript">
+		jQuery.validator.methods.compareDate = function (value, element, param) {
+			var startDate = jQuery(param).val();
+			var date1 = new Date(Date.parse(startDate.replace("-", "/")));
+			var date2 = new Date(Date.parse(value.replace("-", "/")));
+			return date1 < date2;
+		};
+
 		$(function () {
 			UE.getEditor('taskContent');
 		});
@@ -111,7 +118,7 @@
 					required:true,
 				},
 				requireTime:{
-					required:true,
+					compareDate: "#startDate"
 				},
 				executorUser:{
 					required:true,
@@ -119,6 +126,15 @@
 				acceptorUser:{
 					required:true,
 				},
+			},
+			messages: {
+				"startDate": {
+					required: "开始时间不能为空!"
+				},
+				"requireTime": {
+					required: "完成时间不能为空!",
+					compareDate: "完成时间必须大于开始时间!"
+				}
 			},
 			focusCleanup: true
 		});
