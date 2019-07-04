@@ -2,9 +2,11 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
-<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet" type="text/css" />
-<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" th:href="@{/css/flowChart.css}" />
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet"
+      type="text/css"/>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet"
+      type="text/css"/>
+<link rel="stylesheet" th:href="@{/css/flowChart.css}"/>
 <style type="text/css">
     /* attch */
     .attch-list {
@@ -269,9 +271,9 @@
 
                         <div class="well" th:utext="${workTask.description}"></div>
 
-<!--                        <textarea readonly name="description" th:field="*{description}" autocomplete="off"-->
-<!--                                  maxlength="500"-->
-<!--                                  class="form-control" rows="3"></textarea>-->
+                        <!--                        <textarea readonly name="description" th:field="*{description}" autocomplete="off"-->
+                        <!--                                  maxlength="500"-->
+                        <!--                                  class="form-control" rows="3"></textarea>-->
                     </div>
                 </div>
             </div>
@@ -315,7 +317,7 @@
         <input name="taskId" th:value="${taskId}" type="hidden">
         <input name="taskKey" id="taskKey" th:value="${taskKey}" type="hidden">
         <input name="workTaskId" id="workTaskId" th:value="${workTaskActivity.workTaskId}" type="hidden">
-        <input name="submitType" id="submitType"   type="hidden">
+        <input name="submitType" id="submitType" type="hidden">
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
@@ -331,7 +333,9 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">要求完成时间：</label>
                     <div class="col-sm-10">
-                        <input name="updateTime" readonly th:value="${#dates.format(workTaskActivity?.updateTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"
+                        <input name="updateTime" readonly
+                               th:value="${#dates.format(workTaskActivity?.updateTime, 'yyyy-MM-dd HH:mm:ss')}"
+                               class="form-control"
                                type="text">
                     </div>
                 </div>
@@ -346,7 +350,7 @@
                         <select id="userIds" name="userIds" class="form-control select2-hidden-accessible">
                             <option value=""></option>
                             <option th:each="user:${users}" th:value="${user.loginName}"
-                                    th:text="${user.userName}" ></option>
+                                    th:text="${user.userName}"></option>
                         </select>
                     </div>
                 </div>
@@ -357,10 +361,11 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label"><span style="color: red; ">*</span>汇报内容：</label>
                     <div class="col-sm-10">
-<!--                       <textarea th:text="${workTaskActivity.content}" rows="6" name="content"-->
-<!--                                 class="form-control"></textarea>-->
+                        <!--                       <textarea th:text="${workTaskActivity.content}" rows="6" name="content"-->
+                        <!--                                 class="form-control"></textarea>-->
 
-                        <script id="target" name="content" type="text/plain" style="width:1024px;height:500px;" th:utext="${workTaskActivity.content}" ></script>
+                        <script id="target" name="content" type="text/plain" style="width:1024px;height:500px;"
+                                th:utext="${workTaskActivity.content}"></script>
 
                     </div>
                 </div>
@@ -381,35 +386,37 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">汇报内容：</label>
                     <div class="col-sm-10">
-<!--                       <textarea th:text="${workTaskActivity.content}" readonly rows="6" name="content"-->
-<!--                                 class="form-control"></textarea>-->
+                        <!--                       <textarea th:text="${workTaskActivity.content}" readonly rows="6" name="content"-->
+                        <!--                                 class="form-control"></textarea>-->
                         <div class="well" th:utext="${workTaskActivity.content}"></div>
 
                     </div>
                 </div>
             </div>
         </div>
-<!--        <div class="row" th:if="${taskKey=='lingdaopingfen'}">-->
-<!--            -->
-<!--        </div>-->
+        <!--        <div class="row" th:if="${taskKey=='lingdaopingfen'}">-->
+        <!--            -->
+        <!--        </div>-->
         <div class="col-sm-12">
             <div class="form-group">
                 <label class="col-sm-2 control-label">任务附件：</label>
                 <div class="col-sm-10">
-<!--                    <p th:each="taskfile:${workTaskActivity.workTaskFiles}">-->
-<!--                        <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"-->
-<!--                           th:text="${taskfile.fileName}"></a>-->
-<!--                    </p>-->
+                    <!--                    <p th:each="taskfile:${workTaskActivity.workTaskFiles}">-->
+                    <!--                        <a th:onclick="'javascript:downloadFile(\''+${taskfile.id}+'\');'"-->
+                    <!--                           th:text="${taskfile.fileName}"></a>-->
+                    <!--                    </p>-->
                     <ul id="task_file_list" class="attch-list" style="display: block;">
-                        <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskActivity.workTaskFiles}"><i class="attch-itm-icon xlsx"></i><a
+                        <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskActivity.workTaskFiles}"><i
+                                class="attch-itm-icon xlsx"></i><a
                                 class="attch-itm-name"
                                 th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
-                                target="_blank" th:text="${file.fileName}" th:title="${file.fileName}" ></a><span
+                                target="_blank" th:text="${file.fileName}" th:title="${file.fileName}"></a><span
                                 class="attch-itm-size"></span><span class="attch-itm-state"></span><a
                                 class="attch-itm-dload"
                                 th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
                                 target="_blank">下载</a>
-                            <a class="attch-itm-delete"  th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a></li>
+                            <a class="attch-itm-delete" th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -419,7 +426,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label"><span style="color: red; ">*</span>任务得分：</label>
                     <div class="col-sm-10">
-                        <input name="targetScore" id="targetScore" th:value="${workTaskActivity.targetScore}" class="form-control"
+                        <input name="targetScore" id="targetScore" th:value="${workTaskActivity.targetScore}"
+                               class="form-control"
                                type="text">
                     </div>
                 </div>
@@ -428,7 +436,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">批示：</label>
                     <div class="col-sm-10">
-                        <textarea  name="repContent" id="repContent" th:text="${workTaskActivity.repContent}" class="form-control"></textarea>
+                        <textarea name="repContent" id="repContent" th:text="${workTaskActivity.repContent}"
+                                  class="form-control"></textarea>
                     </div>
                 </div>
             </div>
@@ -506,7 +515,7 @@
 <script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
 <script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
-<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"> </script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
@@ -533,6 +542,15 @@
                     return;
                 }
                 formData.append('userIds', userIds);
+            }
+
+            var taskKey = '[[${taskKey}]]';
+            if(taskKey=='lingdaopingfen'){
+                layer.tips("请输入得分", '#targetScore', {
+                    tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+                    time: 4000,
+                    area: ['300px', 'auto'],
+                })
             }
             if ($('#file')[0]) {
                 formData.append('file', $('#file')[0].files[0]);
@@ -568,25 +586,26 @@
 
     function submitHandler(submitType) {
         $("#submitType").val(submitType);
-       $("#form-workTaskActivity-edit").submit();
+        $("#form-workTaskActivity-edit").submit();
     }
+
     function downloadFile(fileId) {
         window.location.href = ctx + "worktask/workTaskFile/downloadFile/" + fileId;
     }
 
-    function deleteFile(id){
+    function deleteFile(id) {
 
 
-        $.modal.confirm("确定删除该附件吗？", function() {
-            var data = { "ids": id };
+        $.modal.confirm("确定删除该附件吗？", function () {
+            var data = {"ids": id};
             $.ajax({
-                url:ctx  + "worktask/workTaskFile/delete",
+                url: ctx + "worktask/workTaskFile/delete",
                 type: "post",
                 data: data,
                 beforeSend: function () {
                     $.modal.loading("正在处理中，请稍后...");
                 },
-                success: function(result) {
+                success: function (result) {
                     $.modal.closeLoading();
                     window.location.reload()
                 }
