@@ -334,17 +334,21 @@
         if ($.validate.form()) {
             var leaderId = $.form.selectSelects("leaderId");
             var cooperateDeptId = $.form.selectSelects("cooperateDeptId");
-
+            var userIds = $.form.selectSelects("userIds");
+            if (userIds == "") {
+                layer.tips("请选择督办主任", '#userIds', {
+                    tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+                    time: 4000,
+                    area: ['300px', 'auto'],
+                })
+                return;
+            }
             // userIds
             var formData = new FormData($("#form-workTask-add")[0]);
             formData.append('leaderId', leaderId);
             formData.append('cooperateDeptId', cooperateDeptId);
             formData.append('file', $('#file')[0].files[0]);
-            var userIds = $.form.selectSelects("userIds");
-            if (userIds == "") {
-                $.modal.alert("请选择督办主任", "error");
-                return;
-            }
+
             formData.append('userIds', userIds);
             $.ajax({
                 url: prefix + "/add",

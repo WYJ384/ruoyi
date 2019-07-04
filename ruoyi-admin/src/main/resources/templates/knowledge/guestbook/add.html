@@ -46,16 +46,17 @@
 			var editor= UE.getEditor('content');
 		})
 		function submitHandler() {
-			var editor= UE.getEditor('content');
-			if(editor.getPlainTxt().trim()==""||editor.getPlainTxt()==null){
-				layer.tips("请输入内容", '#content', {
-					tips: [1, '#f00'], //1-上，2-右，3-下，4-左
-					time: 4000,
-					area: ['300px', 'auto'],
-				})
-				return;
-			}
+
 	        if ($.validate.form()) {
+				var editor= UE.getEditor('content');
+				if(editor.getPlainTxt().trim()==""||editor.getPlainTxt()==null){
+					layer.tips("请输入内容", '#content', {
+						tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+						time: 4000,
+						area: ['300px', 'auto'],
+					})
+					return;
+				}
 	            $.operate.save(prefix + "/add", $('#form-guestbook-add').serialize());
 	        }
 	    }
