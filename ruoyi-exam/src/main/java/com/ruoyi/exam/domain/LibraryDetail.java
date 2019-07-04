@@ -89,8 +89,18 @@ public class LibraryDetail extends BaseEntity
 	private String remark9;
 	/** 扩展10 */
 	private String remark10;
+	//辅助查询
+	private String examPaperId;
 
-	public void setId(String id) 
+	public String getExamPaperId() {
+		return examPaperId;
+	}
+
+	public void setExamPaperId(String examPaperId) {
+		this.examPaperId = examPaperId;
+	}
+
+	public void setId(String id)
 	{
 		this.id = id;
 	}

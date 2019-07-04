@@ -43,10 +43,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
     <select id="selectLibraryDetailList" parameterType="LibraryDetail" resultMap="LibraryDetailResult">
         <include refid="selectLibraryDetailVo"/>
-        <where>  
+
+        <where>
+            <if test="examPaperId != null  and examPaperId != '' "> and id NOT IN
+                (  SELECT  question_id  FROM   exam_paper_question  WHERE  exam_paper_id =#{examPaperId}  )
+            </if>
             <if test="id != null  and id != '' "> and id = #{id}</if>
              <if test="libType != null  and libType != '' "> and lib_type = #{libType}</if>
-             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="title != null  and title != '' "> and title like concat('%',#{title},'%')</if>
              <if test="choiceA != null  and choiceA != '' "> and choice_a = #{choiceA}</if>
              <if test="choiceB != null  and choiceB != '' "> and choice_b = #{choiceB}</if>
              <if test="choiceC != null  and choiceC != '' "> and choice_c = #{choiceC}</if>
