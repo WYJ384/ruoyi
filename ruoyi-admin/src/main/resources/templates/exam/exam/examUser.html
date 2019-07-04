@@ -99,7 +99,7 @@
 	var removeFlag = [[${@permission.hasPermi('system:user:remove')}]];
 	var resetPwdFlag = [[${@permission.hasPermi('system:user:resetPwd')}]];
 	var datas = [[${@dict.getType('sys_normal_disable')}]];
-	var prefix = ctx + "system/user";
+	var prefix = ctx + "exam/examUser";
 
 	$(function() {
 		var panehHidden = false;
@@ -113,13 +113,7 @@
 
 	function queryUserList() {
 		var options = {
-			url: prefix + "/list",
-			createUrl: prefix + "/add",
-			updateUrl: prefix + "/edit/{id}",
-			removeUrl: prefix + "/remove",
-			exportUrl: prefix + "/export",
-			importUrl: prefix + "/importData",
-			importTemplateUrl: prefix + "/importTemplate",
+			url: prefix + "/sysUserlist?examId="+[[${id}]] ,
 			// sortName: "orderNum",
 			sortOrder: "desc",
 			modalName: "用户",
@@ -193,11 +187,9 @@
 			},
 			success: function(result) {
 				$.operate.ajaxSuccess(result);
-				parent.$('#examUser').value(1);
 			}
 		};
 		$.ajax(config)
-		parent.layer.close(index);
 
 
 	}

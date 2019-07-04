@@ -1,7 +1,9 @@
 package com.ruoyi.exam.mapper;
 
 import com.ruoyi.exam.domain.ExamUser;
-import java.util.List;	
+import com.ruoyi.system.domain.SysUser;
+
+import java.util.List;
 
 /**
  * 考试人员 数据层
@@ -58,5 +60,11 @@ public interface ExamUserMapper
      * @return 结果
      */
 	public int deleteExamUserByIds(String[] examIds);
-	
+	/**
+	 * 根据条件分页查询用户对象
+	 *
+	 * @param sysUser 用户信息
+	 * @return 用户信息集合信息
+	 */
+	public List<SysUser> selectUserList(SysUser sysUser);
 }

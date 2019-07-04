@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.ruoyi.exam.domain.PaperQuestion;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +39,8 @@ public class ExamUserController extends BaseController
 	
 	@Autowired
 	private IExamUserService examUserService;
-	
+	@Autowired
+	private ISysUserService userService;
 	@RequiresPermissions("exam:examUser:view")
 	@GetMapping()
 	public String examUser()
@@ -57,7 +60,14 @@ public class ExamUserController extends BaseController
         List<ExamUser> list = examUserService.selectExamUserList(examUser);
 		return getDataTable(list);
 	}
-	
+	@PostMapping("/sysUserlist")
+	@ResponseBody
+	public TableDataInfo sysUserlist(SysUser user)
+	{
+		startPage();
+		List<SysUser> list = examUserService.selectUserList(user);
+		return getDataTable(list);
+	}
 	
 	/**
 	 * 导出考试人员列表

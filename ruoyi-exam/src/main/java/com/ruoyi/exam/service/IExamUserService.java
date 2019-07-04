@@ -1,6 +1,8 @@
 package com.ruoyi.exam.service;
 
 import com.ruoyi.exam.domain.ExamUser;
+import com.ruoyi.system.domain.SysUser;
+
 import java.util.List;
 
 /**
@@ -50,5 +52,6 @@ public interface IExamUserService
      * @return 结果
      */
 	public int deleteExamUserByIds(String ids);
+	public List<SysUser> selectUserList(SysUser sysUser);
 	
 }

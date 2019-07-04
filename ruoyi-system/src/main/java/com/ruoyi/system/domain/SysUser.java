@@ -85,6 +85,17 @@ public class SysUser extends BaseEntity
     /** 岗位组 */
     private Long[] postIds;
 
+    //辅助查询
+    private String examId;
+
+    public String getExamId() {
+        return examId;
+    }
+
+    public void setExamId(String examId) {
+        this.examId = examId;
+    }
+
     public String getOrderNum() {
         return orderNum;
     }

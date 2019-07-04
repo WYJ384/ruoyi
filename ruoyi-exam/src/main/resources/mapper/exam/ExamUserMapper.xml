@@ -21,6 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userName"     column="user_name"    />
         <association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
     </resultMap>
+
+
     <resultMap id="deptResult" type="SysDept">
         <id     property="deptId"   column="dept_id"     />
         <result property="parentId" column="parent_id"   />
@@ -28,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orderNum" column="order_num"   />
         <result property="status"   column="dept_status" />
     </resultMap>
+
     <sql id="selectExamUserVo">
         SELECT
             exam_id,
@@ -115,5 +118,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{examId}
         </foreach>
     </delete>
+
+
+
+
+    <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
+        SELECT
+        u.user_id,
+        u.dept_id,
+        u.login_name,
+        u.user_name,
+        u.email,
+        u.phonenumber,
+        u.sex,
+        u.avatar,
+        u.salt,
+        u. STATUS,
+        u.del_flag,
+        u.login_ip,
+        u.login_date,
+        u.create_by,
+        u.create_time,
+        u.remark,
+        d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status
+        FROM
+        sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        WHERE
+        user_id NOT IN (
+            SELECT
+            user_id
+            FROM
+            exam_exam_user
+            WHERE
+            exam_id = #{examId}
+        )
+        and  u.del_flag = '0'
+        <if test="loginName != null and loginName != ''">
+            AND u.login_name like concat('%', #{loginName}, '%')
+        </if>
+        <if test="userName != null and userName != ''">
+            AND u.user_name like concat('%', #{userName}, '%')
+        </if>
+        <if test="deptId != null and deptId != 0">
+            AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors) ))
+        </if>
+        <!-- 数据范围过滤 -->
+        order by u.order_num
+    </select>
     
 </mapper>

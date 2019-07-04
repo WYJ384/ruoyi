@@ -1,6 +1,8 @@
 package com.ruoyi.exam.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.exam.mapper.ExamUserMapper;
@@ -79,5 +81,10 @@ public class ExamUserServiceImpl implements IExamUserService
 	{
 		return examUserMapper.deleteExamUserByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<SysUser> selectUserList(SysUser sysUser) {
+		return examUserMapper.selectUserList(sysUser);
+	}
+
 }
