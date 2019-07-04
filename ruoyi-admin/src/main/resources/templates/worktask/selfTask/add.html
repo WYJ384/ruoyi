@@ -7,19 +7,19 @@
         <form class="form-horizontal m" id="form-selfTask-add">
 			<input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
 			<input id="remark" name="remark" class="form-control" type="hidden">
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务标题：</label>
 				<div class="col-sm-8">
 					<input id="taskTitle" name="taskTitle" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>开始时间：</label>
 				<div class="col-sm-8">
 					<input id="startDate" name="startDate" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>要求完成时间：</label>
 				<div class="col-sm-8">
 					<input id="requireTime" name="requireTime" class="form-control" type="text">
@@ -41,14 +41,14 @@
 				</div>
 			</div>
 
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">任务描述：</label>
 				<div class="col-sm-8">
 					<textarea  id="taskContent" name="taskContent" ></textarea>
 
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务执行人：</label>
 				<div class="col-sm-8">
 					<select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible" multiple="">
@@ -134,10 +134,16 @@
 				type: 'datetime'
 			});
 		});
-		
+
 		function submitHandler() {
-	        if ($.validate.form()) {
-				var  executorUser=$('#executorUser option:selected').text();
+			var  executorUser=$('#executorUser option:selected').text();
+			if(executorUser==""){
+				layer.tips("请选择任务执行人", '#executorUser');
+			}
+
+
+			if ($.validate.form()) {
+
 				var executorUsers = "";
 				for (var i = 0; i < $("#executorUser").select2('data').length; i++) {
 					executorUsers += $("#executorUser").select2('data')[i].text;
