@@ -60,6 +60,7 @@ public class ResultController extends BaseController {
     @ResponseBody
     public TableDataInfo list(Result result) {
         startPage();
+        result.setUserId(ShiroUtils.getUserId()+"");
         List<Result> list = resultService.selectResultList(result);
         return getDataTable(list);
     }
