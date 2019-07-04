@@ -82,7 +82,17 @@
 		});
 		
 		function submitHandler() {
+			var editor= UE.getEditor('target');
+			if(editor.getPlainTxt().trim()==""||editor.getPlainTxt()==null){
+				layer.tips("请输入任务目标", '#target', {
+					tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+					time: 4000,
+					area: ['300px', 'auto'],
+				})
+				return;
+			}
 	        if ($.validate.form()) {
+
 	            $.operate.saveTab(prefix + "/add", $('#form-workTaskActivity-add').serialize());
 	        }
 	    }

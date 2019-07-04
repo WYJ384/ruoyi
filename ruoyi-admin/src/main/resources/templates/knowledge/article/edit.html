@@ -217,6 +217,8 @@
 				},
 				title:{
 					required:true,
+				}, keywords: {
+					required: true,
 				},
 			},
 			focusCleanup: true
@@ -224,6 +226,15 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
+				var editor= UE.getEditor('solution');
+				if(editor.getPlainTxt().trim()==""||editor.getPlainTxt()==null){
+					layer.tips("请输入内容", '#solution', {
+						tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+						time: 4000,
+						area: ['300px', 'auto'],
+					})
+					return;
+				}
 	            $.operate.saveTab(prefix + "/edit", $('#form-article-edit').serialize());
 	        }
 	    }
