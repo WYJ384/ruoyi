@@ -17,7 +17,7 @@
 <div class="container">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/f/fIndexController/index">首页</a></li>
-        <li class="breadcrumb-item"><a href="#" th:text="${cmsCategory.name}">Library</a></li>
+        <li class="breadcrumb-item"><a th:href="${'/f/knowledge/article/column/'+cmsCategory.id}" th:text="${cmsCategory.name}">Library</a></li>
     </ol>
     <!--    <div class="pull-right">-->
     <!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
