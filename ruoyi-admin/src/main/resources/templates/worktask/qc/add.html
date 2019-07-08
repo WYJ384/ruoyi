@@ -163,6 +163,7 @@
 				})
 			}
 			if ($.validate.form()) {
+				var executorUsers = "";
 				for (var i = 0; i < $("#executorUser").select2('data').length; i++) {
 					executorUsers += $("#executorUser").select2('data')[i].text;
 					if( i < $("#executorUser").select2('data').length-1){
