@@ -7,7 +7,8 @@
     <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
         <input id="id" name="id" th:field="*{id}" type="hidden">
         <input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
-        <input id="remark" name="remark" class="form-control" type="hidden">
+        <input id="remark" name="remark"  th:value="${remark}"  class="form-control" type="hidden">
+        <input id="remark4" name="remark4"  th:value="${remark4}"   class="form-control" type="hidden">
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>项目名称：</label>
             <div class="col-sm-8">
@@ -61,6 +62,16 @@
                     <option th:each="user:${sysUsers}" th:value="${user.userId}"
                             th:text="${user.userName}"
                             th:selected="${selfTask.executorUser.contains(user.userId.toString())}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>项目负责人：</label>
+            <div class="col-sm-8">
+                <select id="remark5" name="remark5" class="form-control select2-hidden-accessible" required="required">
+                    <option value=""></option>
+                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                            th:text="${user.userName}" th:selected="${selfTask.remark5?.contains(user.userId.toString())}"></option>
                 </select>
             </div>
         </div>
@@ -145,6 +156,26 @@
     });
 
     function submitHandler() {
+
+        var  executorUser=$('#executorUser option:selected').text();
+        var  remark5=$('#remark5 option:selected').text();
+        if(executorUser==""){
+            layer.tips("请选择小组成员", '#executorUser', {
+                tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+                time: 4000,
+                area: ['300px', 'auto'],
+            })
+            return
+        }
+        if(remark5==""){
+            layer.tips("请选择项目负责人", '#remark5', {
+                tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+                time: 4000,
+                area: ['300px', 'auto'],
+            })
+            return
+        }
+
         if ($.validate.form()) {
             var executorUser = $('#executorUser option:selected').text();
             var executorUsers = "";
@@ -155,6 +186,15 @@
                 }
             }
             $("#remark").val(executorUsers)
+
+            var fuzren = "";
+            for (var i = 0; i < $("#remark5").select2('data').length; i++) {
+                fuzren += $("#remark5").select2('data')[i].text;
+                if( i < $("#remark5").select2('data').length-1){
+                    fuzren +=",";
+                }
+            }
+            $("#remark4").val(fuzren)
             $.operate.saveTab(prefix + "/edit", $('#form-selfTask-edit').serialize());
         }
     }

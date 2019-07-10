@@ -7,6 +7,8 @@
         <form class="form-horizontal m" id="form-selfTask-add">
 			<input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
 			<input id="remark" name="remark" class="form-control" type="hidden">
+			<input id="remark4" name="remark4" class="form-control" type="hidden">
+
 			<div class="form-group">
 
 				<label class="col-sm-3 control-label" th:if="pid==null"><span style="color: red; " >*</span>项目名称：</label>
@@ -60,6 +62,16 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>项目负责人：</label>
+				<div class="col-sm-8">
+					<select id="remark5" name="remark5" class="form-control select2-hidden-accessible" required="required">
+						<option value=""></option>
+						<option th:each="user:${sysUsers}" th:value="${user.userId}"
+								th:text="${user.userName}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>项目验收人：</label>
 				<div class="col-sm-8">
 					<select id="acceptorUser" name="acceptorUser" class="form-control select2-hidden-accessible" required="required">
 						<option value=""></option>
@@ -155,12 +167,22 @@
 
 		function submitHandler() {
 			var  executorUser=$('#executorUser option:selected').text();
+			var  remark5=$('#remark5 option:selected').text();
 			if(executorUser==""){
-				layer.tips("请选择任务执行人", '#executorUser', {
+				layer.tips("请选择小组成员", '#executorUser', {
 					tips: [1, '#f00'], //1-上，2-右，3-下，4-左
 					time: 4000,
 					area: ['300px', 'auto'],
 				})
+				return
+			}
+			if(remark5==""){
+				layer.tips("请选择项目负责人", '#remark5', {
+					tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+					time: 4000,
+					area: ['300px', 'auto'],
+				})
+				return
 			}
 			if ($.validate.form()) {
 				var executorUsers = "";
@@ -170,7 +192,17 @@
 						executorUsers +=",";
 					}
 				}
+
+				var fuzren = "";
+				for (var i = 0; i < $("#remark5").select2('data').length; i++) {
+					fuzren += $("#remark5").select2('data')[i].text;
+					if( i < $("#remark5").select2('data').length-1){
+						fuzren +=",";
+					}
+				}
+				$("#remark4").val(fuzren)
 				$("#remark").val(executorUsers)
+
 				$.operate.saveTab(prefix + "/add", $('#form-selfTask-add').serialize());
 			}
 		}
