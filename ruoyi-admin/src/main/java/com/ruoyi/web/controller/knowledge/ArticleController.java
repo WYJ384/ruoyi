@@ -74,11 +74,11 @@ public class ArticleController extends BaseController
 	public TableDataInfo list(Article article)
 	{
 		startPage();
-//		if (StringUtils.isNotNull(ShiroUtils.getUserId()) && SysUser.isAdmin(ShiroUtils.getUserId()))
-//		{
-//		}else{
-//			article.setCreateBy(ShiroUtils.getUserId()+"");
-//		}
+		if (StringUtils.isNotNull(ShiroUtils.getUserId()) && SysUser.isAdmin(ShiroUtils.getUserId()))
+		{
+		}else{
+			article.setCreateBy(ShiroUtils.getUserId()+"");
+		}
         List<Article> list = articleService.selectArticleList(article);
 		return getDataTable(list);
 	}
