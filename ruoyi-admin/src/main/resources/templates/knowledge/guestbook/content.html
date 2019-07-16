@@ -1,0 +1,36 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+<body>
+<!--<link th:href="@{/css/style.css}" rel="stylesheet"/>-->
+<link th:href="@{/css/home.css}" rel="stylesheet"/>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+<div class="container">
+<!--    <div class="pull-right">-->
+<!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
+<!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
+<!--        <button class="btn btn-white btn-xs" type="button">标签</button>-->
+<!--    </div>-->
+
+    <div class="text-center article-title">
+        <span class="text-muted" ><i class="fa fa-clock-o"></i> <span th:text="${#dates.format(guestbook.createDate, 'yyyy年MM月dd日')}">2017年10月28日</span> </span>
+        <h1 th:text="${guestbook.remark1}" ></h1>
+    </div>
+    <div ></div>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content" th:utext="${guestbook.content}" >
+        </div>
+    </div>
+
+
+
+
+</div>
+<div th:include="include::footer"></div>
+</body>
+</html>

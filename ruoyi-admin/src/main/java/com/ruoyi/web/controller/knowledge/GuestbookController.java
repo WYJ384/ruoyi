@@ -115,7 +115,13 @@ public class GuestbookController extends BaseController
 		mmap.put("guestbook", guestbook);
 	    return prefix + "/edit";
 	}
-	
+	@GetMapping("/content/{id}")
+	public String content(@PathVariable("id") String id, ModelMap mmap)
+	{
+		Guestbook guestbook = guestbookService.selectGuestbookById(id);
+		mmap.put("guestbook", guestbook);
+		return prefix + "/content";
+	}
 	/**
 	 * 修改保存留言板
 	 */

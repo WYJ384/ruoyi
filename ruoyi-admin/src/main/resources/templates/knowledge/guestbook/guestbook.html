@@ -84,8 +84,14 @@
 				// },
 				{
 					field : 'remark1',
-					title : '留言内容',
-					sortable: true
+					title : '标题',
+					sortable: true,
+					formatter: function (value, row, index) {
+
+						var actions = [];
+						actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+row.remark1+'\',\'' +prefix +'/content/'+row.id+'/' + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+						return actions.join('');
+					}
 				},
 				{
 					field : 'name', 
