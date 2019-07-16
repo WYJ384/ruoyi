@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="ScoreActivity" id="ScoreActivityResult">
         <result property="id"    column="activity_id"    />
         <result property="name"    column="activity_name"    />
+        <result property="beginTime"    column="begin_time"    />
     </resultMap>
     <resultMap type="ScoringPointer" id="ScoringPointerResult">
         <result property="id" column="score_pointer_id"/>
@@ -72,14 +73,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             d.dept_id,
             d.dept_name,
             score_activity.`name` as activity_name,
-            score_activity.`id` as activity_id
+            score_activity.`id` as activity_id,
+			score_activity.`begin_time` as begin_time
         FROM
             score_activity_detail detail
         LEFT JOIN scoring_pointer pointer ON detail.score_pointer_id = pointer.id
         LEFT JOIN pointer_type ON pointer_type.id = pointer.pointer_type_id
         LEFT JOIN sys_dept d ON d.dept_id = pointer.dept_id
         LEFT JOIN sys_dept evalDept ON evalDept.dept_id = pointer.eval_dept_id
-        LEFT JOIN score_activity ON score_activity.id = detail.activity_id
+       INNER  JOIN score_activity ON score_activity.id = detail.activity_id
     </sql>
 	<select id="getDeptMonthScore" resultType="com.ruoyi.taskscore.domain.ScoreDeptVO" parameterType="com.ruoyi.taskscore.domain.ScoreDeptVO">
         SELECT
