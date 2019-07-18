@@ -157,6 +157,35 @@ public class ResultController extends BaseController {
         mmap.put("result", result);
         return prefix + "/edit";
     }
+    @GetMapping("/checkScore/{examId}/{userId}")
+    public String checkScore(@PathVariable("examId") String examId,@PathVariable("userId") String userId, ModelMap mmap) {
+        Exam exam = examService.selectExamById(examId);
+        Result result=new Result();
+        result.setUserId(userId);
+        result.setExamId(examId);
+        List<Result> results = resultService.selectResultList(result);
+        if(results!=null&&results.size()>0){
+            result=results.get(0);
+            String questionAnwser = result.getQuestionAnwser();
+            String[] anwsers = questionAnwser.split(",");
+            for (String anwser :anwsers) {
+                String[] anIdAndAn = anwser.split(":");
+                String detailId=anIdAndAn[0];
+                LibraryDetail libraryDetail = libraryDetailService.selectLibraryDetailById(detailId);
+
+
+            }
+        }
+        if(exam!=null){
+            List<PaperQuestion> paperQuestions = paperQuestionService.selectPaperQuestionById(exam.getExamPaperId());
+            mmap.addAttribute("paperQuestions", paperQuestions);
+        }
+
+        return prefix + "/checkScore";
+    }
+
+
+
 
     /**
      * 修改保存考试成绩

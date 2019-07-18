@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<style type="text/css">
+    .title{
+        background: rgb(247,247,247);
+        line-height: 30px;
+    }
+</style>
+<head th:include="include :: header"></head>
+
+<body >
+<div class="container-div form-horizontal m">
+    <div class="row">
+        <div class="search-collapse" style="padding: 40px;background: #fff">
+            <ul>
+                <li th:each="question,questionStat:${paperQuestions}">
+
+                    <div class="title" th:if="${question.libraryDetail.libType eq '3' or question.libraryDetail.libType eq '5'}">
+
+
+                        <span th:if="${question.libraryDetail.libType eq '3'}"
+                              style="background: rgb(226,237,247);color: rgb(119,187,17)">填空题</span>
+
+                        <span th:if="${question.libraryDetail.libType eq '5'}"
+                              style="background: #fff;color: rgb(255,102,0)">简答题</span>
+                        <h4 style="display: inline-block"
+                            th:text="${(questionStat.index+1)+'.'+question.libraryDetail.title}"></h4>
+                        <h4 style="display: inline-block" th:text="'（'+${question.remark4+'分）'}"></h4>
+                    </div>
+
+                    <ul th:if="${question.libraryDetail.libType eq '3'}">
+                        <li>
+                            <h5 th:each="dayCyc : ${#numbers.sequence(1,question.libraryDetail.remark1)}"><input type="text"  name="choiceA"></h5>
+                        </li>
+                    </ul>
+
+                    <ul th:if="${question.libraryDetail.libType eq '5'}">
+                        <li>
+                            <h5>
+                                <textarea rows="10" cols="80"></textarea>
+                            </h5>
+                        </li>
+                    </ul>
+                    <!--                    <div>-->
+                    <!--                        <div class="btn-group-sm" id="toolbar" role="group">-->
+                    <!--&lt;!&ndash;                            <a class="btn btn-success" >&ndash;&gt;-->
+                    <!--&lt;!&ndash;                                <i class="fa fa-plus"></i> 添加&ndash;&gt;-->
+                    <!--&lt;!&ndash;                            </a>&ndash;&gt;-->
+                    <!--                            <input type="number"  th:value="${question.remark4}" th:id="${question.questionId}">-->
+                    <!--                            <a class="btn btn-primary btn-edit " th:onclick="updateScore([[${question.questionId}]],[[${question.examPaperId}]])">-->
+                    <!--                                <i class="fa fa-edit"></i> 保存分值-->
+                    <!--                            </a>-->
+                    <!--                            <a class="btn btn-danger btn-del btn-del "  th:onclick="deleteQuestion([[${question.questionId}]],[[${question.examPaperId}]])">-->
+                    <!--                                <i class="fa fa-remove"></i> 删除-->
+                    <!--                            </a>-->
+
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+
+</body>
+</html>
