@@ -53,6 +53,20 @@ public class ResultController extends BaseController {
     public String result() {
         return prefix + "/result";
     }
+    @GetMapping("/resultScore")
+    public String resultScore() {
+        return prefix + "/resultScore";
+    }
+
+    @RequiresPermissions("exam:result:list")
+    @PostMapping("/resultScore")
+    @ResponseBody
+    public TableDataInfo resultScore(Result result) {
+        startPage();
+        result.setCheckScoreUser(ShiroUtils.getUserId()+"");
+        List<Result> list = resultService.selectResultList(result);
+        return getDataTable(list);
+    }
 
     /**
      * 查询考试成绩列表
@@ -206,7 +220,7 @@ public class ResultController extends BaseController {
     public AjaxResult editSave(Result result) {
         result.setUpdateBy(ShiroUtils.getUserId()+"");
         result.setUpdateDate(new Date());
-        result.setRemark1("1");
+        result.setRemark1("1");//已阅卷
         return toAjax(resultService.updateResult(result));
     }
 

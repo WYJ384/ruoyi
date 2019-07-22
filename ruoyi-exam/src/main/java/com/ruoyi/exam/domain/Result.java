@@ -58,8 +58,21 @@ public class Result extends BaseEntity
 	private String remark9;
 	/** 扩展10 */
 	private String remark10;
+
+	private String checkScoreUser;
+
+
+
 	private SysUser sysUser;
 	private Exam exam;
+
+	public String getCheckScoreUser() {
+		return checkScoreUser;
+	}
+
+	public void setCheckScoreUser(String checkScoreUser) {
+		this.checkScoreUser = checkScoreUser;
+	}
 
 	public Exam getExam() {
 		return exam;

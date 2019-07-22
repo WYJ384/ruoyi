@@ -99,6 +99,7 @@
             <if test="remark8 != null  and remark8 != '' ">and exam_result.remark8 = #{remark8}</if>
             <if test="remark9 != null  and remark9 != '' ">and exam_result.remark9 = #{remark9}</if>
             <if test="remark10 != null  and remark10 != '' ">and exam_result.remark10 = #{remark10}</if>
+            <if test="checkScoreUser != null  and checkScoreUser != '' "> and FIND_IN_SET(#{checkScoreUser},exam_exam.read_user_id) </if>
         </where>
     </select>
 
@@ -181,7 +182,7 @@
             <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
             <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
         </trim>
-        where exam_id = #{examId}
+        where exam_id = #{examId} and user_id = #{userId}
     </update>
 
     <delete id="deleteResultById" parameterType="String">

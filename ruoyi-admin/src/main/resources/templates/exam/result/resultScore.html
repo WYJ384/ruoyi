@@ -48,9 +48,9 @@
 <!--               shiro:hasPermission="exam:result:remove">-->
 <!--                <i class="fa fa-remove"></i> 删除-->
 <!--            </a>-->
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="exam:result:export">
-                <i class="fa fa-download"></i> 导出
-            </a>
+<!--            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="exam:result:export">-->
+<!--                <i class="fa fa-download"></i> 导出-->
+<!--            </a>-->
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -65,7 +65,7 @@
 
     $(function () {
         var options = {
-            url: prefix + "/list",
+            url: prefix + "/resultScore",
             createUrl: prefix + "/add",
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
@@ -146,7 +146,7 @@
                     formatter: function (value, row, index) {
                         var actions = [];
                         name="阅卷"
-                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+name+'\',\'' +prefix +'/checkScore/'+row.examId+'/'+row.userId + '\')"><i class="fa fa-edit"></i>阅卷</a> ');
+                        actions.push('<a class="" href="#" onclick="$.operate.addSubTab(\''+name+'\',\'' +prefix +'/checkScore/'+row.examId+'/'+row.userId + '\')"><i class="fa fa-edit"></i>阅卷</a> ');
                         // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.examId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }

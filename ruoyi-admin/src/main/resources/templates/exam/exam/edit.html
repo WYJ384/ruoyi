@@ -35,7 +35,7 @@
 							multiple="">
 						<option th:each="user:${users}" th:value="${user.userId}"
 								th:text="${user.userName}"
-								th:selected="${exam.readUserId eq user.userId.toString() and user.userId.toString()!='1'}"></option>
+								th:selected="${exam.readUserId.contains(user.userId.toString())  and user.userId.toString()!='1'}"></option>
 					</select>
 				</div>
 			</div>
