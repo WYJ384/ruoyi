@@ -1,73 +1,70 @@
 <!DOCTYPE HTML>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-</head>
-<style type="text/css">
-    .title{
-        background: rgb(247,247,247);
-        line-height: 30px;
-    }
-</style>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:include="include :: header"></head>
-
-<body >
-<div class="container-div form-horizontal m">
-    <div class="row">
-        <div class="search-collapse" style="padding: 40px;background: #fff">
-            <ul>
-                <li th:each="question,questionStat:${paperQuestions}">
-
-                    <div class="title" th:if="${question.libraryDetail.libType eq '3' or question.libraryDetail.libType eq '5'}">
-
-
-                        <span th:if="${question.libraryDetail.libType eq '3'}"
-                              style="background: rgb(226,237,247);color: rgb(119,187,17)">填空题</span>
-
-                        <span th:if="${question.libraryDetail.libType eq '5'}"
-                              style="background: #fff;color: rgb(255,102,0)">简答题</span>
-                        <h4 style="display: inline-block"
-                            th:text="${(questionStat.index+1)+'.'+question.libraryDetail.title}"></h4>
-                        <h4 style="display: inline-block" th:text="'（'+${question.remark4+'分）'}"></h4>
-                    </div>
-
-                    <ul th:if="${question.libraryDetail.libType eq '3'}">
-                        <li>
-                            <h5 th:each="dayCyc : ${#numbers.sequence(1,question.libraryDetail.remark1)}"><input type="text"  name="choiceA"></h5>
-                        </li>
-                    </ul>
-
-                    <ul th:if="${question.libraryDetail.libType eq '5'}">
-                        <li>
-                            <h5>
-                                <textarea rows="10" cols="80"></textarea>
-                            </h5>
-                        </li>
-                    </ul>
-                    <!--                    <div>-->
-                    <!--                        <div class="btn-group-sm" id="toolbar" role="group">-->
-                    <!--&lt;!&ndash;                            <a class="btn btn-success" >&ndash;&gt;-->
-                    <!--&lt;!&ndash;                                <i class="fa fa-plus"></i> 添加&ndash;&gt;-->
-                    <!--&lt;!&ndash;                            </a>&ndash;&gt;-->
-                    <!--                            <input type="number"  th:value="${question.remark4}" th:id="${question.questionId}">-->
-                    <!--                            <a class="btn btn-primary btn-edit " th:onclick="updateScore([[${question.questionId}]],[[${question.examPaperId}]])">-->
-                    <!--                                <i class="fa fa-edit"></i> 保存分值-->
-                    <!--                            </a>-->
-                    <!--                            <a class="btn btn-danger btn-del btn-del "  th:onclick="deleteQuestion([[${question.questionId}]],[[${question.examPaperId}]])">-->
-                    <!--                                <i class="fa fa-remove"></i> 删除-->
-                    <!--                            </a>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-
-                </li>
-            </ul>
-        </div>
+<body>
+<h2 class="text-center" th:text="${exam.name}">关于xxx的考试</h2>
+<form action="" id="form-result-edit">
+    <input type="hidden" th:value="${result.examId}" name="examId">
+    <input type="hidden" th:value="${result.userId}" name="userId">
+    <table class="table">
+        <tr>
+            <th>题目</th>
+            <th>答案</th>
+            <th>用户答案</th>
+            <th>分数</th>
+            <th>得分</th>
+        </tr>
+        <tr th:each="question,questionStat:${libraryDetailList}">
+            <td th:text="${question.title}">题目</td>
+            <td th:text="${question.answer}">答案</td>
+            <td th:text="${question.remark}">用户答案</td>
+            <th th:text="${question.remark4}">分数</th>
+            <td><input type="number" name="uscore" value="0"></td>
+        </tr>
+    </table>
+    <h2 class="text-center" th:text="${'选择判断得分:'+result.score}"></h2>
+    <h2 class="text-center">最终得分: <input type="number" id="finalScore" name="remark" th:value="${result.score}"></h2>
+</form>
+<div class="row">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+        </button>&nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+        </button>
     </div>
 </div>
-<div th:include="include::footer"></div>
-
 </body>
+<div th:include="include::footer"></div>
+<script>
+    $(function () {
+       $("input[name=uscore]").blur(function () {
+           score=[[${result.score}]]
+           $("input[name=uscore]").each(function (a,b) {
+               score+=parseFloat($(b).val());
+           });
+           $("#finalScore").val(score)
+       });
+
+    });
+    function submitHandler() {
+        alert(1)
+
+
+    }
+    var prefix = ctx + "exam/result";
+    $("#form-result-edit").validate({
+        rules:{
+            remark:{
+                required:true,
+            },
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-result-edit').serialize());
+        }
+    }
+</script>
 </html>

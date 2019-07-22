@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.exam;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import com.ruoyi.exam.domain.*;
 import com.ruoyi.exam.service.*;
 import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -104,22 +106,23 @@ public class ResultController extends BaseController {
             if(libraryDetail==null){
                 continue;
             }
+            PaperQuestion paperQuestion=new PaperQuestion();
+            paperQuestion.setQuestionId(key);
+            paperQuestion.setExamPaperId(exam.getExamPaperId());
+            List<PaperQuestion> paperQuestions = paperQuestionService.selectPaperQuestionList(paperQuestion);
+            PaperQuestion question = paperQuestions.get(0);
+
             //试题答案
             String answer = libraryDetail.getAnswer();
             //用户答案
             String userAnswer = StringUtils.join(parameterMap.get(key));
             if(StringUtils.isNotEmpty(answer)&&StringUtils.isNotEmpty(userAnswer)){
                 if(answer.equals(userAnswer)){
-                    PaperQuestion paperQuestion=new PaperQuestion();
-                    paperQuestion.setQuestionId(key);
-                    paperQuestion.setExamPaperId(exam.getExamPaperId());
-                    List<PaperQuestion> paperQuestions = paperQuestionService.selectPaperQuestionList(paperQuestion);
-                    PaperQuestion question = paperQuestions.get(0);
                     score+=Double.valueOf(question.getRemark4());
                 }
             }
 
-            strResult+=key+":"+userAnswer;
+            strResult+=key+":"+userAnswer+":"+question.getRemark4();
             if(i<parameterMap.size()-2){
                strResult+=",";
             }
@@ -163,6 +166,7 @@ public class ResultController extends BaseController {
         Result result=new Result();
         result.setUserId(userId);
         result.setExamId(examId);
+        List<LibraryDetail> libraryDetailList=new ArrayList<LibraryDetail>();
         List<Result> results = resultService.selectResultList(result);
         if(results!=null&&results.size()>0){
             result=results.get(0);
@@ -171,16 +175,21 @@ public class ResultController extends BaseController {
             for (String anwser :anwsers) {
                 String[] anIdAndAn = anwser.split(":");
                 String detailId=anIdAndAn[0];
+                String userAnswer=anIdAndAn[1];
+                String score=anIdAndAn[2];
                 LibraryDetail libraryDetail = libraryDetailService.selectLibraryDetailById(detailId);
-
-
+                if(libraryDetail.getLibType().equals("3") || libraryDetail.getLibType().equals("5") ){
+                    LibraryDetail question=new LibraryDetail();
+                    BeanUtils.copyProperties(libraryDetail,question);
+                    question.setRemark(userAnswer);
+                    question.setRemark4(score);
+                    libraryDetailList.add(question);
+                }
             }
+            mmap.addAttribute("result", result);
         }
-        if(exam!=null){
-            List<PaperQuestion> paperQuestions = paperQuestionService.selectPaperQuestionById(exam.getExamPaperId());
-            mmap.addAttribute("paperQuestions", paperQuestions);
-        }
-
+        mmap.addAttribute("exam", exam);
+        mmap.addAttribute("libraryDetailList", libraryDetailList);
         return prefix + "/checkScore";
     }
 
@@ -190,11 +199,14 @@ public class ResultController extends BaseController {
     /**
      * 修改保存考试成绩
      */
-    @RequiresPermissions("exam:result:edit")
+//    @RequiresPermissions("exam:result:edit")
     @Log(title = "考试成绩", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Result result) {
+        result.setUpdateBy(ShiroUtils.getUserId()+"");
+        result.setUpdateDate(new Date());
+        result.setRemark1("1");
         return toAjax(resultService.updateResult(result));
     }
 

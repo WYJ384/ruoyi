@@ -32,13 +32,13 @@ public class Result extends BaseEntity
 	private String updateBy;
 	/** 更新时间 */
 	private Date updateDate;
-	/** 备注信息 */
+	/** 最终得分 */
 	private String remark;
 	/** 删除标记 */
 	private String delFlag;
 	/** 考生答案 */
 	private String questionAnwser;
-	/** 扩展1 */
+	/** 是否阅卷 0否1是 */
 	private String remark1;
 	/** 扩展2 */
 	private String remark2;
