@@ -66,7 +66,7 @@
                                                 <ul>
 
                                                     <li>
-                                                        <input th:text="${question.libraryDetail.choiceA}" type="radio"
+                                                        <input th:text="${'A、'+question.libraryDetail.choiceA}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="A"
                                                                th:name="${question.questionId}"
@@ -74,14 +74,14 @@
 
                                                     </li>
                                                      <li>
-                                                        <input th:text="${question.libraryDetail.choiceB}" type="radio"
+                                                        <input th:text="${'B、'+question.libraryDetail.choiceB}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="B"
                                                                th:data-qid="${question.questionId}"
                                                                th:name="${question.questionId}">
                                                     </li>
                                                        <li>
-                                                        <input th:text="${question.libraryDetail.choiceC}" type="radio"
+                                                        <input th:text="${'C、'+question.libraryDetail.choiceC}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="C"
                                                                th:data-qid="${question.questionId}"
@@ -89,7 +89,7 @@
                                                     </li>
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}"
-                                                               th:text="${question.libraryDetail.choiceD}" type="radio"
+                                                               th:text="${'D、'+question.libraryDetail.choiceD}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="D"
                                                                th:data-qid="${question.questionId}"
@@ -98,7 +98,7 @@
 
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}"
-                                                               th:text="${question.libraryDetail.choiceE}" type="radio"
+                                                               th:text="${'E、'+question.libraryDetail.choiceE}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="E"
                                                                th:data-qid="${question.questionId}"
@@ -107,7 +107,7 @@
 
                                                     <li>
                                                         <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}"
-                                                               th:text="${question.libraryDetail.choiceF}" type="radio"
+                                                               th:text="${'F、'+question.libraryDetail.choiceF}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="F"
                                                                th:data-qid="${question.questionId}"
@@ -148,7 +148,7 @@
                                                 <ul>
 
                                                     <li>
-                                                        <input th:text="${question.libraryDetail.choiceA}"
+                                                        <input th:text="${'A、'+question.libraryDetail.choiceA}"
                                                                type="checkbox"
                                                                class="validate[required] qk-choice single_choice"
                                                                value="A"
@@ -157,7 +157,7 @@
 
                                                     </li>
                                                      <li>
-                                                        <input th:text="${question.libraryDetail.choiceB}"
+                                                        <input th:text="${'B、'+question.libraryDetail.choiceB}"
                                                                type="checkbox"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="B"
@@ -165,7 +165,7 @@
                                                                th:name="${question.questionId}">
                                                     </li>
                                                        <li>
-                                                        <input th:text="${question.libraryDetail.choiceC}"
+                                                        <input th:text="${'C、'+question.libraryDetail.choiceC}"
                                                                type="checkbox"
                                                                class="validate[required] qk-choice single_choice"
                                                                value="C"
@@ -174,7 +174,7 @@
                                                     </li>
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}"
-                                                               th:text="${question.libraryDetail.choiceD}"
+                                                               th:text="${'D、'+question.libraryDetail.choiceD}"
                                                                type="checkbox"
                                                                class="validate[required] qk-choice single_choice"
                                                                value="D"
@@ -184,7 +184,7 @@
 
                                                        <li>
                                                         <input th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}"
-                                                               th:text="${question.libraryDetail.choiceE}"
+                                                               th:text="${'E、'+question.libraryDetail.choiceE}"
                                                                type="checkbox"
                                                                class="validate[required] qk-choice single_choice"
                                                                value="E"
@@ -194,7 +194,7 @@
 
                                                     <li>
                                                         <input th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}"
-                                                               th:text="${question.libraryDetail.choiceF}"
+                                                               th:text="${'F、'+question.libraryDetail.choiceF}"
                                                                type="checkbox"
                                                                class="validate[required] qk-choice single_choice"
                                                                value="F"
@@ -310,7 +310,7 @@
                                                 <ul>
 
                                                     <li>
-                                                        <input th:text="${question.libraryDetail.choiceA}" type="radio"
+                                                        <input th:text="${'A、'+question.libraryDetail.choiceA}" type="radio"
                                                                class="validate[required] single_choice  qk-choice"
                                                                value="A"
                                                                th:data-qid="${question.questionId}"
@@ -318,7 +318,7 @@
 
                                                     </li>
                                                      <li>
-                                                        <input th:text="${question.libraryDetail.choiceB}" type="radio"
+                                                        <input th:text="${'B、'+question.libraryDetail.choiceB}" type="radio"
                                                                class="validate[required] single_choice qk-choice"
                                                                value="B"
                                                                th:data-qid="${question.questionId}"
