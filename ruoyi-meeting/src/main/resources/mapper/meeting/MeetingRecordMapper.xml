@@ -1,126 +1,115 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.meeting.mapper.MeetingRecordMapper">
-    
+
     <resultMap type="MeetingRecord" id="MeetingRecordResult">
         <result property="id"    column="id"    />
         <result property="dept"    column="dept"    />
-        <result property="speaker"    column="speaker"    />
-        <result property="recorder"    column="recorder"    />
-        <result property="joinPerson"    column="join_person"    />
-        <result property="missPerson"    column="miss_person"    />
+        <result property="meetingSubject"    column="meeting_subject"    />
+        <result property="meetingBeginTime"    column="meeting_begin_time"    />
+        <result property="meetingEndTime"    column="meeting_end_time"    />
         <result property="meetingContent"    column="meeting_content"    />
         <result property="submitPerson"    column="submit_person"    />
-        <result property="meetingId"    column="meeting_id"    />
-        <result property="meetroomId"    column="meetroom_id"    />
+        <result property="recorder"    column="recorder"    />
+        <result property="createdBy"    column="created_by"    />
         <result property="createdTime"    column="created_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="updatedTime"    column="updated_time"    />
-        <result property="createdBy"    column="created_by"    />
         <result property="remarks"    column="remarks"    />
     </resultMap>
-	
-	<sql id="selectMeetingRecordVo">
-        select id, dept, speaker, recorder, join_person, miss_person, meeting_content, submit_person, meeting_id, meetroom_id, created_time, update_by, updated_time, created_by, remarks from meeting_record
+
+    <sql id="selectMeetingRecordVo">
+        select id, dept, meeting_subject, meeting_begin_time, meeting_end_time, meeting_content, submit_person, recorder, created_by, created_time, update_by, updated_time, remarks from meeting_record
     </sql>
-	
+
     <select id="selectMeetingRecordList" parameterType="MeetingRecord" resultMap="MeetingRecordResult">
         <include refid="selectMeetingRecordVo"/>
-        <where>  
-            <if test="id != null "> and id = #{id}</if>
-             <if test="dept != null  and dept != '' "> and dept = #{dept}</if>
-             <if test="speaker != null  and speaker != '' "> and speaker = #{speaker}</if>
-             <if test="recorder != null  and recorder != '' "> and recorder = #{recorder}</if>
-             <if test="joinPerson != null  and joinPerson != '' "> and join_person = #{joinPerson}</if>
-             <if test="missPerson != null  and missPerson != '' "> and miss_person = #{missPerson}</if>
-             <if test="meetingContent != null  and meetingContent != '' "> and meeting_content = #{meetingContent}</if>
-             <if test="submitPerson != null  and submitPerson != '' "> and submit_person = #{submitPerson}</if>
-             <if test="meetingId != null "> and meeting_id = #{meetingId}</if>
-             <if test="meetroomId != null "> and meetroom_id = #{meetroomId}</if>
-             <if test="createdTime != null "> and created_time = #{createdTime}</if>
-             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updatedTime != null "> and updated_time = #{updatedTime}</if>
-             <if test="createdBy != null  and createdBy != '' "> and created_by = #{createdBy}</if>
-             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
-         </where>
+        <where>
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+            <if test="dept != null  and dept != '' "> and dept = #{dept}</if>
+            <if test="meetingSubject != null  and meetingSubject != '' "> and meeting_subject = #{meetingSubject}</if>
+            <if test="meetingBeginTime != null "> and meeting_begin_time = #{meetingBeginTime}</if>
+            <if test="meetingEndTime != null "> and meeting_end_time = #{meetingEndTime}</if>
+            <if test="meetingContent != null  and meetingContent != '' "> and meeting_content = #{meetingContent}</if>
+            <if test="submitPerson != null  and submitPerson != '' "> and submit_person = #{submitPerson}</if>
+            <if test="recorder != null  and recorder != '' "> and recorder = #{recorder}</if>
+            <if test="createdBy != null  and createdBy != '' "> and created_by = #{createdBy}</if>
+            <if test="createdTime != null "> and created_time = #{createdTime}</if>
+            <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+            <if test="updatedTime != null "> and updated_time = #{updatedTime}</if>
+            <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+        </where>
     </select>
-    
-    <select id="selectMeetingRecordById" parameterType="Integer" resultMap="MeetingRecordResult">
+
+    <select id="selectMeetingRecordById" parameterType="String" resultMap="MeetingRecordResult">
         <include refid="selectMeetingRecordVo"/>
         where id = #{id}
     </select>
-        
-    <insert id="insertMeetingRecord" parameterType="MeetingRecord" useGeneratedKeys="true" keyProperty="id">
+
+    <insert id="insertMeetingRecord" parameterType="MeetingRecord">
         insert into meeting_record
-		<trim prefix="(" suffix=")" suffixOverrides=",">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null  and id != ''  ">id,</if>
-			<if test="dept != null  and dept != ''  ">dept,</if>
-			<if test="speaker != null  and speaker != ''  ">speaker,</if>
-			<if test="recorder != null  and recorder != ''  ">recorder,</if>
-			<if test="joinPerson != null  and joinPerson != ''  ">join_person,</if>
-			<if test="missPerson != null  and missPerson != ''  ">miss_person,</if>
-			<if test="meetingContent != null  and meetingContent != ''  ">meeting_content,</if>
-			<if test="submitPerson != null  and submitPerson != ''  ">submit_person,</if>
-			<if test="meetingId != null  ">meeting_id,</if>
-			<if test="meetroomId != null  ">meetroom_id,</if>
-			<if test="createdTime != null  ">created_time,</if>
-			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
-			<if test="updatedTime != null  ">updated_time,</if>
-			<if test="createdBy != null  and createdBy != ''  ">created_by,</if>
-			<if test="remarks != null  and remarks != ''  ">remarks,</if>
-         </trim>
+            <if test="dept != null  and dept != ''  ">dept,</if>
+            <if test="meetingSubject != null  and meetingSubject != ''  ">meeting_subject,</if>
+            <if test="meetingBeginTime != null  ">meeting_begin_time,</if>
+            <if test="meetingEndTime != null  ">meeting_end_time,</if>
+            <if test="meetingContent != null  and meetingContent != ''  ">meeting_content,</if>
+            <if test="submitPerson != null  and submitPerson != ''  ">submit_person,</if>
+            <if test="recorder != null  and recorder != ''  ">recorder,</if>
+            <if test="createdBy != null  and createdBy != ''  ">created_by,</if>
+            <if test="createdTime != null  ">created_time,</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+            <if test="updatedTime != null  ">updated_time,</if>
+            <if test="remarks != null  and remarks != ''  ">remarks,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  and id != ''  ">#{id},</if>
-			<if test="dept != null  and dept != ''  ">#{dept},</if>
-			<if test="speaker != null  and speaker != ''  ">#{speaker},</if>
-			<if test="recorder != null  and recorder != ''  ">#{recorder},</if>
-			<if test="joinPerson != null  and joinPerson != ''  ">#{joinPerson},</if>
-			<if test="missPerson != null  and missPerson != ''  ">#{missPerson},</if>
-			<if test="meetingContent != null  and meetingContent != ''  ">#{meetingContent},</if>
-			<if test="submitPerson != null  and submitPerson != ''  ">#{submitPerson},</if>
-			<if test="meetingId != null  ">#{meetingId},</if>
-			<if test="meetroomId != null  ">#{meetroomId},</if>
-			<if test="createdTime != null  ">#{createdTime},</if>
-			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
-			<if test="updatedTime != null  ">#{updatedTime},</if>
-			<if test="createdBy != null  and createdBy != ''  ">#{createdBy},</if>
-			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
-         </trim>
+            <if test="dept != null  and dept != ''  ">#{dept},</if>
+            <if test="meetingSubject != null  and meetingSubject != ''  ">#{meetingSubject},</if>
+            <if test="meetingBeginTime != null  ">#{meetingBeginTime},</if>
+            <if test="meetingEndTime != null  ">#{meetingEndTime},</if>
+            <if test="meetingContent != null  and meetingContent != ''  ">#{meetingContent},</if>
+            <if test="submitPerson != null  and submitPerson != ''  ">#{submitPerson},</if>
+            <if test="recorder != null  and recorder != ''  ">#{recorder},</if>
+            <if test="createdBy != null  and createdBy != ''  ">#{createdBy},</if>
+            <if test="createdTime != null  ">#{createdTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+            <if test="updatedTime != null  ">#{updatedTime},</if>
+            <if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateMeetingRecord" parameterType="MeetingRecord">
         update meeting_record
         <trim prefix="SET" suffixOverrides=",">
-            <if test="id != null  and id != ''  ">id = #{id},</if>
             <if test="dept != null  and dept != ''  ">dept = #{dept},</if>
-            <if test="speaker != null  and speaker != ''  ">speaker = #{speaker},</if>
-            <if test="recorder != null  and recorder != ''  ">recorder = #{recorder},</if>
-            <if test="joinPerson != null  and joinPerson != ''  ">join_person = #{joinPerson},</if>
-            <if test="missPerson != null  and missPerson != ''  ">miss_person = #{missPerson},</if>
+            <if test="meetingSubject != null  and meetingSubject != ''  ">meeting_subject = #{meetingSubject},</if>
+            <if test="meetingBeginTime != null  ">meeting_begin_time = #{meetingBeginTime},</if>
+            <if test="meetingEndTime != null  ">meeting_end_time = #{meetingEndTime},</if>
             <if test="meetingContent != null  and meetingContent != ''  ">meeting_content = #{meetingContent},</if>
             <if test="submitPerson != null  and submitPerson != ''  ">submit_person = #{submitPerson},</if>
-            <if test="meetingId != null  ">meeting_id = #{meetingId},</if>
-            <if test="meetroomId != null  ">meetroom_id = #{meetroomId},</if>
+            <if test="recorder != null  and recorder != ''  ">recorder = #{recorder},</if>
+            <if test="createdBy != null  and createdBy != ''  ">created_by = #{createdBy},</if>
             <if test="createdTime != null  ">created_time = #{createdTime},</if>
             <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
             <if test="updatedTime != null  ">updated_time = #{updatedTime},</if>
-            <if test="createdBy != null  and createdBy != ''  ">created_by = #{createdBy},</if>
             <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
         </trim>
         where id = #{id}
     </update>
 
-	<delete id="deleteMeetingRecordById" parameterType="Integer">
+    <delete id="deleteMeetingRecordById" parameterType="String">
         delete from meeting_record where id = #{id}
     </delete>
-	
+
     <delete id="deleteMeetingRecordByIds" parameterType="String">
-        delete from meeting_record where id in 
+        delete from meeting_record where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>
