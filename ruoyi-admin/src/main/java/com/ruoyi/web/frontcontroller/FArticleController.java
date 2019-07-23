@@ -8,6 +8,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.exam.domain.LibraryDetail;
+import com.ruoyi.exam.service.ILibraryDetailService;
+import com.ruoyi.exam.service.ILibraryService;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.knowledge.domain.Article;
 import com.ruoyi.knowledge.domain.ArticleData;
@@ -48,8 +51,13 @@ public class FArticleController extends FBaseController
 	private ICmsCategoryService cmsCategoryService;
 	@Autowired
 	private IArticleDataService articleDataService;
+
+	@Autowired
+	private ILibraryService libraryService;
+	@Autowired
+	private ILibraryDetailService libraryDetailService;
 	@GetMapping("/article/{id}")
-	public String article(@PathVariable("id") String id,ModelMap modelMap)
+	public String article(@PathVariable("id") String id,ModelMap modelMap,String libId)
 	{
 		Article article = articleService.selectArticleById(id);
 		article.setHits(article.getHits()+1);
@@ -71,6 +79,11 @@ public class FArticleController extends FBaseController
 		CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(article.getCategoryId());
 		String customContentView = cmsCategory.getCustomContentView();
 		modelMap.put("cmsCategory", cmsCategory);
+
+		LibraryDetail libraryDetail=new LibraryDetail();
+		libraryDetail.setLibId(libId);
+		List<LibraryDetail> libraryDetails = libraryDetailService.selectLibraryDetailList(libraryDetail);
+		modelMap.put("libraryDetails", libraryDetails);
 		if(StringUtils.isNotEmpty(customContentView)){
 			return "/front/"+prefix + "/"+customContentView;
 		}else{

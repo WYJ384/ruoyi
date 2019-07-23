@@ -85,7 +85,7 @@ public class SysPasswordService
 
     public static void main(String[] args)
     {
-        String s = new Md5Hash("admin" + "admin190403" + "111111").toHex().toString();
+        String s = new Md5Hash("admin" + "admin@190723" + "111111").toHex().toString();
         System.out.println(s);
     }
 
