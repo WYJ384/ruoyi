@@ -9,8 +9,10 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.exam.domain.LibraryDetail;
+import com.ruoyi.exam.domain.SingleChoice;
 import com.ruoyi.exam.service.ILibraryDetailService;
 import com.ruoyi.exam.service.ILibraryService;
+import com.ruoyi.exam.service.ISingleChoiceService;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.knowledge.domain.Article;
 import com.ruoyi.knowledge.domain.ArticleData;
@@ -56,6 +58,8 @@ public class FArticleController extends FBaseController
 	private ILibraryService libraryService;
 	@Autowired
 	private ILibraryDetailService libraryDetailService;
+	@Autowired
+	private ISingleChoiceService singleChoiceService;
 	@GetMapping("/article/{id}")
 	public String article(@PathVariable("id") String id,ModelMap modelMap,String libId)
 	{
@@ -84,6 +88,15 @@ public class FArticleController extends FBaseController
 		libraryDetail.setLibId(libId);
 		List<LibraryDetail> libraryDetails = libraryDetailService.selectLibraryDetailList(libraryDetail);
 		modelMap.put("libraryDetails", libraryDetails);
+		SingleChoice singleChoice=new SingleChoice();
+		singleChoice.setCreateBy(ShiroUtils.getUserId()+"");
+		singleChoice.setChoiceG(article.getId());
+		List<SingleChoice> singleChoices = singleChoiceService.selectSingleChoiceList(singleChoice);
+		if(singleChoices!=null&&singleChoices.size()>0){
+			modelMap.put("isScore", true);
+		}else{
+			modelMap.put("isScore", false);
+		}
 		if(StringUtils.isNotEmpty(customContentView)){
 			return "/front/"+prefix + "/"+customContentView;
 		}else{

@@ -98,7 +98,7 @@
 
 <!--        </div>-->
 <!--    </div>-->
-    <div th:include="front/knowledge/article/questionnaire::questionnaire"></div>
+    <div th:if="${isScore==false}" th:include="front/knowledge/article/questionnaire::questionnaire"></div>
 
 </div>
 

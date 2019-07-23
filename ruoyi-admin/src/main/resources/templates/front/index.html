@@ -127,7 +127,7 @@
                 <div class="ibox">
                     <div class="ibox-content">
                         <a th:href="'/f/knowledge/article/article/'+${hotArticle.id}" class="btn-link">
-                            <h4 th:text="${hotArticle.title}">
+                            <h4 th:text="${hotArticle.title}" style=" overflow: hidden; text-overflow: ellipsis; white-space: nowrap; ">
                                 时间从何而来？为什么时间似乎是流动的？
                             </h4>
                         </a>
