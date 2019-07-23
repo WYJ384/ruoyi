@@ -24,6 +24,7 @@
                 <th>网络安全考核</th>
                 <th>资源融智</th>
                 <th>基础维护管理提升</th>
+                <th>教育培训</th>
                 <th>总经理加扣分</th>
                 <th>省公司月度考核</th>
                 <th>总分</th>
@@ -44,9 +45,10 @@
                 <td th:text="${score.wangluoanquan}">网络安全得分</td>
                 <td th:text="${score.ziyuan==null?'——':score.ziyuan}">资源</td>
                 <td th:text="${score.jichu}">基础</td>
+                <td th:text="${score.jypx}">基础</td>
                 <td th:text="${score.zongjinglijiafen}">总经理加扣分</td>
                 <td th:text="${score.shenggongsiyuedukaohe}">省公司月度考核</td>
-                <td th:text="${score.totalScore}">总分</td>
+                <td th:text="${#numbers.formatDecimal(score.totalScore,1,2)}">总分</td>
             </tr>
         </table>
     </div>

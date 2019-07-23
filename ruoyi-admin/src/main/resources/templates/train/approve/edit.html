@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-approve-edit" th:object="${approve}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">审请单位：</label>
+				<div class="col-sm-8">
+					<input id="sqdw" name="sqdw" th:field="*{sqdw}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">合同金额：</label>
+				<div class="col-sm-8">
+					<input id="htje" name="htje" th:field="*{htje}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">合同编号：</label>
+				<div class="col-sm-8">
+					<input id="htbh" name="htbh" th:field="*{htbh}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">合同价款：</label>
+				<div class="col-sm-8">
+					<input id="htjk" name="htjk" th:field="*{htjk}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">合同名称：</label>
+				<div class="col-sm-8">
+					<input id="htmc" name="htmc" th:field="*{htmc}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">累计已付款：</label>
+				<div class="col-sm-8">
+					<input id="ljyfk" name="ljyfk" th:field="*{ljyfk}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">款项用途：</label>
+				<div class="col-sm-8">
+					<input id="kxyt" name="kxyt" th:field="*{kxyt}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">本次申请金额：</label>
+				<div class="col-sm-8">
+					<input id="bcsqje" name="bcsqje" th:field="*{bcsqje}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">收款单位：</label>
+				<div class="col-sm-8">
+					<input id="skdw" name="skdw" th:field="*{skdw}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">实际付款金额：</label>
+				<div class="col-sm-8">
+					<input id="sjfkje" name="sjfkje" th:field="*{sjfkje}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建者：</label>
+				<div class="col-sm-8">
+					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">创建时间：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">更新者：</label>
+				<div class="col-sm-8">
+					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">更新时间：</label>
+				<div class="col-sm-8">
+					<input id="updateDate" name="updateDate" th:field="*{updateDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注信息：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">删除标记：</label>
+				<div class="col-sm-8">
+					<input id="delFlag" name="delFlag" th:field="*{delFlag}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">题库：</label>
+				<div class="col-sm-8">
+					<input id="libId" name="libId" th:field="*{libId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">本次付款申请比例：</label>
+				<div class="col-sm-8">
+					<input id="bcsqfkbl" name="bcsqfkbl" th:field="*{bcsqfkbl}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">尚需支付金额：</label>
+				<div class="col-sm-8">
+					<input id="sxzfje" name="sxzfje" th:field="*{sxzfje}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">经办人：</label>
+				<div class="col-sm-8">
+					<input id="jbr" name="jbr" th:field="*{jbr}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">技术支撑部负责人：</label>
+				<div class="col-sm-8">
+					<input id="jszcbfzr" name="jszcbfzr" th:field="*{jszcbfzr}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">维护部门负责人：</label>
+				<div class="col-sm-8">
+					<input id="whbmfzr" name="whbmfzr" th:field="*{whbmfzr}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">办公室负责人：</label>
+				<div class="col-sm-8">
+					<input id="bgsfzr" name="bgsfzr" th:field="*{bgsfzr}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">主管副总经理：</label>
+				<div class="col-sm-8">
+					<input id="zgfzjl" name="zgfzjl" th:field="*{zgfzjl}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">总经理：</label>
+				<div class="col-sm-8">
+					<input id="zjl" name="zjl" th:field="*{zjl}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">财务部负责人：</label>
+				<div class="col-sm-8">
+					<input id="cwbfzr" name="cwbfzr" th:field="*{cwbfzr}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">申请编号：</label>
+				<div class="col-sm-8">
+					<input id="spbh" name="spbh" th:field="*{spbh}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">是否阅卷 0否1是：</label>
+				<div class="col-sm-8">
+					<input id="remark1" name="remark1" th:field="*{remark1}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展2：</label>
+				<div class="col-sm-8">
+					<input id="remark2" name="remark2" th:field="*{remark2}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展3：</label>
+				<div class="col-sm-8">
+					<input id="remark3" name="remark3" th:field="*{remark3}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展4：</label>
+				<div class="col-sm-8">
+					<input id="remark4" name="remark4" th:field="*{remark4}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展5：</label>
+				<div class="col-sm-8">
+					<input id="remark5" name="remark5" th:field="*{remark5}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展6：</label>
+				<div class="col-sm-8">
+					<input id="remark6" name="remark6" th:field="*{remark6}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展7：</label>
+				<div class="col-sm-8">
+					<input id="remark7" name="remark7" th:field="*{remark7}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展8：</label>
+				<div class="col-sm-8">
+					<input id="remark8" name="remark8" th:field="*{remark8}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展9：</label>
+				<div class="col-sm-8">
+					<input id="remark9" name="remark9" th:field="*{remark9}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">扩展10：</label>
+				<div class="col-sm-8">
+					<input id="remark10" name="remark10" th:field="*{remark10}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "train/approve";
+		$("#form-approve-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-approve-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

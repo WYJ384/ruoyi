@@ -28,7 +28,7 @@
 			$('.table').find("td[class^='type_']").each(function (index, element) {
 				var cla=$(element).attr("class");
 				var obj=$('.table').find("."+cla);
-				if(obj.length>1){
+				if(obj.length>=2){
 					obj.eq(0).attr("rowspan",obj.length);
 					obj.eq(0).removeClass(cla);
 					$('.table').find("."+cla).remove();

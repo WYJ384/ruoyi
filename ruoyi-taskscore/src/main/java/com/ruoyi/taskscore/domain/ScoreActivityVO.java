@@ -30,6 +30,8 @@ public class ScoreActivityVO {
     private Double ziyuan;
     //    基础
     private Double jichu;
+    //    教育培训
+    private Double jypx;
     //    总经理加扣分
     private Double zongjinglijiafen;
     //    省公司月度考核
@@ -37,6 +39,13 @@ public class ScoreActivityVO {
     //    总分
     private Double totalScore;
 
+    public Double getJypx() {
+        return jypx;
+    }
+
+    public void setJypx(Double jypx) {
+        this.jypx = jypx;
+    }
 
     public String getActivityId() {
         return activityId;

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.train.mapper.ApproveMapper">
+    
+    <resultMap type="Approve" id="ApproveResult">
+        <result property="id"    column="id"    />
+        <result property="sqdw"    column="sqdw"    />
+        <result property="htje"    column="htje"    />
+        <result property="htbh"    column="htbh"    />
+        <result property="htjk"    column="htjk"    />
+        <result property="htmc"    column="htmc"    />
+        <result property="ljyfk"    column="ljyfk"    />
+        <result property="kxyt"    column="kxyt"    />
+        <result property="bcsqje"    column="bcsqje"    />
+        <result property="skdw"    column="skdw"    />
+        <result property="sjfkje"    column="sjfkje"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="libId"    column="lib_id"    />
+        <result property="bcsqfkbl"    column="bcsqfkbl"    />
+        <result property="sxzfje"    column="sxzfje"    />
+        <result property="jbr"    column="jbr"    />
+        <result property="jszcbfzr"    column="jszcbfzr"    />
+        <result property="whbmfzr"    column="whbmfzr"    />
+        <result property="bgsfzr"    column="bgsfzr"    />
+        <result property="zgfzjl"    column="zgfzjl"    />
+        <result property="zjl"    column="zjl"    />
+        <result property="cwbfzr"    column="cwbfzr"    />
+        <result property="spbh"    column="spbh"    />
+        <result property="remark1"    column="remark1"    />
+        <result property="remark2"    column="remark2"    />
+        <result property="remark3"    column="remark3"    />
+        <result property="remark4"    column="remark4"    />
+        <result property="remark5"    column="remark5"    />
+        <result property="remark6"    column="remark6"    />
+        <result property="remark7"    column="remark7"    />
+        <result property="remark8"    column="remark8"    />
+        <result property="remark9"    column="remark9"    />
+        <result property="remark10"    column="remark10"    />
+    </resultMap>
+	
+	<sql id="selectApproveVo">
+        select id, sqdw, htje, htbh, htjk, htmc, ljyfk, kxyt, bcsqje, skdw, sjfkje, create_by, create_date, update_by, update_date, remark, del_flag, lib_id, bcsqfkbl, sxzfje, jbr, jszcbfzr, whbmfzr, bgsfzr, zgfzjl, zjl, cwbfzr, spbh, remark1, remark2, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10 from approve
+    </sql>
+	
+    <select id="selectApproveList" parameterType="Approve" resultMap="ApproveResult">
+        <include refid="selectApproveVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="sqdw != null  and sqdw != '' "> and sqdw = #{sqdw}</if>
+             <if test="htje != null  and htje != '' "> and htje = #{htje}</if>
+             <if test="htbh != null  and htbh != '' "> and htbh = #{htbh}</if>
+             <if test="htjk != null  and htjk != '' "> and htjk = #{htjk}</if>
+             <if test="htmc != null  and htmc != '' "> and htmc = #{htmc}</if>
+             <if test="ljyfk != null  and ljyfk != '' "> and ljyfk = #{ljyfk}</if>
+             <if test="kxyt != null  and kxyt != '' "> and kxyt = #{kxyt}</if>
+             <if test="bcsqje != null  and bcsqje != '' "> and bcsqje = #{bcsqje}</if>
+             <if test="skdw != null  and skdw != '' "> and skdw = #{skdw}</if>
+             <if test="sjfkje != null  and sjfkje != '' "> and sjfkje = #{sjfkje}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="libId != null  and libId != '' "> and lib_id = #{libId}</if>
+             <if test="bcsqfkbl != null  and bcsqfkbl != '' "> and bcsqfkbl = #{bcsqfkbl}</if>
+             <if test="sxzfje != null  and sxzfje != '' "> and sxzfje = #{sxzfje}</if>
+             <if test="jbr != null  and jbr != '' "> and jbr = #{jbr}</if>
+             <if test="jszcbfzr != null  and jszcbfzr != '' "> and jszcbfzr = #{jszcbfzr}</if>
+             <if test="whbmfzr != null  and whbmfzr != '' "> and whbmfzr = #{whbmfzr}</if>
+             <if test="bgsfzr != null  and bgsfzr != '' "> and bgsfzr = #{bgsfzr}</if>
+             <if test="zgfzjl != null  and zgfzjl != '' "> and zgfzjl = #{zgfzjl}</if>
+             <if test="zjl != null  and zjl != '' "> and zjl = #{zjl}</if>
+             <if test="cwbfzr != null  and cwbfzr != '' "> and cwbfzr = #{cwbfzr}</if>
+             <if test="spbh != null  and spbh != '' "> and spbh = #{spbh}</if>
+             <if test="remark1 != null  and remark1 != '' "> and remark1 = #{remark1}</if>
+             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
+             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
+             <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
+             <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
+             <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
+             <if test="remark7 != null  and remark7 != '' "> and remark7 = #{remark7}</if>
+             <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
+             <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
+             <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+         </where>
+    </select>
+    
+    <select id="selectApproveById" parameterType="String" resultMap="ApproveResult">
+        <include refid="selectApproveVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertApprove" parameterType="Approve">
+        insert into approve
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="sqdw != null  and sqdw != ''  ">sqdw,</if>
+			<if test="htje != null  and htje != ''  ">htje,</if>
+			<if test="htbh != null  and htbh != ''  ">htbh,</if>
+			<if test="htjk != null  and htjk != ''  ">htjk,</if>
+			<if test="htmc != null  and htmc != ''  ">htmc,</if>
+			<if test="ljyfk != null  and ljyfk != ''  ">ljyfk,</if>
+			<if test="kxyt != null  and kxyt != ''  ">kxyt,</if>
+			<if test="bcsqje != null  and bcsqje != ''  ">bcsqje,</if>
+			<if test="skdw != null  and skdw != ''  ">skdw,</if>
+			<if test="sjfkje != null  and sjfkje != ''  ">sjfkje,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="libId != null  and libId != ''  ">lib_id,</if>
+			<if test="bcsqfkbl != null  and bcsqfkbl != ''  ">bcsqfkbl,</if>
+			<if test="sxzfje != null  and sxzfje != ''  ">sxzfje,</if>
+			<if test="jbr != null  and jbr != ''  ">jbr,</if>
+			<if test="jszcbfzr != null  and jszcbfzr != ''  ">jszcbfzr,</if>
+			<if test="whbmfzr != null  and whbmfzr != ''  ">whbmfzr,</if>
+			<if test="bgsfzr != null  and bgsfzr != ''  ">bgsfzr,</if>
+			<if test="zgfzjl != null  and zgfzjl != ''  ">zgfzjl,</if>
+			<if test="zjl != null  and zjl != ''  ">zjl,</if>
+			<if test="cwbfzr != null  and cwbfzr != ''  ">cwbfzr,</if>
+			<if test="spbh != null  and spbh != ''  ">spbh,</if>
+			<if test="remark1 != null  and remark1 != ''  ">remark1,</if>
+			<if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+			<if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+			<if test="remark4 != null  and remark4 != ''  ">remark4,</if>
+			<if test="remark5 != null  and remark5 != ''  ">remark5,</if>
+			<if test="remark6 != null  and remark6 != ''  ">remark6,</if>
+			<if test="remark7 != null  and remark7 != ''  ">remark7,</if>
+			<if test="remark8 != null  and remark8 != ''  ">remark8,</if>
+			<if test="remark9 != null  and remark9 != ''  ">remark9,</if>
+			<if test="remark10 != null  and remark10 != ''  ">remark10,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="sqdw != null  and sqdw != ''  ">#{sqdw},</if>
+			<if test="htje != null  and htje != ''  ">#{htje},</if>
+			<if test="htbh != null  and htbh != ''  ">#{htbh},</if>
+			<if test="htjk != null  and htjk != ''  ">#{htjk},</if>
+			<if test="htmc != null  and htmc != ''  ">#{htmc},</if>
+			<if test="ljyfk != null  and ljyfk != ''  ">#{ljyfk},</if>
+			<if test="kxyt != null  and kxyt != ''  ">#{kxyt},</if>
+			<if test="bcsqje != null  and bcsqje != ''  ">#{bcsqje},</if>
+			<if test="skdw != null  and skdw != ''  ">#{skdw},</if>
+			<if test="sjfkje != null  and sjfkje != ''  ">#{sjfkje},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="libId != null  and libId != ''  ">#{libId},</if>
+			<if test="bcsqfkbl != null  and bcsqfkbl != ''  ">#{bcsqfkbl},</if>
+			<if test="sxzfje != null  and sxzfje != ''  ">#{sxzfje},</if>
+			<if test="jbr != null  and jbr != ''  ">#{jbr},</if>
+			<if test="jszcbfzr != null  and jszcbfzr != ''  ">#{jszcbfzr},</if>
+			<if test="whbmfzr != null  and whbmfzr != ''  ">#{whbmfzr},</if>
+			<if test="bgsfzr != null  and bgsfzr != ''  ">#{bgsfzr},</if>
+			<if test="zgfzjl != null  and zgfzjl != ''  ">#{zgfzjl},</if>
+			<if test="zjl != null  and zjl != ''  ">#{zjl},</if>
+			<if test="cwbfzr != null  and cwbfzr != ''  ">#{cwbfzr},</if>
+			<if test="spbh != null  and spbh != ''  ">#{spbh},</if>
+			<if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
+			<if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+			<if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+			<if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
+			<if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
+			<if test="remark6 != null  and remark6 != ''  ">#{remark6},</if>
+			<if test="remark7 != null  and remark7 != ''  ">#{remark7},</if>
+			<if test="remark8 != null  and remark8 != ''  ">#{remark8},</if>
+			<if test="remark9 != null  and remark9 != ''  ">#{remark9},</if>
+			<if test="remark10 != null  and remark10 != ''  ">#{remark10},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateApprove" parameterType="Approve">
+        update approve
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sqdw != null  and sqdw != ''  ">sqdw = #{sqdw},</if>
+            <if test="htje != null  and htje != ''  ">htje = #{htje},</if>
+            <if test="htbh != null  and htbh != ''  ">htbh = #{htbh},</if>
+            <if test="htjk != null  and htjk != ''  ">htjk = #{htjk},</if>
+            <if test="htmc != null  and htmc != ''  ">htmc = #{htmc},</if>
+            <if test="ljyfk != null  and ljyfk != ''  ">ljyfk = #{ljyfk},</if>
+            <if test="kxyt != null  and kxyt != ''  ">kxyt = #{kxyt},</if>
+            <if test="bcsqje != null  and bcsqje != ''  ">bcsqje = #{bcsqje},</if>
+            <if test="skdw != null  and skdw != ''  ">skdw = #{skdw},</if>
+            <if test="sjfkje != null  and sjfkje != ''  ">sjfkje = #{sjfkje},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="libId != null  and libId != ''  ">lib_id = #{libId},</if>
+            <if test="bcsqfkbl != null  and bcsqfkbl != ''  ">bcsqfkbl = #{bcsqfkbl},</if>
+            <if test="sxzfje != null  and sxzfje != ''  ">sxzfje = #{sxzfje},</if>
+            <if test="jbr != null  and jbr != ''  ">jbr = #{jbr},</if>
+            <if test="jszcbfzr != null  and jszcbfzr != ''  ">jszcbfzr = #{jszcbfzr},</if>
+            <if test="whbmfzr != null  and whbmfzr != ''  ">whbmfzr = #{whbmfzr},</if>
+            <if test="bgsfzr != null  and bgsfzr != ''  ">bgsfzr = #{bgsfzr},</if>
+            <if test="zgfzjl != null  and zgfzjl != ''  ">zgfzjl = #{zgfzjl},</if>
+            <if test="zjl != null  and zjl != ''  ">zjl = #{zjl},</if>
+            <if test="cwbfzr != null  and cwbfzr != ''  ">cwbfzr = #{cwbfzr},</if>
+            <if test="spbh != null  and spbh != ''  ">spbh = #{spbh},</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''  ">remark7 = #{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''  ">remark8 = #{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteApproveById" parameterType="String">
+        delete from approve where id = #{id}
+    </delete>
+	
+    <delete id="deleteApproveByIds" parameterType="String">
+        delete from approve where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

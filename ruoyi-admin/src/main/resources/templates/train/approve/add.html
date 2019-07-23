@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+
+    <form class="form-horizontal m" id="form-approve-add">
+        <h2 class="text-center">中国电信股份有限公司甘肃分公司网络监控维护中心付款审批单</h2>
+        <h4 class="text-center">2019年7月18日</h4>
+        <h4 class="text-right">申请编号：082</h4>
+        <table class="table table-bordered">
+            <tr>
+                <th colspan="2" class="text-right">审请单位（签章）</th>
+                <td colspan="2">
+                    <input id="sqdw" name="sqdw" class="form-control" type="text">
+                </td>
+                <th class="text-right">合同金额</th>
+                <td>
+                    <input id="htje" name="htje" class="form-control" type="text">
+                </td>
+                <th colspan="2">备注</th>
+
+            </tr>
+            <tr>
+                <th colspan="2" class="text-right">合同编号</th>
+                <td colspan="2">
+                    <input id="htbh" name="htbh" class="form-control" type="text">
+                </td>
+                <th class="text-right">合同价款</th>
+                <td>
+                    <input id="htjk" name="htjk" class="form-control" type="text">
+                </td>
+                <td rowspan="5" colspan="2">
+                    <input id="remark" name="remark" class="form-control" type="text">
+                </td>
+
+            </tr>
+            <tr>
+                <th colspan="2" class="text-right">合同名称</th>
+                <td colspan="2">
+                    <input id="htmc" name="htmc" class="form-control" type="text">
+                </td>
+                <th class="text-right">累计已付款</th>
+                <td>
+                    <input id="ljyfk" name="ljyfk" class="form-control" type="text">
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2" class="text-right">款项用途</th>
+                <td colspan="2">
+                    <input id="kxyt" name="kxyt" class="form-control" type="text">
+                </td>
+                <th class="text-right">本次申请金额</th>
+                <td>
+                    <input id="bcsqje" name="bcsqje" class="form-control" type="text">
+                </td>
+
+            </tr>
+
+            <tr>
+                <th colspan="2" class="text-right">收款单位</th>
+                <td colspan="2">
+                    <input id="skdw" name="skdw" class="form-control" type="text">
+                </td>
+                <th class="text-right">实际付款金额</th>
+                <td>
+                    <input id="sjfkje" name="sjfkje" class="form-control" type="text">
+                </td>
+
+            </tr>
+
+            <tr>
+                <th class="text-right" colspan="3">本次付款申请比例（%）</th>
+                <td>
+                    <input id="bcsqfkbl" name="bcsqfkbl" class="form-control" type="text">
+                </td>
+                <th class="text-right">尚需支付金额</th>
+                <td>
+                    <input id="sxzfje" name="sxzfje" class="form-control" type="text">
+                </td>
+
+            </tr>
+            <tr>
+                <th rowspan="2">审核（批）流程</th>
+                <th>经办人</th>
+                <th>技术支撑部负责人</th>
+                <th>维护部门负责人</th>
+                <th>办公室负责人</th>
+                <th>主管副总经理</th>
+                <th>总经理</th>
+                <th>财务部负责人</th>
+            </tr>
+            <tr>
+
+                <td th:text="${approve.jbr}"></td>
+                <td>
+                    <select id="jszcbfzr" name="jszcbfzr" class="form-control select2-hidden-accessible">
+                        <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                                th:text="${user.userName}" th:selected="${user.userName eq '韩瑞萍'}">
+
+                        </option>
+                    </select>
+                </td>
+                <td>
+
+                    <select id="whbmfzr" name="whbmfzr" class="form-control select2-hidden-accessible">
+                        <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                                th:text="${user.userName}" th:selected="${user.userName eq '王芙蓉'}">
+
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <select id="bgsfzr" name="bgsfzr" class="form-control select2-hidden-accessible">
+                        <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                                th:text="${user.userName}" th:selected="${user.userName eq '钟立兵'}">
+
+                        </option>
+                    </select>
+
+                </td>
+                <td>
+
+                    <select id="zgfzjl" name="zgfzjl" class="form-control select2-hidden-accessible">
+                        <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                                th:text="${user.userName}" th:selected="${user.userName eq '钟立兵'}">
+
+                        </option>
+                    </select>
+                </td>
+                <td>
+
+                    <select id="zjl" name="zjl" class="form-control select2-hidden-accessible">
+                        <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                                th:text="${user.userName}" th:selected="${user.userName eq '钟立兵'}">
+
+                        </option>
+                    </select>
+
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="row">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+        </button>&nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+        </button>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+<script type="text/javascript">
+    var prefix = ctx + "train/approve"
+    $("#form-approve-add").validate({
+        rules: {
+            sqdw: {
+                required: true,
+            },
+            htje: {
+                required: true,
+            },
+            htbh: {
+                required: true,
+            },
+            htjk: {
+                required: true,
+            },
+            htmc: {
+                required: true,
+            },
+            ljyfk: {
+                required: true,
+            },
+            kxyt: {
+                required: true,
+            },
+            bcsqje: {
+                required: true,
+            },
+            skdw: {
+                required: true,
+            },
+            sjfkje: {
+                required: true,
+            },
+            sxzfje: {
+                required: true,
+            },
+
+            bcsqfkbl: {
+                required: true,
+            },
+            jszcbfzr: {
+                required: true,
+            },
+            whbmfzr: {
+                required: true,
+            },
+            bgsfzr: {
+                required: true,
+            },
+            zgfzjl: {
+                required: true,
+            },
+            cwbfzr: {
+                required: true,
+            },
+            remark: {
+                required: true,
+            },
+            zjl: {
+                required: true,
+            },
+
+
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/add", $('#form-approve-add').serialize());
+        }
+    }
+</script>
+</body>
+</html>

@@ -194,7 +194,6 @@ public class ScoreActivityController extends BaseController {
                 }else  if(pointerType.equals("总经理考核")){
                     scoreActivityVO.setZongjingliScore(score);
                 }else  if(pointerType.equals("分管领导考核1")){
-
                     scoreActivityVO.setFenguanScore1(score);
                 }else  if(pointerType.equals("分管领导考核2")){
                     scoreActivityVO.setFenguanScore2(score);
@@ -220,6 +219,8 @@ public class ScoreActivityController extends BaseController {
                     scoreActivityVO.setZongjinglijiafen(score);
                 }else  if(pointerType.equals("省公司月度考核")){
                     scoreActivityVO.setShenggongsiyuedukaohe(score);
+                }else  if(pointerType.equals("教育培训")){
+                    scoreActivityVO.setJypx(score);
                 }
             }
             getDeptScore(scoreActivityVO);
@@ -242,7 +243,7 @@ public class ScoreActivityController extends BaseController {
         Double wangluoanquan = scoreActivityVO.getWangluoanquan();
         Double jichu = scoreActivityVO.getJichu();
         Double ziyuan = scoreActivityVO.getZiyuan();
-
+        Double jypx = scoreActivityVO.getJypx();
 
         Double zongjinglijiafen = scoreActivityVO.getZongjinglijiafen();
         Double fenguanScore1 = scoreActivityVO.getFenguanScore1();
