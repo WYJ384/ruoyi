@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
              <if test="updateDate != null "> and update_date = #{updateDate}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+
              <if test="libId != null  and libId != '' "> and lib_id = #{libId}</if>
              <if test="bcsqfkbl != null  and bcsqfkbl != '' "> and bcsqfkbl = #{bcsqfkbl}</if>
              <if test="sxzfje != null  and sxzfje != '' "> and sxzfje = #{sxzfje}</if>
@@ -90,12 +90,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
              <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
              <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+              and del_flag = 0
          </where>
     </select>
     
     <select id="selectApproveById" parameterType="String" resultMap="ApproveResult">
         <include refid="selectApproveVo"/>
-        where id = #{id}
+        where id = #{id} and  del_flag=0
+    </select>
+    <select id="getMaxSQBH" resultType="Integer">
+        select max(spbh) max FROM approve where   del_flag=0
     </select>
         
     <insert id="insertApprove" parameterType="Approve">
@@ -227,11 +231,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
 	<delete id="deleteApproveById" parameterType="String">
-        delete from approve where id = #{id}
+        update  approve set del_flag=1 where id = #{id}
     </delete>
 	
     <delete id="deleteApproveByIds" parameterType="String">
-        delete from approve where id in 
+        update  approve set del_flag=1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
