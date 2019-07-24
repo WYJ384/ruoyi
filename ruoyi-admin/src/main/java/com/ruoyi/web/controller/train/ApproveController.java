@@ -1,12 +1,20 @@
 package com.ruoyi.web.controller.train;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.framework.util.NOCStringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.train.domain.Train;
+import com.ruoyi.train.service.ITrainService;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +48,15 @@ public class ApproveController extends BaseController
 	private ISysUserService userService;
 	@Autowired
 	private IApproveService approveService;
+
+	@Autowired
+	private ITrainService trainService;
+	@Autowired
+	private ActTaskService actTaskService;
+	@Autowired
+	TaskService taskService;
+	@Autowired
+	HistoryService historyService;
 	
 	@RequiresPermissions("train:approve:view")
 	@GetMapping()
@@ -86,10 +103,17 @@ public class ApproveController extends BaseController
 		approve.setJbr(ShiroUtils.getSysUser().getUserName());
 		approve.setCreateTime(new Date());
 		approve.setId(NOCStringUtils.getUUID());
+//		查询申请编号，若果不存在从001开始
+		Integer sqbh=approveService.getMaxSQBH();
+		if(sqbh==null){
+			sqbh=1;
+		}
+		approve.setSpbh(String.format("%03d", sqbh));
 		mmap.put("approve", approve);
+
 	    return prefix + "/add";
 	}
-	
+
 	/**
 	 * 新增保存付款审批
 	 */
@@ -102,6 +126,7 @@ public class ApproveController extends BaseController
 		approve.setCreateBy(ShiroUtils.getUserId()+"");
 		approve.setCreateTime(new Date());
 		approve.setJbr(ShiroUtils.getUserId()+"");
+		approve.setId(NOCStringUtils.getUUID());
 		return toAjax(approveService.insertApprove(approve));
 	}
 
@@ -115,7 +140,29 @@ public class ApproveController extends BaseController
 		mmap.put("approve", approve);
 	    return prefix + "/edit";
 	}
-	
+	@GetMapping("/query/{id}")
+	public String query(@PathVariable("id") String id, ModelMap mmap)
+	{
+		Approve approve = approveService.selectApproveById(id);
+		mmap.put("approve", approve);
+		return prefix + "/query";
+	}
+	@Log(title = "付款审批开始", businessType = BusinessType.UPDATE)
+	public void startApprove(Approve approve){
+		String businessTable = "approve";
+		String businessId = "3";
+		String title = "付款审批";
+		String userId = ShiroUtils.getLoginName();
+		Map<String, Object> vars = new HashMap<String, Object>();
+		vars.put("jszcbfzr", approve.getJszcbfzr());
+		vars.put("whbmfzr", approve.getWhbmfzr());
+		vars.put("bgsfzr", approve.getBgsfzr());
+		vars.put("zgfz", approve.getZgfzjl());
+		vars.put("zjl", approve.getZjl());
+		ProcessInstance processInstance = actTaskService.startProcess("fkspd", businessTable, businessId, title, userId, vars);
+		approve.setProcessInstanceId(processInstance.getId());
+		approveService.updateApprove(approve);
+	}
 	/**
 	 * 修改保存付款审批
 	 */

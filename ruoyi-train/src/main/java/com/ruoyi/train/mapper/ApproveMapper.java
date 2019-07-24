@@ -58,5 +58,6 @@ public interface ApproveMapper
      * @return 结果
      */
 	public int deleteApproveByIds(String[] ids);
-	
+
+    Integer getMaxSQBH();
 }

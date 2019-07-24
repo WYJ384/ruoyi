@@ -22,7 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateDate"    column="update_date"    />
         <result property="remark"    column="remark"    />
         <result property="delFlag"    column="del_flag"    />
-        <result property="libId"    column="lib_id"    />
         <result property="bcsqfkbl"    column="bcsqfkbl"    />
         <result property="sxzfje"    column="sxzfje"    />
         <result property="jbr"    column="jbr"    />
@@ -43,10 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark8"    column="remark8"    />
         <result property="remark9"    column="remark9"    />
         <result property="remark10"    column="remark10"    />
+        <result property="libId"    column="lib_id"    />
+        <result property="processInstanceId"    column="process_instance_id"    />
+        <result property="approveStatus"    column="approve_status"    />
     </resultMap>
 	
 	<sql id="selectApproveVo">
-        select id, sqdw, htje, htbh, htjk, htmc, ljyfk, kxyt, bcsqje, skdw, sjfkje, create_by, create_date, update_by, update_date, remark, del_flag, lib_id, bcsqfkbl, sxzfje, jbr, jszcbfzr, whbmfzr, bgsfzr, zgfzjl, zjl, cwbfzr, spbh, remark1, remark2, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10 from approve
+        select id, sqdw, htje, htbh, htjk, htmc, ljyfk, kxyt, bcsqje, skdw, sjfkje, create_by, create_date, update_by, update_date, remark, del_flag, bcsqfkbl, sxzfje, jbr, jszcbfzr, whbmfzr, bgsfzr, zgfzjl, zjl, cwbfzr, spbh, remark1, remark2, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10, lib_id, process_instance_id, approve_status from approve
     </sql>
 	
     <select id="selectApproveList" parameterType="Approve" resultMap="ApproveResult">
@@ -68,8 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
              <if test="updateDate != null "> and update_date = #{updateDate}</if>
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
-
-             <if test="libId != null  and libId != '' "> and lib_id = #{libId}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
              <if test="bcsqfkbl != null  and bcsqfkbl != '' "> and bcsqfkbl = #{bcsqfkbl}</if>
              <if test="sxzfje != null  and sxzfje != '' "> and sxzfje = #{sxzfje}</if>
              <if test="jbr != null  and jbr != '' "> and jbr = #{jbr}</if>
@@ -90,7 +91,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
              <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
              <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
-              and del_flag = 0
+             <if test="libId != null  and libId != '' "> and lib_id = #{libId}</if>
+             <if test="processInstanceId != null  and processInstanceId != '' "> and process_instance_id = #{processInstanceId}</if>
+             <if test="approveStatus != null  and approveStatus != '' "> and approve_status = #{approveStatus}</if>
+            and del_flag = 0
          </where>
     </select>
     
@@ -101,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getMaxSQBH" resultType="Integer">
         select max(spbh) max FROM approve where   del_flag=0
     </select>
-        
+
     <insert id="insertApprove" parameterType="Approve">
         insert into approve
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -122,7 +126,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateDate != null  ">update_date,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
-			<if test="libId != null  and libId != ''  ">lib_id,</if>
 			<if test="bcsqfkbl != null  and bcsqfkbl != ''  ">bcsqfkbl,</if>
 			<if test="sxzfje != null  and sxzfje != ''  ">sxzfje,</if>
 			<if test="jbr != null  and jbr != ''  ">jbr,</if>
@@ -143,6 +146,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="remark8 != null  and remark8 != ''  ">remark8,</if>
 			<if test="remark9 != null  and remark9 != ''  ">remark9,</if>
 			<if test="remark10 != null  and remark10 != ''  ">remark10,</if>
+			<if test="libId != null  and libId != ''  ">lib_id,</if>
+			<if test="processInstanceId != null  and processInstanceId != ''  ">process_instance_id,</if>
+			<if test="approveStatus != null  and approveStatus != ''  ">approve_status,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null  and id != ''  ">#{id},</if>
@@ -162,7 +168,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateDate != null  ">#{updateDate},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
-			<if test="libId != null  and libId != ''  ">#{libId},</if>
 			<if test="bcsqfkbl != null  and bcsqfkbl != ''  ">#{bcsqfkbl},</if>
 			<if test="sxzfje != null  and sxzfje != ''  ">#{sxzfje},</if>
 			<if test="jbr != null  and jbr != ''  ">#{jbr},</if>
@@ -183,6 +188,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="remark8 != null  and remark8 != ''  ">#{remark8},</if>
 			<if test="remark9 != null  and remark9 != ''  ">#{remark9},</if>
 			<if test="remark10 != null  and remark10 != ''  ">#{remark10},</if>
+			<if test="libId != null  and libId != ''  ">#{libId},</if>
+			<if test="processInstanceId != null  and processInstanceId != ''  ">#{processInstanceId},</if>
+			<if test="approveStatus != null  and approveStatus != ''  ">#{approveStatus},</if>
          </trim>
     </insert>
 	 
@@ -205,7 +213,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateDate != null  ">update_date = #{updateDate},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
-            <if test="libId != null  and libId != ''  ">lib_id = #{libId},</if>
             <if test="bcsqfkbl != null  and bcsqfkbl != ''  ">bcsqfkbl = #{bcsqfkbl},</if>
             <if test="sxzfje != null  and sxzfje != ''  ">sxzfje = #{sxzfje},</if>
             <if test="jbr != null  and jbr != ''  ">jbr = #{jbr},</if>
@@ -226,6 +233,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="remark8 != null  and remark8 != ''  ">remark8 = #{remark8},</if>
             <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
             <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
+            <if test="libId != null  and libId != ''  ">lib_id = #{libId},</if>
+            <if test="processInstanceId != null  and processInstanceId != ''  ">process_instance_id = #{processInstanceId},</if>
+            <if test="approveStatus != null  and approveStatus != ''  ">approve_status = #{approveStatus},</if>
         </trim>
         where id = #{id}
     </update>

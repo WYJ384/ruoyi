@@ -13,18 +13,9 @@
 							<li>
 								审批单位：<input type="text" name="spdw"/>
 							</li>
-
-
 							<li>
 								合同编号：<input type="text" name="htbh"/>
 							</li>
-
-
-
-
-
-
-
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -79,7 +70,13 @@
 				{
 					field : 'sqdw',
 					title : '审请单位',
-					sortable: true
+					sortable: true,
+					formatter: function (value, row, index) {
+						var actions = [];
+						var title="付款审批单";
+						actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/query/'+row.id + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+						return actions.join('');
+					}
 				},
 
 				{

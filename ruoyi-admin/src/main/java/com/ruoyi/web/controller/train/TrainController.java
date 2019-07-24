@@ -57,11 +57,14 @@ public class TrainController extends BaseController
 	@Autowired
 	TaskService taskService;
 	@Autowired
+	HistoryService historyService;
+	@Autowired
 	private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private ISysDictDataService dictDataService;
-	@Autowired
-	HistoryService historyService;
+
+
+
 	@RequiresPermissions("train:train:view")
 	@GetMapping()
 	public String train()

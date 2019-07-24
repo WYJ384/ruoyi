@@ -79,5 +79,10 @@ public class ApproveServiceImpl implements IApproveService
 	{
 		return approveMapper.deleteApproveByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public Integer getMaxSQBH() {
+		return approveMapper.getMaxSQBH();
+	}
+
 }

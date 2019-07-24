@@ -10,7 +10,8 @@
     <form class="form-horizontal m" id="form-approve-add">
         <h2 class="text-center">中国电信股份有限公司甘肃分公司网络监控维护中心付款审批单</h2>
         <h4 class="text-center">2019年7月18日</h4>
-        <h4 class="text-right">申请编号：082</h4>
+        <h4 class="text-right">申请编号：<span th:text="${approve.spbh}"></span></h4>
+        <input type="hidden" th:value="${approve.spbh}" name="spbh">
         <table class="table table-bordered">
             <tr>
                 <th colspan="2" class="text-right">审请单位（签章）</th>

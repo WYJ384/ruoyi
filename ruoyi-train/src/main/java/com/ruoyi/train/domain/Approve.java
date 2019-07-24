@@ -9,7 +9,7 @@ import java.util.Date;
  * 付款审批表 approve
  * 
  * @author ruoyi
- * @date 2019-07-23
+ * @date 2019-07-24
  */
 public class Approve extends BaseEntity
 {
@@ -49,8 +49,6 @@ public class Approve extends BaseEntity
 	private String remark;
 	/** 删除标记 */
 	private String delFlag;
-	/** 题库 */
-	private String libId;
 	/** 本次付款申请比例 */
 	private String bcsqfkbl;
 	/** 尚需支付金额 */
@@ -91,6 +89,12 @@ public class Approve extends BaseEntity
 	private String remark9;
 	/** 扩展10 */
 	private String remark10;
+	/**  */
+	private String libId;
+	/** 流程编号 */
+	private String processInstanceId;
+	/** 申请状态1暂存2申请中 */
+	private String approveStatus;
 
 	public void setId(String id) 
 	{
@@ -244,15 +248,6 @@ public class Approve extends BaseEntity
 	public String getDelFlag() 
 	{
 		return delFlag;
-	}
-	public void setLibId(String libId) 
-	{
-		this.libId = libId;
-	}
-
-	public String getLibId() 
-	{
-		return libId;
 	}
 	public void setBcsqfkbl(String bcsqfkbl) 
 	{
@@ -434,6 +429,33 @@ public class Approve extends BaseEntity
 	{
 		return remark10;
 	}
+	public void setLibId(String libId) 
+	{
+		this.libId = libId;
+	}
+
+	public String getLibId() 
+	{
+		return libId;
+	}
+	public void setProcessInstanceId(String processInstanceId) 
+	{
+		this.processInstanceId = processInstanceId;
+	}
+
+	public String getProcessInstanceId() 
+	{
+		return processInstanceId;
+	}
+	public void setApproveStatus(String approveStatus) 
+	{
+		this.approveStatus = approveStatus;
+	}
+
+	public String getApproveStatus() 
+	{
+		return approveStatus;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -454,7 +476,6 @@ public class Approve extends BaseEntity
             .append("updateDate", getUpdateDate())
             .append("remark", getRemark())
             .append("delFlag", getDelFlag())
-            .append("libId", getLibId())
             .append("bcsqfkbl", getBcsqfkbl())
             .append("sxzfje", getSxzfje())
             .append("jbr", getJbr())
@@ -475,6 +496,9 @@ public class Approve extends BaseEntity
             .append("remark8", getRemark8())
             .append("remark9", getRemark9())
             .append("remark10", getRemark10())
+            .append("libId", getLibId())
+            .append("processInstanceId", getProcessInstanceId())
+            .append("approveStatus", getApproveStatus())
             .toString();
     }
 }

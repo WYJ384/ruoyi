@@ -50,5 +50,10 @@ public interface IApproveService
      * @return 结果
      */
 	public int deleteApproveByIds(String ids);
-	
+
+	/**
+	 * 查询最大的申请编号
+	 * @return
+	 */
+	Integer getMaxSQBH();
 }

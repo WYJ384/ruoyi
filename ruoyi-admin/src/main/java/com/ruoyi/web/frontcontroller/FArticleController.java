@@ -83,11 +83,14 @@ public class FArticleController extends FBaseController
 		CmsCategory cmsCategory = cmsCategoryService.selectCmsCategoryById(article.getCategoryId());
 		String customContentView = cmsCategory.getCustomContentView();
 		modelMap.put("cmsCategory", cmsCategory);
-
+		if(StringUtils.isEmpty(libId)){
+			libId="1";
+		}
 		LibraryDetail libraryDetail=new LibraryDetail();
 		libraryDetail.setLibId(libId);
 		List<LibraryDetail> libraryDetails = libraryDetailService.selectLibraryDetailList(libraryDetail);
 		modelMap.put("libraryDetails", libraryDetails);
+
 		SingleChoice singleChoice=new SingleChoice();
 		singleChoice.setCreateBy(ShiroUtils.getUserId()+"");
 		singleChoice.setChoiceG(article.getId());
