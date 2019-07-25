@@ -194,11 +194,11 @@ public class ScoreActivityController extends BaseController {
                     scoreActivityVO.setShenggongsikaohe(score);
                 }else  if(pointerType.equals("总经理考核")){
                     scoreActivityVO.setZongjingliScore(score);
-                }else  if(pointerType.equals("分管领导考核1")){
+                }else  if(pointerType.equals("副总经理考核")){
                     scoreActivityVO.setFenguanScore1(score);
-                }else  if(pointerType.equals("分管领导考核2")){
+                }else  if(pointerType.equals("总工程师考核")){
                     scoreActivityVO.setFenguanScore2(score);
-                }else  if(pointerType.equals("分管领导考核3")){
+                }else  if(pointerType.equals("高级专家、技术负责人考核")){
                     scoreActivityVO.setFenguanScore3(score);
                 }else  if(pointerType.equals("省市一体化考核")){
                     scoreActivityVO.setShengshiyitihuaScore(score);
@@ -234,55 +234,60 @@ public class ScoreActivityController extends BaseController {
         return prefix + "/statistics";
     }
     public void getDeptScore(ScoreActivityVO scoreActivityVO){
-        Double shenggongsikaohe = scoreActivityVO.getShenggongsikaohe();
-        Double shenggongsiyuedukaohe = scoreActivityVO.getShenggongsiyuedukaohe();
-        Double zongjingliScore = scoreActivityVO.getZongjingliScore();
-        Double anquanshengchanScore = scoreActivityVO.getAnquanshengchanScore();
-        Double dangjiangongzuo = scoreActivityVO.getDangjiangongzuo();
-        Double jiankonggongdan = scoreActivityVO.getJiankonggongdan();
-        Double zhengqizhicheng = scoreActivityVO.getZhengqizhicheng();
-        Double wangluoanquan = scoreActivityVO.getWangluoanquan();
-        Double jichu = scoreActivityVO.getJichu();
-        Double ziyuan = scoreActivityVO.getZiyuan();
-        Double jypx = scoreActivityVO.getJypx();
+        Double shenggongsikaohe = scoreActivityVO.getShenggongsikaohe()==null?0D:scoreActivityVO.getShenggongsikaohe();
+        Double shenggongsiyuedukaohe = scoreActivityVO.getShenggongsiyuedukaohe()==null?0D:scoreActivityVO.getShenggongsiyuedukaohe();
+        Double zongjingliScore = scoreActivityVO.getZongjingliScore()==null?0D:scoreActivityVO.getZongjingliScore();
+        Double anquanshengchanScore = scoreActivityVO.getAnquanshengchanScore()==null?0D:scoreActivityVO.getAnquanshengchanScore();
+        Double dangjiangongzuo = scoreActivityVO.getDangjiangongzuo()==null?0D:scoreActivityVO.getDangjiangongzuo();
+        Double jiankonggongdan = scoreActivityVO.getJiankonggongdan()==null?0D:scoreActivityVO.getJiankonggongdan();
+        Double zhengqizhicheng = scoreActivityVO.getZhengqizhicheng()==null?0D:scoreActivityVO.getZhengqizhicheng();
+        Double wangluoanquan = scoreActivityVO.getWangluoanquan()==null?0D:scoreActivityVO.getWangluoanquan();
+        Double jichu = scoreActivityVO.getJichu()==null?0D:scoreActivityVO.getJichu();
+        Double ziyuan = scoreActivityVO.getZiyuan()==null?0D:scoreActivityVO.getZiyuan();
+        Double jypx = scoreActivityVO.getJypx()==null?0D:scoreActivityVO.getJypx();
 
         Double zongjinglijiafen = scoreActivityVO.getZongjinglijiafen();
-        Double fenguanScore1 = scoreActivityVO.getFenguanScore1();
-        if(fenguanScore1==null){
-            fenguanScore1=0D;
+        Double fuzongjingli = scoreActivityVO.getFenguanScore1();
+        if(fuzongjingli==null){
+            fuzongjingli=0D;
         }
-        Double fenguanScore2 = scoreActivityVO.getFenguanScore2();
-        if(fenguanScore2==null){
-            fenguanScore2=0D;
+        Double zonggongchengshi = scoreActivityVO.getFenguanScore2();
+        if(zonggongchengshi==null){
+            zonggongchengshi=0D;
+        }
+        Double jishufuzeren = scoreActivityVO.getFenguanScore3();
+        if(jishufuzeren==null){
+            jishufuzeren=0D;
         }
         Double shengshiyitihuaScore = scoreActivityVO.getShengshiyitihuaScore();
         Double totalScore=0D;
         if(scoreActivityVO.getDeptName().equals("办公室")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.4 + fenguanScore1*0.2 + fenguanScore2*0.2  +
-                     anquanshengchanScore  + wangluoanquan+jichu+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+            Double kh=zongjingliScore*0.4 + fuzongjingli*0.4 +anquanshengchanScore+ wangluoanquan +dangjiangongzuo +jichu+ziyuan+jypx;
+            totalScore = shenggongsikaohe * kh / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("技术支撑部")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.3 + fenguanScore1*0.2 + fenguanScore2*0.2  +
-                    anquanshengchanScore +jiankonggongdan + wangluoanquan+jichu+ziyuan+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
+            Double kh=zongjingliScore*0.3 + fuzongjingli*0.4 +anquanshengchanScore+ wangluoanquan +jiankonggongdan+dangjiangongzuo +jichu+ziyuan+jypx;
+            System.out.println(kh+"===");
+            totalScore = shenggongsikaohe * kh / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("移动业务运营部")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.15 + fenguanScore1*0.15+shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
+            totalScore = shenggongsikaohe * (zongjingliScore*0.15 + fuzongjingli*0.15+shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
                      +jiankonggongdan +dangjiangongzuo+ wangluoanquan+jichu+ziyuan+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("承载网络运营部")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.3 + fenguanScore1*0.3 +anquanshengchanScore+zhengqizhicheng  +
+            totalScore = shenggongsikaohe * (zongjingliScore*0.3 + fuzongjingli*0.3 +anquanshengchanScore+zhengqizhicheng  +
                     +jiankonggongdan +dangjiangongzuo+ wangluoanquan+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("云与IDC运营部")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.15 + fenguanScore1*0.15   +shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
+            totalScore = shenggongsikaohe * (zongjingliScore*0.3  +shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
                     +jiankonggongdan +dangjiangongzuo+ wangluoanquan+jichu+ziyuan+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("政企支撑中心")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.20 + fenguanScore1*0.20   +shengshiyitihuaScore+anquanshengchanScore  +
+            totalScore = shenggongsikaohe * (zongjingliScore*0.20 + fuzongjingli*0.20   +shengshiyitihuaScore+anquanshengchanScore  +
                     +jiankonggongdan +dangjiangongzuo+ wangluoanquan+jichu+ziyuan+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("监控调度部")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.20 + fenguanScore1*0.20   +shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
+            totalScore = shenggongsikaohe * (zongjingliScore*0.20 + fuzongjingli*0.20   +shengshiyitihuaScore+anquanshengchanScore+zhengqizhicheng  +
                      +dangjiangongzuo+ wangluoanquan+jichu+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("宽带与视频运营部")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.30 + fenguanScore1*0.30 +anquanshengchanScore+zhengqizhicheng  +
+            totalScore = shenggongsikaohe * (zongjingliScore*0.30 + fuzongjingli*0.30 +anquanshengchanScore+zhengqizhicheng  +
                     +jiankonggongdan +dangjiangongzuo+ wangluoanquan+jichu+ziyuan+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }else if(scoreActivityVO.getDeptName().equals("基础设施维护部")){
-            totalScore = shenggongsikaohe * (zongjingliScore*0.40 + fenguanScore1*0.30 +anquanshengchanScore  +
+            totalScore = shenggongsikaohe * (zongjingliScore*0.40 + fuzongjingli*0.30 +anquanshengchanScore  +
                     +jiankonggongdan +dangjiangongzuo+ wangluoanquan+jichu+ziyuan+jypx) / 100 + zongjinglijiafen + shenggongsiyuedukaohe;
         }
         scoreActivityVO.setTotalScore(totalScore);
