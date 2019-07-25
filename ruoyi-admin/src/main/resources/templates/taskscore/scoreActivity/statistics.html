@@ -65,6 +65,14 @@
         var url = prefix + '/detail/' + id;
         createMenuItem(url, "查看");
     }
+    $(function () {
+        $('.table').find("td").each(function (index, element) {
+            var text = $(element).text();
+            if (!isNaN(text)&&text<0) {
+                $(element).css("color","red")
+            }
+        });
+    })
 </script>
 </body>
 </html>

@@ -7,22 +7,22 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>指标类型</th>
+<!--            <th>指标类型</th>-->
             <th>指标</th>
             <th>得分</th>
 
         </tr>
 
         <tr th:each="scoreActivity: ${scoreActivityDetails}">
-            <td th:text="${scoreActivity.scoringPointer?.pointerType?.name}"
-                th:class="'type_'+${scoreActivity.scoringPointer?.pointerType?.id}"></td>
+<!--            <td th:text="${scoreActivity.scoringPointer?.pointerType?.name}"-->
+<!--                th:class="'type_'+${scoreActivity.scoringPointer?.pointerType?.id}"></td>-->
             <td th:text="${scoreActivity.scoringPointer.name}">指标</td>
-            <td>
+            <td th:text="${scoreActivity.score==null?'0':scoreActivity.score}">
 
-                <input type="text" name="score" th:value="${scoreActivity.score==null?'0':scoreActivity.score}">
-                <button type="button" class="btn btn-sm btn-primary" ><i
-                        class="fa fa-check"></i>保 存</button>
-                <input type="hidden" name="id" th:value="${scoreActivity.id}">
+<!--                <input type="text" name="score" th:value="${scoreActivity.score==null?'0':scoreActivity.score}">-->
+<!--                <button type="button" class="btn btn-sm btn-primary" ><i-->
+<!--                        class="fa fa-check"></i>保 存</button>-->
+<!--                <input type="hidden" name="id" th:value="${scoreActivity.id}">-->
             </td>
 
         </tr>
