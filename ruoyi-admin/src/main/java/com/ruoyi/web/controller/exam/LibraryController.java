@@ -1,10 +1,12 @@
 package com.ruoyi.web.controller.exam;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import com.ruoyi.exam.domain.LibraryCategory;
 import com.ruoyi.exam.domain.LibraryQuestion;
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +56,7 @@ public class LibraryController extends BaseController
 	public TableDataInfo list(Library library)
 	{
 		startPage();
+		library.setPermission("1");
         List<Library> list = libraryService.selectLibraryList(library);
 		return getDataTable(list);
 	}
@@ -90,6 +93,8 @@ public class LibraryController extends BaseController
 	public AjaxResult addSave(Library library)
 	{
 		library.setId(UUID.randomUUID().toString().replaceAll("-",""));
+		library.setCreateBy(ShiroUtils.getUserId()+"");
+		library.setCreateDate(new Date());
 		return toAjax(libraryService.insertLibrary(library));
 	}
 	@GetMapping("/detail/{id}")

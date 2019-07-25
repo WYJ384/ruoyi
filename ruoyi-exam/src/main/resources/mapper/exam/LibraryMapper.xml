@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cateId != null  and cateId != '' ">
                 AND (cate_id = #{cateId} OR cate_id IN ( SELECT id FROM exam_library_category t WHERE FIND_IN_SET (#{cateId},parent_ids) ))
             </if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createBy != null  and createBy != '' "> or create_by = #{createBy}</if>
              <if test="createDate != null "> and create_date = #{createDate}</if>
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
              <if test="updateDate != null "> and update_date = #{updateDate}</if>

@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.exam;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -110,6 +111,8 @@ public class LibraryCategoryController extends BaseController
 	public AjaxResult addSave(LibraryCategory libraryCategory)
 	{
 		libraryCategory.setId(UUID.randomUUID().toString().replaceAll("-",""));
+		libraryCategory.setCreateBy(ShiroUtils.getUserId()+"");
+		libraryCategory.setCreateDate(new Date());
 		return toAjax(libraryCategoryService.insertLibraryCategory(libraryCategory));
 	}
 	/**

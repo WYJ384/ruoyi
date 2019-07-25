@@ -1,48 +1,82 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
-	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
 
-		<table class="table table-bordered">
-			<tr>
-				<th >指标类型</th>
-				<th >指标</th>
-				<th>得分</th>
-			</tr>
+    <table class="table table-bordered">
+        <tr>
+            <th>指标类型</th>
+            <th>指标</th>
+            <th>得分</th>
 
-			<tr th:each="scoreActivity: ${scoreActivityDetails}" >
-				<td th:text="${scoreActivity.scoringPointer?.pointerType?.name}" th:class="'type_'+${scoreActivity.scoringPointer?.pointerType?.id}"></td>
-				<td th:text="${scoreActivity.scoringPointer.name}">指标</td>
-				<td th:text="${scoreActivity.score==null?'0':scoreActivity.score}">得分</td>
-			</tr>
+        </tr>
 
-		</table>
+        <tr th:each="scoreActivity: ${scoreActivityDetails}">
+            <td th:text="${scoreActivity.scoringPointer?.pointerType?.name}"
+                th:class="'type_'+${scoreActivity.scoringPointer?.pointerType?.id}"></td>
+            <td th:text="${scoreActivity.scoringPointer.name}">指标</td>
+            <td>
 
-	</div>
+                <input type="text" name="score" th:value="${scoreActivity.score==null?'0':scoreActivity.score}">
+                <button type="button" class="btn btn-sm btn-primary" ><i
+                        class="fa fa-check"></i>保 存</button>
+                <input type="hidden" name="id" th:value="${scoreActivity.id}">
+            </td>
 
-	<div th:include="include::footer"></div>
-	<script th:inline="javascript">
-		$(function () {
-			$('.table').find("td[class^='type_']").each(function (index, element) {
-				var cla=$(element).attr("class");
-				var obj=$('.table').find("."+cla);
-				if(obj.length>=2){
-					obj.eq(0).attr("rowspan",obj.length);
-					obj.eq(0).removeClass(cla);
-					$('.table').find("."+cla).remove();
-				}
-			});
+        </tr>
+
+    </table>
+
+</div>
+
+<div th:include="include::footer"></div>
+<script th:inline="javascript">
+    $(function () {
+        $('.table').find("td[class^='type_']").each(function (index, element) {
+            var cla = $(element).attr("class");
+            var obj = $('.table').find("." + cla);
+            if (obj.length >= 2) {
+                obj.eq(0).attr("rowspan", obj.length);
+                obj.eq(0).removeClass(cla);
+                $('.table').find("." + cla).remove();
+            }
+        });
 
 
-			$('.table').find("td").each(function (index, element) {
-				var td_text=$(element).text();
-				if(td_text=="分管领导考核1" ||td_text=="分管领导考核2"||td_text=="分管领导考核3"){
-					$(element).text("分管领导考核")
-				}
-			})
-		});
-	</script>
+        $('.table').find("td").each(function (index, element) {
+            var td_text = $(element).text();
+            if (td_text == "分管领导考核1" || td_text == "分管领导考核2" || td_text == "分管领导考核3") {
+                $(element).text("分管领导考核")
+            }
+        })
+        $(".btn").click(function () {
+
+            var id=$(this).next().val()
+            var score=$(this).prev().val()
+            var prefix = ctx + "taskscore/scoreActivityDetail";
+            var config = {
+                url: prefix + "/edit",
+                type: "post",
+                dataType: "json",
+                data: {id:id,score:score},
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                    $.modal.disable();
+                },
+                success: function (result) {
+                    $.modal.closeLoading();
+                    $.modal.disable();
+                    window.location.reload()
+                }
+            };
+            $.ajax(config)
+
+        });
+    });
+
+
+</script>
 </body>
 </html>
