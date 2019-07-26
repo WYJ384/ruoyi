@@ -14,6 +14,7 @@ import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -73,8 +74,10 @@ public class ArticleController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(Article article)
 	{
+
+		Subject subject = ShiroUtils.getSubject();
 		startPage();
-		if (SysUser.isAdmin(ShiroUtils.getUserId()))
+		if (ShiroUtils.getSubject().hasRole("zhishikuguanliyuan"))
 		{
 
 		}else{
