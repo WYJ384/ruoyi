@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-meetingRecord-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">主办单位：</label>
+				<div class="col-sm-8">
+					<input id="dept" name="dept" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">会议主题：</label>
+				<div class="col-sm-8">
+					<input id="meetingSubject" name="meetingSubject" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">开始时间：</label>
+				<div class="col-sm-8">
+					<input id="meetingBeginTime" name="meetingBeginTime" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">结束时间：</label>
+				<div class="col-sm-8">
+					<input id="meetingEndTime" name="meetingEndTime" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">会议内容：</label>
+				<div class="col-sm-8">
+					<script id="meetingContent" name="meetingContent" type="text/plain" style="width:100%;height:300px;"></script>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">审核人：</label>
+				<div class="col-sm-8">
+					<select id="submitPerson" name="submitPerson" class="form-control select2-hidden-accessible">
+						<option th:each="user:${users}" th:value="${user.userId}"
+								th:text="${user.userName}"></option>
+					</select>
+				</div>
+			</div>
+<!--			<div class="form-group">-->
+<!--				<label class="col-sm-3 control-label">记录人：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<select id="recorder" name="recorder" class="form-control select2-hidden-accessible">-->
+<!--						<option th:each="user:${users}" th:value="${user.userId}"-->
+<!--								th:text="${user.userName}"></option>-->
+<!--					</select>-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<textarea  id="remarks" name="remarks" class="form-control"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+		</div>
+	</div>
+    <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs/select/select2.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+    <script type="text/javascript">
+		var prefix = ctx + "meeting/meetingRecord"
+		$(function () {
+			UE.getEditor('meetingContent');
+		});
+		$("#form-meetingRecord-add").validate({
+			rules:{
+				meetingBeginTime:{
+					required:true,
+				},
+				meetingEndTime:{
+					required:true,
+				},
+				meetingContent:{
+					required:true,
+				},
+				submitPerson: {
+					required: true,
+				},
+			},
+			focusCleanup: true
+		});
+
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			var meetingBeginTime = laydate.render({
+				elem: '#meetingBeginTime',
+				theme: 'molv',
+				type: 'datetime',
+				format: 'yyyy-MM-dd HH:mm:ss',
+				<!-- 设置endTime控件可允许选择的最小值 -->
+				done: function (value, dates){
+					meetingEndTime.config.min = {
+						year:dates.year,
+						month:dates.month-1,
+						date:dates.date,
+						hours: 0,
+						minutes: 0,
+						seconds : 0
+					}
+				},
+			});
+
+			var meetingEndTime = laydate.render({
+				elem: '#meetingEndTime',
+				theme: 'molv',
+				type: 'datetime',
+				format: 'yyyy-MM-dd HH:mm:ss'
+			});
+		});
+
+
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-meetingRecord-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

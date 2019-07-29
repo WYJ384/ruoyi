@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								主办单位：<input type="text" name="dept"/>
+							</li>
+
+							<li>
+								开始时间：<input type="text" name="meetingBeginTime"/>
+							</li>
+							<li>
+								结束时间：<input type="text" name="meetingEndTime"/>
+							</li>
+
+							<li>
+								会议主题：<input type="text" name="meetingSubject"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="meeting:meetingRecord:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="meeting:meetingRecord:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="meeting:meetingRecord:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+<!--				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="meeting:meetingRecord:export">-->
+<!--						<i class="fa fa-download"></i> 导出-->
+<!--				 </a>-->
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+	 <script id="titleTpl" type="text/html">
+		 <div style="overflow: hidden">{{#title}}</div>
+	 </script>
+	 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+	 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
+	 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+	 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+	 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+	 <script th:src="@{/js/template-web.js}"></script>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('meeting:meetingRecord:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('meeting:meetingRecord:remove')}]];
+        var prefix = ctx + "meeting/meetingRecord";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "会议记录",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '主键',
+					visible: false
+				},
+					// {
+					// 	field : 'dept',
+					// 	title : '主办单位',
+					// 	sortable: true
+					// },
+					{
+						field : 'meetingSubject',
+						title : '会议主题',
+						sortable: true,
+						formatter: function (value, row, index) {
+							var titles = "详情";
+							var actions = [];
+							if(value== null){
+								value="请补充工会议主题"
+								var html=template("titleTpl",{"title":value});
+								console.log(html);
+								actions.push('<a class=" ' + editFlag + '" href="#" style="color: red" onclick="$.operate.addSubTab(\''+titles+'\',\'' +prefix +'/query/'+row.id+'\')">' +html+ '</a> ');
+								return actions.join('');
+							}else if(value.length>20|| value != null){
+								value=value.substring(0,15);
+								value=value+"......"
+								var html=template("titleTpl",{"title":value});
+								// console.log(html);
+								actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+titles+'\',\'' +prefix +'/query/'+row.id+'\')">' +html+ '</a> ');
+								return actions.join('');
+							}
+							// var url = prefix +'/jobsumm/jobsummary/jobsummary/'+row.id;
+							// return "<a onclick='$.modal.open(\""+ $.table._option.modalName+'详情'+"\",\""+ url+"\",)'>"+value+"</a>";
+
+
+						},
+					},
+					{
+						field : 'meetingBeginTime',
+						title : '开始时间',
+						sortable: true
+					},
+					{
+						field : 'meetingEndTime',
+						title : '结束时间',
+						sortable: true
+					},
+					// {
+					// 	field : 'meetingContent',
+					// 	title : '会议内容',
+					// 	sortable: true
+					// },
+					// {
+					// 	field : 'submitPerson',
+					// 	title : '审核人',
+					// 	sortable: true
+					// },
+					{
+						field : 'recorder',
+						title : '审核人',
+						sortable: true
+					},
+					// {
+					// 	field : 'createdBy',
+					// 	title : '创建人',
+					// 	sortable: true
+					// },
+					// {
+					// 	field : 'createdTime',
+					// 	title : '创建时间',
+					// 	sortable: true
+					// },
+					// {
+					// 	field : 'updateBy',
+					// 	title : '修改人',
+					// 	sortable: true
+					// },
+					// {
+					// 	field : 'updatedTime',
+					// 	title : '修改时间',
+					// 	sortable: true
+					// },
+					// {
+					// 	field : 'remarks',
+					// 	title : '备注',
+					// 	sortable: true
+					// },
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

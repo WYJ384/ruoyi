@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/html">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-meetingRecord-edit" th:object="${meetingRecord}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">主办单位：</label>
+				<div class="col-sm-8">
+<!--					<input id="dept" name="dept" th:field="*{dept}" class="form-control" type="text">-->
+					<span class="task-pitems-user"  th:utext="*{dept}" ></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">会议主题：</label>
+				<div class="col-sm-8">
+<!--					<input id="meetingSubject" name="meetingSubject" th:field="*{meetingSubject}" class="form-control" type="text">-->
+					<span class="task-pitems-user"  th:utext="*{meetingContent}" ></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">开始时间：</label>
+				<div class="col-sm-8">
+<!--					<input id="meetingBeginTime" name="meetingBeginTime" class="form-control" type="text" th:value="${#dates.format(meetingRecord.meetingBeginTime,'yyyy-MM-dd HH:mm:ss')}">-->
+					<span class="task-pitems-user"  th:text="${#dates.format(meetingRecord.meetingBeginTime,'yyyy-MM-dd HH:mm:ss')}" ></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">结束时间：</label>
+				<div class="col-sm-8">
+<!--					<input id="meetingEndTime" name="meetingEndTime" class="form-control" type="text" th:value="${#dates.format(meetingRecord.meetingEndTime,'yyyy-MM-dd HH:mm:ss')}">-->
+					<span class="task-pitems-user"  th:text="${#dates.format(meetingRecord.meetingEndTime,'yyyy-MM-dd HH:mm:ss')}" ></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">会议内容：</label>
+				<div class="col-sm-8">
+<!--					<script id="meetingContent" name="meetingContent" type="text/plain" style="width:100%;height:300px;"th:utext="*{meetingContent}" ></script>-->
+					<span class="task-pitems-user"  th:utext="*{meetingContent}" ></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">审核人：</label>
+				<div class="col-sm-8">
+					<input id="recorder" name="recorder" th:field="*{recorder}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+<!--					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">-->
+					<span class="task-pitems-user"  th:utext="*{remarks}" ></span>
+				</div>
+			</div>
+		</form>
+    </div>
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+		</div>
+	</div>
+    <div th:include="include::footer"></div>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
+	<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+	<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+	<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+    <script type="text/javascript">
+		$(function () {
+			UE.getEditor('meetingContent');
+		});
+		var prefix = ctx + "meeting/meetingRecord"
+		$("#form-jobsummary-edit").validate({
+			rules:{
+				stratTime:{
+					required:true,
+				},
+				endTime:{
+					required:true,
+				},
+				jobType:{
+					required:true,
+				},
+				jobContent:{
+					required:true,
+				},
+				jobSumm:{
+					required:true,
+				},
+				jobPlan:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			var stratTime = laydate.render({
+				elem: '#stratTime',
+				theme: 'molv',
+				type: 'datetime',
+				format: 'yyyy-MM-dd HH:mm:ss',
+				<!-- 设置endTime控件可允许选择的最小值 -->
+				done: function (value, dates){
+					endTime.config.min = {
+						year:dates.year,
+						month:dates.month-1,
+						date:dates.date,
+						hours: 0,
+						minutes: 0,
+						seconds : 0
+					}
+				},
+			});
+
+			var endTime = laydate.render({
+				elem: '#endTime',
+				theme: 'molv',
+				type: 'datetime',
+				format: 'yyyy-MM-dd HH:mm:ss'
+			});
+		});
+
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.saveTab(prefix + "/edit", $('#form-jobsummary-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
