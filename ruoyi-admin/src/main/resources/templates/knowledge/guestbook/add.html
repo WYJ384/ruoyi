@@ -15,9 +15,10 @@
 				<label class="col-sm-3 control-label">问题描述：</label>
 				<div class="col-sm-8">
 					<textarea id="remark1" name="remark1" class="form-control" required placeholder="问题描述" ></textarea>
+					&nbsp;
+					<script id="content" name="content" type="text/plain" style="width:100%;height:300px;"></script>
 				</div>
 			</div>
-			<script id="content" name="content" type="text/plain" style="width:100%;height:300px;"></script>
 		</form>
 	</div>
 <!--	<div class="row">-->
@@ -43,12 +44,47 @@
 			focusCleanup: true
 		});
 		$(function () {
-			var editor= UE.getEditor('content');
+			var editor= UE.getEditor('content', {
+				toolbars: [
+					[
+						'fontfamily', //字体
+						'undo', //撤销
+						'redo', //重做
+						//'formatmatch', //格式刷
+						//'pasteplain', //纯文本粘贴模式
+						//'selectall', //全选
+						//'simpleupload', //单图上传
+						'insertimage', //多图上传
+						'spechars', //特殊字符
+						'justifyleft', //居左对齐
+						'justifyright', //居右对齐
+						'justifycenter', //居中对齐
+						'justifyjustify', //两端对齐
+						'forecolor', //字体颜色
+						//'attachment', //附件
+						//'lineheight', //行间距
+						//'searchreplace', //查询替换
+					]
+				],
+				autoHeightEnabled: true,
+				autoFloatEnabled: true,
+				initialFrameWidth:795,//初始化编辑器宽度，默认1000
+				//initialFrameHeight  //初始化编辑器高度，默认320
+				enableAutoSave :true,//启用自动保存 [默认值：true]
+				saveInterval:500, //[默认值：500] //自动保存间隔时间，单位ms
+				pasteplain :true // [默认值：false] 是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+			});
 		})
 		function submitHandler() {
 
 	        if ($.validate.form()) {
-				var editor= UE.getEditor('content');
+				var editor= UE.getEditor('content', {
+					toolbars: [
+						['fullscreen', 'source', 'undo', 'redo', 'bold']['bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc']
+					],
+					autoHeightEnabled: true,
+					autoFloatEnabled: true
+				});
 				if(editor.getPlainTxt().trim()==""||editor.getPlainTxt()==null){
 					layer.tips("请输入内容", '#content', {
 						tips: [1, '#f00'], //1-上，2-右，3-下，4-左
