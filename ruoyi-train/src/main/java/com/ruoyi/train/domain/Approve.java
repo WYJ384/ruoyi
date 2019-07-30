@@ -1,5 +1,6 @@
 package com.ruoyi.train.domain;
 
+import com.ruoyi.activiti.domain.TaskVO;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -95,7 +96,15 @@ public class Approve extends BaseEntity
 	private String processInstanceId;
 	/** 申请状态1暂存2申请中 */
 	private String approveStatus;
+	TaskVO task=new TaskVO();
 
+	public TaskVO getTask() {
+		return task;
+	}
+
+	public void setTask(TaskVO task) {
+		this.task = task;
+	}
 	public void setId(String id) 
 	{
 		this.id = id;

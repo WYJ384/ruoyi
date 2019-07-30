@@ -146,7 +146,10 @@
                     formatter: function (value, row, index) {
                         var actions = [];
                         name="阅卷"
-                        actions.push('<a class="" href="#" onclick="$.operate.addSubTab(\''+name+'\',\'' +prefix +'/checkScore/'+row.examId+'/'+row.userId + '\')"><i class="fa fa-edit"></i>阅卷</a> ');
+                        if(row.remark1==0){
+                            actions.push('<a class="" href="#" onclick="$.operate.addSubTab(\''+name+'\',\'' +prefix +'/checkScore/'+row.examId+'/'+row.userId + '\')"><i class="fa fa-edit"></i>阅卷</a> ');
+
+                        }
                         // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.examId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }

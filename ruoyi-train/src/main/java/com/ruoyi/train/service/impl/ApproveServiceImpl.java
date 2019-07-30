@@ -85,4 +85,9 @@ public class ApproveServiceImpl implements IApproveService
 		return approveMapper.getMaxSQBH();
 	}
 
+	@Override
+	public Approve selectApproveByProcessInstanceId(String processInstanceId) {
+		return approveMapper.selectApproveByProcessInstanceId(processInstanceId);
+	}
+
 }

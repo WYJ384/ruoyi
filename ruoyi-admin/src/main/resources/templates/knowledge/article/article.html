@@ -53,15 +53,15 @@
 				<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="knowledge:article:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="knowledge:article:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="knowledge:article:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
-				<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="knowledge:article:import">
-					<i class="fa fa-upload"></i> 导入
-				</a>
+<!--				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="knowledge:article:edit">-->
+<!--					<i class="fa fa-edit"></i> 修改-->
+<!--				</a>-->
+<!--				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="knowledge:article:remove">-->
+<!--					<i class="fa fa-remove"></i> 删除-->
+<!--				</a>-->
+<!--				<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="knowledge:article:import">-->
+<!--					<i class="fa fa-upload"></i> 导入-->
+<!--				</a>-->
 				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="knowledge:article:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
@@ -205,9 +205,14 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		            	var userId='[[${userId}]]'
+		            	if(row.createBy==userId){
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+						}
 						actions.push('<a class="btn btn-primary  btn-xs ' + editFlag + '" href="'+previewUrl+row.id+'" target="_blank" ><i class="fa fa-eye"></i>预览</a>');
-						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						if(row.createBy==userId){
+							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						}
 						return actions.join('');
 		            }
 		        }]

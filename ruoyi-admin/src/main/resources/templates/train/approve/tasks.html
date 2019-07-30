@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            培训人员姓名：<input type="text" name="userName"/>
+                        </li>
+
+                        <li>
+                            出发时间：<input type="text" id="startDate" name="startDate"/>
+                        </li>
+
+                        <li>
+                            回程时间：<input type="text"  id="endDate" name="endDate"/>
+                        </li>
+
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('train:train:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('train:train:remove')}]];
+    var prefix = ctx + "train/approve";
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#startDate',
+            theme: 'molv',
+            type: 'date',
+        });
+        laydate.render({
+            elem: '#endDate',
+            theme: 'molv',
+            type: 'date',
+        });
+    });
+    $(function () {
+        var options = {
+            url: prefix + "/myTask",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "培训审批",
+            showExport: true,
+            columns: [
+                {
+                    field: 'userName',
+                    title: '培训人员姓名',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        var title="培训审批";
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id+'/'+row.task.id + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+                        return actions.join('');
+                    }
+                },
+                {
+                    field: 'startDate',
+                    title: '出发时间',
+                    sortable: true
+                },
+                {
+                    field: 'endDate',
+                    title: '回程时间',
+                    sortable: true
+                },
+                {
+                    field: 'trainStatus',
+                    title: '申请状态',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if(value==1){
+                            return "暂存";
+                        }else if(value==2){
+                            return "申请中";
+                        }else if(value==3){
+                            return "申请通过";
+                        }
+                        else if(value==4){
+                            return "申请不通过";
+                        }
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        var title="培训审批";
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id+'/'+row.task.id  + '\')"><i class="fa fa-edit"></i>审核</a> ');
+                        return actions.join('');
+
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

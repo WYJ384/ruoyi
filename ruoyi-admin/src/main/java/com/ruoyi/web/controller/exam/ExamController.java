@@ -69,6 +69,7 @@ public class ExamController extends BaseController
 	public TableDataInfo list(Exam exam)
 	{
 		startPage();
+		exam.setCreateBy(ShiroUtils.getUserId()+"");
         List<Exam> list = examService.selectExamList(exam);
 		return getDataTable(list);
 	}

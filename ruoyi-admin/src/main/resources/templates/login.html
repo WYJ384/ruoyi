@@ -25,54 +25,54 @@
 
 <body class="signin">
 
-    <div class="signinpanel">
-        <div class="row">
-            <div class="col-sm-6">
-<!--                <div class="signin-info">-->
-<!--                    <div class="logopanel m-b">-->
-<!--                        &lt;!&ndash;<h1><img alt="[ 甘肃电信NOC ]" src="../static/ruoyi.png" th:src="@{/ruoyi.png}"></h1>&ndash;&gt;-->
-<!--                    </div>-->
-<!--                    <div class="m-b"></div>-->
-<!--                    <h4>欢迎使用 <strong>甘肃电信NOC 后台管理系统</strong></h4>-->
-<!--                    <ul class="m-b">-->
-<!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>会议预约</li>-->
-<!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>通讯录</li>-->
-<!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 绩效督办</li>-->
-<!--&lt;!&ndash;                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 在线网盘</li>&ndash;&gt;-->
-<!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 绩效评分</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-            </div>
-            <div class="col-sm-6">
-                <form id="signupForm">
-                    <h4 class="no-margins">登录：</h4>
-                    <!--<p class="m-t-md">你若不离不弃，我必生死相依</p>-->
-                    <input type="text"     name="username" class="form-control uname"     placeholder="手机号/用户名" value=""    />
-                    <input type="password" name="password" class="form-control pword"     placeholder="密码"   value="" />
-					<div class="row m-t" th:if="${captchaEnabled==true}">
-						<div class="col-xs-6">
-						    <input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5" autocomplete="off">
-						</div>
-						<div class="col-xs-6">
-							<a href="javascript:void(0);" title="点击更换验证码">
-								<img th:src="@{captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
-							</a>
-						</div>
-					</div>
-                    <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'">
-				        <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>
-				    </div>
-                    <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
-                </form>
-            </div>
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-6">
+            <!--                <div class="signin-info">-->
+            <!--                    <div class="logopanel m-b">-->
+            <!--                        &lt;!&ndash;<h1><img alt="[ 甘肃电信NOC ]" src="../static/ruoyi.png" th:src="@{/ruoyi.png}"></h1>&ndash;&gt;-->
+            <!--                    </div>-->
+            <!--                    <div class="m-b"></div>-->
+            <!--                    <h4>欢迎使用 <strong>甘肃电信NOC 后台管理系统</strong></h4>-->
+            <!--                    <ul class="m-b">-->
+            <!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>会议预约</li>-->
+            <!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>通讯录</li>-->
+            <!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 绩效督办</li>-->
+            <!--&lt;!&ndash;                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 在线网盘</li>&ndash;&gt;-->
+            <!--                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 绩效评分</li>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
         </div>
-        <div class="signup-footer">
-            <!--<div class="pull-left">-->
-                <!--&copy; 2019 All Rights Reserved. RuoYi <br>-->
-                <!--<a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备18046899号</a><br>-->
-            <!--</div>-->
+        <div class="col-sm-6">
+            <form id="signupForm">
+                <h4 class="no-margins">登录：</h4>
+                <!--<p class="m-t-md">你若不离不弃，我必生死相依</p>-->
+                <input type="text"     name="username" class="form-control uname"     placeholder="手机号/用户名" value=""    />
+                <input type="password" name="password" class="form-control pword"     placeholder="密码"   value="" />
+                <div class="row m-t" th:if="${captchaEnabled==true}">
+                    <div class="col-xs-6">
+                        <input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5" autocomplete="off">
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="javascript:void(0);" title="点击更换验证码">
+                            <img th:src="@{captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'">
+                    <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>
+                </div>
+                <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+            </form>
         </div>
     </div>
+    <div class="signup-footer">
+        <!--<div class="pull-left">-->
+        <!--&copy; 2019 All Rights Reserved. RuoYi <br>-->
+        <!--<a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备18046899号</a><br>-->
+        <!--</div>-->
+    </div>
+</div>
 <script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
 <!-- 全局js -->
 <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>

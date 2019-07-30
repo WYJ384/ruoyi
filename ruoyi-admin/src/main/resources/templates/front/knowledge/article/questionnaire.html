@@ -54,7 +54,7 @@
                         <ul th:if="${question.libType eq '3'}">
                             <li>
                                 <h5 th:each="dayCyc : ${#numbers.sequence(1,question.remark1)}">
-                                    <input type="number"  name="choiceA" th:value="${question.choiceA}">
+                                    <input type="number"  th:max="${question.choiceA}" min="0"  step="0.1" name="choiceA" th:value="${question.choiceA}">
                                 </h5>
                             </li>
                         </ul>
@@ -86,9 +86,23 @@
             </button>&nbsp;
         </div>
     </div>
+    <div th:include="include::footer"></div>
+
     <script>
         function submitHandler() {
             $.operate.save(ctx + "exam/singleChoice" + "/add", $('#questionnaire').serialize());
         }
+        $(function () {
+            $("input[type=number]").change(function () {
+               var val=parseFloat($(this).val());
+               var max=parseFloat($(this).attr("max"));
+               var min=parseFloat($(this).attr("min"));
+
+               if(val>max || val<min){
+                   $(this).val(max);
+                   alert("请添加正确的分数")
+               }
+            });
+        })
     </script>
 </div>

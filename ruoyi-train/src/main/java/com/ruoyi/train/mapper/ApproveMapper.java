@@ -60,4 +60,6 @@ public interface ApproveMapper
 	public int deleteApproveByIds(String[] ids);
 
     Integer getMaxSQBH();
+
+    Approve selectApproveByProcessInstanceId(String processInstanceId);
 }

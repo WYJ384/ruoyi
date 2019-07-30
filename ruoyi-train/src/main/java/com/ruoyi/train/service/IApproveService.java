@@ -56,4 +56,6 @@ public interface IApproveService
 	 * @return
 	 */
 	Integer getMaxSQBH();
+
+    Approve selectApproveByProcessInstanceId(String processId);
 }

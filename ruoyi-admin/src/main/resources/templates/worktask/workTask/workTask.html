@@ -214,25 +214,25 @@
                     sortable: true,
                     visible: false
                 },
-                {
-                    field: 'result',
-                    title: '督办情况',//1 红灯 2 绿灯 3 黄灯
-                    sortable: true,
-                    formatter: function (value, row, index) {
-                        if (row.workStatus) {
-                            if (row.result == '1') {
-                                return "<span class='badge badge-danger'>红灯</span>";
-                            } else if (row.result == '2') {
-                                return "<span class='badge badge-primary'>绿灯</span>";
-                            } else if (row.result == '3') {
-                                return "<span class='badge badge-warning'>黄灯</span>";
-                            } else {
-                                return row.result
-                            }
-                        }
-
-                    }
-                },
+                // {
+                //     field: 'result',
+                //     title: '督办情况',//1 红灯 2 绿灯 3 黄灯
+                //     sortable: true,
+                //     formatter: function (value, row, index) {
+                //         if (row.workStatus) {
+                //             if (row.result == '1') {
+                //                 return "<span class='badge badge-danger'>红灯</span>";
+                //             } else if (row.result == '2') {
+                //                 return "<span class='badge badge-primary'>绿灯</span>";
+                //             } else if (row.result == '3') {
+                //                 return "<span class='badge badge-warning'>黄灯</span>";
+                //             } else {
+                //                 return row.result
+                //             }
+                //         }
+                //
+                //     }
+                // },
                 // {
                 //     field: 'workScore',
                 //     title: '评分',

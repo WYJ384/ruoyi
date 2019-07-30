@@ -56,7 +56,7 @@ public class LibraryController extends BaseController
 	public TableDataInfo list(Library library)
 	{
 		startPage();
-		library.setPermission("1");
+		library.setCreateBy(ShiroUtils.getUserId()+"");
         List<Library> list = libraryService.selectLibraryList(library);
 		return getDataTable(list);
 	}

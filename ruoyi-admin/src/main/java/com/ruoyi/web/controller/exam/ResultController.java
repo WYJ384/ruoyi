@@ -63,6 +63,9 @@ public class ResultController extends BaseController {
     @ResponseBody
     public TableDataInfo resultScore(Result result) {
         startPage();
+        if(StringUtils.isEmpty(result.getRemark1())){
+            result.setRemark1("0");
+        }
         result.setCheckScoreUser(ShiroUtils.getUserId()+"");
         List<Result> list = resultService.selectResultList(result);
         return getDataTable(list);

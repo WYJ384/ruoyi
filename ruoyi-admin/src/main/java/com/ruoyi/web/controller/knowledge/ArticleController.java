@@ -54,8 +54,9 @@ public class ArticleController extends BaseController
 	private IArticleDataService articleDataService;
 	@RequiresPermissions("knowledge:article:view")
 	@GetMapping()
-	public String article()
+	public String article(ModelMap modelMap)
 	{
+		modelMap.addAttribute("userId",ShiroUtils.getUserId());
 	    return prefix + "/article";
 	}
     @RequiresPermissions("knowledge:article:view")
@@ -81,7 +82,7 @@ public class ArticleController extends BaseController
 		{
 
 		}else{
-			article.setCreateBy(ShiroUtils.getLoginName()+"");
+
 		}
         List<Article> list = articleService.selectArticleList(article);
 		return getDataTable(list);

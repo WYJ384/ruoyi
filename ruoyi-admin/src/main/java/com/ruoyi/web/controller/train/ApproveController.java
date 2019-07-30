@@ -1,10 +1,8 @@
 package com.ruoyi.web.controller.train;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.framework.util.NOCStringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
@@ -77,8 +75,37 @@ public class ApproveController extends BaseController
         List<Approve> list = approveService.selectApproveList(approve);
 		return getDataTable(list);
 	}
-	
-	
+
+	/**
+	 * 查看我的任务  admin 查看所有任务
+	 * @return
+	 */
+	@Log(title = "查询培训任务", businessType = BusinessType.OTHER)
+	@RequiresPermissions("train:approve:view")
+	@RequestMapping("/myTask")
+	@ResponseBody
+	TableDataInfo myTask(TaskVO taskVO) {
+		List<Approve> list=new ArrayList<Approve>();
+		taskVO.setProcessInstanceBusinessKey("3");
+		taskVO.setAssignee(ShiroUtils.getUserId()+"");
+		List<TaskVO> taskVOS = actTaskService.taskCandidateOrAssigned(taskVO);
+		Iterator<TaskVO> taskVOIterator = taskVOS.iterator();
+		while (taskVOIterator.hasNext()){
+			TaskVO task = taskVOIterator.next();
+			Approve approve = approveService.selectApproveByProcessInstanceId(task.getProcessId());
+			if(approve==null){
+				continue;
+			}
+			approve.setTask(task);
+			list.add(approve);
+		}
+		return getDataTable(list);
+	}
+	@RequiresPermissions("train:approve:view")
+	@GetMapping("/task")
+	public   String task() {
+		return prefix + "/tasks";
+	}
 	/**
 	 * 导出付款审批列表
 	 */
@@ -127,6 +154,7 @@ public class ApproveController extends BaseController
 		approve.setCreateTime(new Date());
 		approve.setJbr(ShiroUtils.getUserId()+"");
 		approve.setId(NOCStringUtils.getUUID());
+		startApprove(approve);
 		return toAjax(approveService.insertApprove(approve));
 	}
 
@@ -159,7 +187,7 @@ public class ApproveController extends BaseController
 		vars.put("bgsfzr", approve.getBgsfzr());
 		vars.put("zgfz", approve.getZgfzjl());
 		vars.put("zjl", approve.getZjl());
-		ProcessInstance processInstance = actTaskService.startProcess("fkspd", businessTable, businessId, title, userId, vars);
+		ProcessInstance processInstance = actTaskService.startProcess("fksplc", businessTable, businessId, title, userId, vars);
 		approve.setProcessInstanceId(processInstance.getId());
 		approveService.updateApprove(approve);
 	}
