@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="container-div">
+
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <div class="row border-bottom white-bg">
+                <nav class="navbar navbar-static-top">
+                    <div class="navbar-collapse collapse" id="navbar">
+                        <ul class="nav navbar-nav nav-main">
+                            <li><a href="#" class="menu-item active" id="myTask">我的任务</a></li>
+                            <li><a href="#" class="menu-item" id="myCreateTask">我分配的</a></li>
+                            <li><a href="#" class="menu-item" id="myCheckTask">我验收的</a></li>
+                            <li><a href="#" class="menu-item" id="share">共享任务</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            任务标题：<input type="text" name="taskTitle"/>
+                        </li>
+                        <li>
+                            执行人：<input type="text" name="remark"/>
+                        </li>
+                        <li>
+                            <input  onclick="selectLeadDeptTree()" id="leadDeptName" type="text"
+                                    placeholder="请选择归牵头部门" class="form-control" required>
+                            <input name="remark2" type="hidden" id="leadDeptId"/>
+
+                        </li>
+                        <li>
+                            任务状态：
+                            <select name="taskStatus" id="taskStatus" >
+                                <option value=""></option>
+                                <option value="0">进行中</option>
+                                <option value="1">已完成</option>
+                                <option value="2">已验收</option>
+                            </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="worktask:goodness:add">
+                <i class="fa fa-plus"></i> 添加
+            </a>
+            <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()"
+               shiro:hasPermission="worktask:goodness:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()"
+               shiro:hasPermission="worktask:goodness:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="worktask:goodness:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('worktask:selfTask:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('worktask:selfTask:remove')}]];
+    var prefix = ctx + "worktask/basicmaintenance";
+    var taskType=1;//我的任务
+    $(function () {
+        var options = {
+            url: prefix + "/shareList",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "任务",
+            showExport: true,
+            columns: [
+                {
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                },
+                {
+                    field: 'leadDept.deptName',
+                    title: '牵头部门',
+                    sortable: true,
+                },
+
+                {
+                    field: 'taskTitle',
+                    title: '任务标题',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+
+                        var actions = [];
+                        var title="";
+                        if(taskType==1){
+                            title="我的任务"
+                        }else  if(taskType==2){
+                            title="我分配的任务"
+                        }else  if(taskType==3){
+                            title="我审核的任务"
+                        }else  if(taskType==4){
+                            title="共享任务"
+                        }
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/query/'+row.id+'/'+taskType + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+                        return actions.join('');
+                    }
+                },
+                {
+                    field: 'startDate',
+                    title: '开始时间',
+                    sortable: true
+                },
+                {
+                    field: 'requireTime',
+                    title: '要求完成时间',
+                    sortable: true
+                },
+                {
+                    field: 'taskStatus',
+                    title: '任务状态',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if(value=='0'){
+                            return ' <span style="color: #85c02a">进行中</span>    ';
+                        }else  if(value=='1'){
+                            return ' <span style="color: #ff8400">已完成</span>    ';
+                            return '已完成'
+                        }else  if(value=='2'){
+                            return ' <span style="color: #848484">已验收</span>    ';
+                            return '已验收'
+                        }
+                        return actions.join('');
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '执行人',
+                    sortable: true
+                },
+                {
+                    field: 'priority',
+                    title: '优先级',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if (value == 0) {
+                            return "高"
+                        } else if (value == 1) {
+                            return "中"
+                        } else if (value == 2) {
+                            return "低"
+                        }
+                    }
+                },
+
+                {
+                    field: 'taskProgress',
+                    title: '任务进度',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        var html = ' <small>完成度: '+value+'%</small> <div class="progress progress-mini"><div style="width: '+value+'%;" class="progress-bar"></div>  </div>';
+                        return html;
+                    }
+                },
+
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        if(taskType==2){
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        }
+
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+        $("#toolbar").hide();
+        $("myTask").trigger("click")
+        $('.menu-item').click(function () {
+            var menu = $(this).attr('id');
+            if (menu == 'myTask') {//我的任务
+                taskType=1
+                options.url = prefix + '/myTask';
+                $("#toolbar").hide();
+            }
+            if (menu == 'myCreateTask') {//我分配的任务
+                $("#toolbar").show();
+                taskType=2;
+                options.url = prefix + '/list';
+            }
+            if (menu == 'myCheckTask') {//我审核的任务
+                $("#toolbar").hide();
+                taskType=3;
+                options.url = prefix + '/myCheckTask';
+            }
+            if (menu == 'share') {//我审核的任务
+                $("#toolbar").hide();
+                taskType=4;
+                options.url = prefix + '/shareList';
+            }
+
+
+            $("#bootstrap-table").bootstrapTable('refreshOptions', options);
+        });
+    });
+    function selectLeadDeptTree() {
+        var leadDeptId = $("#leadDeptId").val();
+        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
+        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var options = {
+            title: '选择部门',
+            width: "380",
+            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            callBack: doSubmitLeadDept
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmitLeadDept(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#leadDeptId").val(body.find('#treeId').val());
+        $("#leadDeptName").val(body.find('#treeName').val());
+        layer.close(index);
+    }
+</script>
+</body>
+</html>

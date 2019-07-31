@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet"
+      type="text/css"/>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet"
+      type="text/css"/>
+<link th:href="@{/css/uploadfile.css}" media="all" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+    th {
+        text-align: right;
+    }
+</style>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+
+    <form class="form-horizontal m" id="form-selfTask-edit" th:object="${selfTask}">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">大项：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{remark4}"  class="form-control"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">项目：</label>
+            <div class="col-sm-8">
+                <span th:text="*{taskTitle}" class="form-control"> </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>工作内容：</label>
+            <div class="col-sm-8">
+                <div  th:utext="*{remark5}"  ></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>考核指标：</label>
+            <div class="col-sm-8">
+                <div  th:utext="*{remark1}" ></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">存在问题及计划：</label>
+            <div class="col-sm-8">
+                <span  th:utext="*{taskContent}" ></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">分值：</label>
+            <div class="col-sm-8">
+                <input id="remark6" name="remark6" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>责任部门：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{leadDept.deptName}"  class="form-control"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>配合部门 ：</label>
+            <div class="col-sm-8">
+                <span  th:text="*{remark3}"  class="form-control"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">开始时间：</label>
+            <div class="col-sm-8">
+                <span th:text="${#dates.format(selfTask.startDate, 'yyyy-MM-dd HH:mm:ss')}"
+                      class="form-control"> </span>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">要求完成时间：</label>
+            <div class="col-sm-8">
+                <span th:text="${#dates.format(selfTask.requireTime, 'yyyy-MM-dd HH:mm:ss')}"
+                      class="form-control"> </span>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">优先级：</label>
+            <div class="col-sm-8">
+                <span class="form-control" th:if="${selfTask.priority eq '0'}">高</span>
+                <span class="form-control" th:if="${selfTask.priority eq '1'}">中</span>
+                <span class="form-control" th:if="${selfTask.priority eq '2'}">低</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务描述：</label>
+            <div class="col-sm-8">
+                <span th:utext="*{taskContent}"> </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">任务执行人：</label>
+            <div class="col-sm-8">
+                <span th:text="*{remark}" class="form-control"> </span>
+            </div>
+        </div>
+        <div class="form-group"  th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+            <label class="col-sm-3 control-label">附件：</label>
+            <div class="col-sm-8">
+                <input id="file" multiple name="file" class="form-control" type="file"
+                       th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+                <ul id="task_file_list" class="attch-list" style="display: block;">
+                    <li id="file_file_0_0" class="attch-item" th:each="file:${workTaskFiles}"><i
+                            class="attch-itm-icon xlsx"></i><a
+                            class="attch-itm-name"
+                            th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                            target="_blank" th:text="${file.fileName}" th:title="${file.fileName}"></a><span
+                            class="attch-itm-size"></span><span class="attch-itm-state"></span><a
+                            class="attch-itm-dload"
+                            th:href="'/worktask/workTaskFile/downloadFile/'+${file.id}"
+                            target="_blank">下载</a>
+                        <a class="attch-itm-delete" th:onclick="'javascript:deleteFile(\''+${file.id}+'\');'">删除</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+            <label class="col-sm-3 control-label">任务进度：</label>
+            <div class="col-sm-8">
+                <input id="percentAge" name="percentAge" th:value="*{taskProgress}" type="hidden">
+
+                <div id="slider-range-min" class="col-sm-8" style="margin-top: 10px;"></div>
+                <div class="task-progress-current col-sm-2" style="margin-top: 8px;">
+                    当前进度：<span id="task_progress_current" style="color: #85c02a"
+                               th:text="${selfTask.taskProgress}+'%'"></span>
+                </div>
+                <div class="task-progress-save col-sm-2" style="margin-top: 4px;">
+                    <a id="savePercent" onclick="submitHandler()"
+                       class="b-btn-five dp-inline task-sub-save btn btn-primary btn-xs">保存进度</a>
+                </div>
+                <!--					<input id="taskProgress" name="taskProgress" th:field="*{taskProgress}" class="form-control" type="text">-->
+            </div>
+        </div>
+
+        <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+            <label class="col-sm-3 control-label">进度描述：</label>
+            <div class="col-sm-8">
+                <textarea id="processText" name="processText" class="form-control"></textarea>
+            </div>
+        </div>
+        <label class="col-sm-3 control-label"></label>
+        <div class="col-sm-8">
+
+            <div class="task-progress-items">
+                <h5>任务进度提交记录</h5>
+                <div class="task-pitems-main">
+                    <ul>
+                        <li th:each="process:${processList}">
+                            <div class="task-pitem-info">
+                                <span class="task-pitems-user" th:text="${process.createBy}"></span> 于 <span
+                                    class="task-pitems-time"
+                                    th:text="${#dates.format(process.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-05-09 16:58:40 </span>提交任务进度，完成<span
+                                    class="task-pitems-progress" th:text="${process.percentAge}+'%'">50%</span>
+                            </div>
+                            <div class="task-pitem-desc" th:text="'进度描述:'+${process.processText}">进度描述：222</div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group" th:if="${selfTask.taskStatus eq '0' && taskType eq '1'}">
+            <label class="col-sm-3 control-label">分解任务：</label>
+            <div class="col-sm-8">
+                按执行步骤，流程，阶段等，您可以快速将本任务进行分解，子任务也可以指派给其他同事。
+                <a onclick="addChildTask()"
+                   class="b-btn-five dp-inline task-sub-save btn btn-primary btn-xs">添加子任务</a>
+                <div class="task-sub-items">
+                    <ul>
+
+                        <li class="task-sub-item" th:each="task:${childSelfTasks}">
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label">任务标题</label>
+                                <div class="task-sitem-text" th:text="${task.taskTitle}">
+                                </div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label">开始时间</label>
+                                <div class="task-sitem-text task-sitem-middle"
+                                     th:text="${#dates.format(task.startDate, 'yyyy-MM-dd HH:mm:ss')}">2019-05-10
+                                    14:31:29
+                                </div>
+                                <label class="task-sitem-label">要求完成时间</label>
+                                <div class="task-sitem-text task-sitem-middle"
+                                     th:text="${#dates.format(task.requireTime, 'yyyy-MM-dd HH:mm:ss')}">2019-05-11
+                                    14:31:33
+                                </div>
+                                <label class="task-sitem-label">优先级</label>
+                                <div class="task-sitem-text task-sitem-middle">
+                                    <span th:if="${task.priority eq '0'}">高</span>
+                                    <span th:if="${task.priority eq '1'}">中</span>
+                                    <span th:if="${task.priority eq '2'}">低</span>
+                                </div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label">任务描述</label>
+                                <div class="task-sitem-text" th:text="${task.taskContent}"></div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label">任务进度</label>
+                                <div class="task-sitem-text" th:text="${task.taskProgress}+'%'">0%</div>
+                            </div>
+                            <div class="task-sitem-option clear">
+                                <label class="task-sitem-label">任务执行人</label>
+                                <div class="task-sitem-text font-c-dgreen" th:text="${task.remark}"></div>
+                            </div>
+
+                            <div class="task-sitem-flist" id="task_sitem_flist_ff8080816a8cd094016aa0706dc63278">
+                                <ul id="task_file_list_ff8080816a8cd094016aa0706dc63278" class="attch-list"></ul>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">修改人：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">修改时间：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="updatedTime" name="updatedTime" th:field="*{updatedTime}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">创建人：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="createdBy" name="createdBy" th:field="*{createdBy}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--			<div class="form-group">	-->
+        <!--				<label class="col-sm-3 control-label">备注：</label>-->
+        <!--				<div class="col-sm-8">-->
+        <!--					<input id="remarks" name="remarks" th:field="*{remarks}" class="form-control" type="text">-->
+        <!--				</div>-->
+        <!--			</div>-->
+    </form>
+</div>
+<div class="row" th:if="${taskType eq '3' && selfTask.taskStatus eq '1'}">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="passCheck()"><i class="fa fa-check"></i>通过
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="noPassCheck()"><i class="fa fa-reply-all"></i>不通过
+        </button>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+<script type="text/javascript">
+    $('#file').fileinput({
+        language: 'zh',
+        showPreview: false, //是否显示预览
+        showUpload: true, //是否显示上传按钮
+        showRemove: true, //显示移除按钮
+        enctype: 'multipart/form-data',
+        uploadUrl: ctx + 'worktask/workTaskFile/upload', // you must set a valid URL here else you will get an error
+        uploadExtraData: {"workTaskId": '[[${selfTask.id}]]'},
+        allowedFileExtensions: ['ppt', 'xls', 'xlsx', "doc", "docx", "pptx", "pdf"],
+        overwriteInitial: false,
+        maxFileSize: 10000,
+        maxFilesNum: 10,
+
+    });
+    var prefix = ctx + "worktask/selfTaskProcess";
+    $("#form-selfTask-edit").validate({
+        rules: {
+            processText: {
+                required: true,
+            },
+        },
+        focusCleanup: true
+    });
+
+    //通过
+    function passCheck() {
+        var config = {
+            url: ctx + "worktask/basicmaintenance/edit",
+            type: "post",
+            dataType: "json",
+            data: {id: $("#id").val(), check: 2},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function (result) {
+                $.modal.closeLoading();
+                window.location.reload()
+            }
+        };
+        $.ajax(config)
+    }
+
+    //不通过
+    function noPassCheck() {
+        var config = {
+            url: ctx + "worktask/basicmaintenance/edit",
+            type: "post",
+            dataType: "json",
+            data: {id: $("#id").val(), check: 1},
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function (result) {
+                $.modal.closeLoading();
+                window.location.reload()
+            }
+        };
+        $.ajax(config)
+    }
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var config = {
+                url: prefix + "/add",
+                type: "post",
+                dataType: "json",
+                data: $('#form-selfTask-edit').serialize(),
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function (result) {
+                    $.modal.closeLoading();
+                    window.location.reload()
+                }
+            };
+            $.ajax(config)
+
+        }
+    }
+
+    function addChildTask() {
+        $.modal.open("添加子任务", ctx + "worktask/basicmaintenance/addChild/" + $("#id").val())
+    }
+
+    function deleteFile(id) {
+        var data = {"ids": id};
+        $.ajax({
+            url: ctx + "worktask/workTaskFile/delete",
+            type: "post",
+            dataType: "json",
+            data: data,
+            beforeSend: function () {
+                $.modal.loading("正在处理中，请稍后...");
+            },
+            success: function (result) {
+                $.modal.closeLoading();
+                window.location.reload()
+            }
+        })
+    }
+
+    $(function () {
+
+        //通用初始化方法
+        var startValue = '[[${selfTask.taskProgress}]]';
+        //初始化进度条
+        $("#slider-range-min").slider({
+            range: "min",
+            value: startValue,
+            min: 1,
+            max: 100,
+            slide: function (event, ui) {
+                if (ui.value < parseInt(startValue, 10)) {
+                    return false;
+                } else {
+                    $("#task_progress_current").text(ui.value + "%");
+                    $("#percentAge").val(ui.value);
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

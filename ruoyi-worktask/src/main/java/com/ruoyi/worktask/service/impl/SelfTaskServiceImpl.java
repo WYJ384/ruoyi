@@ -2,6 +2,7 @@ package com.ruoyi.worktask.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.worktask.domain.BasicMaintenance;
 import com.ruoyi.worktask.domain.Goodness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,5 +94,15 @@ public class SelfTaskServiceImpl implements ISelfTaskService
 	{
 		return selfTaskMapper.deleteSelfTaskByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<BasicMaintenance> basicmaintenanceTaskList(BasicMaintenance selfTask) {
+		return selfTaskMapper.basicmaintenanceTaskList(selfTask);
+	}
+
+	@Override
+	public BasicMaintenance selectBasicMaintenanceTaskById(String id) {
+		return selfTaskMapper.selectBasicMaintenanceTaskById(id);
+	}
+
 }
