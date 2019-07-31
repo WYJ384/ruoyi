@@ -4,12 +4,16 @@ import java.util.*;
 
 import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.NOCStringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.train.domain.Train;
 import com.ruoyi.train.service.ITrainService;
+import com.ruoyi.worktask.domain.WorkTaskFile;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -41,12 +45,14 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 @RequestMapping("/train/approve")
 public class ApproveController extends BaseController
 {
+
     private String prefix = "train/approve";
 	@Autowired
 	private ISysUserService userService;
 	@Autowired
 	private IApproveService approveService;
-
+	@Autowired
+	private ISysDeptService deptService;
 	@Autowired
 	private ITrainService trainService;
 	@Autowired
@@ -106,6 +112,20 @@ public class ApproveController extends BaseController
 	public   String task() {
 		return prefix + "/tasks";
 	}
+	@RequiresPermissions("train:approve:view")
+	@GetMapping("/shenhe/{id}/{taskId}")
+	public   String shenhe(@PathVariable("id") String id,@PathVariable("taskId") String taskId, ModelMap mmap) {
+		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
+		mmap.addAttribute("sysUsers",sysUsers);
+		mmap.addAttribute("taskId",taskId);
+		Approve approve = approveService.selectApproveById(id);
+		mmap.put("approve", approve);
+//		WorkTaskFile activityFile=new WorkTaskFile();
+//		activityFile.setWorkTaskId(id);
+//		List<WorkTaskFile> workTaskFiles = workTaskFileService.selectWorkTaskFileList(activityFile);
+//		mmap.put("workTaskFiles", workTaskFiles);
+		return prefix + "/shenhe";
+	}
 	/**
 	 * 导出付款审批列表
 	 */
@@ -135,7 +155,10 @@ public class ApproveController extends BaseController
 		if(sqbh==null){
 			sqbh=1;
 		}
+		Long deptId = ShiroUtils.getSysUser().getDeptId();
+		SysDept sysDept = deptService.selectDeptById(deptId);
 		approve.setSpbh(String.format("%03d", sqbh));
+		approve.setSqdw(sysDept.getDeptName());
 		mmap.put("approve", approve);
 
 	    return prefix + "/add";
@@ -216,5 +239,23 @@ public class ApproveController extends BaseController
 	{		
 		return toAjax(approveService.deleteApproveByIds(ids));
 	}
-	
+
+
+	@RequiresPermissions("train:train:check")
+	@Log(title = "培训审核", businessType = BusinessType.DELETE)
+	@PostMapping( "/check")
+	@ResponseBody
+	public AjaxResult check(String result,String taskId,String id,String comment)
+	{
+		TaskVO taskVO = actTaskService.selectOneTask(taskId);
+
+		Approve approve = approveService.selectApproveById(id);
+		TaskVO taskVo=new TaskVO();
+		taskVo.setProcessInstanceId(approve.getProcessInstanceId());
+		taskService.setAssignee(taskId,ShiroUtils.getUserId()+"");
+		taskService.setOwner(taskId,ShiroUtils.getUserId()+"");
+		Map<String, Object> vars = new HashMap<String, Object>();
+		actTaskService.complete(taskId,approve.getProcessInstanceId(),comment,"",vars);
+		return toAjax(1);
+	}
 }

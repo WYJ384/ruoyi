@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/css/fileinput.css}" media="all" rel="stylesheet"
+      type="text/css"/>
+<link th:href="@{/ajax/libs/bootstrap-fileinput-master/themes/explorer-fas/theme.css}" media="all" rel="stylesheet"
+      type="text/css"/>
+<style type="text/css">
+    th {
+        text-align: right;
+    }
+</style>
+<body class="white-bg">
+<div th:include="train/approve/comm_v::comm_v"></div>
+<form class="form-horizontal m" id="form-train-edit" th:object="${approve}">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">处理意见：</label>
+        <div class="col-sm-8">
+            <textarea id="comment" name="comment" class="form-control"></textarea>
+        </div>
+    </div>
+</form>
+<input type="hidden" id="taskId" th:value="${taskId}">
+<div class="row">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="pass()"><i class="fa fa-check"></i>确定</button>&nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+        </button>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/fileinput.js}" type="text/javascript"></script>
+<script th:src="@{/ajax/libs/bootstrap-fileinput-master/js/locales/zh.js}" type="text/javascript"></script>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+<script type="text/javascript">
+    var prefix = ctx + "train/approve";
+
+    function pass() {
+        submitCheck(1);
+    }
+
+    function noPass() {
+        submitCheck(2);
+    }
+
+    $("#form-train-edit").validate({
+        rules: {
+            comment: {
+                required: true,
+            },
+        },
+        focusCleanup: true
+    });
+
+    function submitCheck(result) {
+        if ($.validate.form()) {
+            var data = {
+                "result": result,
+                "id": $("#id").val(),
+                "taskId": $("#taskId").val(),
+                "comment": $("#comment").val()
+            };
+            var config = {
+                url: prefix + "/check",
+                type: "post",
+                dataType: "json",
+                data: data,
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                },
+                success: function (result) {
+                    $.table.refresh();
+                    $.modal.msgSuccess(result.msg);
+                    $.modal.closeLoading();
+                    location.reload()
+                    closeItem();
+                }
+            };
+            $.ajax(config)
+        }
+
+    }
+
+</script>
+</body>
+</html>

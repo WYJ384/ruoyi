@@ -68,49 +68,35 @@
             showExport: true,
             columns: [
                 {
-                    field: 'userName',
-                    title: '培训人员姓名',
+                    field : 'sqdw',
+                    title : '审请单位',
                     sortable: true,
                     formatter: function (value, row, index) {
                         var actions = [];
-                        var title="培训审批";
-                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id+'/'+row.task.id + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
+                        var title="付款审批单";
+                        actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/query/'+row.id + '\')"><i class="fa fa-edit"></i>' + value + '</a> ');
                         return actions.join('');
                     }
                 },
+
                 {
-                    field: 'startDate',
-                    title: '出发时间',
+                    field : 'htbh',
+                    title : '合同编号',
                     sortable: true
                 },
+
                 {
-                    field: 'endDate',
-                    title: '回程时间',
+                    field : 'htmc',
+                    title : '合同名称',
                     sortable: true
                 },
-                {
-                    field: 'trainStatus',
-                    title: '申请状态',
-                    sortable: true,
-                    formatter: function (value, row, index) {
-                        if(value==1){
-                            return "暂存";
-                        }else if(value==2){
-                            return "申请中";
-                        }else if(value==3){
-                            return "申请通过";
-                        }
-                        else if(value==4){
-                            return "申请不通过";
-                        }
-                    }
-                },
+
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function (value, row, index) {
                         var actions = [];
-                        var title="培训审批";
+                        var title="付款审批";
                         actions.push('<a class=" ' + editFlag + '" href="#" onclick="$.operate.addSubTab(\''+title+'\',\'' +prefix +'/shenhe/'+row.id+'/'+row.task.id  + '\')"><i class="fa fa-edit"></i>审核</a> ');
                         return actions.join('');
 

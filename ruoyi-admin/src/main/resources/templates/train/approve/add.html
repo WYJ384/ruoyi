@@ -16,7 +16,7 @@
             <tr>
                 <th colspan="2" class="text-right">审请单位（签章）</th>
                 <td colspan="2">
-                    <input id="sqdw" name="sqdw" class="form-control" type="text">
+                    <input id="sqdw" name="sqdw" th:value="${approve.sqdw}" class="form-control" type="text">
                 </td>
                 <th class="text-right">合同金额</th>
                 <td>
@@ -127,7 +127,7 @@
 
                     <select id="zgfzjl" name="zgfzjl" class="form-control select2-hidden-accessible">
                         <option th:each="user:${sysUsers}" th:value="${user.userId}"
-                                th:text="${user.userName}" th:selected="${user.userName eq '钟立兵'}">
+                                th:text="${user.userName}" th:selected="${user.userName eq '王喆'}">
 
                         </option>
                     </select>
@@ -136,7 +136,7 @@
 
                     <select id="zjl" name="zjl" class="form-control select2-hidden-accessible">
                         <option th:each="user:${sysUsers}" th:value="${user.userId}"
-                                th:text="${user.userName}" th:selected="${user.userName eq '钟立兵'}">
+                                th:text="${user.userName}" th:selected="${user.userName eq '姚勇'}">
 
                         </option>
                     </select>
@@ -228,7 +228,7 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/add", $('#form-approve-add').serialize());
+            $.operate.saveTab(prefix + "/add", $('#form-approve-add').serialize());
         }
     }
 </script>
