@@ -1,95 +1,104 @@
 <div th:fragment="comm_v">
     <div class="form-horizontal m" id="form-approve-add">
         <h2 class="text-center">中国电信股份有限公司甘肃分公司网络监控维护中心付款审批单</h2>
-        <h4 class="text-center">2019年7月18日</h4>
-        <h4 class="text-right">申请编号：<span th:text="${approve.spbh}"></span></h4>
+<!--        <h4 class="text-center">2019年7月18日</h4>-->
+        <h4 class="text-right">申请编号：<span  th:text="${#dates.format(approve.createDate, 'yyyy')}"></span><span th:text="${approve.spbh}"></span></h4>
         <input type="hidden" th:value="${approve.spbh}" name="spbh">
         <input id="id" name="id" th:field="${approve.id}"  type="hidden">
-        <table class="table table-bordered">
+        <table class="table table-bordered" >
             <tr>
-                <th colspan="2" class="text-right">审请单位（签章）</th>
-                <td colspan="2" th:text="${approve.sqdw}">
+                <td colspan="2" class="text-center" width="20%">审请单位（签章）</td>
+                <td colspan="2"  class="text-center"   width="30%" th:text="${approve.sqdw}">
                 </td>
-                <th class="text-right">合同金额</th>
-                <td th:text="${approve.htje}">
+                <td class="text-center"  width="20%">合同金额</td>
+                <td class="text-center" th:text="${approve.htje}">
                 </td>
-                <th colspan="2">备注</th>
+                <td class="text-center" colspan="2"   width="15%">备注</td>
 
             </tr>
             <tr>
-                <th colspan="2" class="text-right">合同编号</th>
-                <td colspan="2" th:text="${approve.htbh}">
+                <td colspan="2" class="text-center">合同编号</td>
+                <td class="text-center" colspan="2" th:text="${approve.htbh}">
                 </td>
-                <th class="text-right">合同价款</th>
-                <td th:text="${approve.htjk}">
+                <td class="text-center">合同价款</td>
+                <td class="text-center" th:text="${approve.htjk+'元'}">
                 </td>
                 <td rowspan="5" colspan="2" th:text="${approve.remark}">
                 </td>
 
             </tr>
             <tr>
-                <th colspan="2" class="text-right">合同名称</th>
-                <td colspan="2" th:text="${approve.htmc}">
+                <td colspan="2" class="text-center">合同名称</td>
+                <td class="text-center" colspan="2" th:text="${approve.htmc}">
                 </td>
-                <th class="text-right">累计已付款</th>
-                <td th:text="${approve.ljyfk}">
+                <td class="text-center">累计已付款</td>
+                <td class="text-center" th:text="${approve.ljyfk+'元'}">
                 </td>
             </tr>
             <tr>
-                <th colspan="2" class="text-right">款项用途</th>
-                <td colspan="2" th:text="${approve.kxyt}">
+                <td colspan="2" class="text-center">款项用途</td>
+                <td colspan="2" class="text-center" th:text="${approve.kxyt}">
                 </td>
-                <th class="text-right">本次申请金额</th>
-                <td th:text="${approve.bcsqje}">
-                </td>
-
-            </tr>
-
-            <tr>
-                <th colspan="2" class="text-right">收款单位</th>
-                <td colspan="2" th:text="${approve.skdw}">
-                </td>
-                <th class="text-right">实际付款金额</th>
-                <td th:text="${approve.sjfkje}">
+                <td class="text-center">本次申请金额</td>
+                <td class="text-center" th:text="${approve.bcsqje+'元'}">
                 </td>
 
             </tr>
 
             <tr>
-                <th class="text-right" colspan="3">本次付款申请比例（%）</th>
-                <td th:text="${approve.bcsqfkbl}">
+                <td colspan="2" class="text-center">收款单位</td>
+                <td class="text-center" colspan="2" th:text="${approve.skdw}">
                 </td>
-                <th class="text-right">尚需支付金额</th>
-                <td th:text="${approve.sxzfje}">
+                <td class="text-center">实际付款金额</td>
+                <td class="text-center" th:text="${approve.sjfkje+'元'}">
                 </td>
 
             </tr>
             <tr>
-                <th rowspan="2">审核（批）流程</th>
-                <th>经办人</th>
-                <th>技术支撑部负责人</th>
-                <th>维护部门负责人</th>
-                <th>办公室负责人</th>
-                <th>主管副总经理</th>
-                <th>总经理</th>
-                <th>财务部负责人</th>
-            </tr>
-            <tr>
+                <td colspan="2" class="text-center">本次付款申请比例（%）</td>
+                <td class="text-center" colspan="2" th:text="${approve.bcsqfkbl}">
+                </td>
+                <td class="text-center">尚需支付金额</td>
+                <td class="text-center" th:text="${approve.sxzfje+'元'}">
+                </td>
 
-                <td th:text="${approve.jbr}"></td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
             </tr>
+
+<!--            <tr>-->
+<!--                <td class="text-center" colspan="3">本次付款申请比例（%）</td>-->
+<!--                <td class="text-center" th:text="${approve.bcsqfkbl}">-->
+<!--                </td>-->
+<!--                <td class="text-center">尚需支付金额</td>-->
+<!--                <td class="text-center" th:text="${approve.sxzfje}">-->
+<!--                </td>-->
+
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td rowspan="2">审核（批）流程</td>-->
+<!--                <td经办人</td>-->
+<!--                <td技术支撑部负责人</td>-->
+<!--                <td维护部门负责人</td>-->
+<!--                <td办公室负责人</td>-->
+<!--                <td主管副总经理</td>-->
+<!--                <td总经理</td>-->
+<!--                <td财务部负责人</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+
+<!--                <td th:text="${approve.jbr}"></td>-->
+<!--                <td-->
+<!--                </td>-->
+<!--                <td-->
+<!--                </td>-->
+<!--                <td-->
+<!--                </td>-->
+<!--                <td-->
+<!--                </td>-->
+<!--                <td-->
+<!--                </td>-->
+<!--                <td-->
+<!--                </td>-->
+<!--            </tr>-->
         </table>
     </div>
 </div>

@@ -1,0 +1,36 @@
+<div th:fragment="approvecomm" >
+    <div class=" form-horizontal m">
+        <table  class="table  table-bordered ">
+            <tr>
+                <td style="text-align: center">审核（批）环节</td>
+                <td style="text-align: center">处理人</td>
+                <td style="text-align: center">处理时间</td>
+                <!--                        <td style="text-align: center">基本操作</td>-->
+                <!--                        <td style="text-align: center">处理机构</td>-->
+                <td style="text-align: center">审批意见</td>
+            </tr>
+            <tr>
+                <td style="text-align: center">经办人</td>
+                <td style="text-align: center" th:text="${approve.jbr}"></td>
+                <td style="text-align: center" th:text="${#dates.format(approve.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td style="text-align: center"></td>
+            </tr>
+            <tr th:each="hi:${historyTaskVos}">
+                <td style="text-align: center" th:text="${hi.name}"></td>
+                <td style="text-align: center" th:text="${hi.assignee}"></td>
+                <td style="text-align: center" th:text="${#dates.format(hi.endTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <!--                        <td style="text-align: center" th:text="${hi.repContent}"></td>-->
+                <!--                        <td style="text-align: center" th:text="${hi.endTime}"></td>-->
+                <td style="text-align: center" th:text="${hi.repContent}"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center">财务部负责人</td>
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+

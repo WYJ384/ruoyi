@@ -4,24 +4,46 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
 
-<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content" id="printContainer">
     <div th:include="train/approve/comm_v::comm_v"></div>
-
+    <div th:include="train/approve/approve_comm_lc::approvecomm"></div>
 </div>
 <div class="row">
     <div class="col-sm-offset-5 col-sm-10">
         <button type="button" class="btn btn-sm btn-primary" onclick="workProcessDetail()"><i class="fa fa-reply-all"></i>查看流程 </button>
-        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
-        </button>
+        <button type="button" class="btn btn-sm btn-danger" onclick="printPage()"><i class="fa fa-reply-all"></i>打 印 </button>
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
     </div>
 </div>
-<div th:include="include::footer"></div>
-<script th:src="@{/ajax/libs/select/select2.js}"></script>
+<!--<div th:include="include::footer"></div>-->
+<!-- bootstrap-table 表格插件 -->
+<script th:src="@{/js/jquery-1.4.4.min.js}"></script>
+
+<!-- 遮罩层 -->
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script th:src="@{/ajax/libs/layui/layui.js}"></script>
+<script th:src="@{/ruoyi/js/common.js?v=3.2.0}"></script>
+<script th:src="@{/ruoyi/js/ry-ui.js?v=3.2.0}"></script>
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+
+<script th:src="@{/js/jquery.jqprint-0.3.js}"></script>
 <script>
     function workProcessDetail(){
-        $.modal.openTab("查看流程",ctx +"diagram-viewer/index.html?processDefinitionId=fksplc:1:205125&processInstanceId="+[[${approve.processInstanceId}]]);
+        $.modal.openTab("查看流程",ctx +"diagram-viewer/index.html?processDefinitionId=fksplc:1:207504&processInstanceId="+[[${approve.processInstanceId}]]);
 
     }
+    function printPage() {
+        $("#printContainer").jqprint({
+            debug: false, //如果是true则可以显示iframe查看效果（iframe默认高和宽都很小，可以再源码中调大），默认是false
+            importCSS: true, //true表示引进原来的页面的css，默认是true。（如果是true，先会找$("link[media=print]")，若没有会去找$("link")中的css文件）
+            printContainer: true, //表示如果原来选择的对象必须被纳入打印（注意：设置为false可能会打破你的CSS规则）。
+            operaSupport: true//表示如果插件也必须支持歌opera浏览器，在这种情况下，它提供了建立一个临时的打印选项卡。默认是true
+        });
+
+    }
+
 </script>
 </body>
 </html>

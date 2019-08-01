@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.train;
 
 import java.util.*;
 
+import com.ruoyi.activiti.domain.HistoryTaskVo;
 import com.ruoyi.activiti.domain.TaskVO;
 import com.ruoyi.activiti.service.ActTaskService;
 import com.ruoyi.common.utils.StringUtils;
@@ -16,8 +17,12 @@ import com.ruoyi.train.service.ITrainService;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -53,14 +58,14 @@ public class ApproveController extends BaseController
 	private IApproveService approveService;
 	@Autowired
 	private ISysDeptService deptService;
-	@Autowired
-	private ITrainService trainService;
+
 	@Autowired
 	private ActTaskService actTaskService;
 	@Autowired
 	TaskService taskService;
 	@Autowired
 	HistoryService historyService;
+
 	
 	@RequiresPermissions("train:approve:view")
 	@GetMapping()
@@ -157,7 +162,7 @@ public class ApproveController extends BaseController
 		}
 		Long deptId = ShiroUtils.getSysUser().getDeptId();
 		SysDept sysDept = deptService.selectDeptById(deptId);
-		approve.setSpbh(String.format("%03d", sqbh));
+		approve.setSpbh(String.format("%04d", sqbh));
 		approve.setSqdw(sysDept.getDeptName());
 		mmap.put("approve", approve);
 
@@ -195,8 +200,42 @@ public class ApproveController extends BaseController
 	public String query(@PathVariable("id") String id, ModelMap mmap)
 	{
 		Approve approve = approveService.selectApproveById(id);
+		String jbr = approve.getJbr();
+		SysUser sysUser = userService.selectUserById(Long.valueOf(jbr));
+		if(sysUser!=null){
+			approve.setJbr(sysUser.getUserName());
+		}
 		mmap.put("approve", approve);
+		List<HistoryTaskVo> historyTaskVos = historyTaskList(approve.getProcessInstanceId());
+		mmap.put("historyTaskVos", historyTaskVos);
 		return prefix + "/query";
+	}
+	public List<HistoryTaskVo>  historyTaskList(String processInstanceId){
+		List<HistoryTaskVo> historyTaskVos=new ArrayList<HistoryTaskVo>();
+		List<HistoricTaskInstance> list= historyService // 历史相关Service
+				.createHistoricTaskInstanceQuery() // 创建历史任务实例查询
+				.processInstanceId(processInstanceId) // 用流程实例id查询
+				.finished() // 查询已经完成的任务
+				.list();
+		for(HistoricTaskInstance hti:list){
+			HistoryTaskVo historyTaskVo=new HistoryTaskVo();
+			BeanUtils.copyProperties(hti,historyTaskVo);
+			String assignee = hti.getAssignee();
+			if(StringUtils.isNotEmpty(assignee)){
+				SysUser sysUser = userService.selectUserById(Long.valueOf(assignee));
+				if(sysUser!=null){
+					historyTaskVo.setAssignee(sysUser.getUserName());
+				}
+			}
+			List<Comment> taskComments = taskService.getTaskComments(hti.getId());
+			if(taskComments!=null&&taskComments.size()>0){
+				String fullMessage = taskService.getTaskComments(hti.getId()).get(0).getFullMessage();
+				historyTaskVo.setRepContent(fullMessage);
+			}
+			historyTaskVos.add(historyTaskVo);
+		}
+
+		return historyTaskVos;
 	}
 	@Log(title = "付款审批开始", businessType = BusinessType.UPDATE)
 	public void startApprove(Approve approve){
@@ -224,7 +263,7 @@ public class ApproveController extends BaseController
 	public AjaxResult editSave(Approve approve)
 	{
 		approve.setUpdateBy(ShiroUtils.getUserId()+"");
-		approve.setUpdateTime(new Date());
+		approve.setUpdateDate(new Date());
 		return toAjax(approveService.updateApprove(approve));
 	}
 	
