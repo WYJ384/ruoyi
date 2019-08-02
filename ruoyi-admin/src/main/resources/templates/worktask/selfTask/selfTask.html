@@ -81,7 +81,7 @@
     var editFlag = [[${@permission.hasPermi('worktask:selfTask:edit')}]];
     var removeFlag = [[${@permission.hasPermi('worktask:selfTask:remove')}]];
     var prefix = ctx + "worktask/selfTask";
-    var taskType = 1;//我的任务
+    var taskType = 4;//共享任务
     $(function () {
         var options = {
             url: prefix + "/shareList",
