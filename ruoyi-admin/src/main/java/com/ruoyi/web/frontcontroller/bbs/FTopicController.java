@@ -1,7 +1,9 @@
 package com.ruoyi.web.frontcontroller.bbs;
 
 
+import com.ruoyi.bbs.domain.Reply;
 import com.ruoyi.bbs.domain.Topic;
+import com.ruoyi.bbs.service.IReplyService;
 import com.ruoyi.bbs.service.ITopicService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
@@ -31,7 +33,8 @@ import java.util.List;
 public class FTopicController extends BaseController
 {
     private String prefix = "front/bbs";
-	
+	@Autowired
+	private IReplyService replyService;
 	@Autowired
 	private ITopicService topicService;
 	
@@ -91,6 +94,10 @@ public class FTopicController extends BaseController
 	{
 		Topic topic = topicService.selectTopicById(id);
 		modelMap.addAttribute("topic",topic);
+		Reply reply=new Reply();
+		reply.setTid(id);
+		List<Reply> replies = replyService.selectReplyList(reply);
+		modelMap.addAttribute("replies",replies);
 		return prefix + "/jie/detail";
 	}
 	/**

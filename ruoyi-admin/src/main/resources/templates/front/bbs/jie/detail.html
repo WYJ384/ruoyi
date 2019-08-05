@@ -178,15 +178,16 @@
         </fieldset>
 
         <ul class="jieda" id="jieda">
-          <li data-id="111" class="jieda-daan">
+          <li th:each="reply:${replies}" data-id="111" class="jieda-daan">
             <a name="item-1111111111"></a>
             <div class="detail-about detail-about-reply">
               <a class="fly-avatar" href="">
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">
+                <img   th:src="@{'/profile/avatar/'+${reply.sysUser.avatar}}" th:alt="${reply.sysUser.userName}">
+
               </a>
               <div class="fly-detail-user">
                 <a href="" class="fly-link">
-                  <cite>贤心</cite>
+                  <cite th:text="${topic.sysUser.userName}">贤心</cite>
                   <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
                   <i class="layui-badge fly-badge-vip">VIP3</i>              
                 </a>
@@ -205,7 +206,7 @@
 
               <i class="iconfont icon-caina" title="最佳答案"></i>
             </div>
-            <div class="detail-body jieda-body photos">
+            <div class="detail-body jieda-body photos" th:utext="${reply.content}">
               <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
             </div>
             <div class="jieda-reply">
@@ -217,55 +218,23 @@
                 <i class="iconfont icon-svgmoban53"></i>
                 回复
               </span>
-              <div class="jieda-admin">
-                <span type="edit">编辑</span>
-                <span type="del">删除</span>
-                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
-              </div>
+<!--              <div class="jieda-admin">-->
+<!--                <span type="edit">编辑</span>-->
+<!--                <span type="del">删除</span>-->
+<!--                 <span class="jieda-accept" type="accept">采纳</span> -->
+<!--              </div>-->
             </div>
           </li>
           
-          <li data-id="111">
-            <a name="item-1111111111"></a>
-            <div class="detail-about detail-about-reply">
-              <a class="fly-avatar" href="">
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">
-              </a>
-              <div class="fly-detail-user">
-                <a href="" class="fly-link">
-                  <cite>贤心</cite>       
-                </a>
-              </div>
-              <div class="detail-hits">
-                <span>2017-11-30</span>
-              </div>
-            </div>
-            <div class="detail-body jieda-body photos">
-              <p>蓝瘦那个香菇，这是一条没被采纳的回帖</p>
-            </div>
-            <div class="jieda-reply">
-              <span class="jieda-zan" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>0</em>
-              </span>
-              <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>
-                回复
-              </span>
-              <div class="jieda-admin">
-                <span type="edit">编辑</span>
-                <span type="del">删除</span>
-                <span class="jieda-accept" type="accept">采纳</span>
-              </div>
-            </div>
-          </li>
+
           
           <!-- 无数据时 -->
           <!-- <li class="fly-none">消灭零回复</li> -->
         </ul>
         
         <div class="layui-form layui-form-pane">
-          <form action="/jie/reply/" method="post">
+          <form action="/f/bbs/reply/add" method="post">
+            <input type="hidden" name="tid" th:value="${topic.id}">
             <div class="layui-form-item layui-form-text">
               <a name="comment"></a>
               <div class="layui-input-block">

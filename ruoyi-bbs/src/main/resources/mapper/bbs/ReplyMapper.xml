@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bbs.mapper.ReplyMapper">
+    
+    <resultMap type="Reply" id="ReplyResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="clickCount"    column="click_count"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="tid"    column="tid"    />
+        <result property="remark2"    column="remark2"    />
+        <result property="remark3"    column="remark3"    />
+        <result property="remark4"    column="remark4"    />
+        <result property="remark5"    column="remark5"    />
+        <result property="remark6"    column="remark6"    />
+        <result property="remark7"    column="remark7"    />
+        <result property="remark8"    column="remark8"    />
+        <result property="remark9"    column="remark9"    />
+        <result property="remark10"    column="remark10"    />
+        <association property="sysUser" column="create_by" javaType="SysUser" resultMap="SysUserResult"/>
+
+    </resultMap>
+	
+	<sql id="selectReplyVo">
+    SELECT
+	id,
+	rep.title,
+	rep.content,
+	rep.click_count,
+	rep.create_by,
+	rep.create_date,
+	rep.update_by,
+	rep.update_date,
+	rep.remark,
+	rep.del_flag,
+	tid,
+	remark2,
+	remark3,
+	remark4,
+	remark5,
+	remark6,
+	remark7,
+	remark8,
+	remark9,
+	remark10,
+	user_id,
+	avatar,
+	user_name
+FROM
+	bbs_reply rep
+INNER JOIN sys_user ON rep.create_by = sys_user.user_id
+    </sql>
+    <resultMap id="SysUserResult" type="SysUser">
+        <id     property="userId"       column="user_id"      />
+        <result property="avatar"       column="avatar"       />
+        <result property="userName"     column="user_name"    />
+    </resultMap>
+
+    <select id="selectReplyList" parameterType="Reply" resultMap="ReplyResult">
+        <include refid="selectReplyVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="clickCount != null "> and click_count = #{clickCount}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="tid != null  and tid != '' "> and tid = #{tid}</if>
+             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
+             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
+             <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
+             <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
+             <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
+             <if test="remark7 != null  and remark7 != '' "> and remark7 = #{remark7}</if>
+             <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
+             <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
+             <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+         </where>
+    </select>
+    
+    <select id="selectReplyById" parameterType="String" resultMap="ReplyResult">
+        <include refid="selectReplyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertReply" parameterType="Reply">
+        insert into bbs_reply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="clickCount != null  ">click_count,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="tid != null  and tid != ''  ">tid,</if>
+			<if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+			<if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+			<if test="remark4 != null  and remark4 != ''  ">remark4,</if>
+			<if test="remark5 != null  and remark5 != ''  ">remark5,</if>
+			<if test="remark6 != null  and remark6 != ''  ">remark6,</if>
+			<if test="remark7 != null  and remark7 != ''  ">remark7,</if>
+			<if test="remark8 != null  and remark8 != ''  ">remark8,</if>
+			<if test="remark9 != null  and remark9 != ''  ">remark9,</if>
+			<if test="remark10 != null  and remark10 != ''  ">remark10,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="clickCount != null  ">#{clickCount},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="tid != null  and tid != ''  ">#{tid},</if>
+			<if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+			<if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+			<if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
+			<if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
+			<if test="remark6 != null  and remark6 != ''  ">#{remark6},</if>
+			<if test="remark7 != null  and remark7 != ''  ">#{remark7},</if>
+			<if test="remark8 != null  and remark8 != ''  ">#{remark8},</if>
+			<if test="remark9 != null  and remark9 != ''  ">#{remark9},</if>
+			<if test="remark10 != null  and remark10 != ''  ">#{remark10},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateReply" parameterType="Reply">
+        update bbs_reply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="clickCount != null  ">click_count = #{clickCount},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="tid != null  and tid != ''  ">tid = #{tid},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''  ">remark7 = #{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''  ">remark8 = #{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteReplyById" parameterType="String">
+        delete from bbs_reply where id = #{id}
+    </delete>
+	
+    <delete id="deleteReplyByIds" parameterType="String">
+        delete from bbs_reply where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

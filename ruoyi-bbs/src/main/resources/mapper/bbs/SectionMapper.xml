@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bbs.mapper.SectionMapper">
+    
+    <resultMap type="Section" id="SectionResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="topicCount"    column="topic_count"    />
+        <result property="clickCount"    column="click_count"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark1"    column="remark1"    />
+        <result property="remark2"    column="remark2"    />
+        <result property="remark3"    column="remark3"    />
+        <result property="remark4"    column="remark4"    />
+        <result property="remark5"    column="remark5"    />
+        <result property="remark6"    column="remark6"    />
+        <result property="remark7"    column="remark7"    />
+        <result property="remark8"    column="remark8"    />
+        <result property="remark9"    column="remark9"    />
+        <result property="remark10"    column="remark10"    />
+    </resultMap>
+	
+	<sql id="selectSectionVo">
+        select id, name, topic_count, click_count, create_by, create_date, update_by, update_date, remarks, del_flag, remark1, remark2, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10 from bbs_section
+    </sql>
+	
+    <select id="selectSectionList" parameterType="Section" resultMap="SectionResult">
+        <include refid="selectSectionVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="topicCount != null "> and topic_count = #{topicCount}</if>
+             <if test="clickCount != null  and clickCount != '' "> and click_count = #{clickCount}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="remark1 != null  and remark1 != '' "> and remark1 = #{remark1}</if>
+             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
+             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
+             <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
+             <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
+             <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
+             <if test="remark7 != null  and remark7 != '' "> and remark7 = #{remark7}</if>
+             <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
+             <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
+             <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+         </where>
+    </select>
+    
+    <select id="selectSectionById" parameterType="String" resultMap="SectionResult">
+        <include refid="selectSectionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSection" parameterType="Section">
+        insert into bbs_section
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="topicCount != null  ">topic_count,</if>
+			<if test="clickCount != null  and clickCount != ''  ">click_count,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="remarks != null  and remarks != ''  ">remarks,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="remark1 != null  and remark1 != ''  ">remark1,</if>
+			<if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+			<if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+			<if test="remark4 != null  and remark4 != ''  ">remark4,</if>
+			<if test="remark5 != null  and remark5 != ''  ">remark5,</if>
+			<if test="remark6 != null  and remark6 != ''  ">remark6,</if>
+			<if test="remark7 != null  and remark7 != ''  ">remark7,</if>
+			<if test="remark8 != null  and remark8 != ''  ">remark8,</if>
+			<if test="remark9 != null  and remark9 != ''  ">remark9,</if>
+			<if test="remark10 != null  and remark10 != ''  ">remark10,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="topicCount != null  ">#{topicCount},</if>
+			<if test="clickCount != null  and clickCount != ''  ">#{clickCount},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="remarks != null  and remarks != ''  ">#{remarks},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
+			<if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+			<if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+			<if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
+			<if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
+			<if test="remark6 != null  and remark6 != ''  ">#{remark6},</if>
+			<if test="remark7 != null  and remark7 != ''  ">#{remark7},</if>
+			<if test="remark8 != null  and remark8 != ''  ">#{remark8},</if>
+			<if test="remark9 != null  and remark9 != ''  ">#{remark9},</if>
+			<if test="remark10 != null  and remark10 != ''  ">#{remark10},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSection" parameterType="Section">
+        update bbs_section
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="topicCount != null  ">topic_count = #{topicCount},</if>
+            <if test="clickCount != null  and clickCount != ''  ">click_count = #{clickCount},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="remarks != null  and remarks != ''  ">remarks = #{remarks},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''  ">remark6 = #{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''  ">remark7 = #{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''  ">remark8 = #{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''  ">remark9 = #{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''  ">remark10 = #{remark10},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSectionById" parameterType="String">
+        delete from bbs_section where id = #{id}
+    </delete>
+	
+    <delete id="deleteSectionByIds" parameterType="String">
+        delete from bbs_section where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
