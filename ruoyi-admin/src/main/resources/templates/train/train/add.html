@@ -88,7 +88,7 @@
 				<div class="col-sm-8">
 					<select id="zjl" name="zjl" class="form-control select2-hidden-accessible" >
 						<option th:each="user:${sysUsers}" th:value="${user.userId}"
-								th:text="${user.userName}"></option>
+								th:text="${user.userName}" th:selected="${user.userName eq '姚勇'}"></option>
 					</select>
 				</div>
 			</div>
@@ -98,7 +98,7 @@
 					<select id="zfgzjl" name="zfgzjl" class="form-control select2-hidden-accessible" required>
 						<option value=""></option>
 						<option th:each="user:${sysUsers}" th:value="${user.userId}"
-								th:text="${user.userName}"></option>
+								th:text="${user.userName}" th:selected="${user.userName eq '王喆'}"></option>
 					</select>
 				</div>
 			</div>
@@ -108,7 +108,7 @@
 					<select id="jsfzr" name="jsfzr" class="form-control select2-hidden-accessible">
 						<option value=""></option>
 						<option th:each="user:${sysUsers}" th:value="${user.userId}"
-								th:text="${user.userName}"></option>
+								th:text="${user.userName}" th:selected="${user.userName eq '郝咏梅'}"></option>
 					</select>
 				</div>
 			</div>
@@ -118,7 +118,7 @@
 					<select id="pxwyhbgs" name="pxwyhbgs" class="form-control select2-hidden-accessible">
 						<option value=""></option>
 						<option th:each="user:${sysUsers}" th:value="${user.userId}"
-								th:text="${user.userName}"></option>
+								th:text="${user.userName}" th:selected="${user.userName eq '何颖'}"></option>
 					</select>
 				</div>
 			</div>
@@ -128,7 +128,7 @@
 					<select id="bgs" name="bgs" class="form-control select2-hidden-accessible">
 						<option value=""></option>
 						<option th:each="user:${sysUsers}" th:value="${user.userId}"
-								th:text="${user.userName}"></option>
+								th:text="${user.userName}" th:selected="${user.userName eq '钟立兵'}"></option>
 					</select>
 				</div>
 			</div>
@@ -138,7 +138,7 @@
 					<select id="bmzr" name="bmzr" class="form-control select2-hidden-accessible">
 						<option value=""></option>
 						<option th:each="user:${sysUsers}" th:value="${user.userId}"
-								th:text="${user.userName}"></option>
+								th:text="${user.userName}" ></option>
 					</select>
 				</div>
 			</div>

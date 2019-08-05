@@ -260,6 +260,7 @@
         <module>ruoyi-exam</module>
         <module>ruoyi-jobsumm</module>
         <module>ruoyi-train</module>
+        <module>ruoyi-bbs</module>
     </modules>
     <packaging>pom</packaging>
 
