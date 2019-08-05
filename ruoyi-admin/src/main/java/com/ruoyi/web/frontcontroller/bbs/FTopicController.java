@@ -86,9 +86,11 @@ public class FTopicController extends BaseController
 	{
 		return prefix + "/jie/index";
 	}
-	@GetMapping("/jieDetail")
-	public String jieDetail()
+	@GetMapping("/jieDetail/{id}")
+	public String jieDetail(@PathVariable("id") String id,ModelMap modelMap)
 	{
+		Topic topic = topicService.selectTopicById(id);
+		modelMap.addAttribute("topic",topic);
 		return prefix + "/jie/detail";
 	}
 	/**
