@@ -4,8 +4,9 @@
       <img th:src="@{/ajax/libs/bbs/res/images/logo.png}" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
-      <li class="layui-nav-item layui-this">
-        <a href="/f/bbs/topic/index"><i class="iconfont icon-jiaoliu"></i>交流</a>
+
+      <li th:each="menu:${session.cmsCategories}" class="layui-nav-item">
+        <a th:href="${menu.href+menu.id}" ><i class="iconfont icon-jiaoliu"></i><span th:text="${menu.name}"></span></a>
       </li>
 <!--      <li class="layui-nav-item">-->
 <!--        <a href="case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>-->
@@ -47,7 +48,7 @@
           <dd><a href="/f/bbs/user/message"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
           <dd><a href="/f/bbs/user/home"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
-          <dd><a href="/user/logout/" style="text-align: center;">退出</a></dd>
+          <dd><a href="/logout" style="text-align: center;">退出</a></dd>
         </dl>
       </li>
 

@@ -2,6 +2,7 @@ package com.ruoyi.web.frontcontroller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.page.TableSupport;
@@ -13,12 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class FBaseController {
     @Autowired
     private ICmsCategoryService cmsCategoryService;
+    @Autowired
+    HttpSession session;
     protected void getMenu(ModelMap modelMap)
     {
         CmsCategory cmsCategory = new CmsCategory();
@@ -26,6 +30,7 @@ public class FBaseController {
         cmsCategory.setInMenu("0");
         List<CmsCategory> cmsCategories = cmsCategoryService.selectCmsCategoryList(cmsCategory);
         modelMap.addAttribute("cmsCategories",cmsCategories);
+        session.setAttribute("cmsCategories",cmsCategories);
     }
     /**
      * 设置请求分页数据
@@ -64,5 +69,73 @@ public class FBaseController {
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }
+    /**
+     * 响应返回结果
+     *
+     * @param rows 影响行数
+     * @return 操作结果
+     */
+    protected AjaxResult toAjax(int rows)
+    {
+        return rows > 0 ? success() : error();
+    }
 
+    /**
+     * 响应返回结果
+     *
+     * @param result 结果
+     * @return 操作结果
+     */
+    protected AjaxResult toAjax(boolean result)
+    {
+        return result ? success() : error();
+    }
+
+    /**
+     * 返回成功
+     */
+    public AjaxResult success()
+    {
+        return AjaxResult.success();
+    }
+
+    /**
+     * 返回失败消息
+     */
+    public AjaxResult error()
+    {
+        return AjaxResult.error();
+    }
+
+    /**
+     * 返回成功消息
+     */
+    public AjaxResult success(String message)
+    {
+        return AjaxResult.success(message);
+    }
+
+    /**
+     * 返回失败消息
+     */
+    public AjaxResult error(String message)
+    {
+        return AjaxResult.error(message);
+    }
+
+    /**
+     * 返回错误码消息
+     */
+    public AjaxResult error(int code, String message)
+    {
+        return AjaxResult.error(code, message);
+    }
+
+    /**
+     * 页面跳转
+     */
+    public String redirect(String url)
+    {
+        return StringUtils.format("redirect:{}", url);
+    }
 }

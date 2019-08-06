@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.ruoyi.framework.util.NOCStringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.web.frontcontroller.FBaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
  */
 @Controller
 @RequestMapping("/f/bbs/reply")
-public class FReplyController extends BaseController {
+public class FReplyController extends FBaseController {
     private String prefix = "bbs/reply";
 
     @Autowired

@@ -1,6 +1,8 @@
 package com.ruoyi.web.frontcontroller.bbs;
 
 import java.util.List;
+
+import com.ruoyi.web.frontcontroller.FBaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
  */
 @Controller
 @RequestMapping("/f/bbs/section")
-public class FSectionController extends BaseController
+public class FSectionController extends FBaseController
 {
     private String prefix = "bbs/section";
 	

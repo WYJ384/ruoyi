@@ -1,25 +1,25 @@
 
 <span th:fragment="user-nav" >
   <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
-    <li class="layui-nav-item">
+    <li class="layui-nav-item"  th:classappend="${currUrl=='home'?'layui-this':''}">
       <a href="/f/bbs/user/home">
         <i class="layui-icon">&#xe609;</i>
         我的主页
       </a>
     </li>
-    <li class="layui-nav-item">
+    <li class="layui-nav-item"  th:classappend="${currUrl=='index'?'layui-this':''}">
       <a href="/f/bbs/user/index">
         <i class="layui-icon">&#xe612;</i>
         用户中心
       </a>
     </li>
-    <li class="layui-nav-item">
+    <li class="layui-nav-item" th:classappend="${currUrl=='set'?'layui-this':''}">
       <a href="/f/bbs/user/set">
         <i class="layui-icon">&#xe620;</i>
         基本设置
       </a>
     </li>
-    <li class="layui-nav-item">
+    <li class="layui-nav-item" th:classappend="${currUrl=='message'?'layui-this':''}">
       <a href="/f/bbs/user/message">
         <i class="layui-icon">&#xe611;</i>
         我的消息

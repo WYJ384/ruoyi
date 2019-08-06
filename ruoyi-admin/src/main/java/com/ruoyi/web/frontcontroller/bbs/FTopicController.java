@@ -13,6 +13,7 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.NOCStringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.web.frontcontroller.FBaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/f/bbs/topic")
-public class FTopicController extends BaseController
+public class FTopicController extends FBaseController
 {
     private String prefix = "front/bbs";
 	@Autowired
