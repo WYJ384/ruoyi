@@ -1,6 +1,10 @@
 package com.ruoyi.web.controller.bbs;
 
+import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.framework.util.NOCStringUtils;
+import com.ruoyi.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +89,10 @@ public class SectionController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Section section)
-	{		
+	{
+		section.setId(NOCStringUtils.getUUID());
+		section.setCreateDate(new Date());
+		section.setCreateBy(ShiroUtils.getUserId()+"");
 		return toAjax(sectionService.insertSection(section));
 	}
 
@@ -108,7 +115,9 @@ public class SectionController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Section section)
-	{		
+	{
+		section.setUpdateDate(new Date());
+		section.setUpdateBy(ShiroUtils.getUserId()+"");
 		return toAjax(sectionService.updateSection(section));
 	}
 	

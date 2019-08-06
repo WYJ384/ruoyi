@@ -2,6 +2,8 @@ package com.ruoyi.web.frontcontroller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ruoyi.bbs.domain.Section;
+import com.ruoyi.bbs.service.ISectionService;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -23,6 +25,8 @@ public class FBaseController {
     private ICmsCategoryService cmsCategoryService;
     @Autowired
     HttpSession session;
+    @Autowired
+    private ISectionService sectionService;
     protected void getMenu(ModelMap modelMap)
     {
         CmsCategory cmsCategory = new CmsCategory();
@@ -30,6 +34,9 @@ public class FBaseController {
         cmsCategory.setInMenu("0");
         List<CmsCategory> cmsCategories = cmsCategoryService.selectCmsCategoryList(cmsCategory);
         modelMap.addAttribute("cmsCategories",cmsCategories);
+        Section section=new Section();
+        List<Section> sections = sectionService.selectSectionList(section);
+        session.setAttribute("sections",sections);
         session.setAttribute("cmsCategories",cmsCategories);
     }
     /**
