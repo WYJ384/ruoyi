@@ -237,8 +237,10 @@
             <input type="hidden" name="tid" th:value="${topic.id}">
             <div class="layui-form-item layui-form-text">
               <a name="comment"></a>
-              <div class="layui-input-block">
-                <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+              <div class="layui-input-block" id="divContent">
+                <textarea id="content" name="content" required lay-verify="required"
+                          placeholder="详细描述" class="layui-textarea"
+                          style="height: 260px;"></textarea>
               </div>
             </div>
             <div class="layui-form-item">
@@ -325,10 +327,44 @@
     <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
   </p>
 </div>
-
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
 <script th:src="@{/ajax/libs/bbs/res/layui/layui.js}"></script>
 
 <script>
+
+  var editor= UE.getEditor('content', {
+    toolbars: [
+      [
+        'fontfamily', //字体
+        'undo', //撤销
+        'redo', //重做
+        'emotion',
+        //'formatmatch', //格式刷
+        //'pasteplain', //纯文本粘贴模式
+        //'selectall', //全选
+        'simpleupload', //单图上传
+        // 'insertimage', //多图上传
+        'spechars', //特殊字符
+        'justifyleft', //居左对齐
+        'justifyright', //居右对齐
+        'justifycenter', //居中对齐
+        'justifyjustify', //两端对齐
+        'forecolor', //字体颜色
+        //'attachment', //附件
+        //'lineheight', //行间距
+        //'searchreplace', //查询替换
+      ]
+    ],
+    autoHeightEnabled: true,
+    autoFloatEnabled: true,
+    // initialFrameWidth:795,//初始化编辑器宽度，默认1000
+    //initialFrameHeight  //初始化编辑器高度，默认320
+    enableAutoSave :true,//启用自动保存 [默认值：true]
+    saveInterval:500, //[默认值：500] //自动保存间隔时间，单位ms
+    pasteplain :true // [默认值：false] 是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+  });
 layui.cache.page = 'jie';
 layui.cache.user = {
   username: '游客'
