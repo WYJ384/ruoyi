@@ -13,34 +13,7 @@
 </head>
 <body>
 <div class="fly-header layui-bg-black"  th:include="front/bbs/common/header::header"></div>
-
-
-
-<div class="fly-panel fly-column">
-  <div class="layui-container">
-    <ul class="layui-clear">
-      <li class="layui-hide-xs"><a href="/f/bbs/topic/index">首页</a></li>
-      <li class="layui-this"><a href="">提问</a></li> 
-      <li><a href="">分享<span class="layui-badge-dot"></span></a></li> 
-      <li><a href="">讨论</a></li> 
-      <li><a href="">建议</a></li> 
-      <li><a href="">公告</a></li> 
-      <li><a href="">动态</a></li> 
-      <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li> 
-      
-      <!-- 用户登入后显示 -->
-      <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="../user/index.html">我发表的贴</a></li> 
-      <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="../user/index.html#collection">我收藏的贴</a></li> 
-    </ul> 
-    
-    <div class="fly-column-right layui-hide-xs"> 
-      <span class="fly-search"><i class="layui-icon"></i></span>
-      <a href="/f/bbs/topic/add" class="layui-btn">发表新帖</a>
-    </div> 
-    <div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-      <a href="/f/bbs/topic/add" class="layui-btn">发表新帖</a>
-    </div> 
-  </div>
+<div class="fly-panel fly-column"  th:include="front/bbs/common/column::column">
 </div>
 
 <div class="layui-container">
@@ -215,13 +188,8 @@
   </div>
 </div>
 
-<div class="fly-footer">
-  <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
-  <p>
-    <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
-    <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
-  </p>
+<div class="fly-footer" th:include="front/bbs/common/footer::footer">
+
 </div>
 
 <script id="articleTpl" type="text/html">

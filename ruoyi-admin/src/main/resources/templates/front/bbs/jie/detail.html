@@ -1,7 +1,7 @@
  
  
 <!DOCTYPE html>
-<html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <title>Fly Template v3.0，基于 layui 的极简社区页面模版</title>
@@ -15,31 +15,7 @@
 <div class="fly-header layui-bg-black"  th:include="front/bbs/common/header::header"></div>
 
 <div class="layui-hide-xs">
-  <div class="fly-panel fly-column">
-    <div class="layui-container">
-      <ul class="layui-clear">
-        <li class="layui-hide-xs"><a href="/f/bbs/topic/index">首页</a></li>
-        <li class="layui-this"><a href="">提问</a></li> 
-        <li><a href="">分享<span class="layui-badge-dot"></span></a></li> 
-        <li><a href="">讨论</a></li> 
-        <li><a href="">建议</a></li> 
-        <li><a href="">公告</a></li> 
-        <li><a href="">动态</a></li> 
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li> 
-        
-        <!-- 用户登入后显示 -->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="../user/index.html">我发表的贴</a></li> 
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="../user/index.html#collection">我收藏的贴</a></li> 
-      </ul> 
-      
-      <div class="fly-column-right layui-hide-xs"> 
-        <span class="fly-search"><i class="layui-icon"></i></span>
-        <a href="/f/bbs/topic/add" class="layui-btn">发表新帖</a>
-      </div> 
-      <div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-        <a href="/f/bbs/topic/add" class="layui-btn">发表新帖</a>
-      </div> 
-    </div>
+  <div class="fly-panel fly-column"  th:include="front/bbs/common/column::column">
   </div>
 </div>
 
@@ -68,8 +44,8 @@
 <!--            &lt;!&ndash; <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> &ndash;&gt;-->
 <!--          </div>-->
           <span class="fly-list-nums"> 
-            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 66</a>
-            <i class="iconfont" title="人气">&#xe60b;</i> 99999
+            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> </a>
+            <i class="iconfont" title="人气">&#xe60b;</i>
           </span>
         </div>
         <div class="detail-about">
@@ -77,40 +53,24 @@
             <img   th:src="@{'/profile/avatar/'+${topic.sysUser.avatar}}" th:alt="${topic.sysUser.userName}">
           </a>
           <div class="fly-detail-user">
-            <a href="../user/home.html" class="fly-link">
+<!--            <a href="../user/home.html" class="fly-link">-->
+              <a class="fly-link">
               <cite th:text="${topic.sysUser.userName}" >贤心</cite>
               <i class="iconfont icon-renzheng" title="认证信息：{{ rows.user.approve }}"></i>
               <i class="layui-badge fly-badge-vip">VIP3</i>
             </a>
-            <span>2017-11-30</span>
+            <span th:text="${#dates.format(topic.createDate,'yyyy-MM-dd HH:mm')}">2017-11-30</span>
+
           </div>
           <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
-            <span style="padding-right: 10px; color: #FF7200">悬赏：60飞吻</span>  
-            <span class="layui-btn layui-btn-xs jie-admin" type="edit"><a href="add.html">编辑此贴</a></span>
+            <span style="padding-right: 10px; color: #FF7200">
+<!--              悬赏：60飞吻-->
+            </span>
+<!--            <span class="layui-btn layui-btn-xs jie-admin" type="edit"><a href="add.html">编辑此贴</a></span>-->
           </div>
         </div>
         <div class="detail-body photos" th:utext="${topic.content}">
-          <p>
-            该模版由 layui官方社区（<a href="http://fly.layui.com/" target="_blank">fly.layui.com</a>）倾情提供，只为表明我们对 layui 执着的信念、以及对未来持续加强的承诺。该模版基于 layui 搭建而成，可作为极简通用型社区的页面支撑。
-          </p>
-          <p>更新日志：</p>
-<pre>
-# v3.0 2017-11-30
-* 采用 layui 2.2.3 作为 UI 支撑
-* 全面同步最新的 Fly 社区风格，各种细节得到大幅优化
-* 更友好的响应式适配能力
-</pre>
-          
-          下载<hr>
-          <p>
-            官网：<a href="http://www.layui.com/template/fly/" target="_blank">http://www.layui.com/template/fly/</a><br>
-            码云：<a href="https://gitee.com/sentsin/fly/" target="_blank">https://gitee.com/sentsin/fly/</a><br>
-            GitHub：<a href="https://github.com/layui/fly" target="_blank">https://github.com/layui/fly</a>
-          </p>
-          封面<hr>
-          <p>
-            <img src="../../res/images/fly.jpg" alt="Fly社区">
-          </p>
+
         </div>
       </div>
 
@@ -120,7 +80,7 @@
         </fieldset>
 
         <ul class="jieda" id="jieda">
-          <li th:each="reply:${replies}" data-id="111" class="jieda-daan">
+          <li th:each="reply:${replies}" th:data-id="${reply.id}" class="jieda-daan">
             <a name="item-1111111111"></a>
             <div class="detail-about detail-about-reply">
               <a class="fly-avatar" href="">
@@ -143,7 +103,7 @@
               </div>
 
               <div class="detail-hits">
-                <span>2017-11-30</span>
+                <span th:text="${#dates.format(topic.createDate,'yyyy-MM-dd HH:mm')}">刚刚</span>
               </div>
 
               <i class="iconfont icon-caina" title="最佳答案"></i>
@@ -196,46 +156,46 @@
     <div class="layui-col-md4">
       <dl class="fly-panel fly-list-one">
         <dt class="fly-panel-title">本周热议</dt>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
-        <dd>
-          <a href="">基于 layui 的极简社区页面模版</a>
-          <span><i class="iconfont icon-pinglun1"></i> 16</span>
-        </dd>
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
+<!--        <dd>-->
+<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
+<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
+<!--        </dd>-->
 
         <!-- 无数据时 -->
         <!--
@@ -261,13 +221,8 @@
   </div>
 </div>
 
-<div class="fly-footer">
-  <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
-  <p>
-    <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
-    <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
-  </p>
+<div class="fly-footer" th:include="front/bbs/common/footer::footer">
+
 </div>
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
