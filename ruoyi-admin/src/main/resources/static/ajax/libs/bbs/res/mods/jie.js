@@ -139,18 +139,39 @@ layui.define('fly', function(exports){
   gather.jiedaActive = {
     zan: function(li){ //赞
       var othis = $(this), ok = othis.hasClass('zanok');
-      fly.json('/api/jieda-zan/', {
-        ok: ok
-        ,id: li.data('id')
-      }, function(res){
-        if(res.status === 0){
-          var zans = othis.find('em').html()|0;
-          othis[ok ? 'removeClass' : 'addClass']('zanok');
-          othis.find('em').html(ok ? (--zans) : (++zans));
-        } else {
-          layer.msg(res.msg);
+      var config = {
+        url: '/f/bbs/reply/jieda-zan/',
+        type: "post",
+        dataType: "json",
+        data:  {
+          ok: ok
+          ,id: li.data('id')
+        },
+        beforeSend: function () {
+        },
+        success: function(res) {
+          if(res.code ==0){
+            var zans = othis.find('em').html()|0;
+            othis[ok ? 'removeClass' : 'addClass']('zanok');
+            othis.find('em').html(ok ? (--zans) : (++zans));
+          } else {
+            layer.msg(res.msg);
+          }
         }
-      });
+      };
+      $.ajax(config)
+      // fly.json('/f/bbs/reply/jieda-zan/', {
+      //   ok: ok
+      //   ,id: li.data('id')
+      // }, function(res){
+      //   if(res.code ==0){
+      //     var zans = othis.find('em').html()|0;
+      //     othis[ok ? 'removeClass' : 'addClass']('zanok');
+      //     othis.find('em').html(ok ? (--zans) : (++zans));
+      //   } else {
+      //     layer.msg(res.msg);
+      //   }
+      // });
     }
     ,reply: function(li){ //回复
       location.href = "#divContent";

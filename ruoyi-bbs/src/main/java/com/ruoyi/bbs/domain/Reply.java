@@ -38,8 +38,8 @@ public class Reply extends BaseEntity
 	private String delFlag;
 	/** 主题ID */
 	private String tid;
-	/** 扩展2 */
-	private String remark2;
+	/** 点赞数 */
+	private Integer zan;
 	/** 扩展3 */
 	private String remark3;
 	/** 扩展4 */
@@ -58,103 +58,90 @@ public class Reply extends BaseEntity
 	private String remark10;
 	private SysUser sysUser;
 
-	public SysUser getSysUser() {
-		return sysUser;
+	public String getId() {
+		return id;
 	}
 
-	public void setSysUser(SysUser sysUser) {
-		this.sysUser = sysUser;
-	}
-
-	public void setId(String id)
-	{
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getId() 
-	{
-		return id;
+	public String getTitle() {
+		return title;
 	}
-	public void setTitle(String title) 
-	{
+
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	public String getTitle() 
-	{
-		return title;
+	public String getContent() {
+		return content;
 	}
-	public void setContent(String content) 
-	{
+
+	public void setContent(String content) {
 		this.content = content;
 	}
 
-	public String getContent() 
-	{
-		return content;
+	public Integer getClickCount() {
+		return clickCount;
 	}
-	public void setClickCount(Integer clickCount) 
-	{
+
+	public void setClickCount(Integer clickCount) {
 		this.clickCount = clickCount;
 	}
 
-	public Integer getClickCount() 
-	{
-		return clickCount;
+	@Override
+	public String getCreateBy() {
+		return createBy;
 	}
-	public void setCreateBy(String createBy) 
-	{
+
+	@Override
+	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
 
-	public String getCreateBy() 
-	{
-		return createBy;
+	public Date getCreateDate() {
+		return createDate;
 	}
-	public void setCreateDate(Date createDate) 
-	{
+
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getCreateDate() 
-	{
-		return createDate;
+	@Override
+	public String getUpdateBy() {
+		return updateBy;
 	}
-	public void setUpdateBy(String updateBy) 
-	{
+
+	@Override
+	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
 
-	public String getUpdateBy() 
-	{
-		return updateBy;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
-	public void setUpdateDate(Date updateDate) 
-	{
+
+	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
 
-	public Date getUpdateDate() 
-	{
-		return updateDate;
+	@Override
+	public String getRemark() {
+		return remark;
 	}
-	public void setRemark(String remark) 
-	{
+
+	@Override
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 
-	public String getRemark() 
-	{
-		return remark;
-	}
-	public void setDelFlag(String delFlag) 
-	{
-		this.delFlag = delFlag;
+	public String getDelFlag() {
+		return delFlag;
 	}
 
-	public String getDelFlag() 
-	{
-		return delFlag;
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
 	}
 
 	public String getTid() {
@@ -165,87 +152,83 @@ public class Reply extends BaseEntity
 		this.tid = tid;
 	}
 
-	public void setRemark2(String remark2)
-	{
-		this.remark2 = remark2;
+	public Integer getZan() {
+		return zan;
 	}
 
-	public String getRemark2() 
-	{
-		return remark2;
+	public void setZan(Integer zan) {
+		this.zan = zan;
 	}
-	public void setRemark3(String remark3) 
-	{
+
+	public String getRemark3() {
+		return remark3;
+	}
+
+	public void setRemark3(String remark3) {
 		this.remark3 = remark3;
 	}
 
-	public String getRemark3() 
-	{
-		return remark3;
+	public String getRemark4() {
+		return remark4;
 	}
-	public void setRemark4(String remark4) 
-	{
+
+	public void setRemark4(String remark4) {
 		this.remark4 = remark4;
 	}
 
-	public String getRemark4() 
-	{
-		return remark4;
+	public String getRemark5() {
+		return remark5;
 	}
-	public void setRemark5(String remark5) 
-	{
+
+	public void setRemark5(String remark5) {
 		this.remark5 = remark5;
 	}
 
-	public String getRemark5() 
-	{
-		return remark5;
+	public String getRemark6() {
+		return remark6;
 	}
-	public void setRemark6(String remark6) 
-	{
+
+	public void setRemark6(String remark6) {
 		this.remark6 = remark6;
 	}
 
-	public String getRemark6() 
-	{
-		return remark6;
+	public String getRemark7() {
+		return remark7;
 	}
-	public void setRemark7(String remark7) 
-	{
+
+	public void setRemark7(String remark7) {
 		this.remark7 = remark7;
 	}
 
-	public String getRemark7() 
-	{
-		return remark7;
+	public String getRemark8() {
+		return remark8;
 	}
-	public void setRemark8(String remark8) 
-	{
+
+	public void setRemark8(String remark8) {
 		this.remark8 = remark8;
 	}
 
-	public String getRemark8() 
-	{
-		return remark8;
+	public String getRemark9() {
+		return remark9;
 	}
-	public void setRemark9(String remark9) 
-	{
+
+	public void setRemark9(String remark9) {
 		this.remark9 = remark9;
 	}
 
-	public String getRemark9() 
-	{
-		return remark9;
-	}
-	public void setRemark10(String remark10) 
-	{
-		this.remark10 = remark10;
-	}
-
-	public String getRemark10() 
-	{
+	public String getRemark10() {
 		return remark10;
 	}
 
+	public void setRemark10(String remark10) {
+		this.remark10 = remark10;
+	}
 
+	public SysUser getSysUser() {
+		return sysUser;
+	}
+
+	public void setSysUser(SysUser sysUser) {
+		this.sysUser = sysUser;
+	}
 }

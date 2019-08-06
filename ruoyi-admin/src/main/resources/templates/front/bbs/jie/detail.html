@@ -4,10 +4,10 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>Fly Template v3.0，基于 layui 的极简社区页面模版</title>
+  <title>甘肃电信NOC管理系统论坛</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="fly,layui,前端社区">
-  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+<!--  <meta name="keywords" content="fly,layui,前端社区">-->
+<!--  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">-->
   <link rel="stylesheet" th:href="@{/ajax/libs/bbs/res/layui/css/layui.css}">
   <link rel="stylesheet" th:href="@{/ajax/libs/bbs/res/css/global.css}">
 </head>
@@ -112,9 +112,9 @@
               <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
             </div>
             <div class="jieda-reply">
-              <span class="jieda-zan zanok" type="zan">
+              <span class="jieda-zan " type="zan">
                 <i class="iconfont icon-zan"></i>
-                <em>66</em>
+                <em th:text="${reply.zan}">66</em>
               </span>
               <span type="reply">
                 <i class="iconfont icon-svgmoban53"></i>

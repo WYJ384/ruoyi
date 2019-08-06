@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
         <result property="delFlag"    column="del_flag"    />
         <result property="tid"    column="tid"    />
-        <result property="remark2"    column="remark2"    />
+        <result property="zan"    column="zan"    />
         <result property="remark3"    column="remark3"    />
         <result property="remark4"    column="remark4"    />
         <result property="remark5"    column="remark5"    />
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	rep.remark,
 	rep.del_flag,
 	tid,
-	remark2,
+	rep.zan,
 	remark3,
 	remark4,
 	remark5,
@@ -57,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 FROM
 	bbs_reply rep
 INNER JOIN sys_user ON rep.create_by = sys_user.user_id
+
     </sql>
     <resultMap id="SysUserResult" type="SysUser">
         <id     property="userId"       column="user_id"      />
@@ -78,7 +79,7 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
              <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
              <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
              <if test="tid != null  and tid != '' "> and tid = #{tid}</if>
-             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
+             <if test="zan != null  and zan != '' "> and zan = #{zan}</if>
              <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
              <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
              <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
@@ -88,6 +89,7 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
              <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
              <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
          </where>
+        order  by zan desc ,rep.create_date desc
     </select>
     
     <select id="selectReplyById" parameterType="String" resultMap="ReplyResult">
@@ -109,7 +111,7 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
 			<if test="remark != null  and remark != ''  ">remark,</if>
 			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
 			<if test="tid != null  and tid != ''  ">tid,</if>
-			<if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+			<if test="zan != null  and zan != ''  ">zan,</if>
 			<if test="remark3 != null  and remark3 != ''  ">remark3,</if>
 			<if test="remark4 != null  and remark4 != ''  ">remark4,</if>
 			<if test="remark5 != null  and remark5 != ''  ">remark5,</if>
@@ -131,7 +133,7 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
 			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
 			<if test="tid != null  and tid != ''  ">#{tid},</if>
-			<if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+			<if test="zan != null  and zan != ''  ">#{zan},</if>
 			<if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
 			<if test="remark4 != null  and remark4 != ''  ">#{remark4},</if>
 			<if test="remark5 != null  and remark5 != ''  ">#{remark5},</if>
@@ -156,7 +158,7 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
             <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
             <if test="tid != null  and tid != ''  ">tid = #{tid},</if>
-            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="zan != null  and zan != ''  ">zan = #{zan},</if>
             <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
             <if test="remark4 != null  and remark4 != ''  ">remark4 = #{remark4},</if>
             <if test="remark5 != null  and remark5 != ''  ">remark5 = #{remark5},</if>
