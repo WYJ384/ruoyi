@@ -9,10 +9,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
-import com.ruoyi.worktask.domain.BasicMaintenance;
-import com.ruoyi.worktask.domain.SelfTask;
-import com.ruoyi.worktask.domain.SelfTaskProcess;
-import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.domain.*;
 import com.ruoyi.worktask.service.ISelfTaskProcessService;
 import com.ruoyi.worktask.service.ISelfTaskService;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
@@ -22,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -228,7 +226,27 @@ public class BasicMaintenanceController extends BaseController
 	{
 		return toAjax(selfTaskService.deleteSelfTaskByIds(ids));
 	}
+	@Log(title = "基础维护管理提升导入", businessType = BusinessType.IMPORT)
+	@RequiresPermissions("worktask:basicmaintenance:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file) throws Exception
+	{
+		ExcelUtil<BasicMaintenance> util = new ExcelUtil<BasicMaintenance>(BasicMaintenance.class);
+		List<BasicMaintenance> basicMaintenanceList = util.importExcel(file.getInputStream());
+		String operName = ShiroUtils.getSysUser().getUserId()+"";
+		String message = selfTaskService.importBasicmaintenance(basicMaintenanceList, operName);
+		return AjaxResult.success(message);
+	}
 
+	@RequiresPermissions("worktask:basicmaintenance:view")
+	@GetMapping("/importTemplate")
+	@ResponseBody
+	public AjaxResult importTemplate()
+	{
+		ExcelUtil<BasicMaintenance> util = new ExcelUtil<BasicMaintenance>(BasicMaintenance.class);
+		return util.importTemplateExcel("基础维护管理提升");
+	}
 }
 
 	

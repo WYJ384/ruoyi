@@ -49,7 +49,7 @@ public class Goodness extends BaseEntity
 	@Excel(name = "要求完成时间", prompt = "要求完成时间")
 	private Date requireTime;
 	/** 任务执行人 */
-	@Excel(name = "任务执行人", prompt = "任务执行人")
+	@Excel(name = "任务执行人,多个人直接用英文分号(;)分隔", prompt = "任务执行人,多个人直接用英文分号(;)分隔")
 	private String executorUser;
 	/** 任务验收人 */
 	@Excel(name = "任务验收人", prompt = "任务验收人")

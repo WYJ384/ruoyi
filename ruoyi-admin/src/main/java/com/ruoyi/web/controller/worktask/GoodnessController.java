@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.exam.domain.LibraryDetail;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -228,7 +230,27 @@ public class GoodnessController extends BaseController
 	{
 		return toAjax(selfTaskService.deleteSelfTaskByIds(ids));
 	}
+	@Log(title = "固优势补短板导入", businessType = BusinessType.IMPORT)
+	@RequiresPermissions("worktask:goodness:import")
+	@PostMapping("/importData")
+	@ResponseBody
+	public AjaxResult importData(MultipartFile file) throws Exception
+	{
+		ExcelUtil<Goodness> util = new ExcelUtil<Goodness>(Goodness.class);
+		List<Goodness> goodnessList = util.importExcel(file.getInputStream());
+		String operName = ShiroUtils.getSysUser().getUserId()+"";
+		String message = selfTaskService.importGoodness(goodnessList, operName);
+		return AjaxResult.success(message);
+	}
 
+	@RequiresPermissions("worktask:goodness:view")
+	@GetMapping("/importTemplate")
+	@ResponseBody
+	public AjaxResult importTemplate()
+	{
+		ExcelUtil<Goodness> util = new ExcelUtil<Goodness>(Goodness.class);
+		return util.importTemplateExcel("固优势补短板");
+	}
 }
 
 	

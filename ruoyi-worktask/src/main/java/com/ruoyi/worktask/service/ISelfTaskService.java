@@ -66,4 +66,20 @@ public interface ISelfTaskService
 	List<BasicMaintenance> basicmaintenanceTaskList(BasicMaintenance selfTask);
 
 	BasicMaintenance selectBasicMaintenanceTaskById(String id);
+
+	/**
+	 * 固优势补短板
+	 * @param goodnessList
+	 * @param operName
+	 * @return
+	 */
+	String importGoodness(List<Goodness> goodnessList, String operName);
+
+	/**
+	 * 基础维护管理提升
+	 * @param basicMaintenanceList
+	 * @param operName
+	 * @return
+	 */
+    String importBasicmaintenance(List<BasicMaintenance> basicMaintenanceList, String operName);
 }
