@@ -195,7 +195,11 @@ public class SelfTaskServiceImpl implements ISelfTaskService {
                 BeanUtils.copyProperties(basicMaintenance, selfTask);
                 selfTask.setSelvalTaskType("4");
                 selfTask.setTaskStatus("0");
+
                 String remark2 = selfTask.getRemark2();//责任部门
+                if(StringUtils.isEmpty(remark2)){
+                    continue;
+                }
                 SysDept dept=new SysDept();
                 dept.setDeptName(remark2);
                 List<SysDept> sysDepts = sysDeptService.selectDeptList(dept);

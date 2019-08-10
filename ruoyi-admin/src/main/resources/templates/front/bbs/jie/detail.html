@@ -141,7 +141,7 @@
               <a name="comment"></a>
               <div class="layui-input-block" id="divContent">
                 <textarea id="content" name="content" required lay-verify="required"
-                          placeholder="详细描述" class="layui-textarea"
+                          placeholder="详细描述"
                           style="height: 260px;"></textarea>
               </div>
             </div>
@@ -208,12 +208,12 @@
           这里可作为广告区域
         </div>
         <div class="fly-panel-main">
-          <a href="http://layim.layui.com/?from=fly" target="_blank" class="fly-zanzhu" time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">LayIM 3.0 - layui 旗舰之作</a>
+<!--          <a href="http://layim.layui.com/?from=fly" target="_blank" class="fly-zanzhu" time-limit="2017.09.25-2099.01.01" style="background-color: #5FB878;">LayIM 3.0 - layui 旗舰之作</a>-->
         </div>
       </div>
 
       <div class="fly-panel" style="padding: 20px 0; text-align: center;">
-        <img src="../../res/images/weixin.jpg" style="max-width: 100%;" alt="layui">
+        <img th:src="@{/ajax/libs/bbs/res/images/weixin.jpg}" style="max-width: 100%;" alt="layui">
         <p style="position: relative; color: #666;">微信扫码关注 layui 公众号</p>
       </div>
 
