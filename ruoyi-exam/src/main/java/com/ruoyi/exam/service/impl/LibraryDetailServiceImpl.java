@@ -96,10 +96,7 @@ public class LibraryDetailServiceImpl implements ILibraryDetailService {
             return trim;
         }
     }
-    public static void  main(String[] args){
-        String cbda = ASCIISort("CBDA");
-        System.out.println(cbda);
-    }
+
 
     @Override
     public String importLibraryDetail(List<LibraryDetail> libraryDetails, String libId, String operName) {
