@@ -1,6 +1,7 @@
 package com.ruoyi.web.frontcontroller.bbs;
 
 
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.bbs.domain.Reply;
 import com.ruoyi.bbs.domain.Topic;
 import com.ruoyi.bbs.service.IReplyService;
@@ -21,7 +22,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 主贴 信息操作处理
@@ -55,11 +58,16 @@ public class FTopicController extends FBaseController
 //	@RequiresPermissions("bbs:topic:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(Topic topic)
+	public Map list(Topic topic)
 	{
+		Map result = new HashMap();
+		topic.setCreateBy(ShiroUtils.getSysUser().getUserId()+"");
 		startPage();
         List<Topic> list = topicService.selectTopicList(topic);
-		return getDataTable(list);
+        result.put("code",0);
+        result.put("data",list);
+        result.put("count",new PageInfo(list).getTotal());
+		return result;
 	}
 	
 	

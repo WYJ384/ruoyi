@@ -74,7 +74,7 @@ INNER JOIN sys_user ON topic.create_by = sys_user.user_id
              <if test="title != null  and title != '' "> and title = #{title}</if>
              <if test="content != null  and content != '' "> and content = #{content}</if>
              <if test="clickCount != null "> and click_count = #{clickCount}</if>
-             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createBy != null  and createBy != '' "> and topic.create_by = #{createBy}</if>
              <if test="createDate != null "> and create_date = #{createDate}</if>
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
              <if test="updateDate != null "> and update_date = #{updateDate}</if>
