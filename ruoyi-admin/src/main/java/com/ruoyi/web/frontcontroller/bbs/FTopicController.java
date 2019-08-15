@@ -96,7 +96,7 @@ public class FTopicController extends FBaseController
 
 	@GetMapping("/jieIndex")
 	public String jieIndex(Topic topic,@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum ,
-						   @RequestParam(name = "pageSize",defaultValue = "2")  Integer pageSize,ModelMap modelMap)
+						   @RequestParam(name = "pageSize",defaultValue = "8")  Integer pageSize,ModelMap modelMap)
 	{
 		PageHelper.startPage(pageNum, pageSize);
 		List<Topic> list = topicService.selectTopicList(topic);
