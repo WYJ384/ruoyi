@@ -4,14 +4,17 @@ package com.ruoyi.web.frontcontroller.bbs;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.bbs.domain.Reply;
+import com.ruoyi.bbs.domain.Section;
 import com.ruoyi.bbs.domain.Topic;
 import com.ruoyi.bbs.service.IReplyService;
+import com.ruoyi.bbs.service.ISectionService;
 import com.ruoyi.bbs.service.ITopicService;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.NOCStringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
@@ -42,7 +45,8 @@ public class FTopicController extends FBaseController
 	private IReplyService replyService;
 	@Autowired
 	private ITopicService topicService;
-	
+	@Autowired
+	private ISectionService sectionService;
 	@GetMapping("/index")
 	public String topic(Topic topic,Integer pageSize,Integer pageNum,ModelMap modelMap)
 	{
@@ -89,8 +93,11 @@ public class FTopicController extends FBaseController
 	 * 新增主贴
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap modelMap)
 	{
+		Section section=new Section();
+		List<Section> sections = sectionService.selectSectionList(section);
+
 	    return prefix + "/jie/add";
 	}
 
@@ -102,6 +109,9 @@ public class FTopicController extends FBaseController
 		List<Topic> list = topicService.selectTopicList(topic);
 		PageInfo<Topic> pageInfo=new PageInfo<Topic>(list);
 		modelMap.addAttribute("pageInfo",pageInfo);
+
+		modelMap.addAttribute("topic",topic);
+
 		return prefix + "/jie/index";
 	}
 	@GetMapping("/jieDetail/{id}")

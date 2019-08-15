@@ -1,9 +1,11 @@
-
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <div class="fly-panel fly-column" th:fragment="column">
   <div class="layui-container">
     <ul class="layui-clear">
-      <li class="layui-hide-xs"><a href="/f/bbs/topic/index">首页</a></li>
-      <li th:each="secion:${session.sections}"><a href="" th:text="${secion.name}">提问</a></li>
+      <li class="layui-hide-xs" th:classappend="${topic.sid eq ''} ?'layui-this':''"><a href="/f/bbs/topic/index" >首页</a></li>
+      <li th:each="section:${session.sections}"  th:classappend="${topic.sid==section.id} ?'layui-this':''"><a th:href="${'/f/bbs/topic/jieIndex?sid='+section.id}" th:text="${section.name}"
+
+                                                   >提问</a></li>
 
       <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
 

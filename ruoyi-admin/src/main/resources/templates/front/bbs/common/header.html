@@ -38,10 +38,10 @@
       <!-- 登入后的状态 -->
       <li class="layui-nav-item">
         <a class="fly-nav-avatar" href="javascript:;">
-          <cite class="layui-hide-xs" th:text="${session.sysUser.userName}">贤心</cite>
+          <cite class="layui-hide-xs" th:text="${session.sysUser!=null?session.sysUser.userName:''}">贤心</cite>
           <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
 <!--          <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>-->
-          <img   th:src="@{'/profile/avatar/'+${session.sysUser.avatar}}" th:alt="${session.sysUser.userName}">
+          <img   th:src="@{'/profile/avatar/'+${session.sysUser!=null?session.sysUser.avatar:''}}" th:alt="${session.sysUser!=null?session.sysUser.userName:''}">
         </a>
         <dl class="layui-nav-child">
           <dd><a href="/f/bbs/user/set"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
