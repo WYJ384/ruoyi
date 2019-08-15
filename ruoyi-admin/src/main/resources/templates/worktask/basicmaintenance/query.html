@@ -85,16 +85,16 @@
             </div>
         </div>
 
+<!--        <div class="form-group layui-hide">-->
+<!--            <label class="col-sm-3 control-label">优先级：</label>-->
+<!--            <div class="col-sm-8">-->
+<!--                <span class="form-control" th:if="${selfTask.priority eq '0'}">高</span>-->
+<!--                <span class="form-control" th:if="${selfTask.priority eq '1'}">中</span>-->
+<!--                <span class="form-control" th:if="${selfTask.priority eq '2'}">低</span>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="form-group">
-            <label class="col-sm-3 control-label">优先级：</label>
-            <div class="col-sm-8">
-                <span class="form-control" th:if="${selfTask.priority eq '0'}">高</span>
-                <span class="form-control" th:if="${selfTask.priority eq '1'}">中</span>
-                <span class="form-control" th:if="${selfTask.priority eq '2'}">低</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">任务描述：</label>
+            <label class="col-sm-3 control-label">当月完成情况：</label>
             <div class="col-sm-8">
                 <span th:utext="*{taskContent}"> </span>
             </div>

@@ -134,11 +134,11 @@
                         return actions.join('');
                     }
                 },
-                {
-                    field: 'startDate',
-                    title: '开始时间',
-                    sortable: true
-                },
+                // {
+                //     field: 'startDate',
+                //     title: '开始时间',
+                //     sortable: true
+                // },
                 {
                     field: 'requireTime',
                     title: '要求完成时间',
@@ -178,7 +178,8 @@
                         } else if (value == 2) {
                             return "低"
                         }
-                    }
+                    },
+                    visible: false
                 },
 
                 {
