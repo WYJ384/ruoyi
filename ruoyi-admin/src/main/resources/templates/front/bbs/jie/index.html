@@ -1,18 +1,18 @@
  
  
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>甘肃电信NOC管理系统论坛</title>
+  <title>基于 layui 的极简社区页面模版</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<!--  <meta name="keywords" content="fly,layui,前端社区">-->
-<!--  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">-->
+  <meta name="keywords" content="fly,layui,前端社区">
+  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
   <link rel="stylesheet" th:href="@{/ajax/libs/bbs/res/layui/css/layui.css}">
   <link rel="stylesheet" th:href="@{/ajax/libs/bbs/res/css/global.css}">
 </head>
 <body>
+
 <div class="fly-header layui-bg-black"  th:include="front/bbs/common/header::header"></div>
 <div class="fly-panel fly-column"  th:include="front/bbs/common/column::column">
 </div>
@@ -37,26 +37,27 @@
           </span>
         </div>
 
-        <ul class="fly-list" id="articleList">
-          <li>
+        <ul class="fly-list">          
+          <li th:each="topic:${pageInfo.list}">
             <a href="user/home.html" class="fly-avatar">
-              <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
+              <img   th:src="@{'/profile/avatar/'+${topic.sysUser.avatar}}" th:alt="${topic.sysUser.userName}">
+
             </a>
             <h2>
               <a class="layui-badge">分享</a>
-              <a href="/f/bbs/topic/jieDetail">基于 layui 的极简社区页面模版</a>
+              <a href="detail.html" th:text="${topic.title}">基于 layui 的极简社区页面模版</a>
             </h2>
             <div class="fly-list-info">
               <a href="user/home.html" link>
-                <cite>贤心</cite>
+                <cite th:text="${topic.sysUser.userName}" >贤心</cite>
                 <!--
                 <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
                 <i class="layui-badge fly-badge-vip">VIP3</i>
                 -->
               </a>
-              <span>刚刚</span>
+              <span th:text="${#dates.format(topic.createDate,'yyyy-MM-dd HH:mm')}">2017-11-30</span>
               
-              <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+<!--              <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>-->
               <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
               <span class="fly-list-nums"> 
                 <i class="iconfont icon-pinglun1" title="回答"></i> 66
@@ -67,50 +68,22 @@
               <!--<span class="layui-badge layui-bg-red">精帖</span>-->
             </div>
           </li>
-          <li>
-            <a href="user/home.html" class="fly-avatar">
-              <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
-            </a>
-            <h2>
-              <a class="layui-badge">动态</a>
-              <a href="/f/bbs/topic/jieDetail">基于 layui 的极简社区页面模版</a>
-            </h2>
-            <div class="fly-list-info">
-              <a href="user/home.html" link>
-                <cite>贤心</cite>
-                <!--<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>-->
-                <i class="layui-badge fly-badge-vip">VIP3</i>
-              </a>
-              <span>刚刚</span>
-              
-              <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
-              <span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>
-              <span class="fly-list-nums"> 
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-            </div>
-            <div class="fly-list-badge">
-              <span class="layui-badge layui-bg-red">精帖</span>
-            </div>
-          </li>
 
         </ul>
         
         <!-- <div class="fly-none">没有相关数据</div> -->
     
         <div style="text-align: center">
-          <div >
-<!--            <span class="laypage-curr">1</span>-->
-<!--            <a href="/jie/page/2/">2</a>-->
-<!--            <a href="/jie/page/3/">3</a>-->
-<!--            <a href="/jie/page/4/">4</a>-->
-<!--            <a href="/jie/page/5/">5</a>-->
-<!--            <span>…</span>-->
-<!--            <a href="/jie/page/148/" class="laypage-last" title="尾页">尾页</a>-->
-<!--            <a href="/jie/page/2/" class="laypage-next">下一页</a>-->
+          <div class="laypage-main">
+            <a  th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.prePage}" th:if="${pageInfo.hasPreviousPage}" class="laypage-prev">上一页</a>
+            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateFirstPage}" class="laypage-first" title="首页">首页</a>
+            <!--            <span class="laypage-curr">1</span>-->
+            <a th:each="num:${pageInfo.navigatepageNums}"
+               th:classappend="${pageInfo.pageNum==num}?'laypage-curr'" th:href="${'/f/bbs/topic/jieIndex?pageNum='+num}" th:text="${num}">2</a>
 
+            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateLastPage}" class="laypage-last" title="尾页">尾页</a>
+            <a  th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.nextPage}" th:if="${pageInfo.hasNextPage}" class="laypage-next">下一页</a>
           </div>
-          <ul  class="laypage-main pagination" id="pagination0" ></ul>
         </div>
 
       </div>
@@ -118,46 +91,46 @@
     <div class="layui-col-md4">
       <dl class="fly-panel fly-list-one">
         <dt class="fly-panel-title">本周热议</dt>
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
-<!--        <dd>-->
-<!--          <a href="">基于 layui 的极简社区页面模版</a>-->
-<!--          <span><i class="iconfont icon-pinglun1"></i> 16</span>-->
-<!--        </dd>-->
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
 
         <!-- 无数据时 -->
         <!--
@@ -192,116 +165,6 @@
 <div class="fly-footer" th:include="front/bbs/common/footer::footer">
 
 </div>
-
-<script id="articleTpl" type="text/html">
-  {{each rows topic}}
-
-  <li>
-    <a href="user/home.html" class="fly-avatar">
-      <img   src="{{'/profile/avatar/'+topic.sysUser.avatar}}" >
-    </a>
-    <h2>
-      <a class="layui-badge">分享</a>
-      <a href="/f/bbs/topic/jieDetail/{{topic.id}}">{{topic.title}}</a>
-    </h2>
-    <div class="fly-list-info">
-      <a href="user/home.html" link>
-        <cite  >{{topic.sysUser.userName}}</cite>
-      </a>
-      <span>刚刚</span>
-
-<!--      <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>-->
-      <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-              </span>
-    </div>
-<!--    <div class="fly-list-badge">-->
-<!--      <span class="layui-badge layui-bg-black">置顶</span>-->
-<!--    </div>-->
-  </li>
-  {{/each}}
-</script>
-<div th:include="include::footer"></div>
-<script th:src="@{/js/template-web.js}"></script>
-<script th:src="@{/js/jq-paginator.js}"></script>
-<script th:src="@{/ajax/libs/bbs/res/layui/layui.js}"></script>
-<script>
-  layui.cache.page = 'jie';
-  layui.cache.user = {
-    username: '游客'
-    ,uid: -1
-    ,avatar: '/ajax/libs/bbs/res/images/avatar/00.jpg'
-    ,experience: 83
-    ,sex: '男'
-  };
-  layui.config({
-    version: "3.0.0"
-    ,base: '/ajax/libs/bbs//res/mods/'
-  }).extend({
-    fly: 'index'
-  }).use('fly');
-  $(function () {
-    loadArticleList(1);
-  });
-  function loadArticleList(num) {
-    var pageSize = 6;
-    var config = {
-      url: ctx + "f/bbs/topic/list",
-      type: "post",
-      dataType: "json",
-      data: {
-        pageSize: pageSize,
-        pageNum: num,
-        // categoryId: $("#categoryId").val(),
-        // keywords: $("#keywords").val(),
-
-      },
-      beforeSend: function () {
-        $.modal.loading("正在处理中，请稍后...");
-        $.modal.disable();
-      },
-      success: function (result) {
-        $("#articleList").html(template("articleTpl", result));
-        if (result.total == 0) {
-          display_pages(parseInt(1), 5, num);
-        } else {
-          var total_pages = (result.total + pageSize - 1) / pageSize;
-          display_pages(parseInt(total_pages), 5, num);
-        }
-
-        $.modal.closeLoading();
-        $.modal.enable();
-      }
-    };
-    $.ajax(config)
-  }
-  function display_pages(total_pages, visible_pages, current_page) {
-    // if(!visible_pages){
-    //     visible_pages = 5;
-    // }
-    // if(!current_page){
-    //     current_page = 1;
-    // }
-    $.jqPaginator('#pagination0', {
-      totalPages: total_pages,
-      visiblePages: visible_pages,
-      currentPage: current_page,
-      first: '<li class="first"><a href="javascript:;">首页</a></li>',
-      prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
-      next: '<li class="next"><a href="javascript:;">下一页</a></li>',
-      last: '<li class="last"><a href="javascript:;">末页</a></li>',
-      page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-      onPageChange: function (num, type) {
-        if (num != current_page) {
-          loadArticleList(num);
-          $('#text').html('当前第' + num + '页');
-        }
-      }
-    });
-
-
-  }
-</script>
 
 </body>
 </html>

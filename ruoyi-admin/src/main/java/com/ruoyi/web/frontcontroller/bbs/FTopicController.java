@@ -1,6 +1,7 @@
 package com.ruoyi.web.frontcontroller.bbs;
 
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.bbs.domain.Reply;
 import com.ruoyi.bbs.domain.Topic;
@@ -94,8 +95,13 @@ public class FTopicController extends FBaseController
 	}
 
 	@GetMapping("/jieIndex")
-	public String jieIndex()
+	public String jieIndex(Topic topic,@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum ,
+						   @RequestParam(name = "pageSize",defaultValue = "2")  Integer pageSize,ModelMap modelMap)
 	{
+		PageHelper.startPage(pageNum, pageSize);
+		List<Topic> list = topicService.selectTopicList(topic);
+		PageInfo<Topic> pageInfo=new PageInfo<Topic>(list);
+		modelMap.addAttribute("pageInfo",pageInfo);
 		return prefix + "/jie/index";
 	}
 	@GetMapping("/jieDetail/{id}")
