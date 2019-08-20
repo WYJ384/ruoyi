@@ -69,11 +69,13 @@ public class LibraryDetail extends BaseEntity
 	/** 题库 */
 	private String libId;
 	@Excel(name = "答案数量", prompt = "答案数量")
-	/** 扩展1 */
+	/** 答案数量 */
 	private String remark1;
-	/** 扩展2 */
+	@Excel(name = "难易", prompt = "难易")
+	/** 难易 */
 	private String remark2;
-	/** 扩展3 */
+	@Excel(name = "知识点", prompt = "知识点")
+	/** 知识点 */
 	private String remark3;
 	/** 扩展4 */
 	private String remark4;
