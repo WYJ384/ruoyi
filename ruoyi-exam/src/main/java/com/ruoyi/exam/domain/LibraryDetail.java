@@ -77,7 +77,8 @@ public class LibraryDetail extends BaseEntity
 	@Excel(name = "知识点", prompt = "知识点")
 	/** 知识点 */
 	private String remark3;
-	/** 扩展4 */
+	@Excel(name = "专业", prompt = "专业")
+	/** 专业 */
 	private String remark4;
 	/** 扩展5 */
 	private String remark5;

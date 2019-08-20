@@ -30,18 +30,38 @@
             <form id="formId">
                 <input type="hidden" id="libId" name="libId"/>
                 <div class="select-list">
+
                     <ul>
                         <li>
                             题目：<input type="text" name="title"/>
                         </li>
                         <li>
+                            专业：<input type="text" name="remark4"/>
+                        </li>
+                        <li>
+                            知识点：<input type="text" name="remark3"/>
+                        </li>
+
+                        <li>
                             类型：
                             <select name="libType" id="libType">
+                                <option value=""></option>
+
                                 <option value="1">单选题</option>
                                 <option value="2">多选题</option>
                                 <option value="3">填空题</option>
                                 <option value="4">判断</option>
                                 <option value="5">简答题</option>
+
+                            </select>
+                        </li>
+                        <li>
+                            难易度：
+                            <select name="remark2" id="remark2">
+                                <option value=""></option>
+                                <option value="难">难</option>
+                                <option value="中">中</option>
+                                <option value="易">易</option>
 
                             </select>
                         </li>

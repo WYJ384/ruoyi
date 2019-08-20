@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="libId != null  and libId != '' "> and lib_id = #{libId}</if>
              <if test="remark1 != null  and remark1 != '' "> and remark1 = #{remark1}</if>
              <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
-             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
+             <if test="remark3 != null  and remark3 != '' "> and remark3 like concat('%', #{remark3}, '%')</if>
              <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
              <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
              <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>

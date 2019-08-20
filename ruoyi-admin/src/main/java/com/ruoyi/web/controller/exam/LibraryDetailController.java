@@ -61,6 +61,7 @@ public class LibraryDetailController extends BaseController
 	public TableDataInfo list(LibraryDetail libraryDetail)
 	{
 		startPage();
+		libraryDetail.setCreateBy(ShiroUtils.getUserId()+"");
         List<LibraryDetail> list = libraryDetailService.selectLibraryDetailList(libraryDetail);
 		return getDataTable(list);
 	}
