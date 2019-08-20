@@ -18,13 +18,12 @@ public class LibraryDetail extends BaseEntity
 	
 	/** 单选题ID */
 	private String id;
-	@Excel(name = "题型", prompt = "题型")
+	@Excel(name = "题型", prompt = "题型（单选题、多选题、判断题、填空题、简答题）")
 	/** 题型 */
 	private String libType;
 	@Excel(name = "题目", prompt = "题目")
 	/** 题目 */
 	private String title;
-
 	/** 选项A */
 	@Excel(name = "选项A", prompt = "选项A")
 	private String choiceA;
@@ -69,6 +68,7 @@ public class LibraryDetail extends BaseEntity
 	private String delFlag;
 	/** 题库 */
 	private String libId;
+	@Excel(name = "答案数量", prompt = "答案数量")
 	/** 扩展1 */
 	private String remark1;
 	/** 扩展2 */
