@@ -15,10 +15,10 @@
 							</li>
 
 							<li>
-								开始时间：<input type="text" name="meetingBeginTime"/>
+								开始时间：<input type="text" name="meetingBeginTime" id="meetingBeginTime"/>
 							</li>
 							<li>
-								结束时间：<input type="text" name="meetingEndTime"/>
+								结束时间：<input type="text" name="meetingEndTime" id="meetingEndTime"/>
 							</li>
 
 							<li>
@@ -67,6 +67,41 @@
         var removeFlag = [[${@permission.hasPermi('meeting:meetingRecord:remove')}]];
         var prefix = ctx + "meeting/meetingRecord";
 
+		$("#jobSummForm").validate({
+			//非空验证
+			rules: {
+				meetingBeginTime: {
+					required: true,
+				},
+				meetingEndTime: {
+					required: true,
+				},
+			},
+			focusCleanup: true,
+
+		});
+
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			var meetingBeginTime = laydate.render({
+				elem: '#meetingBeginTime',
+				theme: 'molv',
+				<!-- 设置endTime控件可允许选择的最小值 -->
+				done: function (value, dates){
+					meetingEndTime.config.min = {
+						year:dates.year,
+						month:dates.month-1,
+						date:dates.date
+					}
+				},
+			});
+
+			var meetingEndTime = laydate.render({
+				elem: '#meetingEndTime',
+				theme: 'molv',
+			});
+		});
+
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -84,11 +119,11 @@
 					title : '主键',
 					visible: false
 				},
-					// {
-					// 	field : 'dept',
-					// 	title : '主办单位',
-					// 	sortable: true
-					// },
+					{
+						field : 'dept',
+						title : '主办单位',
+						sortable: true
+					},
 					{
 						field : 'meetingSubject',
 						title : '会议主题',

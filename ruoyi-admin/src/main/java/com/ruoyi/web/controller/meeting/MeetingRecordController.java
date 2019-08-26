@@ -62,6 +62,7 @@ public class MeetingRecordController extends BaseController
 	{
 		startPage();
 		meetingRecord.setCreatedBy(ShiroUtils.getUserId()+"");
+		meetingRecord.setSubmitPerson(ShiroUtils.getUserId()+"");
         List<MeetingRecord> list = meetingRecordService.selectMeetingRecordList(meetingRecord);
 		return getDataTable(list);
 	}

@@ -106,7 +106,6 @@ public class ExamController extends BaseController
 	@GetMapping("/examUser/{id}")
 	public String examUser(@PathVariable("id") String id, ModelMap mmap)
 	{
-
 		mmap.addAttribute("id",id);
 		return prefix + "/examUser";
 	}

@@ -50,7 +50,7 @@ public class PaperController extends BaseController {
 
     @RequiresPermissions("exam:paper:view")
     @GetMapping()
-    public String paper() { return prefix + "/paper"; }
+    public String paper(  ) { return prefix + "/paper"; }
 
     /**
      * 查询试卷列表

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/html">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
@@ -13,25 +13,25 @@
 				</div>
 			</div>-->
 
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">创建时间：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user" th:text="${#dates.format(jobsummary.createDate,'yyyy-MM-dd HH:mm')}"></span>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">开始时间：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user"  th:text="${#dates.format(jobsummary.stratTime,'yyyy-MM-dd HH:mm:ss')}"></span>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">结束时间：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user"  th:text="${#dates.format(jobsummary.endTime,'yyyy-MM-dd HH:mm:ss')}"></span>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">工作总结类型：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user" th:if="${jobsummary.jobType eq '1'}">周报</span>
@@ -40,25 +40,25 @@
 					</select>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">工作内容：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user"  th:utext="*{jobContent}" ></span>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">工作总结：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user"  th:utext="*{jobSumm}" ></span>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">工作计划：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user"  th:utext="*{jobPlan}" ></span>
 				</div>
 			</div>
-			<div class="form-group">	
+			<div class="form-group">
 				<label class="col-sm-3 control-label">备注信息：</label>
 				<div class="col-sm-8">
 					<span class="task-pitems-user"  th:utext="*{remark}" ></span>

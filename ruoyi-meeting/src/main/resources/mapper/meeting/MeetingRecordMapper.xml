@@ -27,15 +27,14 @@
     <select id="selectMeetingRecordList" parameterType="MeetingRecord" resultMap="MeetingRecordResult">
         <include refid="selectMeetingRecordVo"/>
         <where>
+            <if test="submitPerson != null  and submitPerson != '' and createdBy!= null  and createdBy != '' " > and submit_person = #{submitPerson}  or  created_by = #{createdBy}</if>
             <if test="id != null  and id != '' "> and id = #{id}</if>
-            <if test="dept != null  and dept != '' "> and dept = #{dept}</if>
-            <if test="meetingSubject != null  and meetingSubject != '' "> and meeting_subject = #{meetingSubject}</if>
-            <if test="meetingBeginTime != null "> and meeting_begin_time = #{meetingBeginTime}</if>
-            <if test="meetingEndTime != null "> and meeting_end_time = #{meetingEndTime}</if>
+            <if test="dept != null  and dept != '' "> and dept like concat('%',#{dept},'%') </if>
+            <if test="meetingSubject != null  and meetingSubject != '' "> and meeting_subject like concat('%', #{meetingSubject}, '%')</if>
+            <if test="meetingBeginTime != null "> and meeting_begin_time  >= #{meetingBeginTime}</if>
+            <if test="meetingEndTime != null "> and meeting_end_time <![CDATA[<=]]> #{meetingEndTime}</if>
             <if test="meetingContent != null  and meetingContent != '' "> and meeting_content = #{meetingContent}</if>
-            <if test="submitPerson != null  and submitPerson != '' "> and submit_person = #{submitPerson}</if>
             <if test="recorder != null  and recorder != '' "> and recorder = #{recorder}</if>
-            <if test="createdBy != null  and createdBy != '' "> and created_by = #{createdBy}</if>
             <if test="createdTime != null "> and created_time = #{createdTime}</if>
             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
             <if test="updatedTime != null "> and updated_time = #{updatedTime}</if>
