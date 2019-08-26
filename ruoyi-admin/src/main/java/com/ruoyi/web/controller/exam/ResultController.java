@@ -1,9 +1,6 @@
 package com.ruoyi.web.controller.exam;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.exam.domain.*;
@@ -138,6 +135,9 @@ public class ResultController extends BaseController {
                     score+=Double.valueOf(question.getRemark4());
                 }
             }
+            if(libraryDetail.getLibType().equals("3")){
+                userAnswer = StringUtils.join(parameterMap.get(key),";");
+            }
 
             strResult+=key+":"+userAnswer+":"+question.getRemark4();
             if(i<parameterMap.size()-2){
@@ -152,7 +152,6 @@ public class ResultController extends BaseController {
         result.setScore(score);
         result.setQuestionAnwser(strResult);
 		resultService.insertResult(result);
-
 
         ExamUser examUser=new ExamUser();
         examUser.setUserId(ShiroUtils.getUserId()+"");

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<style type="text/css">
+    .title{
+        background: rgb(247,247,247);
+        line-height: 30px;
+    }
+</style>
+<head th:include="include :: header"></head>
+
+<body >
+<div class="container-div form-horizontal m">
+    <div class="row">
+        <div class="search-collapse" style="padding: 40px;background: #fff">
+            <ul>
+                <li th:each="question,questionStat:${paperQuestions}">
+
+                    <div class="title">
+                         <span th:if="${question.libraryDetail.libType eq '1'}"
+                               style="background: rgb(226,237,247);color:rgb(51,153,255) ">单选题</span>
+                        <span th:if="${question.libraryDetail.libType eq '2'}"
+                              style="background: rgb(226,237,247);color: rgb(119,187,17)">多选题</span>
+                        <span th:if="${question.libraryDetail.libType eq '3'}"
+                              style="background: rgb(226,237,247);color: rgb(119,187,17)">填空题</span>
+                        <span th:if="${question.libraryDetail.libType eq '4'}"
+                              style="background: #fff;color: rgb(255,102,0)">判断题</span>
+                        <span th:if="${question.libraryDetail.libType eq '5'}"
+                              style="background: #fff;color: rgb(255,102,0)">简答题</span>
+                        <h4 style="display: inline-block"
+                            th:text="${(questionStat.index+1)+'.'+question.libraryDetail.title}"></h4>
+                        <h4 style="display: inline-block" th:text="${question.remark4+'（分）'}"></h4>
+                    </div>
+<!--                    <span th:text="${}"></span>-->
+                    <span th:if="${question.libraryDetail.libType eq '1'}"></span>
+                    <ul th:if="${question.libraryDetail.libType eq '1'}">
+                        <li>
+                            <h5>A-<input type="radio"  th:name="${question.questionId}" th:text="${question.libraryDetail.choiceA}" th:checked="${question.libraryDetail.answer eq 'A'}" value="A"></h5>
+                            <h5>B-<input type="radio" th:name="${question.questionId}" th:text="${question.libraryDetail.choiceB}"  th:checked="${question.libraryDetail.answer eq 'B'}" value="B"></h5>
+                            <h5>C-<input type="radio" th:name="${question.questionId}" th:text="${question.libraryDetail.choiceC}" th:checked="${question.libraryDetail.answer eq 'C'}" value="C"></h5>
+                            <h5 th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}">D-<input type="radio" th:checked="${question.libraryDetail.answer eq 'D'}" th:name="${question.questionId}" value="D"  th:text="${question.libraryDetail.choiceD}"></h5>
+                            <h5 th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}" >E-<input type="radio" th:checked="${question.libraryDetail.answer eq 'E'}" th:name="${question.questionId}"  value="E" th:text="${question.libraryDetail.choiceE}"></h5>
+                            <h5  th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" >F-<input type="radio" th:checked="${question.libraryDetail.answer eq 'F'}" th:name="${question.questionId}"  value="F" th:text="${question.libraryDetail.choiceF}"></h5>
+                        </li>
+                    </ul>
+                    <ul th:if="${question.libraryDetail.libType eq '2'}">
+                        <li>
+                            <h5>A-<input type="checkbox" th:checked="${question.libraryDetail.answer.contains('A') }"    th:name="${question.questionId}"  value="A" th:text="${question.libraryDetail.choiceA}"></h5>
+                            <h5>B-<input type="checkbox"  th:checked="${question.libraryDetail.answer.contains('B') }"   th:name="${question.questionId}"   value="B" th:text="${question.libraryDetail.choiceB}"></h5>
+                            <h5>C-<input type="checkbox"  th:checked="${question.libraryDetail.answer.contains('C') }"   th:name="${question.questionId}"    value="C" th:text="${question.libraryDetail.choiceC}"></h5>
+                            <h5 th:if="${question.libraryDetail.choiceD!='' && question.libraryDetail.choiceD!=null}" >D-<input type="checkbox"  th:checked="${question.libraryDetail.answer.contains('D') }"  th:name="${question.questionId}" value="D" th:text="${question.libraryDetail.choiceD}"></h5>
+                            <h5  th:if="${question.libraryDetail.choiceE!='' && question.libraryDetail.choiceE!=null}">E-<input type="checkbox"  th:checked="${question.libraryDetail.answer.contains('E') }"  th:name="${question.questionId}"  value="E" th:text="${question.libraryDetail.choiceE}"></h5>
+                            <h5 th:if="${question.libraryDetail.choiceF!='' && question.libraryDetail.choiceF!=null}" >F-<input type="checkbox" th:name="${question.questionId}"  th:checked="${question.libraryDetail.answer.contains('F') }"   value="F" th:text="${question.libraryDetail.choiceF}"></h5>
+                        </li>
+                    </ul>
+                    <ul th:if="${question.libraryDetail.libType eq '3'}">
+                        <li>
+                            <h5 th:each="dayCyc : ${#numbers.sequence(1,question.libraryDetail.remark1)}">
+                                <input type="text" style="width: 50%" th:name="${question.questionId}" th:value="${question.libraryDetail.answer}">
+                            </h5>
+                        </li>
+                    </ul>
+                    <ul th:if="${question.libraryDetail.libType eq '4'}">
+                        <li>
+                            <h5>A-<input type="radio"  th:checked="${question.libraryDetail.answer eq 'A'}" th:name="${question.questionId}"  th:text="${question.libraryDetail.choiceA}"></h5>
+                            <h5>B-<input type="radio"  th:checked="${question.libraryDetail.answer eq 'B'}" th:name="${question.questionId}" th:text="${question.libraryDetail.choiceB}"></h5>
+                        </li>
+                    </ul>
+                    <ul th:if="${question.libraryDetail.libType eq '5'}">
+                        <li>
+                            <h5>
+                                <textarea rows="10" cols="80" th:text="${question.libraryDetail.answer}"></textarea>
+                            </h5>
+                        </li>
+                    </ul>
+<!--                    <div>-->
+<!--                        <div class="btn-group-sm" id="toolbar" role="group">-->
+<!--&lt;!&ndash;                            <a class="btn btn-success" >&ndash;&gt;-->
+<!--&lt;!&ndash;                                <i class="fa fa-plus"></i> 添加&ndash;&gt;-->
+<!--&lt;!&ndash;                            </a>&ndash;&gt;-->
+<!--                            <input type="number"  th:value="${question.remark4}" th:id="${question.questionId}">-->
+<!--                            <a class="btn btn-primary btn-edit " th:onclick="updateScore([[${question.questionId}]],[[${question.examPaperId}]])">-->
+<!--                                <i class="fa fa-edit"></i> 保存分值-->
+<!--                            </a>-->
+<!--                            <a class="btn btn-danger btn-del btn-del "  th:onclick="deleteQuestion([[${question.questionId}]],[[${question.examPaperId}]])">-->
+<!--                                <i class="fa fa-remove"></i> 删除-->
+<!--                            </a>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+
+</body>
+</html>
