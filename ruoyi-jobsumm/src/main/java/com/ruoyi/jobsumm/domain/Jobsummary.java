@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
 import java.util.Date;
+import com.ruoyi.common.annotation.Excel;
 
 /**
  * 工作总结表 jobsummary
@@ -20,24 +21,33 @@ public class Jobsummary extends BaseEntity
 	/** 创建者 */
 	private String createBy;
 	/** 创建时间 */
+	@Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
 	private Date createDate;
 	/** 开始时间 */
+	@Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
 	private Date stratTime;
 	/** 结束时间 */
+	@Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
 	private Date endTime;
 	/** 总结类型 1：周报、2：月报、3：年报 */
+	@Excel(name = "总结类型", readConverterExp = "1=周报,2=月报,3=年报")
 	private String jobType;
 	/** 工作内容 */
+	@Excel(name = "工作内容")
 	private String jobContent;
 	/** 工作总结 */
+	@Excel(name = "工作总结")
 	private String jobSumm;
 	/** 工作计划 */
+	@Excel(name = "工作计划")
 	private String jobPlan;
 	/** 提交人 */
+	@Excel(name = "提交人")
 	private String submitBy;
 	/** 总结验收人 */
 	private String acceptorUser;
 	/** 备注信息 */
+	@Excel(name = "备注")
 	private String remark;
 	/** 更新者 */
 	private String updateBy;

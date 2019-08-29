@@ -147,7 +147,10 @@ public class FTopicController extends FBaseController
 	{
 		Topic topic = topicService.selectTopicById(id);
 		mmap.put("topic", topic);
-	    return prefix + "/edit";
+		Section section=new Section();
+		List<Section> sections = sectionService.selectSectionList(section);
+		mmap.put("section",section);
+	    return prefix + "/jie/edit";
 	}
 	
 	/**
@@ -158,7 +161,9 @@ public class FTopicController extends FBaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Topic topic)
-	{		
+	{
+		topic.setUpdateDate(new Date());
+		topic.setUpdateBy(ShiroUtils.getUserId()+"");
 		return toAjax(topicService.updateTopic(topic));
 	}
 	

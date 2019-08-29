@@ -24,13 +24,13 @@
     <i class="layui-icon">&#xe602;</i>
   </div>
   <div class="site-mobile-shade"></div>
-  
+
   <div class="site-tree-mobile layui-hide">
     <i class="layui-icon">&#xe602;</i>
   </div>
   <div class="site-mobile-shade"></div>
-  
-  
+
+
   <div class="fly-panel fly-panel-user" pad20>
     <!--
     <div class="fly-msg" style="margin-top: 15px;">
@@ -76,30 +76,32 @@
       ,method: "post"
       ,cols: [
         [{
-        checkbox: true
-      },
-        {
-          field : 'title',
-          title : '标题',
-          sortable: true
+          checkbox: true
         },
-        {
-          field : 'clickCount',
-          title : '点击数',
-          sortable: true
-        },
-        {
-          field : 'createDate',
-          title : '创建时间',
-          sortable: true
-        },
+          {
+            field : 'title',
+            title : '标题',
+            sortable: true
+          },
+          {
+            field : 'clickCount',
+            title : '点击数',
+            sortable: true
+          },
+          {
+            field : 'createDate',
+            title : '创建时间',
+            sortable: true
+          },
           {
             fixed: 'right',
             title:'操作',
             toolbar: '#barDemo',
-            width:150
+            width:150,
+            align: 'center',
 
-        }]
+
+          }]
       ],
       done:function (res, curr, count) {
         $("#num_topic").text(count)
@@ -114,15 +116,7 @@
           layer.close(index);
         });
       } else if(obj.event === 'edit'){
-        layer.prompt({
-          formType: 2
-          ,value: data.email
-        }, function(value, index){
-          obj.update({
-            email: value
-          });
-          layer.close(index);
-        });
+        window.location.href=prefix + "/edit/"+data.id;
       }
     });
   });

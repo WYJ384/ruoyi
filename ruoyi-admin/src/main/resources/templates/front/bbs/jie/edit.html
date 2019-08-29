@@ -25,19 +25,21 @@
         <div class="layui-form layui-form-pane">
             <div class="layui-tab layui-tab-brief" lay-filter="user">
                 <ul class="layui-tab-title">
-                    <li class="layui-this">发表新帖<!-- 编辑帖子 --></li>
+                    <li class="layui-this"> 编辑帖子</li>
                 </ul>
                 <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                     <div class="layui-tab-item layui-show">
-                        <form action="/f/bbs/topic/addSave" method="post">
+                        <form action="/f/bbs/topic/edit" method="post"  th:object="${topic}">
+<!--                        <form class="form-horizontal m" id="form-jie-edit" th:object="${topic}">-->
+                            <input id="id" name="id" th:field="*{id}"  type="hidden">
                             <div class="layui-row layui-col-space15 layui-form-item">
                                 <div class="layui-col-md3">
                                     <label class="layui-form-label">所在专栏</label>
                                     <div class="layui-input-block">
-                                        <select lay-verify="required" name="sid" lay-filter="column">
+                                        <select lay-verify="required" name="sid" lay-filter="column" >
                                             <option></option>
                                             <!--                      <option value="0">提问</option> -->
-                                            <option th:each="section:${session.sections}" th:value="${section.id}" th:text="${section.name}" >分享</option>
+                                            <option th:each="section:${session.sections}" th:value="${section.id}" th:text="${section.name}" th:selected="${topic.sid?.contains(section.id.toString())}"></option>
 
                                         </select>
                                     </div>
@@ -46,7 +48,7 @@
                                     <label for="L_title" class="layui-form-label">标题</label>
                                     <div class="layui-input-block">
                                         <input type="text" id="L_title" name="title" required lay-verify="required"
-                                               autocomplete="off" class="layui-input">
+                                               autocomplete="off" class="layui-input" th:field="*{title}">
                                         <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
                                     </div>
                                 </div>
@@ -55,7 +57,7 @@
                                 <div class="layui-col-md3">
                                     <label class="layui-form-label">所属产品</label>
                                     <div class="layui-input-block">
-                                        <select name="project">
+                                        <select name="project" id="project" class="form-control" >
                                             <option></option>
                                             <option value="layui">layui</option>
                                             <option value="独立版layer">独立版layer</option>
@@ -82,8 +84,7 @@
                             </div>
                             <div class="layui-form-item layui-form-text">
                                <textarea id="content" name="content" required lay-verify="required"
-                                         placeholder="详细描述"
-                                         style="height: 260px;"></textarea>
+                                         placeholder="详细描述"  style="height: 260px;" th:utext="*{content}"></textarea>
                             </div>
                             <!--              <div class="layui-form-item">-->
                             <!--                <div class="layui-inline">-->
@@ -110,8 +111,9 @@
                             <!--                </div>-->
                             <!--              </div>-->
                             <div class="layui-form-item">
-                            <button class="layui-btn" lay-filter="*" lay-submit>立即发布</button>
-                        </div>
+                                <button class="layui-btn" lay-filter="*" lay-submit>保 存</button>
+                                <a class="layui-btn"  href="/f/bbs/user/index">返回</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -134,7 +136,7 @@
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
 <script th:src="@{/ajax/libs/bbs/res/layui/layui.js}"></script>
 <script>
-
+    var prefix = "/f/bbs/topic";
     var editor= UE.getEditor('content', {
         toolbars: [
             [
@@ -177,12 +179,12 @@
         , sex: '男'
     };
     layui.config({
-        version: "3.0.0",
-        base: '/ajax/libs/bbs//res/mods/'
+        version: "3.0.0"
+        , base: '/ajax/libs/bbs//res/mods/'
     }).extend({
         fly: 'index'
     }).use('fly');
-</script>
+    </script>
 
 </body>
 </html>
