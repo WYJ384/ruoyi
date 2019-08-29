@@ -185,6 +185,7 @@ public class PaperController extends BaseController {
     @GetMapping("/chooseLibrary/{id}")
     public String chooseLibrary(ModelMap mmap, @PathVariable("id") String id) {
         Library library = new Library();
+        library.setCreateBy(ShiroUtils.getUserId()+"");
         List<Library> libraryList = libraryService.selectLibraryList(library);
         Paper paper = paperService.selectPaperById(id);
         mmap.addAttribute("paper", paper);

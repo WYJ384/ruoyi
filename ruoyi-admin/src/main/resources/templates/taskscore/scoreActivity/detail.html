@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="white-bg">
@@ -17,12 +17,12 @@
 <!--            <td th:text="${scoreActivity.scoringPointer?.pointerType?.name}"-->
 <!--                th:class="'type_'+${scoreActivity.scoringPointer?.pointerType?.id}"></td>-->
             <td th:text="${scoreActivity.scoringPointer.name}">指标</td>
-            <td th:text="${scoreActivity.score==null?'0':scoreActivity.score}">
+            <td >
 
-<!--                <input type="text" name="score" th:value="${scoreActivity.score==null?'0':scoreActivity.score}">-->
-<!--                <button type="button" class="btn btn-sm btn-primary" ><i-->
-<!--                        class="fa fa-check"></i>保 存</button>-->
-<!--                <input type="hidden" name="id" th:value="${scoreActivity.id}">-->
+                <input type="text" name="score" th:value="${scoreActivity.score==null?'0':scoreActivity.score}">
+                <button type="button" class="btn btn-sm btn-primary"  shiro:hasPermission="taskscore:scoreActivity:pf"><i
+                        class="fa fa-check"></i>保 存</button>
+                <input type="hidden" name="id" th:value="${scoreActivity.id}">
             </td>
 
         </tr>

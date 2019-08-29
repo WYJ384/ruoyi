@@ -135,7 +135,7 @@ public class SelfTaskProcessController extends BaseController
 	/**
 	 * 删除任务进度
 	 */
-	@RequiresPermissions("worktask:selfTaskProcess:remove")
+//	@RequiresPermissions("worktask:selfTaskProcess:remove")
 	@Log(title = "任务进度", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody

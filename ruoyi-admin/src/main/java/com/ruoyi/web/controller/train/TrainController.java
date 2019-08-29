@@ -182,7 +182,11 @@ public class TrainController extends BaseController
 		return prefix + "/query";
 	}
 	public List<HistoryTaskVo>  historyTaskList(String processInstanceId){
+
 		List<HistoryTaskVo> historyTaskVos=new ArrayList<HistoryTaskVo>();
+		if(historyTaskVos==null){
+			return historyTaskVos;
+		}
 		List<HistoricTaskInstance> list= historyService // 历史相关Service
 				.createHistoricTaskInstanceQuery() // 创建历史任务实例查询
 				.processInstanceId(processInstanceId) // 用流程实例id查询
