@@ -18,7 +18,7 @@ public class BasicFacilities extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 
-	/**  */
+	/** 主键 */
 	private String id;
 
 	/** 工作内容 */
