@@ -94,19 +94,25 @@ public class SelfTaskProcessController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(SelfTaskProcess selfTaskProcess)
 	{
-		SelfTask selfTask = selfTaskService.selectSelfTaskById(selfTaskProcess.getId());
-		selfTask.setTaskProgress(selfTaskProcess.getPercentAge());
-		if(selfTaskProcess.getPercentAge().equals("100")){
-			selfTask.setTaskStatus("1");
-		}
-		String acceptorUser = selfTask.getAcceptorUser();
-		mailSendService.sendMailByUserId(acceptorUser,ShiroUtils.getSysUser().getUserName()+"更新任务："+selfTask.getTaskTitle());
-		selfTaskService.updateSelfTask(selfTask);
-		selfTaskProcess.setCreateBy(ShiroUtils.getSysUser().getUserName());
-		selfTaskProcess.setCreateTime(new Date());
-		selfTaskProcess.setUpdateBy(ShiroUtils.getLoginName());
+		try {
+			SelfTask selfTask = selfTaskService.selectSelfTaskById(selfTaskProcess.getId());
+			selfTask.setTaskProgress(selfTaskProcess.getPercentAge());
+			if(selfTaskProcess.getPercentAge().equals("100")){
+				selfTask.setTaskStatus("1");
+			}
+			String acceptorUser = selfTask.getAcceptorUser();
+			mailSendService.sendMailByUserId(acceptorUser,ShiroUtils.getSysUser().getUserName()+"更新任务："+selfTask.getTaskTitle());
 
-		return toAjax(selfTaskProcessService.insertSelfTaskProcess(selfTaskProcess));
+			selfTaskProcess.setCreateBy(ShiroUtils.getSysUser().getUserName());
+			selfTaskProcess.setCreateTime(new Date());
+			selfTaskProcess.setUpdateBy(ShiroUtils.getLoginName());
+			int i = selfTaskProcessService.insertSelfTaskProcess(selfTaskProcess);
+			selfTaskService.updateSelfTask(selfTask);
+			return toAjax(i);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return toAjax(1);
 	}
 
 	/**
