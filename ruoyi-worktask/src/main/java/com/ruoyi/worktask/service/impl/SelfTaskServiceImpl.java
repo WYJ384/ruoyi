@@ -11,6 +11,7 @@ import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.worktask.domain.BasicFacilities;
 import com.ruoyi.worktask.domain.BasicMaintenance;
 import com.ruoyi.worktask.domain.Goodness;
 import org.springframework.beans.BeanUtils;
@@ -233,6 +234,21 @@ public class SelfTaskServiceImpl implements ISelfTaskService {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
+    }
+
+    @Override
+    public String importBasicFacilities(List<BasicFacilities> basicFacilitiesList, String operName) {
+        return null;
+    }
+
+    @Override
+    public List<BasicFacilities> basicfacilitiesTaskList(BasicFacilities selfTask) {
+        return selfTaskMapper.basicFacilitiesTaskList(selfTask);
+    }
+
+    @Override
+    public BasicFacilities selectBasicFacilitiesTaskById(String id) {
+        return selfTaskMapper.selectBasicFacilitiesTaskById(id);
     }
 
     private String getUserId(String userName) {

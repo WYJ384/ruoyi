@@ -9,10 +9,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.ISysUserService;
-import com.ruoyi.worktask.domain.BasicMaintenance;
-import com.ruoyi.worktask.domain.SelfTask;
-import com.ruoyi.worktask.domain.SelfTaskProcess;
-import com.ruoyi.worktask.domain.WorkTaskFile;
+import com.ruoyi.worktask.domain.*;
 import com.ruoyi.worktask.service.ISelfTaskProcessService;
 import com.ruoyi.worktask.service.ISelfTaskService;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
@@ -29,15 +26,15 @@ import java.util.UUID;
 
 /**
  * 任务 信息操作处理
- * 
+ *
  * @author ruoyi
  * @date 2019-05-08
  */
 @Controller
-@RequestMapping("/worktask/basicmaintenance")
+@RequestMapping("/worktask/basicfacilities")
 public class BasicFacilitiesController extends BaseController
 {
-    private String prefix = "worktask/basicmaintenance";
+    private String prefix = "worktask/basicfacilities";
 	@Autowired
 	private IWorkTaskFileService workTaskFileService;
 	@Autowired
@@ -47,7 +44,7 @@ public class BasicFacilitiesController extends BaseController
 	@Autowired
 	private ISysUserService userService;
 	String seTaskType="5";
-	@RequiresPermissions("worktask:basicmaintenance:view")
+	@RequiresPermissions("worktask:basicfacilities:view")
 	@GetMapping()
 	public String selfTask()
 	{
@@ -57,69 +54,70 @@ public class BasicFacilitiesController extends BaseController
 	/**
 	 * 我创建的
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:list")
+	@RequiresPermissions("worktask:basicfacilities:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(BasicMaintenance selfTask)
+	public TableDataInfo list(BasicFacilities selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
 		selfTask.setCreateBy(ShiroUtils.getUserId()+"");
-		List<BasicMaintenance> list = selfTaskService.basicmaintenanceTaskList(selfTask);
+		List<BasicFacilities> list = selfTaskService.basicfacilitiesTaskList(selfTask);
 		return getDataTable(list);
 	}
 	/**
 	 * 共享任务
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:list")
+	@RequiresPermissions("worktask:basicfacilities:list")
 	@PostMapping("shareList")
 	@ResponseBody
-	public TableDataInfo shareList(BasicMaintenance selfTask)
+	public TableDataInfo shareList(BasicFacilities selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
-		List<BasicMaintenance> list = selfTaskService.basicmaintenanceTaskList(selfTask);
+		List<BasicFacilities> list = selfTaskService.basicfacilitiesTaskList(selfTask);
 		return getDataTable(list);
 	}
 	/**
 	 * 我的任务
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:list")
+	@RequiresPermissions("worktask:basicfacilities:list")
 	@PostMapping("/myTask")
 	@ResponseBody
-	public TableDataInfo myTask(BasicMaintenance selfTask)
+	public TableDataInfo myTask(BasicFacilities selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
-		selfTask.setExecutorUser(ShiroUtils.getUserId()+"");
-		List<BasicMaintenance> list = selfTaskService.basicmaintenanceTaskList(selfTask);
+//		selfTask.setExecutorUser(ShiroUtils.getUserId()+"");
+		selfTask.setRemark3(ShiroUtils.getUserId()+"");
+		List<BasicFacilities> list = selfTaskService.basicfacilitiesTaskList(selfTask);
 		return getDataTable(list);
 	}
 	/**
 	 * 我验收的任务
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:list")
+	@RequiresPermissions("worktask:c:list")
 	@PostMapping("/myCheckTask")
 	@ResponseBody
-	public TableDataInfo myCheckTask(BasicMaintenance selfTask)
+	public TableDataInfo myCheckTask(BasicFacilities selfTask)
 	{
 		startPage();
 		selfTask.setSelvalTaskType(seTaskType);
 		selfTask.setAcceptorUser(ShiroUtils.getUserId()+"");
-		List<BasicMaintenance> list = selfTaskService.basicmaintenanceTaskList(selfTask);
+		List<BasicFacilities> list = selfTaskService.basicfacilitiesTaskList(selfTask);
 		return getDataTable(list);
 	}
 
 	/**
 	 * 导出任务列表
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:export")
+	@RequiresPermissions("worktask:basicfacilities:export")
 	@PostMapping("/export")
 	@ResponseBody
-	public AjaxResult export(BasicMaintenance selfTask)
+	public AjaxResult export(BasicFacilities selfTask)
 	{
-		List<BasicMaintenance> list = selfTaskService.basicmaintenanceTaskList(selfTask);
-		ExcelUtil<BasicMaintenance> util = new ExcelUtil<BasicMaintenance>(BasicMaintenance.class);
+		List<BasicFacilities> list = selfTaskService.basicfacilitiesTaskList(selfTask);
+		ExcelUtil<BasicFacilities> util = new ExcelUtil<BasicFacilities>(BasicFacilities.class);
 		return util.exportExcel(list, "selfTask");
 	}
 
@@ -145,7 +143,7 @@ public class BasicFacilitiesController extends BaseController
 	/**
 	 * 新增保存任务
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:add")
+	@RequiresPermissions("worktask:basicfacilities:add")
 	@Log(title = "任务", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
@@ -155,6 +153,7 @@ public class BasicFacilitiesController extends BaseController
 		selfTask.setTaskStatus("0");
 		selfTask.setTaskLevel("0");
 		selfTask.setCreateBy(ShiroUtils.getUserId()+"");
+
 		selfTask.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		return toAjax(selfTaskService.insertSelfTask(selfTask));
 	}
@@ -167,7 +166,7 @@ public class BasicFacilitiesController extends BaseController
 	{
 		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
 		mmap.addAttribute("sysUsers",sysUsers);
-		BasicMaintenance selfTask = selfTaskService.selectBasicMaintenanceTaskById(id);
+		BasicFacilities selfTask = selfTaskService.selectBasicFacilitiesTaskById(id);
 		SelfTaskProcess selfTaskProcess=new SelfTaskProcess();
 		selfTaskProcess.setId(id);
 		List<SelfTaskProcess> processList = selfTaskProcessService.selectSelfTaskProcessList(selfTaskProcess);
@@ -180,13 +179,13 @@ public class BasicFacilitiesController extends BaseController
 	{
 		List<SysUser> sysUsers = userService.selectUserList(new SysUser());
 		mmap.addAttribute("sysUsers",sysUsers);
-		BasicMaintenance selfTask = selfTaskService.selectBasicMaintenanceTaskById(id);
+		BasicFacilities selfTask = selfTaskService.selectBasicFacilitiesTaskById(id);
 		SelfTaskProcess selfTaskProcess=new SelfTaskProcess();
 		selfTaskProcess.setId(id);
 		List<SelfTaskProcess> processList = selfTaskProcessService.selectSelfTaskProcessList(selfTaskProcess);
-		BasicMaintenance childSelfTask=new BasicMaintenance();
+		BasicFacilities childSelfTask=new BasicFacilities();
 		childSelfTask.setPid(id);
-		List<BasicMaintenance> childSelfTasks = selfTaskService.basicmaintenanceTaskList(childSelfTask);
+		List<BasicFacilities> childSelfTasks = selfTaskService.basicfacilitiesTaskList(childSelfTask);
 
 		WorkTaskFile activityFile=new WorkTaskFile();
 		activityFile.setWorkTaskId(id);
@@ -201,7 +200,7 @@ public class BasicFacilitiesController extends BaseController
 	/**
 	 * 修改保存任务
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:edit")
+	@RequiresPermissions("worktask:basicfacilities:edit")
 	@Log(title = "任务", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
@@ -221,7 +220,7 @@ public class BasicFacilitiesController extends BaseController
 	/**
 	 * 删除任务
 	 */
-	@RequiresPermissions("worktask:basicmaintenance:remove")
+	@RequiresPermissions("worktask:basicfacilities:remove")
 	@Log(title = "任务", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
@@ -230,24 +229,24 @@ public class BasicFacilitiesController extends BaseController
 		return toAjax(selfTaskService.deleteSelfTaskByIds(ids));
 	}
 	@Log(title = "基础维护管理提升导入", businessType = BusinessType.IMPORT)
-	@RequiresPermissions("worktask:basicmaintenance:import")
+	@RequiresPermissions("worktask:basicfacilities:import")
 	@PostMapping("/importData")
 	@ResponseBody
 	public AjaxResult importData(MultipartFile file) throws Exception
 	{
-		ExcelUtil<BasicMaintenance> util = new ExcelUtil<BasicMaintenance>(BasicMaintenance.class);
-		List<BasicMaintenance> basicMaintenanceList = util.importExcel(file.getInputStream());
+		ExcelUtil<BasicFacilities> util = new ExcelUtil<BasicFacilities>(BasicFacilities.class);
+		List<BasicFacilities> basicFacilitiesList = util.importExcel(file.getInputStream());
 		String operName = ShiroUtils.getSysUser().getUserId()+"";
-		String message = selfTaskService.importBasicmaintenance(basicMaintenanceList, operName);
+		String message = selfTaskService.importBasicFacilities(basicFacilitiesList, operName);
 		return AjaxResult.success(message);
 	}
 
-	@RequiresPermissions("worktask:basicmaintenance:view")
+	@RequiresPermissions("worktask:basicfacilities:view")
 	@GetMapping("/importTemplate")
 	@ResponseBody
 	public AjaxResult importTemplate()
 	{
-		ExcelUtil<BasicMaintenance> util = new ExcelUtil<BasicMaintenance>(BasicMaintenance.class);
+		ExcelUtil<BasicFacilities> util = new ExcelUtil<BasicFacilities>(BasicFacilities.class);
 		return util.importTemplateExcel("基础维护管理提升");
 	}
 }

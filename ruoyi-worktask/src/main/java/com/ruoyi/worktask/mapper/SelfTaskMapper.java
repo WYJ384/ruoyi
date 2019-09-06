@@ -1,6 +1,7 @@
 package com.ruoyi.worktask.mapper;
 
 import com.ruoyi.worktask.domain.BasicMaintenance;
+import com.ruoyi.worktask.domain.BasicFacilities;
 import com.ruoyi.worktask.domain.Goodness;
 import com.ruoyi.worktask.domain.SelfTask;
 import java.util.List;	
@@ -77,7 +78,9 @@ public interface SelfTaskMapper
 	public int deleteSelfTaskByIds(String[] ids);
 
 	List<BasicMaintenance> basicmaintenanceTaskList(BasicMaintenance selfTask);
-
 	BasicMaintenance selectBasicMaintenanceTaskById(String id);
+
+	List<BasicFacilities> basicFacilitiesTaskList(BasicFacilities selfTask);
+	BasicFacilities selectBasicFacilitiesTaskById(String id);
 
 }

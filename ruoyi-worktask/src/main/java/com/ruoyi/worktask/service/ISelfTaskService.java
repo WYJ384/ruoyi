@@ -1,5 +1,6 @@
 package com.ruoyi.worktask.service;
 
+import com.ruoyi.worktask.domain.BasicFacilities;
 import com.ruoyi.worktask.domain.BasicMaintenance;
 import com.ruoyi.worktask.domain.Goodness;
 import com.ruoyi.worktask.domain.SelfTask;
@@ -82,4 +83,21 @@ public interface ISelfTaskService
 	 * @return
 	 */
     String importBasicmaintenance(List<BasicMaintenance> basicMaintenanceList, String operName);
+
+	/**
+	 * 基础设施
+	 * @param selfTask
+	 * @return
+	 */
+	List<BasicFacilities> basicfacilitiesTaskList(BasicFacilities selfTask);
+
+	BasicFacilities selectBasicFacilitiesTaskById(String id);
+	/**
+	 * 基础设施
+	 * @param basicFacilitiesList
+	 * @param operName
+	 * @return
+	 */
+	String importBasicFacilities(List<BasicFacilities> basicFacilitiesList, String operName);
+
 }

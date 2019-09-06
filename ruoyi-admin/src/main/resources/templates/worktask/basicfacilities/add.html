@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-selfTask-add">
+        <input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
+        <input id="remark" name="remark" class="form-control" type="hidden">
+        <input id="remark4" name="remark4" class="form-control" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>项目：</label>
+            <div class="col-sm-8">
+                <input id="taskTitle" name="taskTitle" class="form-control" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>工作内容：</label>
+            <div class="col-sm-8">
+                <textarea id="remark5"    name="remark5" ></textarea>
+            </div>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="col-sm-3 control-label">分值：</label>-->
+<!--            <div class="col-sm-8">-->
+<!--                <input id="remark6" name="remark6" class="form-control" type="text">-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>牵头人：</label>
+            <div class="col-sm-8">
+                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible">-->
+                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                            th:text="${user.userName}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>配合人：</label>
+            <div class="col-sm-8">
+                <select id="remark3" name="remark3" class="form-control select2-hidden-accessible">-->
+                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                            th:text="${user.userName}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>开始时间：</label>
+            <div class="col-sm-8">
+                <input id="startDate" name="startDate" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>要求完成时间：</label>
+            <div class="col-sm-8">
+                <input id="requireTime" name="requireTime" class="form-control" type="text">
+            </div>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务执行人：</label>-->
+<!--            <div class="col-sm-8">-->
+<!--                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible"-->
+<!--                        multiple="">-->
+<!--                    <option th:each="user:${sysUsers}" th:value="${user.userId}"-->
+<!--                            th:text="${user.userName}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务验收人：</label>
+            <div class="col-sm-8">
+                <select id="acceptorUser" name="acceptorUser" class="form-control select2-hidden-accessible">-->
+                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
+                            th:text="${user.userName}"></option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-sm-offset-5 col-sm-10">
+        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/select/select2.js}"></script>
+
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"> </script>
+<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        UE.getEditor('remark5');
+    });
+    // jQuery.validator.methods.compareDate = function (value, element, param) {
+    //     var startDate = jQuery(param).val();
+    //     var date1 = new Date(Date.parse(startDate.replace("-", "/")));
+    //     var date2 = new Date(Date.parse(value.replace("-", "/")));
+    //     return date1 < date2;
+    // };
+    var prefix = ctx + "worktask/basicfacilities"
+    $("#form-selfTask-add").validate({
+        rules: {
+            taskTitle: {
+                required: true,
+            },
+            remark5: {
+                required: true,
+            },
+            executorUser: {
+                required: true,
+            },
+            remark3: {
+                required: true,
+            },
+            startDate: {
+                required: true,
+            },
+            requireTime: {
+                required: true,
+            },
+            acceptorUser: {
+                required: true,
+            },
+        },
+        messages: {
+            "startDate": {
+                required: "开始时间不能为空!"
+            },
+            "requireTime": {
+                required: "完成时间不能为空!",
+            }
+        },
+        focusCleanup: true
+    });
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        var startDate = laydate.render({
+            elem: '#startDate',
+            theme: 'molv',
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH:mm',
+            <!-- 设置endTime控件可允许选择的最小值 -->
+            done: function (value, dates){
+                requireTime.config.min = {
+                    year:dates.year,
+                    month:dates.month-1,
+                    date:dates.date,
+                    hours: 0,
+                    minutes: 0,
+                    seconds : 0
+                }
+            },
+        });
+        var requireTime = laydate.render({
+            elem: '#requireTime',
+            theme: 'molv',
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH:mm'
+        });
+    });
+
+    function submitHandler() {
+        var  remark5=$('#remark5 option:selected').text();
+        if(remark5==""){
+            layer.tips("请填写工作内容", '#remark5', {
+                tips: [1, '#f00'], //1-上，2-右，3-下，4-左
+                time: 4000,
+                area: ['300px', 'auto'],
+            })
+            return null;
+        }
+        if ($.validate.form()) {
+            var executorUsers = "";
+            var remark4User = "";
+            for (var i = 0; i < $("#executorUser").select2('data').length; i++) {
+                executorUsers += $("#executorUser").select2('data')[i].text;
+                if( i < $("#executorUser").select2('data').length-1){
+                    executorUsers +=",";
+                }
+            }
+            $("#remark").val(executorUsers)
+
+            for (var i = 0; i < $("#remark3").select2('data').length; i++) {
+                remark4User += $("#remark3").select2('data')[i].text;
+                if( i < $("#remark3").select2('data').length-1){
+                    remark4User +=",";
+                }
+            }
+            $("#remark4").val(remark4User)
+            $.operate.saveTab(prefix + "/add", $('#form-selfTask-add').serialize());
+        }
+    }
+    /*用户管理-新增-选择部门树*/
+    function selectLeadDeptTree() {
+        var leadDeptId = $("#leadDeptId").val();
+        var deptId = $.common.isEmpty(leadDeptId) ? "100" : $("#leadDeptId").val();
+        var url = ctx + "system/dept/selectDeptTree/" + deptId;
+        var options = {
+            title: '选择部门',
+            width: "380",
+            url: ctx + "system/dept/selectDeptTree/" + deptId,
+            callBack: doSubmitLeadDept
+        };
+        $.modal.openOptions(options);
+    }
+
+    function doSubmitLeadDept(index, layero){
+        var tree = layero.find("iframe")[0].contentWindow.$._tree;
+        // if ($.tree.notAllowParents(tree)) {
+        //
+        // }
+        var body = layer.getChildFrame('body', index);
+        $("#leadDeptId").val(body.find('#treeId').val());
+        $("#leadDeptName").val(body.find('#treeName').val());
+        layer.close(index);
+    }
+</script>
+</body>
+</html>

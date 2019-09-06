@@ -2,7 +2,7 @@ package com.ruoyi.worktask.domain;
 
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.system.domain.SysDept;
+import com.ruoyi.system.domain.SysUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -20,7 +20,9 @@ public class BasicFacilities extends BaseEntity
 
 	/** 主键 */
 	private String id;
-
+	/** 项目 */
+	@Excel(name = "项目", prompt = "项目")
+	private String taskTitle;
 	/** 工作内容 */
 	@Excel(name = "工作内容", prompt = "工作内容")
 	private String remark5;
@@ -64,7 +66,10 @@ public class BasicFacilities extends BaseEntity
 	private Date updateTime;
 	/** 创建人 */
 	private String createBy;
+	/**牵头人姓名*/
 	private String remark;
+	/**配合人姓名*/
+	private String remark4;
 	/** 任务类型 */
 	private String taskType;
 	/** 扩展7 */
@@ -75,8 +80,8 @@ public class BasicFacilities extends BaseEntity
 	private String remark9;
 	/** 扩展10 */
 	private String remark10;
-    /** 牵头部门 */
-    private SysDept leadDept;
+    /** 牵头人 */
+    private SysUser user;
 
 	public String getId() {
 		return id;
@@ -84,6 +89,16 @@ public class BasicFacilities extends BaseEntity
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public void setTaskTitle(String taskTitle)
+	{
+		this.taskTitle = taskTitle;
+	}
+
+	public String getTaskTitle()
+	{
+		return taskTitle;
 	}
 
 	public String getRemark5() {
@@ -136,6 +151,14 @@ public class BasicFacilities extends BaseEntity
 
 	public String getTaskLevel() {
 		return taskLevel;
+	}
+
+	public String getRemark4() {
+		return remark4;
+	}
+
+	public void setRemark4(String remark4) {
+		this.remark4 = remark4;
 	}
 
 	public void setTaskLevel(String taskLevel) {
@@ -288,11 +311,11 @@ public class BasicFacilities extends BaseEntity
 		this.remark10 = remark10;
 	}
 
-	public SysDept getLeadDept() {
-		return leadDept;
+	public SysUser getUser() {
+		return user;
 	}
 
-	public void setLeadDept(SysDept leadDept) {
-		this.leadDept = leadDept;
+	public void setUser(SysUser user) {
+		this.user = user;
 	}
 }
