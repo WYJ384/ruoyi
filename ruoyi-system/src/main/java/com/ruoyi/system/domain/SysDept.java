@@ -4,6 +4,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 部门表 sys_dept
  * 
@@ -45,6 +48,26 @@ public class SysDept extends BaseEntity
 
     /** 父部门名称 */
     private String parentName;
+    /** 父部门名称 */
+    private String isShowDept;
+
+    public String getIsShowDept() {
+        return isShowDept;
+    }
+
+    public void setIsShowDept(String isShowDept) {
+        this.isShowDept = isShowDept;
+    }
+
+    private List<SysUser> sysUsers=new ArrayList<SysUser>();
+
+    public List<SysUser> getSysUsers() {
+        return sysUsers;
+    }
+
+    public void setSysUsers(List<SysUser> sysUsers) {
+        this.sysUsers = sysUsers;
+    }
 
     public Long getDeptId()
     {

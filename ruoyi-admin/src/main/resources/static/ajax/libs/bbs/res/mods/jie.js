@@ -174,10 +174,16 @@ layui.define('fly', function(exports){
       // });
     }
     ,reply: function(li){ //回复
+      var othis = $(this)
+      name=othis.parent(".jieda-reply").prev().prev().find('.fly-detail-user cite').text().replace(/\s/g, '')
+
       location.href = "#divContent";
       editor=UE.getEditor("content");
       var val =editor.getContent();
-      var aite = '@'+ li.find('.fly-detail-user cite').text().replace(/\s/g, '');
+      // var aite = '@'+ li.find('.fly-detail-user cite').text().replace(/\s/g, '');
+      var aite = '@'+name
+      var jid =li.find('.fly-detail-user cite').attr("attr-id").replace(/\s/g, '');
+      $("#jid").val(jid)
       // dom.content.focus()
 
       if(val.indexOf(aite) !== -1) return;

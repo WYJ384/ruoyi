@@ -5,9 +5,9 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <link th:href="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
-<link th:href='@{/fullcalendar-scheduler-4.0.1/packages/core/main.css}' rel='stylesheet'/>
-<link th:href='@{/fullcalendar-scheduler-4.0.1/packages/daygrid/main.css}' rel='stylesheet'/>
-<link th:href='@{/fullcalendar-scheduler-4.0.1/packages/timegrid/main.css}' rel='stylesheet'/>
+<link th:href='@{/fullcalendar-scheduler-4.3.1/packages/core/main.css}' rel='stylesheet'/>
+<link th:href='@{/fullcalendar-scheduler-4.3.1/packages/daygrid/main.css}' rel='stylesheet'/>
+<link th:href='@{/fullcalendar-scheduler-4.3.1/packages/timegrid/main.css}' rel='stylesheet'/>
 <link th:href="@{/week/css/week.css}" rel="stylesheet" type="text/css">
 <body class="white-bg">
 <!--<div class="form-horizontal m" style="text-align: center">-->
@@ -156,13 +156,13 @@
 <div th:include="include::footer"></div>
 <script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
 
-<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/core/main.js}'></script>
-<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/interaction/main.js}'></script>
-<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/daygrid/main.js}'></script>
-<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/timegrid/main.js}'></script>
-<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-common/main.js}'></script>
-<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-daygrid/main.js}'></script>
-<script th:src='@{/fullcalendar-scheduler-4.0.1/packages/resource-timegrid/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.3.1/packages/core/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.3.1/packages/interaction/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.3.1/packages/daygrid/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.3.1/packages/timegrid/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.3.1/packages-premium/resource-common/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.3.1/packages-premium/resource-daygrid/main.js}'></script>
+<script th:src='@{/fullcalendar-scheduler-4.3.1/packages-premium/resource-timegrid/main.js}'></script>
 <script type="text/javascript" th:src="@{/week/js/week.js}"></script>
 <script type="text/javascript">
     jQuery.validator.methods.compareDate = function (value, element, param) {
@@ -284,7 +284,7 @@
                 url: '/meeting/meetroom/selectMeetroomList'
             },
             events: { // you can also specify a plain string like 'json/events.json'
-                url: prefix + "/findList"
+                url: prefix + "/findList?a="+new Date().toLocaleTimeString()
             },
 
             select: function (info) {

@@ -40,7 +40,7 @@ public class Reply extends BaseEntity
 	private String tid;
 	/** 点赞数 */
 	private Integer zan;
-	/** 扩展3 */
+	/** 被会回复人ID */
 	private String remark3;
 	/** 扩展4 */
 	private String remark4;

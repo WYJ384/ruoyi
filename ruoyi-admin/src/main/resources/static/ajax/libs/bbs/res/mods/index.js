@@ -548,6 +548,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
 
   //表单提交
   form.on('submit(*)', function(data){
+
     var action = $(data.form).attr('action'), button = $(data.elem);
     fly.json(action, data.field, function(res){
       var end = function(){
@@ -565,7 +566,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
         }) : end();
       };
     });
-    location.reload()
+    //location.reload()
     return false;
   });
 

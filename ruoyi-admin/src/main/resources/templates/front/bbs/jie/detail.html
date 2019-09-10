@@ -1,5 +1,5 @@
- 
- 
+
+
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -23,7 +23,7 @@
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md8 content detail">
       <div class="fly-panel detail-box">
-        <h1 th:text="${topic.title}">Fly Template v3.0，基于 layui 的极简社区页面模版</h1>
+        <h1 th:utext="${topic.title}">Fly Template v3.0，基于 layui 的极简社区页面模版</h1>
         <div class="fly-detail-info">
           <!-- <span class="layui-badge">审核中</span> -->
           <span class="layui-badge layui-bg-green fly-detail-column">动态</span>
@@ -33,7 +33,7 @@
 
           <span class="layui-badge layui-bg-black">置顶</span>
           <span class="layui-badge layui-bg-red">精帖</span>
-          
+
 <!--          <div class="fly-admin-box" data-id="123">-->
 <!--            <span class="layui-btn layui-btn-xs jie-admin" type="del">删除</span>-->
 <!--            -->
@@ -43,7 +43,7 @@
 <!--            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="1">加精</span> -->
 <!--            &lt;!&ndash; <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> &ndash;&gt;-->
 <!--          </div>-->
-          <span class="fly-list-nums"> 
+          <span class="fly-list-nums">
             <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> </a>
             <i class="iconfont" title="人气">&#xe60b;</i>
           </span>
@@ -80,8 +80,8 @@
         </fieldset>
 
         <ul class="jieda" id="jieda">
-          <li th:each="reply:${replies}" th:data-id="${reply.id}" class="jieda-daan">
-            <a name="item-1111111111"></a>
+          <li th:each="reply:${replies}" th:data-id="${reply.id}" class="jieda-daan" th:if="${reply.remark==null}">
+            <a name="item-1111111111" ></a>
             <div class="detail-about detail-about-reply">
               <a class="fly-avatar" href="">
                 <img   th:src="@{'/profile/avatar/'+${reply.sysUser.avatar}}" th:alt="${reply.sysUser.userName}">
@@ -89,11 +89,11 @@
               </a>
               <div class="fly-detail-user">
                 <a href="" class="fly-link">
-                  <cite th:text="${reply.sysUser.userName}">贤心</cite>
+                  <cite th:text="${reply.sysUser.userName}" th:attr-id="${reply.id}">贤心</cite>
                   <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                  <i class="layui-badge fly-badge-vip">VIP3</i>              
+                  <i class="layui-badge fly-badge-vip">VIP3</i>
                 </a>
-                
+
                 <span th:if="${reply.sysUser.userId == topic.sysUser.userId}" >(楼主)</span>
                 <!--
                 <span style="color:#5FB878">(管理员)</span>
@@ -103,7 +103,7 @@
               </div>
 
               <div class="detail-hits">
-                <span th:text="${#dates.format(topic.createDate,'yyyy-MM-dd HH:mm')}">刚刚</span>
+                <span th:text="${#dates.format(reply.createDate,'yyyy-MM-dd HH:mm')}">刚刚</span>
               </div>
 
 <!--              <i class="iconfont icon-caina" title="最佳答案"></i>-->
@@ -126,14 +126,57 @@
 <!--                 <span class="jieda-accept" type="accept">采纳</span> -->
 <!--              </div>-->
             </div>
-          </li>
-          
+              <ul style="margin-left: 50px">
+                  <li class="jieda-daan"  th:each="rreply:${replies}" th:data-id="${rreply.id}"  th:if="${rreply.remark !=null && rreply.remark == reply.id}">
+                      <div class="detail-about detail-about-reply">
+                          <a class="fly-avatar" href="">
+                              <img   th:src="@{'/profile/avatar/'+${rreply.sysUser.avatar}}" th:alt="${rreply.sysUser.userName}">
+                          </a>
+                          <div class="fly-detail-user">
+                              <a href="" class="fly-link">
+                                  <cite th:text="${rreply.sysUser.userName}" th:attr-id="${rreply.sysUser.userId}">贤心</cite>
+                                  <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                  <i class="layui-badge fly-badge-vip">VIP3</i>
+                              </a>
 
-          
+                              <span th:if="${rreply.sysUser.userId == topic.sysUser.userId}" >(楼主)</span>
+                              <!--
+                              <span style="color:#5FB878">(管理员)</span>
+                              <span style="color:#FF9E3F">（社区之光）</span>
+                              <span style="color:#999">（该号已被封）</span>
+                              -->
+                          </div>
+
+                          <div class="detail-hits">
+                              <span th:text="${#dates.format(rreply.createDate,'yyyy-MM-dd HH:mm')}">刚刚</span>
+                          </div>
+
+                          <!--              <i class="iconfont icon-caina" title="最佳答案"></i>-->
+                      </div>
+                      <div class="detail-body jieda-body photos" th:utext="${rreply.content}">
+                          <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
+                      </div>
+                      <div class="jieda-reply">
+                      <span class="jieda-zan " type="zan">
+                        <i class="iconfont icon-zan"></i>
+                        <em th:text="${rreply.zan}">66</em>
+                      </span>
+                          <span type="reply">
+                <i class="iconfont icon-svgmoban53"></i>
+                回复
+              </span>
+                      </div>
+                  </li>
+
+              </ul>
+          </li>
+
+
+
           <!-- 无数据时 -->
           <!-- <li class="fly-none">消灭零回复</li> -->
         </ul>
-        
+
         <div class="layui-form layui-form-pane">
           <form action="/f/bbs/reply/add" method="post">
             <input type="hidden" name="tid" th:value="${topic.id}">
@@ -143,10 +186,11 @@
                 <textarea id="content" name="content" required lay-verify="required"
                           placeholder="详细描述"
                           style="height: 260px;"></textarea>
+
               </div>
             </div>
             <div class="layui-form-item">
-              <input type="hidden" name="jid" value="123">
+                <input type="hidden" id="jid" name="remark">
               <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
             </div>
           </form>
@@ -213,7 +257,7 @@
       </div>
 
       <div class="fly-panel" style="padding: 20px 0; text-align: center;">
-        <img th:src="@{/ajax/libs/bbs/res/images/weixin.jpg}" style="max-width: 100%;" alt="layui">
+<!--        <img th:src="@{/ajax/libs/bbs/res/images/weixin.jpg}" style="max-width: 100%;" alt="layui">-->
         <p style="position: relative; color: #666;">微信扫码关注 layui 公众号</p>
       </div>
 
