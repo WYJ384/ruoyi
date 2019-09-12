@@ -189,7 +189,7 @@
         if ($(this).width() < 769) {
             panehHidden = true;
         }
-        $('body').layout({initClosed: panehHidden, west__size: 185});
+        $('body').layout({initClosed: panehHidden, west__size: 200});
         queryUserList(1);
         queryDeptTree();
         $("#search").click(function () {
@@ -229,7 +229,7 @@
     }
 
     function queryDeptTree() {
-        var url = ctx + "system/dept/treeData";
+        var url = ctx + "system/dept/treeDataExt";
         var options = {
             url: url,
             expandLevel: 2,

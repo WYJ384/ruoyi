@@ -118,20 +118,7 @@
         if ($(this).width() < 769) {
             panehHidden = true;
         }
-        $('body').layout({initClosed: panehHidden, west__size: 185});
-        var setting = {
-            data: {
-                key: {
-                    title: "t"
-                },
-                simpleData: {
-                    enable: true
-                }
-            },
-            callback: {
-                onClick: onClick
-            }
-        };
+        $('body').layout({initClosed: panehHidden, west__size: 200});
         UE.getEditor('taskContent');
     });
     var prefix = ctx + "worktask/selfTask"

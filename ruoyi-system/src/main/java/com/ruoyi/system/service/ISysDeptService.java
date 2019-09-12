@@ -27,6 +27,7 @@ public interface ISysDeptService
      * @return 所有部门信息
      */
     public List<Ztree> selectDeptTree(SysDept dept);
+    public List<Ztree> selectDeptTreeExt(SysDept dept);
 
     /**
      * 根据角色ID查询菜单

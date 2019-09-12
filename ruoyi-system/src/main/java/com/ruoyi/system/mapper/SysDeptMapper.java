@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.Ztree;
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.system.domain.SysDept;
 
@@ -98,4 +100,6 @@ public interface SysDeptMapper
      * @param dept 部门
      */
     public void updateDeptStatus(SysDept dept);
+
+    List<Ztree> selectDeptTree(SysDept dept);
 }

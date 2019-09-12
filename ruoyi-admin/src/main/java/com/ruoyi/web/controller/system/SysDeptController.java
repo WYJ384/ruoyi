@@ -152,6 +152,13 @@ public class SysDeptController extends BaseController
         List<Ztree> ztrees = deptService.selectDeptTree(new SysDept());
         return ztrees;
     }
+    @GetMapping("/treeDataExt")
+    @ResponseBody
+    public List<Ztree> treeDataExt()
+    {
+        List<Ztree> ztrees = deptService.selectDeptTreeExt(new SysDept());
+        return ztrees;
+    }
 
     /**
      * 加载角色部门（数据权限）列表树

@@ -54,6 +54,11 @@ public class SysDeptServiceImpl implements ISysDeptService
         return ztrees;
     }
 
+    @Override
+    public List<Ztree> selectDeptTreeExt(SysDept dept) {
+        return deptMapper.selectDeptTree(dept);
+    }
+
     /**
      * 根据角色ID查询部门（数据权限）
      *

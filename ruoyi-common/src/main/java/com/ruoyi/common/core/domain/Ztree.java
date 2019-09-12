@@ -31,6 +31,15 @@ public class Ztree implements Serializable
 
     /** 是否能勾选 */
     private boolean nocheck = false;
+    private String icon="/img/dept.gif";
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public Long getId()
     {
