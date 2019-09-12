@@ -2,16 +2,14 @@ package com.ruoyi.web.controller.system;
 
 import java.util.List;
 
+import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.Tree;
+import com.ruoyi.system.service.ISysDeptService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
@@ -41,6 +39,8 @@ public class SysUserController extends BaseController
     @Autowired
     private ISysUserService userService;
 
+    @Autowired
+    private ISysDeptService deptService;
     @Autowired
     private ISysRoleService roleService;
 
@@ -140,7 +140,7 @@ public class SysUserController extends BaseController
      * 查询用户部门树
      */
     @Log(title = "查询用户部门树", businessType = BusinessType.OTHER)
-    @PostMapping("/selectUserTree")
+    @RequestMapping(value = "/selectUserTree",method ={RequestMethod.GET,RequestMethod.POST} )
     @ResponseBody
     public List<Tree> selectUserTree(SysUser user)
     {
@@ -176,6 +176,35 @@ public class SysUserController extends BaseController
         }
         user.setUpdateBy(ShiroUtils.getLoginName());
         return toAjax(userService.updateUser(user));
+    }
+
+
+    @RequiresPermissions("system:user:edit")
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/udpateOrder")
+    @ResponseBody
+    public AjaxResult udpateOrder(Long id,Long targetId,boolean isDept)
+    {
+
+        SysUser sourceUser = userService.selectUserById(id);
+        SysUser targetUser = userService.selectUserById(targetId);
+        if(sourceUser!=null&&targetUser!=null){
+            String orderNum=(Integer.parseInt(targetUser.getOrderNum())-1)+"";
+            sourceUser.setOrderNum(orderNum);
+            int i = userService.updateUserInfo(sourceUser);
+            return  toAjax(i);
+        }else{
+            SysDept sourceDept = deptService.selectDeptById(id);
+            SysDept targetIdDept = deptService.selectDeptById(targetId);
+            if(sourceDept!=null&&targetIdDept!=null){
+                String orderNum=(Integer.parseInt(targetIdDept.getOrderNum())-1)+"";
+                sourceDept.setOrderNum(orderNum);
+                int i = deptService.updateDept(sourceDept);
+                return    toAjax(i);
+            }
+        }
+
+        return toAjax(0);
     }
 
     @RequiresPermissions("system:user:resetPwd")

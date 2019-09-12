@@ -388,7 +388,15 @@ public class SysUserServiceImpl implements ISysUserService
             try
             {
                 // 验证是否存在这个用户
-                SysUser u = userMapper.selectUserByLoginName(user.getLoginName());
+                SysUser nu=new SysUser();
+                SysUser u=new SysUser();
+                nu.setUserName(user.getUserName());
+                List<SysUser> sysUsers = userMapper.selectUserList(nu);
+                if(sysUsers.size()>0){
+                    u=sysUsers.get(0);
+                }else{
+                    u=null;
+                }
                 if (StringUtils.isNull(u))
                 {
                     user.setPassword(Md5Utils.hash(user.getLoginName() + password));
@@ -399,10 +407,13 @@ public class SysUserServiceImpl implements ISysUserService
                 }
                 else if (isUpdateSupport)
                 {
+
+                    user.setLoginName(null);
                     user.setUpdateBy(operName);
-                    this.updateUser(user);
+                    user.setUserId(u.getUserId());
+                    this.updateUserInfo(user);
                     successNum++;
-                    successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginName() + " 更新成功");
+                    successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 更新成功");
                 }
                 else
                 {

@@ -76,6 +76,7 @@ public class SysUser extends BaseEntity
     @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT)
     private SysDept dept;
     /** 显示顺序 */
+    @Excel(name = "显示顺序" ,type = Type.IMPORT)
     private String orderNum;
     private List<SysRole> roles;
 

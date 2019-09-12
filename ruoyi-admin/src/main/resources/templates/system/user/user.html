@@ -93,7 +93,11 @@
 	
 	<div th:include="include :: footer"></div>
 	<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
-	<script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+    <script type="text/javascript" th:src="@{/ajax/libs/zTree_v3/js/jquery.ztree.core.js}" ></script>
+    <!-- 引入ztree插件扩展功能 -->
+    <script type="text/javascript" th:src="@{/ajax/libs/zTree_v3/js/jquery.ztree.exhide.min.js}" ></script>
+    <script type="text/javascript"  th:src="@{/ajax/libs/zTree_v3/js/jquery.ztree.excheck.js}"></script>
+    <script type="text/javascript" th:src="@{/ajax/libs/zTree_v3/js/jquery.ztree.exedit.js}"></script>
 	<script th:inline="javascript">
 		var editFlag = [[${@permission.hasPermi('system:user:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('system:user:remove')}]];
@@ -182,21 +186,80 @@
 		
 		function queryDeptTree()
 		{
-			var url = ctx + "system/dept/treeData";
-			var options = {
-		        url: url,
-		        expandLevel: 2,
-		        onClick : zOnClick
-		    };
-			$.tree.init(options);
-			
-			function zOnClick(event, treeId, treeNode) {
-				$("#deptId").val(treeNode.id);
-				$("#parentId").val(treeNode.pId);
-				$.table.search();
-			}
-		}
-		
+			var url =ctx + "system/user/selectUserTree";
+			// var options = {
+		    //     url: url,
+		    //     expandLevel: 2,
+		    //     onClick : zOnClick
+		    // };
+			// $.tree.init(options);
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: url, //服务请求地址
+                success: function(data) {
+                    $._tree=$.fn.zTree.init($("#tree"), setting, data);
+                }
+            });
+
+            var setting = {
+                edit: {
+                    enable: true,
+                    showRemoveBtn: false,
+                    showRenameBtn: false
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: {
+                    onDrop: zTreeOnDrop,
+                    onClick: zOnClick
+                }
+            };
+
+
+        }
+
+        function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {
+            if(targetNode == null) {
+                console.log('drag give up!')
+            } else {
+                console.log('from node :' + treeNodes[0])
+                console.log('to node :' + targetNode)
+
+                isDept=false;
+                if(treeNodes[0].isParent){
+                    isDept=true;
+                }else{
+                    isDept=false;
+                }
+                var data = {
+                    id: treeNodes[0].id,
+                    targetId: targetNode.id,
+                    isDept:isDept
+                }
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    data:data,
+                    url: ctx + "system/user/udpateOrder/", //服务请求地址
+                    success: function(data) {
+                        queryDeptTree();
+                    }
+                });
+
+                console.log(data)
+            }
+
+        }
+        function zOnClick(event, treeId, treeNode) {
+            $("#deptId").val(treeNode.id);
+            $("#parentId").val(treeNode.pId);
+            $.table.search();
+        }
 		$('#btnExpand').click(function() {
 			$._tree.expandAll(true);
 		    $(this).hide();
