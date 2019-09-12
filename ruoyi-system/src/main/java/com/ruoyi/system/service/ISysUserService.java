@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.domain.Tree;
 
 /**
  * 用户 业务层
@@ -163,4 +164,6 @@ public interface ISysUserService
      * @return
      */
     List<SysUser> selectPostByDept(Long deptId);
+
+    List<Tree> selectUserTree();
 }

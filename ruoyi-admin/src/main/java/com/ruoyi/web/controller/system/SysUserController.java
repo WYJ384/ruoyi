@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.Tree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -134,6 +136,18 @@ public class SysUserController extends BaseController
         user.setCreateBy(ShiroUtils.getLoginName());
         return toAjax(userService.insertUser(user));
     }
+    /**
+     * 查询用户部门树
+     */
+    @Log(title = "查询用户部门树", businessType = BusinessType.OTHER)
+    @PostMapping("/selectUserTree")
+    @ResponseBody
+    public List<Tree> selectUserTree(SysUser user)
+    {
+        return  userService.selectUserTree();
+    }
+
+
 
     /**
      * 修改用户

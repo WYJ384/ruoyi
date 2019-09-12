@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.domain.Tree;
 
 /**
  * 用户表 数据层
@@ -112,4 +113,6 @@ public interface SysUserMapper
      * @return
      */
     List<SysUser> selectPostByDept(Long deptId);
+
+    List<Tree> selectUserTree();
 }

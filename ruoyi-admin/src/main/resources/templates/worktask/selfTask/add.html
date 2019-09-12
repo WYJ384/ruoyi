@@ -2,99 +2,106 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
-<body class="white-bg">
-<div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-selfTask-add">
-        <input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
-        <input id="remark" name="remark" class="form-control" type="hidden">
-        <div class="form-group">
-            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务标题：</label>
-            <div class="col-sm-8">
-                <input id="taskTitle" name="taskTitle" class="form-control" type="text">
+<link rel="stylesheet" th:href="@{/ajax/libs/zTree_v3/css/metroStyle/metroStyle.css}"  type="text/css">
+<link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
+<body class="white-bg ">
+<div class="ui-layout-west " style="padding: 5px;">
+    <div class="main-content">
+        <div class="box box-main">
+            <div class="box-header">
+                <div class="box-title">
+                    <i class="fa icon-grid"></i> 组织机构
+                </div>
+                <div class="box-tools pull-right">
+                    <!--<a type="button" class="btn btn-box-tool menuItem" href="#" onclick="dept()" title="管理部门"><i class="fa fa-edit"></i></a>-->
+                    <button type="button" class="btn btn-box-tool" id="btnExpand" title="展开" style="display: none;"><i class="fa fa-chevron-up"></i></button>
+                    <button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠" style="display: inline-block;"><i class="fa fa-chevron-down"></i></button>
+                    <button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
+                </div>
+            </div>
+            <div class="ui-layout-content" style="position: relative; height: 317px; visibility: visible;">
+                <input id="ukeyword" type="search" placeHolder="搜索关键字" />
+                <ul id="userTree" class="ztree"></ul>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>开始时间：</label>
-            <div class="col-sm-8">
-                <input id="startDate" name="startDate" class="form-control" type="text">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>要求完成时间：</label>
-            <div class="col-sm-8">
-                <input id="requireTime" name="requireTime" class="form-control" type="text">
-            </div>
-        </div>
-        <!--			<div class="form-group">	-->
-        <!--				<label class="col-sm-3 control-label">任务类型：</label>-->
-        <!--				<div class="col-sm-8">-->
-        <!--					<input id="selvalTaskType" name="selvalTaskType" class="form-control" type="text">-->
-        <!--				</div>-->
-        <!--			</div>-->
-
-        <div class="form-group">
-            <label class="col-sm-3 control-label">优先级：</label>
-            <div class="col-sm-8">
-                <label class="radio-box"> <input type="radio" name="priority" value="0" checked/> 高 </label>
-                <label class="radio-box"> <input type="radio" name="priority" value="1"/> 中 </label>
-                <label class="radio-box"> <input type="radio" name="priority" value="2"/> 低 </label>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-3 control-label">任务描述：</label>
-            <div class="col-sm-8">
-                <textarea id="taskContent" name="taskContent"></textarea>
-
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务执行人：</label>
-            <div class="col-sm-8">
-                <select id="executorUser" name="executorUser" class="form-control select2-hidden-accessible"
-                        multiple="">
-                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
-                            th:text="${user.userName}"></option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务验收人：</label>
-            <div class="col-sm-8">
-                <select id="acceptorUser" name="acceptorUser" class="form-control select2-hidden-accessible">
-                    <option th:each="user:${sysUsers}" th:value="${user.userId}"
-                            th:text="${user.userName}"></option>
-                </select>
-            </div>
-        </div>
-        <!--			<div class="form-group">	-->
-        <!--				<label class="col-sm-3 control-label">任务进度：</label>-->
-        <!--				<div class="col-sm-8">-->
-        <!--					<input id="taskProgress" name="taskProgress" class="form-control" type="text">-->
-        <!--				</div>-->
-        <!--			</div>-->
-        <!--			<div class="form-group">	-->
-        <!--				<label class="col-sm-3 control-label">共享给：</label>-->
-
-        <!--				<div class="col-sm-8">-->
-        <!--					<label class="radio-box"> <input type="radio" name="isShare" value="1" />所有人 </label>-->
-        <!--					<label class="radio-box"> <input type="radio" name="isShare" value="0" checked/> 不共享 </label>-->
-        <!--					<label class="radio-box"> <input type="radio" name="isShare" value="2" /> 指定人员 </label>-->
-
-        <!--				</div>-->
-        <!--			</div>-->
-    </form>
-</div>
-<div class="row">
-    <div class="col-sm-offset-5 col-sm-10">
-        <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
-        </button>&nbsp;
-        <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
-        </button>
     </div>
 </div>
+
+<div class="container-div ui-layout-center">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-selfTask-add">
+            <input id="pid" name="pid" th:value="${pid}" class="form-control" type="hidden">
+            <input id="remark" name="remark" class="form-control" type="hidden">
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务标题：</label>
+                <div class="col-sm-8">
+                    <input id="taskTitle" name="taskTitle" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>开始时间：</label>
+                <div class="col-sm-8">
+                    <input id="startDate" name="startDate" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>要求完成时间：</label>
+                <div class="col-sm-8">
+                    <input id="requireTime" name="requireTime" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">优先级：</label>
+                <div class="col-sm-8">
+                    <label class="radio-box"> <input type="radio" name="priority" value="0" checked/> 高 </label>
+                    <label class="radio-box"> <input type="radio" name="priority" value="1"/> 中 </label>
+                    <label class="radio-box"> <input type="radio" name="priority" value="2"/> 低 </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">任务描述：</label>
+                <div class="col-sm-8">
+                    <textarea id="taskContent" name="taskContent"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务执行人：</label>
+                <div class="col-sm-8">
+                    <input type="text" id="executorUser" name="executorUser" class="form-control select2-hidden-accessible">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color: red; ">*</span>任务验收人：</label>
+                <div class="col-sm-8">
+                    <input type="text" id="acceptorUser" name="acceptorUser" class="form-control select2-hidden-accessible">
+                </div>
+            </div>
+
+        </form>
+        <div class="row" style="text-align: center">
+            <div class="col-sm-10" >
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
+                </button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
 <div th:include="include::footer"></div>
-<script th:src="@{/ajax/libs/select/select2.js}"></script>
+<script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
+
+<script type="text/javascript" th:src="@{/ajax/libs/zTree_v3/js/jquery.ztree.core.js}" ></script>
+<!-- 引入ztree插件扩展功能 -->
+<script type="text/javascript" th:src="@{/ajax/libs/zTree_v3/js/jquery.ztree.exhide.min.js}" ></script>
+<!-- 引入自定义方法 -->
+<script type="text/javascript" th:src="@{/ajax/libs/zTree_v3/js/fuzzysearch.js}" ></script>
+
+<script th:src="@{/ajax/libs/select/right_select.js}"></script>
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
 <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
@@ -107,6 +114,24 @@
     };
 
     $(function () {
+        var panehHidden = false;
+        if ($(this).width() < 769) {
+            panehHidden = true;
+        }
+        $('body').layout({initClosed: panehHidden, west__size: 185});
+        var setting = {
+            data: {
+                key: {
+                    title: "t"
+                },
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
         UE.getEditor('taskContent');
     });
     var prefix = ctx + "worktask/selfTask"
