@@ -96,7 +96,9 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
         <include refid="selectReplyVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectCountByTid" parameterType="String" resultType="Integer">
+       select count(1) from bbs_reply where tid=#{tid}
+    </select>
     <insert id="insertReply" parameterType="Reply">
         insert into bbs_reply
 		<trim prefix="(" suffix=")" suffixOverrides=",">

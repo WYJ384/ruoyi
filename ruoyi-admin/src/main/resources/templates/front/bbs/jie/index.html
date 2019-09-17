@@ -31,9 +31,9 @@
           <span class="fly-mid"></span>
           <a href="">精华</a>
           <span class="fly-filter-right layui-hide-xs">
-            <a href="" class="layui-this">按最新</a>
+            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateFirstPage+'&sid='+topic.sid+'&orderBy=create_date desc'}"  th:classappend="${orderBy.contains('create_date')} ?'layui-this':''">按最新</a>
             <span class="fly-mid"></span>
-            <a href="">按热议</a>
+            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateFirstPage+'&sid='+topic.sid+'&orderBy=click_count desc'}" th:classappend="${orderBy.contains('click_count')} ?'layui-this':''">按热议</a>
           </span>
         </div>
 
@@ -62,7 +62,7 @@
 <!--              <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>-->
               <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
               <span class="fly-list-nums"> 
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                <i class="iconfont icon-pinglun1" title="回答"></i> <span th:text="${topic.repCount}">0</span>
               </span>
             </div>
             <div class="fly-list-badge">
@@ -77,14 +77,14 @@
     
         <div style="text-align: center">
           <div class="laypage-main">
-            <a  th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.prePage}" th:if="${pageInfo.hasPreviousPage}" class="laypage-prev">上一页</a>
-            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateFirstPage}" class="laypage-first" title="首页">首页</a>
+            <a  th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.prePage+'&sid='+topic.sid}" th:if="${pageInfo.hasPreviousPage}" class="laypage-prev">上一页</a>
+            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateFirstPage+'&sid='+topic.sid}" class="laypage-first" title="首页">首页</a>
             <!--            <span class="laypage-curr">1</span>-->
             <a th:each="num:${pageInfo.navigatepageNums}"
-               th:classappend="${pageInfo.pageNum==num}?'laypage-curr'" th:href="${'/f/bbs/topic/jieIndex?pageNum='+num}" th:text="${num}">2</a>
+               th:classappend="${pageInfo.pageNum==num}?'laypage-curr'" th:href="${'/f/bbs/topic/jieIndex?pageNum='+num+'&sid='+topic.sid}" th:text="${num}">2</a>
 
-            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateLastPage}" class="laypage-last" title="尾页">尾页</a>
-            <a  th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.nextPage}" th:if="${pageInfo.hasNextPage}" class="laypage-next">下一页</a>
+            <a th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.navigateLastPage+'&sid='+topic.sid}" class="laypage-last" title="尾页">尾页</a>
+            <a  th:href="${'/f/bbs/topic/jieIndex?pageNum='+pageInfo.nextPage+'&sid='+topic.sid}" th:if="${pageInfo.hasNextPage}" class="laypage-next">下一页</a>
           </div>
         </div>
 

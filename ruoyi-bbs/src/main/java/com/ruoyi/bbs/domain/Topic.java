@@ -60,6 +60,15 @@ public class Topic extends BaseEntity
 	private String remark9;
 	/** 扩展10 */
 	private String remark10;
+	private 	Integer repCount;
+
+	public Integer getRepCount() {
+		return repCount;
+	}
+
+	public void setRepCount(Integer repCount) {
+		this.repCount = repCount;
+	}
 
 	public SysUser getSysUser() {
 		return sysUser;

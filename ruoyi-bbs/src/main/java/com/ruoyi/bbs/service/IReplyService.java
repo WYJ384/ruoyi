@@ -50,5 +50,10 @@ public interface IReplyService
      * @return 结果
      */
 	public int deleteReplyByIds(String ids);
-	
+	/**
+	 * 根据主题查询评论数量
+	 * @param tid
+	 * @return
+	 */
+	public int selectCountByTid(String tid);
 }

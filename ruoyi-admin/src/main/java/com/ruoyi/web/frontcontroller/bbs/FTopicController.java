@@ -25,10 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 主贴 信息操作处理
@@ -53,6 +50,13 @@ public class FTopicController extends FBaseController
 		pageSize=10;
 		startPage();
 		List<Topic> topicList = topicService.selectTopicList(topic);
+		Iterator<Topic> topicIterator = topicList.iterator();
+		while (topicIterator.hasNext()){
+			Topic topic1 = topicIterator.next();
+			String id = topic1.getId();
+			int count = replyService.selectCountByTid(id);
+			topic1.setRepCount(count);
+		}
 		modelMap.addAttribute("topicList",topicList);
 		return prefix + "/index";
 	}
@@ -103,14 +107,27 @@ public class FTopicController extends FBaseController
 
 	@GetMapping("/jieIndex")
 	public String jieIndex(Topic topic,@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum ,
-						   @RequestParam(name = "pageSize",defaultValue = "8")  Integer pageSize,ModelMap modelMap)
+						   @RequestParam(name = "pageSize",defaultValue = "8")  Integer pageSize,ModelMap modelMap,String orderBy)
 	{
-		PageHelper.startPage(pageNum, pageSize);
+		if(StringUtils.isEmpty(orderBy)){
+			orderBy="create_date desc";
+		}
+		if(topic.getSid().equals("null")){
+			topic.setSid("");
+		}
+		PageHelper.startPage(pageNum, pageSize,orderBy);
 		List<Topic> list = topicService.selectTopicList(topic);
+		Iterator<Topic> topicIterator = list.iterator();
+		while (topicIterator.hasNext()){
+			Topic topic1 = topicIterator.next();
+			String id = topic1.getId();
+			int count = replyService.selectCountByTid(id);
+			topic1.setRepCount(count);
+		}
 		PageInfo<Topic> pageInfo=new PageInfo<Topic>(list);
 		modelMap.addAttribute("pageInfo",pageInfo);
-
 		modelMap.addAttribute("topic",topic);
+		modelMap.addAttribute("orderBy",orderBy);
 
 		return prefix + "/jie/index";
 	}

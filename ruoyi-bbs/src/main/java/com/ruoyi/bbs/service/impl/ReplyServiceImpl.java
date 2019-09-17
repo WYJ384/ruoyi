@@ -79,5 +79,10 @@ public class ReplyServiceImpl implements IReplyService
 	{
 		return replyMapper.deleteReplyByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public int selectCountByTid(String tid) {
+		return replyMapper.selectCountByTid(tid);
+	}
+
 }
