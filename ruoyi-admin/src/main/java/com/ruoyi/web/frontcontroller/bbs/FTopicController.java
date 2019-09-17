@@ -112,6 +112,12 @@ public class FTopicController extends FBaseController
 		if(StringUtils.isEmpty(orderBy)){
 			orderBy="create_date desc";
 		}
+		if(topic==null){
+			topic=new Topic();
+		}
+		if(topic.getSid()==null){
+			topic.setSid("");
+		}
 		if(topic.getSid().equals("null")){
 			topic.setSid("");
 		}

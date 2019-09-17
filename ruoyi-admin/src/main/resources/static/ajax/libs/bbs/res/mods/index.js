@@ -54,7 +54,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
     //Ajax
     json: function(url, data, success, options){
       var that = this, type = typeof data === 'function';
-      
+
       if(type){
         options = success
         success = data;
@@ -548,24 +548,23 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
 
   //表单提交
   form.on('submit(*)', function(data){
-
     var action = $(data.form).attr('action'), button = $(data.elem);
-    fly.json(action, data.field, function(res){
-      var end = function(){
-        if(res.action){
-          location.href = res.action;
-        } else {
-          fly.form[action||button.attr('key')](data.field, data.form);
-        }
-      };
-      if(res.status == 0){
-        button.attr('alert') ? layer.alert(res.msg, {
-          icon: 1,
-          time: 10*1000,
-          end: end
-        }) : end();
-      };
-    });
+    // fly.json(action, data.field, function(res){
+    //   location.href = res.action;
+    // });
+    var config = {
+      url:action,
+      type: "POST",
+      dataType: "json",
+      data: data.field,
+      beforeSend: function () {
+
+      },
+      success: function(res) {
+        location.href = '/f/bbs/topic/jieIndex';
+      }
+    };
+    $.ajax(config)
     //location.reload()
     return false;
   });

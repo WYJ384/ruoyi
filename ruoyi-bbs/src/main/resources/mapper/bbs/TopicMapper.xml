@@ -90,12 +90,13 @@ INNER JOIN sys_user ON topic.create_by = sys_user.user_id
              <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
              <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
              <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+            and topic.del_flag='0'
          </where>
     </select>
     
     <select id="selectTopicById" parameterType="String" resultMap="TopicResult">
         <include refid="selectTopicVo"/>
-        where id = #{id}
+        where id = #{id} and topic.del_flag='0'
     </select>
         
     <insert id="insertTopic" parameterType="Topic">
@@ -176,11 +177,11 @@ INNER JOIN sys_user ON topic.create_by = sys_user.user_id
     </update>
 
 	<delete id="deleteTopicById" parameterType="String">
-        delete from bbs_topic where id = #{id}
+        update   bbs_topic set del_flag='1' where id = #{id}
     </delete>
 	
     <delete id="deleteTopicByIds" parameterType="String">
-        delete from bbs_topic where id in 
+        update   bbs_topic set del_flag='1' where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -88,16 +88,17 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
              <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
              <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
              <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
-         </where>
+            and rep.del_flag='0'
+        </where>
         order  by zan desc ,rep.create_date desc
     </select>
     
     <select id="selectReplyById" parameterType="String" resultMap="ReplyResult">
         <include refid="selectReplyVo"/>
-        where id = #{id}
+        where id = #{id} and rep.del_flag='0'
     </select>
     <select id="selectCountByTid" parameterType="String" resultType="Integer">
-       select count(1) from bbs_reply where tid=#{tid}
+       select count(1) from bbs_reply where tid=#{tid} and bbs_reply.del_flag='0'
     </select>
     <insert id="insertReply" parameterType="Reply">
         insert into bbs_reply
@@ -174,11 +175,11 @@ INNER JOIN sys_user ON rep.create_by = sys_user.user_id
     </update>
 
 	<delete id="deleteReplyById" parameterType="String">
-        delete from bbs_reply where id = #{id}
+       update   bbs_reply set del_flag='1' where id = #{id}
     </delete>
 	
     <delete id="deleteReplyByIds" parameterType="String">
-        delete from bbs_reply where id in 
+        update   bbs_reply set del_flag='1'   where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

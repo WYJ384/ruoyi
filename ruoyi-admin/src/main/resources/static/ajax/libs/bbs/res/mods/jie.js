@@ -76,15 +76,19 @@ layui.define('fly', function(exports){
     del: function(div){
       layer.confirm('确认删除该求解么？', function(index){
         layer.close(index);
-        fly.json('/api/jie-delete/', {
-          id: div.data('id')
-        }, function(res){
-          if(res.status === 0){
-            location.href = '/jie/';
-          } else {
-            layer.msg(res.msg);
+        var config = {
+          url: "/f/bbs/topic/remove",
+          type: "POST",
+          dataType: "json",
+          data: {ids: div.data('id')},
+          beforeSend: function () {
+
+          },
+          success: function(result) {
+            location.href = '/f/bbs/topic/jieIndex';
           }
-        });
+        };
+        $.ajax(config)
       });
     }
     

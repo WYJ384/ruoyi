@@ -34,15 +34,22 @@
           <span class="layui-badge layui-bg-black">置顶</span>
           <span class="layui-badge layui-bg-red">精帖</span>
 
-<!--          <div class="fly-admin-box" data-id="123">-->
-<!--            <span class="layui-btn layui-btn-xs jie-admin" type="del">删除</span>-->
-<!--            -->
-<!--            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span> -->
-<!--            &lt;!&ndash; <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span> &ndash;&gt;-->
-<!--            -->
-<!--            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="1">加精</span> -->
-<!--            &lt;!&ndash; <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> &ndash;&gt;-->
-<!--          </div>-->
+
+            <shiro:hasAnyRoles name="luntanguanliyuan">
+                <div class="fly-admin-box" th:data-id="${topic.id}" >
+                    <span class="layui-btn layui-btn-xs jie-admin" type="del">删除</span>
+
+                    <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span>
+                    <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span> -->
+
+                    <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="1">加精</span>
+                    <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
+                </div>
+
+            </shiro:hasAnyRoles>
+
+
+
           <span class="fly-list-nums">
             <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> </a>
             <i class="iconfont" title="人气">&#xe60b;</i>

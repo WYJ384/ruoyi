@@ -135,7 +135,7 @@ public class ArticleController extends BaseController
 	{
 //		article.setId(UUID.randomUUID().toString().replaceAll("-",""));
 		article.setDelFlag("0");
-		article.setCreateBy(ShiroUtils.getLoginName());
+		article.setCreateBy(ShiroUtils.getUserId()+"");
 		article.setCreateDate(new Date());
 		articleDataService.insertArticleData(articleData);
 		return toAjax(articleService.insertArticle(article));
@@ -189,7 +189,7 @@ public class ArticleController extends BaseController
 	@ResponseBody
 	public AjaxResult editSave(Article article,ArticleData articleData)
 	{
-		article.setUpdateBy(ShiroUtils.getLoginName());
+		article.setUpdateBy(ShiroUtils.getUserId()+"");
 		article.setUpdateDate(new Date());
 		articleDataService.updateArticleData(articleData);
 		return toAjax(articleService.updateArticle(article));
