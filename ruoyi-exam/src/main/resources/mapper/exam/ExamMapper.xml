@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM
         exam_exam
         INNER JOIN exam_exam_user u on u.exam_id=exam_exam.id
-    WHERE u.user_id=#{userId} and now()>= begin_time and now()<![CDATA[<= ]]> end_time
+    WHERE u.user_id=#{userId} and begin_time>=now() and now()<![CDATA[<= ]]> end_time
         <if test="userRemark != null  and userRemark != '' "> and u.remark = #{userRemark}</if>
 
     </select>

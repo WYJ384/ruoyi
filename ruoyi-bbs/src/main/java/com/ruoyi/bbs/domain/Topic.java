@@ -61,6 +61,15 @@ public class Topic extends BaseEntity
 	/** 扩展10 */
 	private String remark10;
 	private 	Integer repCount;
+	Section section;
+
+	public Section getSection() {
+		return section;
+	}
+
+	public void setSection(Section section) {
+		this.section = section;
+	}
 
 	public Integer getRepCount() {
 		return repCount;

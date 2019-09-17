@@ -121,6 +121,8 @@ public class FTopicController extends FBaseController
 		if(topic.getSid().equals("null")){
 			topic.setSid("");
 		}
+
+
 		PageHelper.startPage(pageNum, pageSize,orderBy);
 		List<Topic> list = topicService.selectTopicList(topic);
 		Iterator<Topic> topicIterator = list.iterator();

@@ -27,76 +27,80 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark9"    column="remark9"    />
         <result property="remark10"    column="remark10"    />
         <association property="sysUser" column="create_by" javaType="SysUser" resultMap="SysUserResult"/>
-
+        <association property="section" column="sid" javaType="Section" resultMap="SectionResult"/>
     </resultMap>
     <resultMap id="SysUserResult" type="SysUser">
         <id     property="userId"       column="user_id"      />
         <result property="avatar"       column="avatar"       />
         <result property="userName"     column="user_name"    />
     </resultMap>
-
+    <resultMap id="SectionResult" type="Section">
+        <result property="name"       column="name"       />
+    </resultMap>
     <sql id="selectTopicVo">
-   SELECT
+      SELECT
 	topic.id,
 	topic.sid,
-	title,
-	content,
-	click_count,
+	topic.title,
+	topic.content,
+	topic.click_count,
 	topic.create_by,
 	topic.create_date,
 	topic.update_by,
 	topic.update_date,
-	remarks,
+	topic.remarks,
 	topic.del_flag,
-	remark1,
-	remark2,
-	remark3,
-	remark4,
-	remark5,
-	remark6,
-	remark7,
-	remark8,
-	remark9,
-	remark10,
+	topic.remark1,
+	topic.remark2,
+	topic.remark3,
+	topic.remark4,
+	topic.remark5,
+	topic.remark6,
+	topic.remark7,
+	topic.remark8,
+	topic.remark9,
+	topic.remark10,
 	user_id,
 	avatar,
-	user_name
+	user_name,
+  bbs_section.`name`
 FROM
 	bbs_topic topic
 INNER JOIN sys_user ON topic.create_by = sys_user.user_id
+INNER JOIN bbs_section on bbs_section.id=topic.sid
     </sql>
 	
     <select id="selectTopicList" parameterType="Topic" resultMap="TopicResult">
         <include refid="selectTopicVo"/>
         <where>  
-            <if test="id != null  and id != '' "> and id = #{id}</if>
-             <if test="sid != null  and sid != '' "> and sid = #{sid}</if>
-             <if test="title != null  and title != '' "> and title = #{title}</if>
-             <if test="content != null  and content != '' "> and content = #{content}</if>
-             <if test="clickCount != null "> and click_count = #{clickCount}</if>
+            <if test="id != null  and id != '' "> and topic.id = #{id}</if>
+             <if test="sid != null  and sid != '' "> and topic.sid = #{sid}</if>
+             <if test="title != null  and title != '' "> and topic.title = #{title}</if>
+             <if test="content != null  and content != '' "> and topic.content = #{content}</if>
+             <if test="clickCount != null "> and topic.click_count = #{clickCount}</if>
              <if test="createBy != null  and createBy != '' "> and topic.create_by = #{createBy}</if>
-             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="createDate != null "> and topic.create_date = #{createDate}</if>
              <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
-             <if test="updateDate != null "> and update_date = #{updateDate}</if>
-             <if test="remarks != null  and remarks != '' "> and remarks = #{remarks}</if>
-             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
-             <if test="remark1 != null  and remark1 != '' "> and remark1 = #{remark1}</if>
-             <if test="remark2 != null  and remark2 != '' "> and remark2 = #{remark2}</if>
-             <if test="remark3 != null  and remark3 != '' "> and remark3 = #{remark3}</if>
-             <if test="remark4 != null  and remark4 != '' "> and remark4 = #{remark4}</if>
-             <if test="remark5 != null  and remark5 != '' "> and remark5 = #{remark5}</if>
-             <if test="remark6 != null  and remark6 != '' "> and remark6 = #{remark6}</if>
-             <if test="remark7 != null  and remark7 != '' "> and remark7 = #{remark7}</if>
-             <if test="remark8 != null  and remark8 != '' "> and remark8 = #{remark8}</if>
-             <if test="remark9 != null  and remark9 != '' "> and remark9 = #{remark9}</if>
-             <if test="remark10 != null  and remark10 != '' "> and remark10 = #{remark10}</if>
+             <if test="updateDate != null "> and topic.update_date = #{updateDate}</if>
+             <if test="remarks != null  and remarks != '' "> and topic.remarks = #{remarks}</if>
+             <if test="delFlag != null  and delFlag != '' "> and topic.del_flag = #{delFlag}</if>
+             <if test="remark1 != null  and remark1 != '' "> and topic.remark1 = #{remark1}</if>
+             <if test="remark2 != null  and remark2 != '' "> and topic.remark2 = #{remark2}</if>
+             <if test="remark3 != null  and remark3 != '' "> and topic.remark3 = #{remark3}</if>
+             <if test="remark4 != null  and remark4 != '' "> and topic.remark4 = #{remark4}</if>
+             <if test="remark5 != null  and remark5 != '' "> and topic.remark5 = #{remark5}</if>
+             <if test="remark6 != null  and remark6 != '' "> and topic.remark6 = #{remark6}</if>
+             <if test="remark7 != null  and remark7 != '' "> and topic.remark7 = #{remark7}</if>
+             <if test="remark8 != null  and remark8 != '' "> and topic.remark8 = #{remark8}</if>
+             <if test="remark9 != null  and remark9 != '' "> and topic.remark9 = #{remark9}</if>
+             <if test="remark10 != null  and remark10 != '' "> and topic.remark10 = #{remark10}</if>
             and topic.del_flag='0'
          </where>
     </select>
     
     <select id="selectTopicById" parameterType="String" resultMap="TopicResult">
         <include refid="selectTopicVo"/>
-        where id = #{id} and topic.del_flag='0'
+        where topic.id = #{id} and topic.del_flag='0'
     </select>
         
     <insert id="insertTopic" parameterType="Topic">
