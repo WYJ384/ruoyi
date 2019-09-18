@@ -148,6 +148,12 @@ public class FTopicController extends FBaseController
 		reply.setTid(id);
 		List<Reply> replies = replyService.selectReplyList(reply);
 		modelMap.addAttribute("replies",replies);
+
+		topic.setClickCount(topic.getClickCount()+1);
+//        topic.setUpdateDate(new Date());
+//        topic.setUpdateBy(ShiroUtils.getUserId()+"");
+		topicService.updateTopic(topic);
+
 		return prefix + "/jie/detail";
 	}
 	/**

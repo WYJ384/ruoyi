@@ -208,6 +208,7 @@
         <div class="layui-form layui-form-pane">
           <form action="/f/bbs/reply/add" method="post">
             <input type="hidden" name="tid" th:value="${topic.id}">
+              <input type="hidden" name="id" id="id">
             <div class="layui-form-item layui-form-text">
               <a name="comment"></a>
               <div class="layui-input-block" id="divContent">

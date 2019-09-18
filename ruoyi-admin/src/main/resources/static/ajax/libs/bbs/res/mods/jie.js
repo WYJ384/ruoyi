@@ -215,51 +215,51 @@ layui.define('fly', function(exports){
       });
     }
     ,edit: function(li){ //编辑
-      fly.json('/jie/getDa/', {
-        id: li.data('id')
-      }, function(res){
-        var data = res.rows;
-        layer.prompt({
-          formType: 2
-          ,value: data.content
-          ,maxlength: 100000
-          ,title: '编辑回帖'
-          ,area: ['728px', '300px']
-          ,success: function(layero){
-            fly.layEditor({
-              elem: layero.find('textarea')
-            });
-          }
-        }, function(value, index){
-          fly.json('/jie/updateDa/', {
-            id: li.data('id')
-            ,content: value
-          }, function(res){
-            layer.close(index);
-            li.find('.detail-body').html(fly.content(value));
-          });
-        });
-      });
+
+      var config = {
+        url: '/f/bbs/reply/getData/',
+        type: "post",
+        dataType: "json",
+        data:  {
+          id: li.data('id')
+        },
+        beforeSend: function () {
+        },
+        success: function(res) {
+          var data = res;
+          editor=UE.getEditor("content");
+          editor.setContent(data.content);
+          editor.focus(true);
+          $("#id").val(li.data('id'))
+          $("form").attr('action',"/f/bbs/reply/edit");
+
+
+        }
+      };
+      $.ajax(config);
+
+
+
+
     }
     ,del: function(li){ //删除
       layer.confirm('确认删除该回答么？', function(index){
         layer.close(index);
-        fly.json('/api/jieda-delete/', {
-          id: li.data('id')
-        }, function(res){
-          if(res.status === 0){
-            var count = dom.jiedaCount.text()|0;
-            dom.jiedaCount.html(--count);
-            li.remove();
-            //如果删除了最佳答案
-            if(li.hasClass('jieda-daan')){
-              $('.jie-status').removeClass('jie-status-ok').text('求解中');
-            }
-          } else {
-            layer.msg(res.msg);
+        var config = {
+          url: '/f/bbs/reply/remove/',
+          type: "post",
+          dataType: "json",
+          data:  {
+            ids: li.data('id')
+          },
+          beforeSend: function () {
+          },
+          success: function(res) {
+            location.reload()
           }
-        });
-      });    
+        };
+        $.ajax(config);
+      });
     }
   };
 

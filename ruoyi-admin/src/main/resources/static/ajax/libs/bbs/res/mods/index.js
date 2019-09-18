@@ -561,7 +561,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
 
       },
       success: function(res) {
-        location.href = '/f/bbs/topic/jieIndex';
+        location.reload()
       }
     };
     $.ajax(config)

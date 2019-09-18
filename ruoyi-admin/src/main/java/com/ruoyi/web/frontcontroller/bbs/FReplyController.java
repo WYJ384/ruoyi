@@ -111,7 +111,7 @@ public class FReplyController extends FBaseController {
     /**
      * 修改保存跟帖
      */
-    @RequiresPermissions("bbs:reply:edit")
+//    @RequiresPermissions("bbs:reply:edit")
     @Log(title = "跟帖", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -142,6 +142,17 @@ public class FReplyController extends FBaseController {
     @ResponseBody
     public AjaxResult remove(String ids) {
         return toAjax(replyService.deleteReplyByIds(ids));
+    }
+
+
+
+    @Log(title = "跟帖", businessType = BusinessType.UPDATE)
+    @PostMapping("/getData")
+    @ResponseBody
+    public Reply getData(String id) {
+        Reply reply = replyService.selectReplyById(id);
+
+        return reply;
     }
 
 }
