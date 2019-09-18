@@ -206,7 +206,7 @@ public class FTopicController extends FBaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
+	{
 		return toAjax(topicService.deleteTopicByIds(ids));
 	}
 	

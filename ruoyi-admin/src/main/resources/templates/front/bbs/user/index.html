@@ -109,14 +109,26 @@
     });
     table.on('tool(bootstrap-table)', function(obj){
       var data = obj.data;
+      var ids = {"ids": data.id};
       //console.log(obj)
       if(obj.event === 'del'){
         layer.confirm('真的删除行么', function(index){
-          obj.del();
+          $.ajax({
+            url: prefix + "/remove/",
+            type: "post",
+            dataType: "json",
+            data: ids,
+            success: function (result) {
+              $.modal.closeLoading();
+              window.location.reload();
+            }
+          })
+
           layer.close(index);
+          window.location.reload();
         });
       } else if(obj.event === 'edit'){
-        window.location.href=prefix + "/edit/"+data.id;
+        window.location.href=prefix + "/edit/"+id;
       }
     });
   });
