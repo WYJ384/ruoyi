@@ -30,10 +30,9 @@ layui.define('fly', function(exports){
     };
     elemQuiz.addClass('layui-hide');
     if(value === '0'){
-      layer.tips('下面的信息将便于您获得更好的答案', obj.othis, tips);
-      elemQuiz.removeClass('layui-hide');
+
     } else if(value === '99'){
-      layer.tips('系统会对【分享】类型的帖子予以飞吻奖励，但我们需要审核，通过后方可展示', obj.othis, tips);
+
     }
   });
 

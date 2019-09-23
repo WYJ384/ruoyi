@@ -14,10 +14,10 @@
 <div class="fly-header layui-bg-black"  th:include="front/bbs/common/header::header"></div>
 
 <div class="fly-home fly-panel" style="background-image: url();">
-  <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
+  <img   th:src="@{'/profile/avatar/'+${session.sysUser.avatar}}" th:alt="${session.sysUser.userName}">
   <i class="iconfont icon-renzheng" title="Fly社区认证"></i>
   <h1>
-    贤心
+    <span th:text="${session.sysUser.userName}"></span>
     <i class="iconfont icon-nan"></i>
     <!-- <i class="iconfont icon-nv"></i>  -->
     <i class="layui-badge fly-badge-vip">VIP3</i>
@@ -28,20 +28,20 @@
     -->
   </h1>
 
-  <p style="padding: 10px 0; color: #5FB878;">认证信息：layui 作者</p>
+<!--  <p style="padding: 10px 0; color: #5FB878;">认证信息：layui 作者</p>-->
 
-  <p class="fly-home-info">
-    <i class="iconfont icon-kiss" title="飞吻"></i><span style="color: #FF7200;">66666 飞吻</span>
-    <i class="iconfont icon-shijian"></i><span>2015-6-17 加入</span>
-    <i class="iconfont icon-chengshi"></i><span>来自杭州</span>
-  </p>
+<!--  <p class="fly-home-info">-->
+<!--    <i class="iconfont icon-kiss" title="飞吻"></i><span style="color: #FF7200;">66666 飞吻</span>-->
+<!--    <i class="iconfont icon-shijian"></i><span>2015-6-17 加入</span>-->
+<!--    <i class="iconfont icon-chengshi"></i><span>来自杭州</span>-->
+<!--  </p>-->
 
-  <p class="fly-home-sign">（人生仿若一场修行）</p>
+<!--  <p class="fly-home-sign">（人生仿若一场修行）</p>-->
 
-  <div class="fly-sns" data-user="">
-    <a href="javascript:;" class="layui-btn layui-btn-primary fly-imActive" data-type="addFriend">加为好友</a>
-    <a href="javascript:;" class="layui-btn layui-btn-normal fly-imActive" data-type="chat">发起会话</a>
-  </div>
+<!--  <div class="fly-sns" data-user="">-->
+<!--    <a href="javascript:;" class="layui-btn layui-btn-primary fly-imActive" data-type="addFriend">加为好友</a>-->
+<!--    <a href="javascript:;" class="layui-btn layui-btn-normal fly-imActive" data-type="chat">发起会话</a>-->
+<!--  </div>-->
 
 </div>
 
@@ -57,36 +57,7 @@
             <i>刚刚</i>
             <em class="layui-hide-xs">1136阅/27答</em>
           </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>2017-10-30</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
-          <li>
-            <a href="" class="jie-title"> 基于 layui 的极简社区页面模版</a>
-            <i>1天前</i>
-            <em class="layui-hide-xs">1136阅/27答</em>
-          </li>
+
           <!-- <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><i style="font-size:14px;">没有发表任何求解</i></div> -->
         </ul>
       </div>

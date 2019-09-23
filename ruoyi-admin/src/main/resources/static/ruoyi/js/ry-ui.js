@@ -754,6 +754,32 @@
         	    };
         	    $.ajax(config)
             },
+			// 保存信息 弹出提示框
+			saveModal: function(url, data, callback) {
+				var config = {
+					url: url,
+					type: "post",
+					dataType: "json",
+					data: data,
+					beforeSend: function () {
+						$.modal.loading("正在处理中，请稍后...");
+					},
+					success: function(result) {
+						if (typeof callback == "function") {
+							callback(result);
+						}
+						if (result.code == web_status.SUCCESS) {
+							$.modal.alertSuccess(result.msg)
+						} else if (result.code == web_status.WARNING) {
+							$.modal.alertWarning(result.msg)
+						} else {
+							$.modal.alertError(result.msg);
+						}
+						$.modal.closeLoading();
+					}
+				};
+				$.ajax(config)
+			},
             // 保存选项卡信息
             saveTab: function(url, data) {
             	var config = {

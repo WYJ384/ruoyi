@@ -444,7 +444,7 @@ body.canvas-menu.mini-navbar #page-wrapper, body.canvas-menu.mini-navbar .footer
 
 body.fixed-sidebar .navbar-static-side, body.canvas-menu .navbar-static-side {
     position: fixed;
-    width: 220px;
+    width: 200px;
     z-index: 2001;
     height: 100%;
 }
@@ -3166,7 +3166,7 @@ video {
 #page-wrapper {
     padding: 0 15px;
     position: inherit;
-    margin: 0 0 0 220px;
+    margin: 0 0 0 200px;
 }
 
 .title-action {
@@ -3247,15 +3247,15 @@ body.body-small .footer.fixed {
 /*CONTENTTABS*/
 .content-tabs {
     position: relative;
-    height: 42px;
+    height: 39px;
     background: #fafafa;
-    line-height: 40px;
+    line-height: 38px;
 }
 
 .content-tabs .roll-nav, .page-tabs-list {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 38px;
     text-align: center;
     color: #999;
     z-index: 2;
@@ -3285,9 +3285,9 @@ body.body-small .footer.fixed {
 }
 
 nav.page-tabs {
-    margin-left: 40px;
+    margin-left: 30px;
     width: 100000px;
-    height: 40px;
+    height: 38px;
     overflow: hidden;
 }
 
@@ -3313,7 +3313,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 .roll-right.tabRight {
-    right: 140px;
+    right: 60px;
 }
 
 .roll-right.btn-group {
@@ -3328,7 +3328,7 @@ nav.page-tabs .page-tabs-content {
 
 .roll-right.tabReload {
     background: #fff;
-    height: 40px;
+    height: 38px;
     width: 60px;
     outline: none;
 }
@@ -3338,7 +3338,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 #content-main {
-    height: calc(100% - 140px);
+    height: calc(100% - 127px);
     overflow: hidden;
 }
 
@@ -6858,42 +6858,6 @@ body.rtls .top-navigation .footer.fixed, body.rtls.top-navigation .footer.fixed 
     transition: all .3s ease-out 0s;
 }
 
-::-webkit-scrollbar-track {
-    background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar {
-    width: 6px;
-    background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #999;
-}
-/*GO HOME*/
-.gohome {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-}
-
-.gohome a {
-    height: 38px;
-    width: 38px;
-    display: block;
-    background: #2f4050;
-    padding: 9px 8px;
-    text-align: center;
-    color: #fff;
-    border-radius: 50%;
-    opacity: .5;
-}
-
-.gohome a:hover {
-    opacity: 1;
-}
-
 @media only screen and (-webkit-min-device-pixel-ratio : 2) {
     #content-main {
         -webkit-overflow-scrolling: touch;
@@ -6987,7 +6951,7 @@ body.rtls .top-navigation .footer.fixed, body.rtls.top-navigation .footer.fixed 
 	font-size: 20px;
 	line-height: 50px;
 	text-align: center;
-	width: 220px;
+	width: 200px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	padding: 0 15px;
 	font-weight: 300;
