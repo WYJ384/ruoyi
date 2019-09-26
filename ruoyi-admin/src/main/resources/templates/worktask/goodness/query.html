@@ -160,7 +160,7 @@
                             <div class="task-pitem-desc" th:text="'进度描述:'+${process.processText}">进度描述：222</div>
 <!--                            <a th:onclick="'javascript:deleteProcess(\''+${process.id}+'\');'"-->
 <!--                               class="b-btn-five dp-inline task-sub-save btn btn-primary btn-xs">删除进度</a>-->
-                            <a class="attch-itm-delete b-btn-five dp-inline task-sub-save btn btn-primary btn-xs" th:process_id="${process.id}" style="color: #fff">删除</a></li>
+                            <a class="attch-itm-delete b-btn-five dp-inline task-sub-save btn btn-primary btn-xs"   th:if="${taskType eq '1'}" th:process_id="${process.id}" style="color: #fff">删除</a></li>
                         </li>
 
 
@@ -367,7 +367,6 @@
         });
     })
     function deleteProcess(id) {
-        alert(id)
         $.modal.confirm("确定删除该条信息吗？", function() {
             var url = ctx + "worktask/selfTaskProcess/remove";
             $.operate.submit(url, "post", "json", {ids:id});
