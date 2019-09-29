@@ -1,108 +1,108 @@
 <div th:fragment="questionnaire">
-    <style type="text/css">
-        ul li {
-            list-style-type: none;
-        }
-    </style>
-    <div class="container-div form-horizontal m">
-        <h4 class="h4 text-center">案例评分 </h4>
-        <hr>
-        <div class="row">
-            <div class="search-collapse" style="padding: 40px;background: #fff">
-                <form action="" id="questionnaire">
-                    <ul>
-                    <li th:each="question,questionStat:${libraryDetails}">
+<!--    <style type="text/css">-->
+<!--        ul li {-->
+<!--            list-style-type: none;-->
+<!--        }-->
+<!--    </style>-->
+<!--    <div class="container-div form-horizontal m">-->
+<!--        <h4 class="h4 text-center">案例评分 </h4>-->
+<!--        <hr>-->
+<!--        <div class="row">-->
+<!--            <div class="search-collapse" style="padding: 40px;background: #fff">-->
+<!--                <form action="" id="questionnaire">-->
+<!--                    <ul>-->
+<!--                    <li th:each="question,questionStat:${libraryDetails}">-->
 
-                        <div class="title">
-                            <h4 style="display: inline-block"
-                                th:text="${(questionStat.index+1)+'.'+question.title}"></h4>
-                            <h4 style="display: inline-block" th:text="${question.choiceA+'（分）'}"></h4>
-                        </div>
-                        <span th:if="${question.libType eq '1'}"></span>
-                        <ul th:if="${question.libType eq '1'}">
-                            <li>
-                                <h5><input type="radio" name="choice" th:text="${question.choiceA}"></h5>
-                                <h5><input type="radio" name="choice" th:text="${question.choiceB}"></h5>
-                                <h5><input type="radio" name="choice" th:text="${question.choiceC}"></h5>
-                                <h5><input type="radio" name="choice"
-                                           th:if="${question.choiceD!='' && question.choiceD!=null}"
-                                           th:text="${question.choiceD}"></h5>
-                                <h5><input type="radio" name="choice"
-                                           th:if="${question.choiceE!='' && question.choiceE!=null}"
-                                           th:text="${question.choiceE}"></h5>
-                                <h5><input type="radio" name="choice"
-                                           th:if="${question.choiceF!='' && question.choiceF!=null}"
-                                           th:text="${question.choiceF}"></h5>
-                            </li>
-                        </ul>
-                        <ul th:if="${question.libType eq '2'}">
-                            <li>
-                                <h5><input type="checkbox" name="choiceA" th:text="${question.choiceA}"></h5>
-                                <h5><input type="checkbox" name="choiceA" th:text="${question.choiceB}"></h5>
-                                <h5><input type="checkbox" name="choiceA" th:text="${question.choiceC}"></h5>
-                                <h5><input type="checkbox" name="choiceA"
-                                           th:if="${question.choiceD!='' && question.choiceD!=null}"
-                                           th:text="${question.choiceD}"></h5>
-                                <h5><input type="checkbox" name="choiceA"
-                                           th:if="${question.choiceE!='' && question.choiceE!=null}"
-                                           th:text="${question.choiceE}"></h5>
-                                <h5><input type="checkbox" name="choiceA"
-                                           th:if="${question.choiceF!='' && question.choiceF!=null}"
-                                           th:text="${question.choiceF}"></h5>
-                            </li>
-                        </ul>
-                        <ul th:if="${question.libType eq '3'}">
-                            <li>
-                                <h5 th:each="dayCyc : ${#numbers.sequence(1,question.remark1)}">
-                                    <input type="number"  th:max="${question.choiceA}" min="0"  step="0.1" name="choiceA" th:value="${question.choiceA}">
-                                </h5>
-                            </li>
-                        </ul>
-                        <ul th:if="${question.libType eq '4'}">
-                            <li>
-                                <h5><input type="radio" name="choiceA" th:text="${question.choiceA}"></h5>
-                                <h5><input type="radio" name="choiceA" th:text="${question.choiceB}"></h5>
-                            </li>
-                        </ul>
-                        <ul th:if="${question.libType eq '5'}">
-                            <li>
-                                <h5>
-                                    <textarea rows="10" cols="80"></textarea>
-                                </h5>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                    <input type="hidden" th:value="${article.title}" name="title">
-                    <input type="hidden" th:value="1" name="libId">
-                    <input type="hidden" th:value="${article.id}" name="choiceG">
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="row" style="margin-bottom: 50px;">
-        <div class="col-sm-offset-5 col-sm-10">
-            <button type="button" class="btn btn-lg btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存
-            </button>&nbsp;
-        </div>
-    </div>
-    <div th:include="include::footer"></div>
+<!--                        <div class="title">-->
+<!--                            <h4 style="display: inline-block"-->
+<!--                                th:text="${(questionStat.index+1)+'.'+question.title}"></h4>-->
+<!--                            <h4 style="display: inline-block" th:text="${question.choiceA+'（分）'}"></h4>-->
+<!--                        </div>-->
+<!--                        <span th:if="${question.libType eq '1'}"></span>-->
+<!--                        <ul th:if="${question.libType eq '1'}">-->
+<!--                            <li>-->
+<!--                                <h5><input type="radio" name="choice" th:text="${question.choiceA}"></h5>-->
+<!--                                <h5><input type="radio" name="choice" th:text="${question.choiceB}"></h5>-->
+<!--                                <h5><input type="radio" name="choice" th:text="${question.choiceC}"></h5>-->
+<!--                                <h5><input type="radio" name="choice"-->
+<!--                                           th:if="${question.choiceD!='' && question.choiceD!=null}"-->
+<!--                                           th:text="${question.choiceD}"></h5>-->
+<!--                                <h5><input type="radio" name="choice"-->
+<!--                                           th:if="${question.choiceE!='' && question.choiceE!=null}"-->
+<!--                                           th:text="${question.choiceE}"></h5>-->
+<!--                                <h5><input type="radio" name="choice"-->
+<!--                                           th:if="${question.choiceF!='' && question.choiceF!=null}"-->
+<!--                                           th:text="${question.choiceF}"></h5>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <ul th:if="${question.libType eq '2'}">-->
+<!--                            <li>-->
+<!--                                <h5><input type="checkbox" name="choiceA" th:text="${question.choiceA}"></h5>-->
+<!--                                <h5><input type="checkbox" name="choiceA" th:text="${question.choiceB}"></h5>-->
+<!--                                <h5><input type="checkbox" name="choiceA" th:text="${question.choiceC}"></h5>-->
+<!--                                <h5><input type="checkbox" name="choiceA"-->
+<!--                                           th:if="${question.choiceD!='' && question.choiceD!=null}"-->
+<!--                                           th:text="${question.choiceD}"></h5>-->
+<!--                                <h5><input type="checkbox" name="choiceA"-->
+<!--                                           th:if="${question.choiceE!='' && question.choiceE!=null}"-->
+<!--                                           th:text="${question.choiceE}"></h5>-->
+<!--                                <h5><input type="checkbox" name="choiceA"-->
+<!--                                           th:if="${question.choiceF!='' && question.choiceF!=null}"-->
+<!--                                           th:text="${question.choiceF}"></h5>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <ul th:if="${question.libType eq '3'}">-->
+<!--                            <li>-->
+<!--                                <h5 th:each="dayCyc : ${#numbers.sequence(1,question.remark1)}">-->
+<!--                                    <input type="number"  th:max="${question.choiceA}" min="0"  step="0.1" name="choiceA" th:value="${question.choiceA}">-->
+<!--                                </h5>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <ul th:if="${question.libType eq '4'}">-->
+<!--                            <li>-->
+<!--                                <h5><input type="radio" name="choiceA" th:text="${question.choiceA}"></h5>-->
+<!--                                <h5><input type="radio" name="choiceA" th:text="${question.choiceB}"></h5>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <ul th:if="${question.libType eq '5'}">-->
+<!--                            <li>-->
+<!--                                <h5>-->
+<!--                                    <textarea rows="10" cols="80"></textarea>-->
+<!--                                </h5>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                    <input type="hidden" th:value="${article.title}" name="title">-->
+<!--                    <input type="hidden" th:value="1" name="libId">-->
+<!--                    <input type="hidden" th:value="${article.id}" name="choiceG">-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row" style="margin-bottom: 50px;">-->
+<!--        <div class="col-sm-offset-5 col-sm-10">-->
+<!--            <button type="button" class="btn btn-lg btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存-->
+<!--            </button>&nbsp;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div th:include="include::footer"></div>-->
 
-    <script>
-        function submitHandler() {
-            $.operate.save(ctx + "exam/singleChoice" + "/add", $('#questionnaire').serialize());
-        }
-        $(function () {
-            $("input[type=number]").change(function () {
-               var val=parseFloat($(this).val());
-               var max=parseFloat($(this).attr("max"));
-               var min=parseFloat($(this).attr("min"));
+<!--    <script>-->
+<!--        function submitHandler() {-->
+<!--            $.operate.save(ctx + "exam/singleChoice" + "/add", $('#questionnaire').serialize());-->
+<!--        }-->
+<!--        $(function () {-->
+<!--            $("input[type=number]").change(function () {-->
+<!--               var val=parseFloat($(this).val());-->
+<!--               var max=parseFloat($(this).attr("max"));-->
+<!--               var min=parseFloat($(this).attr("min"));-->
 
-               if(val>max || val<min){
-                   $(this).val(max);
-                   alert("请添加正确的分数")
-               }
-            });
-        })
-    </script>
+<!--               if(val>max || val<min){-->
+<!--                   $(this).val(max);-->
+<!--                   alert("请添加正确的分数")-->
+<!--               }-->
+<!--            });-->
+<!--        })-->
+<!--    </script>-->
 </div>
