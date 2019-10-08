@@ -19,6 +19,7 @@ import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.train.domain.Train;
 import com.ruoyi.train.service.ITrainService;
+import com.ruoyi.web.controller.MsgSendService;
 import com.ruoyi.worktask.domain.WorkTask;
 import com.ruoyi.worktask.domain.WorkTaskActivity;
 import com.ruoyi.worktask.domain.WorkTaskFile;
@@ -62,7 +63,8 @@ public class TrainController extends BaseController
 	private IWorkTaskFileService workTaskFileService;
 	@Autowired
 	private ISysDictDataService dictDataService;
-
+	@Autowired
+	private MsgSendService msgSendService;
 
 
 	@RequiresPermissions("train:train:view")
@@ -223,6 +225,14 @@ public class TrainController extends BaseController
 		ProcessInstance processInstance = actTaskService.startProcess("pxsqlc", businessTable, businessId, title, userId, vars);
 		train.setProcessInstanceId(processInstance.getId());
 		trainService.updateTrain(train);
+		//发送短信
+		//请审核xxx的出差申请
+		SysUser zrSysUser = userService.selectUserById(Long.parseLong(train.getBmzr()));
+		if(zrSysUser!=null){
+			msgSendService.send("请审核"+train.getUserName()+"的出差申请",new String[]{zrSysUser.getPhonenumber()});
+		}
+
+
 	}
 	/**
 	 * 修改保存培训审批
@@ -300,6 +310,22 @@ public class TrainController extends BaseController
 			if(taskVO!=null&&taskVO.getKey().equals("zjlsh")){
 				train.setTrainStatus("3");
 				trainService.updateTrain(train);
+			}
+			if(taskVO!=null){
+				SysUser shSysUser=new SysUser();
+				if(taskVO.getKey().equals("zhuren")){
+//					shSysUser=userService.selectUserById(Long.parseLong())
+				}else if(taskVO.getKey().equals("bgssh")){
+
+				}else if(taskVO.getKey().equals("pxwyhbgssh")){
+
+				}else if(taskVO.getKey().equals("jsfzrsh")){
+
+				}else if(taskVO.getKey().equals("zfgzjlsh")){
+
+				}else if(taskVO.getKey().equals("zjlsh")){
+
+				}
 			}
 			if(StringUtils.isEmpty(comment)){
 				comment="同意";

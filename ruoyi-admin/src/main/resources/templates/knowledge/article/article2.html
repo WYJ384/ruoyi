@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+
+<link th:href="@{/ajax/libs/layout-master1.4.3/source/stable/layout-default.css}" rel="stylesheet"/>
+<!--<link type="text/css" rel="stylesheet" href="\ajax\libs\layout-master1.4.3\source\stable\layout-default.css">-->
+<!--<link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>-->
+<style type="text/css">
+	html, body {
+		width:		100%;
+		height:		100%;
+		padding:	0;
+		margin:		0;
+		overflow:	auto; /* when page gets too small */
+	}
+	#container {
+		background:	#999;
+		height:		100%;
+		margin:		0 auto;
+		width:		100%;
+	}
+	.pane {
+		display:	none; /* will appear when layout inits */
+	}
+</style>
+<body class="gray-bg">
+
+<div id="container">
+	<div class="pane ui-layout-center">
+		Center
+		<p><a href="http://layout.jquery-dev.com/demos.cfm"><B>Go to the Demos page</B></a></p>
+	</div>
+	<div class="pane ui-layout-west">West</div>
+</div>
+<script th:src="@{/ajax/libs/layout-master1.4.3/js/jquery.js}"></script>
+<script th:src="@{/ajax/libs/layout-master1.4.3/js/jquery-ui.js}"></script>
+<script th:src="@{/ajax/libs/layout-master1.4.3/source/stable/jquery.layout.js}"></script>
+	<script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+</body>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$('#container').layout();
+	});
+
+
+</script>
+<form id="importForm" enctype="multipart/form-data" class="mt20 mb10" style="display: none;">
+	<div class="col-xs-offset-1">
+		<input type="file" id="file" name="file"/>
+		<div class="mt10 pt5">
+			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+			&nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+		</div>
+		<font color="red" class="pull-left mt10">
+			提示：仅允许导入“xls”或“xlsx”格式文件！
+		</font>
+	</div>
+</form>
+</html>

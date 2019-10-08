@@ -1,14 +1,23 @@
 package com.ruoyi.web.controller;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.jodconverter.DocumentConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -18,8 +27,11 @@ import java.net.URLClassLoader;
 @Controller
 @RequestMapping("/testController")
 public class TestController {
+    @Autowired
+    private HttpServletResponse response;
 
-
+    @Resource
+    private DocumentConverter converter;
     @RequestMapping("/toIndex")
     @ResponseBody
     public String toIndex(String pathName)  {
@@ -78,6 +90,23 @@ public class TestController {
 
     public static void main(String[] args){
         System.out.println("d是是是");
+    }
+
+    @RequestMapping("toPdfFile")
+    public String toPdfFile() {
+        File file = new File("G:\\智慧校园一卡通PPT1.2.ppt");//需要转换的文件
+        try {
+            File newFile = new File("G:/obj-pdf");//转换之后文件生成的地址
+            if (!newFile.exists()) {
+                newFile.mkdirs();
+            }
+            //文件转化
+            converter.convert(file).to(new File("G:/obj-pdf/hello.pdf")).execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "This is to pdf";
     }
 
 }
