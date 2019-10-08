@@ -314,17 +314,18 @@ public class TrainController extends BaseController
 			if(taskVO!=null){
 				SysUser shSysUser=new SysUser();
 				if(taskVO.getKey().equals("zhuren")){
-//					shSysUser=userService.selectUserById(Long.parseLong())
+					shSysUser=userService.selectUserById(Long.parseLong(train.getBgs()));
 				}else if(taskVO.getKey().equals("bgssh")){
-
+					shSysUser=userService.selectUserById(Long.parseLong(train.getPxwyhbgs()));
 				}else if(taskVO.getKey().equals("pxwyhbgssh")){
-
+					shSysUser=userService.selectUserById(Long.parseLong(train.getJsfzr()));
 				}else if(taskVO.getKey().equals("jsfzrsh")){
-
+					shSysUser=userService.selectUserById(Long.parseLong(train.getZfgzjl()));
 				}else if(taskVO.getKey().equals("zfgzjlsh")){
-
-				}else if(taskVO.getKey().equals("zjlsh")){
-
+					shSysUser=userService.selectUserById(Long.parseLong(train.getZjl()));
+				}
+				if(shSysUser!=null&&StringUtils.isNotEmpty(shSysUser.getPhonenumber())){
+					msgSendService.send("请审核"+train.getUserName()+"的出差申请",new String[]{shSysUser.getPhonenumber()});
 				}
 			}
 			if(StringUtils.isEmpty(comment)){
