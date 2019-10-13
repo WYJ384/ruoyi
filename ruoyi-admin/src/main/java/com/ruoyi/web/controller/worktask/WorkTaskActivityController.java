@@ -16,6 +16,7 @@ import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.web.controller.MailSendService;
+import com.ruoyi.web.controller.MsgSendService;
 import com.ruoyi.worktask.domain.WorkTask;
 import com.ruoyi.worktask.domain.WorkTaskFile;
 import com.ruoyi.worktask.service.IWorkTaskFileService;
@@ -82,7 +83,8 @@ public class WorkTaskActivityController extends BaseController {
     private IWorkTaskFileService workTaskFileService;
     @Autowired
     private MailSendService mailSendService;
-
+    @Autowired
+    private MsgSendService msgSendService;
     @RequiresPermissions("worktask:workTaskActivity:view")
     @GetMapping()
     public String workTaskActivity() {
@@ -270,6 +272,8 @@ public class WorkTaskActivityController extends BaseController {
                 actTaskService.completeTask(taskId, vars);
                 try {
                     mailSendService.sendSimpleMails(userIds,"请完成NOC办公系统专项工作任务");
+                    //短信提醒
+                    msgSendService.send("请完成NOC办公系统专项工作任务",new String[]{userIds});
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -288,6 +292,7 @@ public class WorkTaskActivityController extends BaseController {
                 try {
                     if(StringUtils.isNotEmpty(sysUser.getEmail())){
                         mailSendService.sendSimpleMail(sysUser.getEmail(),"NOC办公系统发送","请查看办公系的专项工作:"+workTask.getWorkName());
+                        msgSendService.send("专项工作:"+workTask.getWorkName()+"已提交，请评分",new String[]{sysUser.getPhonenumber()});
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -357,7 +362,18 @@ public class WorkTaskActivityController extends BaseController {
             String instanceid = processInstance.getId();
             workTaskActivity.setProcess_instance_id(instanceid);
             workTaskActivity.setWorkStatus("2");//任务进行中
-            return toAjax(workTaskActivityService.updateWorkTaskActivity(workTaskActivity));
+
+
+            int ret = workTaskActivityService.updateWorkTaskActivity(workTaskActivity);
+
+
+            try {
+                //短信提醒
+                msgSendService.send("专项工作"+workTask.getWorkName()+"目标已添加",usersArr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return toAjax(ret);
         }
         return AjaxResult.error();
     }
