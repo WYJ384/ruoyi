@@ -107,75 +107,7 @@ public class WorkTaskActivityController extends BaseController {
         if(StringUtils.isEmpty(workTaskActivity.getTargetMonth())){
             workTaskActivity.setTargetMonth(DateFormatUtils.format(new Date(),"MM"));
         }
-        List<WorkTaskActivity> list = workTaskActivityService.selectWorkTaskActivityList(workTaskActivity);
-        Iterator<WorkTaskActivity> taskActivityIterator = list.iterator();
-        while (taskActivityIterator.hasNext()){
-            workTaskActivity = taskActivityIterator.next();
-            String process_instance_id = workTaskActivity.getProcess_instance_id();
-            if(StringUtils.isNotEmpty(process_instance_id)){
-                List<HistoricActivityInstance> historicActivityInstances=historyService // 历史相关Service
-                        .createHistoricActivityInstanceQuery() // 创建历史活动实例查询
-                        .processInstanceId(process_instance_id) // 执行流程实例id
-                        .finished()
-                        .orderByHistoricActivityInstanceStartTime().asc()
-                        .list();
-                for(HistoricActivityInstance hai:historicActivityInstances){
-                    HistoryTaskVo historyTaskVo=new HistoryTaskVo();
-                    BeanUtils.copyProperties(hai,historyTaskVo);
-                    SysUser assignee = userService.selectUserByLoginName(historyTaskVo.getAssignee());
-                    if(assignee!=null){
-                        historyTaskVo.setAssignee(assignee.getDept().getDeptName()+assignee.getUserName());
-                    }
-                    String desc="";
-                    if(hai.getActivityId().equalsIgnoreCase("start")){
-                        HistoricVariableInstance zhuren_users = historyService.createHistoricVariableInstanceQuery()
-                                .processInstanceId(process_instance_id)
-                                .variableName("zhuren_users").singleResult();
-                        historyTaskVo.setQueryVariables(zhuren_users.getValue().toString());
-                        desc="待分配";
-                    }else if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
-                        HistoricVariableInstance yuangong_users = historyService.createHistoricVariableInstanceQuery()
-                                .processInstanceId(process_instance_id)
-                                .variableName("yuangong_users").singleResult();
-                        historyTaskVo.setQueryVariables(yuangong_users.getValue().toString());
-                        desc="待提交";
-                    }else if(hai.getActivityId().equalsIgnoreCase("gerentijiao")){
-                        HistoricVariableInstance fenguan_users = historyService.createHistoricVariableInstanceQuery()
-                                .processInstanceId(process_instance_id)
-                                .variableName("fenguan_users").singleResult();
-                        historyTaskVo.setQueryVariables(fenguan_users.getValue().toString());
-                        historyTaskVo.setDescription(historyTaskVo.getAssignee()+"提交工作内容："+workTaskActivity.getContent());
-                        desc="待评分";
-                    }else if(hai.getActivityId().equalsIgnoreCase("lingdaopingfen")){
-                        historyTaskVo.setDescription("分管领导评分:"+workTaskActivity.getTargetScore());
-                        historyTaskVo.setRepContent(workTaskActivity.getRepContent());
-                        desc="任务结束";
-                    }else if(hai.getActivityId().equalsIgnoreCase("end")){
-                        historyTaskVo.setDescription("任务结束");
-                        desc="任务结束";
-                    }
-                    workTaskActivity.setDelFlag(desc);
-                    String queryVariables = historyTaskVo.getQueryVariables();
-                    historyTaskVo.setQueryVariables("");
-                    if(StringUtils.isNotEmpty(queryVariables)){
-                        String[] arrUsers = queryVariables.split(",");
-                        for (String loginName:arrUsers) {
-                            SysUser user = userService.selectUserByLoginName(loginName);
-                            if(user!=null){
-                                historyTaskVo.setQueryVariables(user.getUserName()+",");
-
-                            }
-                        }
-                        if(hai.getActivityId().equalsIgnoreCase("zhurenduban")){
-                            historyTaskVo.setDescription("主任分配任务执行人:"+historyTaskVo.getQueryVariables());
-                        }
-                    }
-                    workTaskActivity.getHistoryTaskVos().add(historyTaskVo);
-                    workTaskActivity.setWorkStatus(historyTaskVo.getQueryVariables());
-                }
-            }
-        }
-        return getDataTable(list);
+        return getDataTable(workTaskActivityService.selectWorkTaskActivityListExt(workTaskActivity));
     }
 
 
@@ -355,6 +287,12 @@ public class WorkTaskActivityController extends BaseController {
                 SysUser sysUser = userService.selectUserById(Long.valueOf(uid));
                 if(sysUser!=null){
                     userIds=sysUser.getLoginName();
+                    try {
+                        //短信提醒
+                        msgSendService.send("专项工作"+workTask.getWorkName()+"目标已添加",new String[]{sysUser.getPhonenumber()});
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             vars.put("zhuren_users", userIds);
@@ -367,12 +305,7 @@ public class WorkTaskActivityController extends BaseController {
             int ret = workTaskActivityService.updateWorkTaskActivity(workTaskActivity);
 
 
-            try {
-                //短信提醒
-                msgSendService.send("专项工作"+workTask.getWorkName()+"目标已添加",usersArr);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
             return toAjax(ret);
         }
         return AjaxResult.error();

@@ -147,11 +147,11 @@ xss:
 # JodConverter Configuration
 # port : 8100, 8101, 8102, 8103, 8104, 8105, 8106, 8107, 8108, 8109
 ##################################################
-jodconverter.local:
-  enabled: true
-  office-home: C:\Users\Miss33\Desktop\office
-  max-tasks-per-process: 10
-  port-numbers: 8100
+#jodconverter.local:
+#  enabled: true
+#  office-home: C:\Users\Miss33\Desktop\office
+#  max-tasks-per-process: 10
+#  port-numbers: 8100
 msg:
   clientId: nocdsj
   password: noc_123

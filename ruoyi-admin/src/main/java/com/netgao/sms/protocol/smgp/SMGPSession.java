@@ -57,7 +57,9 @@ public class SMGPSession implements Session {
         byte[] bContent = null;
         try {
             bContent = content.getBytes("iso-10646-ucs-2");
-        } catch (UnsupportedEncodingException e) {}
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         if (bContent != null && bContent.length <= 140) {
             submit.setBMsgContent(bContent);

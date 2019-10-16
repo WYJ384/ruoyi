@@ -213,4 +213,21 @@ public class WorkTaskServiceImpl implements IWorkTaskService
 		return historyTaskVos;
 	}
 
+	@Override
+	public List<WorkTask> selectNoTargetWorkList(WorkTask workTask) {
+		List<WorkTask> workTasks = workTaskMapper.selectNoTargetWorkList(workTask);
+		Iterator<WorkTask> iterator = workTasks.iterator();
+		while (iterator.hasNext()){
+			WorkTask task = iterator.next();
+			String userIds = task.getUserIds();
+			if(StringUtils.isNotEmpty(userIds)){
+				SysUser sysUser = userService.selectUserById(Long.parseLong(userIds));
+				if(sysUser!=null){
+					task.setPid(sysUser.getPhonenumber());
+				}
+			}
+		}
+		return workTasks;
+	}
+
 }

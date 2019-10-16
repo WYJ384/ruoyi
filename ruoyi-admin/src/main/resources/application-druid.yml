@@ -9,7 +9,7 @@ spring:
         druid:
             # 主库数据源 ry_20190724_140001
             master:
-                url: jdbc:mysql://135.151.0.120:3306/ry_20190929_090001?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                url: jdbc:mysql://135.151.0.120:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: root
                 password: noc_network_ry_admin_pwd
             # 从库数据源

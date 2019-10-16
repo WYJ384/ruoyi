@@ -62,4 +62,12 @@ public interface IWorkTaskService
 	public List<WorkTask> selectWorkTaskListByUserId(WorkTask workTask);
 
 	public List<HistoryTaskVo>  historyTaskList(String processInstanceId);
+
+	/**
+	 * 查询没有添加月度目标的专项
+	 * @param workTask
+	 * @return
+	 */
+	List<WorkTask> selectNoTargetWorkList(WorkTask workTask);
+
 }

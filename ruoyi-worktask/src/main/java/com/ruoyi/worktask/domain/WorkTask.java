@@ -66,6 +66,16 @@ public class WorkTask extends BaseEntity
 
 	/** 牵头部门 */
 	private SysDept leadDept;
+	/** 目标月份 */
+	private String targetMonth;
+
+	public String getTargetMonth() {
+		return targetMonth;
+	}
+
+	public void setTargetMonth(String targetMonth) {
+		this.targetMonth = targetMonth;
+	}
 
 	public SysDept getLeadDept() {
 		return leadDept;

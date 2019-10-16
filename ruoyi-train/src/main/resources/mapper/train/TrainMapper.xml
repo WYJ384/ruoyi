@@ -71,7 +71,7 @@
         <include refid="selectTrainVo"/>
         <where>
             <if test="id != null  and id != '' ">and id = #{id}</if>
-            <if test="userName != null  and userName != '' ">and user_name like concat('%', #{userName}, '%')</if>
+            <if test="userName != null  and userName != '' ">and t.user_name like concat('%', #{userName}, '%')</if>
             <if test="userId != null ">and user_id = #{userId}</if>
             <if test="startDate != null ">and start_date <![CDATA[>= ]]>  #{startDate}</if>
             <if test="endDate != null ">and end_date   <![CDATA[<= ]]> #{endDate}</if>

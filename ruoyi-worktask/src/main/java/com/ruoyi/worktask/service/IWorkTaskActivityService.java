@@ -54,7 +54,10 @@ public interface IWorkTaskActivityService
      */
 	public int deleteWorkTaskActivityByIds(String ids);
 
-	/**
+    List<WorkTaskActivity> selectWorkTaskActivityListExt(WorkTaskActivity workTaskActivity);
+	List<WorkTaskActivity> selectWorkTaskActivityListPhone(WorkTaskActivity workTaskActivity);
+
+    /**
 	 * 查询部门下的主任
 	 * @param deptId
 	 * @return

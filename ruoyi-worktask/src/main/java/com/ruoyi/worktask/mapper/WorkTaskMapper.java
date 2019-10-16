@@ -68,5 +68,6 @@ public interface WorkTaskMapper
 	 * @return 工作任务集合
 	 */
 	public List<WorkTask> selectWorkTaskListByUserId(WorkTask workTask);
-	
+
+    List<WorkTask> selectNoTargetWorkList(WorkTask workTask);
 }

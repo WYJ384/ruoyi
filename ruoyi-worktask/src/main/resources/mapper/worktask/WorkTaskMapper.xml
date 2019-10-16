@@ -33,6 +33,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cooperateDeptName"    column="cooperateDeptName"    />
         <association property="leadDept" column="leader_id" javaType="SysDept" resultMap="leadDeptResult"/>
     </resultMap>
+
+
+
     <resultMap id="leadDeptResult" type="SysDept">
         <id property="deptId" column="dept_id"/>
         <result property="deptName" column="dept_name"/>
@@ -103,6 +106,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         inner JOIN sys_dept leaddept on work_task.lead_dept_id=leaddept.dept_id
         inner JOIN sys_dept cooperdept on work_task.cooperate_dept_id=cooperdept.dept_id
     </sql>
+
+    <select id="selectNoTargetWorkList" resultMap="WorkTaskResult">
+        SELECT
+            id,
+            pid,
+            work_name,
+            rate_progress,
+            description,
+            begin_time,
+            end_time,
+            user_ids,
+            open_question,
+            work_type,
+            result,
+            work_time,
+            work_status,
+            work_task.create_by,
+            work_task.create_time,
+            work_task.update_by,
+            work_task.update_time,
+            work_task.del_flag
+        FROM
+            work_task
+        WHERE
+            work_task.del_flag = '0'
+        AND id NOT IN (
+            SELECT
+                work_task_activity.work_task_id
+            FROM
+                work_task_activity
+            WHERE
+                del_flag = '0'
+            AND work_task_activity.target_month = #{targetMonth}
+        )
+    </select>
+
     <select id="selectWorkTaskListByUserId" parameterType="WorkTask" resultMap="WorkTaskResult">
         <include refid="selectWorkTaskVo"/>
         <where>

@@ -229,6 +229,7 @@ public class TrainController extends BaseController
 		//请审核xxx的出差申请
 		SysUser zrSysUser = userService.selectUserById(Long.parseLong(train.getBmzr()));
 		if(zrSysUser!=null){
+			System.out.println("请审核"+train.getUserName()+"的出差申请"+zrSysUser.getPhonenumber());
 			msgSendService.send("请审核"+train.getUserName()+"的出差申请",new String[]{zrSysUser.getPhonenumber()});
 		}
 

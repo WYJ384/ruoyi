@@ -5,6 +5,8 @@ import com.netgao.sms.protocol.smgp.SMGPConnection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class MsgSendService {
     @Value("${msg.clientId}")
@@ -18,6 +20,7 @@ public class MsgSendService {
     @Value("${msg.spNumber}")
     private String spNumber;
     public void send(String content,String[] phones){
+        System.out.println("短信内容"+content+ "号码："+Arrays.toString(phones));
         SMGPConnection conn = new SMGPConnection();
         conn.setClientId(clientId);
         conn.setPassword(password);
@@ -34,7 +37,9 @@ public class MsgSendService {
             for(int i = 0; i < phones.length; i++) {
                 session.submit(content, spNumber, phones[i]);
             }
+
         }
+
 
     }
 }
