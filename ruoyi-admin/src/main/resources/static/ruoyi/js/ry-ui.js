@@ -1098,7 +1098,24 @@
             endWith: function(value, end) {
                 var reg = new RegExp(end + "$");
                 return reg.test(value)
-            }
+            },
+			// 比较两个字符串（大小写敏感）
+			equals: function (str, that) {
+				return str == that;
+			},
+			// 字符串格式化(%s )
+			sprintf: function (str) {
+				var args = arguments, flag = true, i = 1;
+				str = str.replace(/%s/g, function () {
+					var arg = args[i++];
+					if (typeof arg === 'undefined') {
+						flag = false;
+						return '';
+					}
+					return arg;
+				});
+				return flag ? str : '';
+			}
         }
     });
 })(jQuery);

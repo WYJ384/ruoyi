@@ -31,6 +31,7 @@
         <jsoup.version>1.11.3</jsoup.version>
         <poi.version>3.17</poi.version>
         <velocity.version>1.7</velocity.version>
+        <fastjson.version>1.2.60</fastjson.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -159,6 +160,12 @@
                 <version>${velocity.version}</version>
             </dependency>
 
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
             <!-- 定时任务-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -239,7 +246,11 @@
                 <artifactId>ruoyi-jobsumm</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-projectmanage</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -261,6 +272,7 @@
         <module>ruoyi-jobsumm</module>
         <module>ruoyi-train</module>
         <module>ruoyi-bbs</module>
+        <module>ruoyi-projectmanage</module>
     </modules>
     <packaging>pom</packaging>
 
