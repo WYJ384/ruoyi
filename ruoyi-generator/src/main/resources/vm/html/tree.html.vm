@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('${functionName}树选择')" />
+    <head th:include="include :: header"></head>
     <th:block th:include="include :: ztree-css" />
 </head>
 <style>

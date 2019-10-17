@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('${functionName}列表')" />
+    <head th:include="include :: header"></head>
 </head>
 <body class="gray-bg">
      <div class="container-div">
