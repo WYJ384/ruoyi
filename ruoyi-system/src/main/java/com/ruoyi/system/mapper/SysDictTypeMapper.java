@@ -74,4 +74,11 @@ public interface SysDictTypeMapper
      * @return 结果
      */
     public SysDictType checkDictTypeUnique(String dictType);
+    /**
+     * 根据字典类型查询信息
+     *
+     * @param dictType 字典类型
+     * @return 字典类型
+     */
+    SysDictType selectDictTypeByType(String dictType);
 }

@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.system.domain.SysDictType;
 
 /**
@@ -73,4 +75,13 @@ public interface ISysDictTypeService
      * @return 结果
      */
     public String checkDictTypeUnique(SysDictType dictType);
+
+    SysDictType selectDictTypeByType(String dictType);
+    /**
+     * 查询字典类型树
+     *
+     * @param dictType 字典类型
+     * @return 所有字典类型
+     */
+    List<Ztree> selectDictTree(SysDictType dictType);
 }

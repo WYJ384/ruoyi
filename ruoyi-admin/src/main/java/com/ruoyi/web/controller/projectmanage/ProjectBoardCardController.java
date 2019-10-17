@@ -5,7 +5,9 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.projectmanage.domain.ProjectBoardCard;
 import com.ruoyi.projectmanage.service.IProjectBoardCardService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -14,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 板卡扩容工程管理模板Controller
@@ -82,6 +86,9 @@ public class ProjectBoardCardController extends BaseController
     @ResponseBody
     public AjaxResult addSave(ProjectBoardCard projectBoardCard)
     {
+        projectBoardCard.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        projectBoardCard.setCreateDate(new Date());
+        projectBoardCard.setCreateBy(ShiroUtils.getUserId()+"");
         return toAjax(projectBoardCardService.insertProjectBoardCard(projectBoardCard));
     }
 
@@ -105,6 +112,8 @@ public class ProjectBoardCardController extends BaseController
     @ResponseBody
     public AjaxResult editSave(ProjectBoardCard projectBoardCard)
     {
+        projectBoardCard.setUpdateDate(new Date());
+        projectBoardCard.setUpdateBy(ShiroUtils.getUserId()+"");
         return toAjax(projectBoardCardService.updateProjectBoardCard(projectBoardCard));
     }
 

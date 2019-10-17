@@ -26,7 +26,8 @@ public class UserConstants
 
     /** 部门正常状态 */
     public static final String DEPT_NORMAL = "0";
-
+    /** 字典正常状态 */
+    public static final String DICT_NORMAL = "0";
     /**
      * 用户名长度限制
      */

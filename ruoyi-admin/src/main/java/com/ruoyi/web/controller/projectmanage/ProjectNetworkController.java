@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.projectmanage.domain.ProjectNetwork;
 import com.ruoyi.projectmanage.service.IProjectNetworkService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 设备入网工程管理模板Controller
@@ -82,6 +85,9 @@ public class ProjectNetworkController extends BaseController
     @ResponseBody
     public AjaxResult addSave(ProjectNetwork projectNetwork)
     {
+        projectNetwork.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        projectNetwork.setCreateDate(new Date());
+        projectNetwork.setCreateBy(ShiroUtils.getUserId()+"");
         return toAjax(projectNetworkService.insertProjectNetwork(projectNetwork));
     }
 
@@ -105,6 +111,8 @@ public class ProjectNetworkController extends BaseController
     @ResponseBody
     public AjaxResult editSave(ProjectNetwork projectNetwork)
     {
+        projectNetwork.setUpdateDate(new Date());
+        projectNetwork.setUpdateBy(ShiroUtils.getUserId()+"");
         return toAjax(projectNetworkService.updateProjectNetwork(projectNetwork));
     }
 

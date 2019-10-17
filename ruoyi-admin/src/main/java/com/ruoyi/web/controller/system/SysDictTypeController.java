@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.Ztree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -144,5 +146,29 @@ public class SysDictTypeController extends BaseController
     public String checkDictTypeUnique(SysDictType dictType)
     {
         return dictTypeService.checkDictTypeUnique(dictType);
+    }
+
+    /**
+     * 选择字典树
+     */
+    @GetMapping("/selectDictTree/{columnId}/{dictType}")
+    public String selectDeptTree(@PathVariable("columnId") Long columnId, @PathVariable("dictType") String dictType,
+                                 ModelMap mmap)
+    {
+        mmap.put("columnId", columnId);
+        mmap.put("dict", dictTypeService.selectDictTypeByType(dictType));
+        return prefix + "/tree";
+    }
+
+
+    /**
+     * 加载字典列表树
+     */
+    @GetMapping("/treeData")
+    @ResponseBody
+    public List<Ztree> treeData()
+    {
+        List<Ztree> ztrees = dictTypeService.selectDictTree(new SysDictType());
+        return ztrees;
     }
 }
