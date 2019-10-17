@@ -2,13 +2,14 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.projectmanage.mapper.ProjectNetworkMapper">
+<mapper namespace="com.ruoyi.projectmanage.mapper.ProjectEquiReplaceMapper">
     
-    <resultMap type="ProjectNetwork" id="ProjectNetworkResult">
+    <resultMap type="ProjectEquiReplace" id="ProjectEquiReplaceResult">
         <result property="id"    column="id"    />
-        <result property="onlineName"    column="online_name"    />
-        <result property="onlineIp"    column="online_ip"    />
-        <result property="onlineTime"    column="online_time"    />
+        <result property="sourceName"    column="source_name"    />
+        <result property="nowName"    column="now_name"    />
+        <result property="replaceIp"    column="replace_ip"    />
+        <result property="replaceTime"    column="replace_time"    />
         <result property="factoryNo"    column="factory_no"    />
         <result property="proFullName"    column="pro_full_name"    />
         <result property="loc"    column="loc"    />
@@ -30,16 +31,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark1"    column="remark1"    />
     </resultMap>
 
-    <sql id="selectProjectNetworkVo">
-        select id, online_name, online_ip, online_time, factory_no, pro_full_name, loc, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10, remark2, create_by, create_date, update_by, update_date, remark, del_flag, remark1 from project_network
+    <sql id="selectProjectEquiReplaceVo">
+        select id, source_name, now_name, replace_ip, replace_time, factory_no, pro_full_name, loc, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10, remark2, create_by, create_date, update_by, update_date, remark, del_flag, remark1 from project_equi_replace
     </sql>
 
-    <select id="selectProjectNetworkList" parameterType="ProjectNetwork" resultMap="ProjectNetworkResult">
-        <include refid="selectProjectNetworkVo"/>
+    <select id="selectProjectEquiReplaceList" parameterType="ProjectEquiReplace" resultMap="ProjectEquiReplaceResult">
+        <include refid="selectProjectEquiReplaceVo"/>
         <where>  
-            <if test="onlineName != null  and onlineName != ''"> and online_name like concat('%', #{onlineName}, '%')</if>
-            <if test="onlineIp != null  and onlineIp != ''"> and online_ip = #{onlineIp}</if>
-            <if test="onlineTime != null "> and online_time = #{onlineTime}</if>
+            <if test="sourceName != null  and sourceName != ''"> and source_name like concat('%', #{sourceName}, '%')</if>
+            <if test="nowName != null  and nowName != ''"> and now_name like concat('%', #{nowName}, '%')</if>
+            <if test="replaceIp != null  and replaceIp != ''"> and replace_ip = #{replaceIp}</if>
+            <if test="replaceTime != null "> and replace_time = #{replaceTime}</if>
             <if test="factoryNo != null  and factoryNo != ''"> and factory_no = #{factoryNo}</if>
             <if test="proFullName != null  and proFullName != ''"> and pro_full_name like concat('%', #{proFullName}, '%')</if>
             <if test="loc != null  and loc != ''"> and loc = #{loc}</if>
@@ -47,18 +49,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectProjectNetworkById" parameterType="String" resultMap="ProjectNetworkResult">
-        <include refid="selectProjectNetworkVo"/>
+    <select id="selectProjectEquiReplaceById" parameterType="String" resultMap="ProjectEquiReplaceResult">
+        <include refid="selectProjectEquiReplaceVo"/>
         where id = #{id} and del_flag=0
     </select>
         
-    <insert id="insertProjectNetwork" parameterType="ProjectNetwork">
-        insert into project_network
+    <insert id="insertProjectEquiReplace" parameterType="ProjectEquiReplace">
+        insert into project_equi_replace
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null  and id != ''">id,</if>
-            <if test="onlineName != null  and onlineName != ''">online_name,</if>
-            <if test="onlineIp != null  and onlineIp != ''">online_ip,</if>
-            <if test="onlineTime != null ">online_time,</if>
+            <if test="sourceName != null  and sourceName != ''">source_name,</if>
+            <if test="nowName != null  and nowName != ''">now_name,</if>
+            <if test="replaceIp != null  and replaceIp != ''">replace_ip,</if>
+            <if test="replaceTime != null ">replace_time,</if>
             <if test="factoryNo != null  and factoryNo != ''">factory_no,</if>
             <if test="proFullName != null  and proFullName != ''">pro_full_name,</if>
             <if test="loc != null  and loc != ''">loc,</if>
@@ -81,9 +84,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  and id != ''">#{id},</if>
-            <if test="onlineName != null  and onlineName != ''">#{onlineName},</if>
-            <if test="onlineIp != null  and onlineIp != ''">#{onlineIp},</if>
-            <if test="onlineTime != null ">#{onlineTime},</if>
+            <if test="sourceName != null  and sourceName != ''">#{sourceName},</if>
+            <if test="nowName != null  and nowName != ''">#{nowName},</if>
+            <if test="replaceIp != null  and replaceIp != ''">#{replaceIp},</if>
+            <if test="replaceTime != null ">#{replaceTime},</if>
             <if test="factoryNo != null  and factoryNo != ''">#{factoryNo},</if>
             <if test="proFullName != null  and proFullName != ''">#{proFullName},</if>
             <if test="loc != null  and loc != ''">#{loc},</if>
@@ -106,12 +110,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateProjectNetwork" parameterType="ProjectNetwork">
-        update project_network
+    <update id="updateProjectEquiReplace" parameterType="ProjectEquiReplace">
+        update project_equi_replace
         <trim prefix="SET" suffixOverrides=",">
-            <if test="onlineName != null  and onlineName != ''">online_name = #{onlineName},</if>
-            <if test="onlineIp != null  and onlineIp != ''">online_ip = #{onlineIp},</if>
-            <if test="onlineTime != null ">online_time = #{onlineTime},</if>
+            <if test="sourceName != null  and sourceName != ''">source_name = #{sourceName},</if>
+            <if test="nowName != null  and nowName != ''">now_name = #{nowName},</if>
+            <if test="replaceIp != null  and replaceIp != ''">replace_ip = #{replaceIp},</if>
+            <if test="replaceTime != null ">replace_time = #{replaceTime},</if>
             <if test="factoryNo != null  and factoryNo != ''">factory_no = #{factoryNo},</if>
             <if test="proFullName != null  and proFullName != ''">pro_full_name = #{proFullName},</if>
             <if test="loc != null  and loc != ''">loc = #{loc},</if>
@@ -135,12 +140,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteProjectNetworkById" parameterType="String">
-        update  project_network set del_flag='1' where id = #{id}
+    <delete id="deleteProjectEquiReplaceById" parameterType="String">
+        update  project_equi_replace set del_flag='1' where id = #{id}
     </delete>
 
-    <delete id="deleteProjectNetworkByIds" parameterType="String">
-        update  project_network set del_flag='1'  where id in
+    <delete id="deleteProjectEquiReplaceByIds" parameterType="String">
+        update  project_equi_replace set del_flag='1'  where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

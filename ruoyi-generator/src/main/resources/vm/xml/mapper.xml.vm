@@ -46,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #end
 #end
 #end
+            and del_flag=0
         </where>
 #if($table.tree)
         order by ${tree_parent_code}
@@ -55,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="select${ClassName}ById" parameterType="${pkColumn.javaType}" resultMap="${ClassName}Result">
 #if($table.crud)
         <include refid="select${ClassName}Vo"/>
-        where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+        where ${pkColumn.columnName} = #{${pkColumn.javaField}} and del_flag=0
 #elseif($table.tree)
         select#foreach($column in $columns) t.$column.columnName,#end p.${tree_name} as parent_name
         from ${tableName} t
@@ -95,11 +96,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="delete${ClassName}ById" parameterType="${pkColumn.javaType}">
-        delete from ${tableName} where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+        update  ${tableName} set del_flag='1' where ${pkColumn.columnName} = #{${pkColumn.javaField}}
     </delete>
 
     <delete id="delete${ClassName}ByIds" parameterType="String">
-        delete from ${tableName} where ${pkColumn.columnName} in 
+        update  ${tableName} set del_flag='1'  where ${pkColumn.columnName} in
         <foreach item="${pkColumn.javaField}" collection="array" open="(" separator="," close=")">
             #{${pkColumn.javaField}}
         </foreach>

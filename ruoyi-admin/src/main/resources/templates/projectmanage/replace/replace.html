@@ -11,18 +11,22 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <p>上线设备名称：</p>
-                                <input type="text" name="onlineName"/>
+                                <p>原替换设备名称：</p>
+                                <input type="text" name="sourceName"/>
                             </li>
                             <li>
-                                <p>上线设备IP：</p>
-                                <input type="text" name="onlineIp"/>
+                                <p>现替换设备名称：</p>
+                                <input type="text" name="nowName"/>
+                            </li>
+                            <li>
+                                <p>替换设备IP：</p>
+                                <input type="text" name="replaceIp"/>
                             </li>
                             <li class="select-time">
-                                <p>设备上线时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginOnlineTime]"/>
+                                <p>替换时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginReplaceTime]"/>
                                 <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endOnlineTime]"/>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endReplaceTime]"/>
                             </li>
                             <li>
                                 <p>工程设计全称：</p>
@@ -38,16 +42,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="projectmanage:network:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="projectmanage:replace:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="projectmanage:network:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="projectmanage:replace:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="projectmanage:network:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="projectmanage:replace:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="projectmanage:network:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="projectmanage:replace:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -58,9 +62,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('projectmanage:network:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('projectmanage:network:remove')}]];
-        var prefix = ctx + "projectmanage/network";
+        var editFlag = [[${@permission.hasPermi('projectmanage:replace:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('projectmanage:replace:remove')}]];
+        var prefix = ctx + "projectmanage/replace";
 
         $(function() {
             var options = {
@@ -69,7 +73,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "设备入网工程管理模板",
+                modalName: "设备替换工程管理模板",
                 columns: [{
                     checkbox: true
                 },
@@ -79,20 +83,24 @@
                     visible: false
                 },
                 {
-                    field : 'onlineName', 
-                    title : '上线设备名称'
+                    field : 'sourceName', 
+                    title : '原替换设备名称'
                 },
                 {
-                    field : 'onlineIp', 
-                    title : '上线设备IP'
+                    field : 'nowName', 
+                    title : '现替换设备名称'
                 },
                 {
-                    field : 'onlineTime', 
-                    title : '设备上线时间'
+                    field : 'replaceIp', 
+                    title : '替换设备IP'
+                },
+                {
+                    field : 'replaceTime', 
+                    title : '替换时间'
                 },
                 {
                     field : 'factoryNo', 
-                    title : '设备厂家及型号'
+                    title : '现替换设备厂家及型号'
                 },
                 {
                     field : 'proFullName', 
@@ -100,7 +108,7 @@
                 },
                 {
                     field : 'loc', 
-                    title : '节点位置'
+                    title : '替换设备节点'
                 },
                 {
                     title: '操作',

@@ -7,41 +7,41 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import java.util.Date;
 
 /**
- * 设备入网工程管理模板对象 project_network
+ * 板卡扩容工程管理模板对象 project_board_card
  * 
  * @author ruoyi
  * @date 2019-10-17
  */
-public class ProjectNetwork extends BaseEntity
+public class ProjectBoardCard extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 主键 */
     private String id;
 
-    /** 上线设备名称 */
-    @Excel(name = "上线设备名称")
-    private String onlineName;
+    /** 扩容设备名称 */
+    @Excel(name = "扩容设备名称")
+    private String name;
 
-    /** 上线设备IP */
-    @Excel(name = "上线设备IP")
-    private String onlineIp;
+    /** 扩容设备管理地址 */
+    @Excel(name = "扩容设备管理地址")
+    private String manageLoc;
 
-    /** 设备上线时间 */
-    @Excel(name = "设备上线时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date onlineTime;
-
-    /** 设备厂家及型号 */
-    @Excel(name = "设备厂家及型号")
-    private String factoryNo;
+    /** 板卡扩容槽位 */
+    @Excel(name = "板卡扩容槽位")
+    private String boardSlot;
 
     /** 工程设计全称 */
     @Excel(name = "工程设计全称")
     private String proFullName;
 
-    /** 节点位置 */
-    @Excel(name = "节点位置")
+    /** 扩容时间 */
+    @Excel(name = "扩容时间")
     private String loc;
+
+    /** 设备厂家及型号 */
+    @Excel(name = "设备厂家及型号", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date extTime;
 
     /** 扩展3 */
     private String remark3;
@@ -91,41 +91,32 @@ public class ProjectNetwork extends BaseEntity
     {
         return id;
     }
-    public void setOnlineName(String onlineName) 
+    public void setName(String name) 
     {
-        this.onlineName = onlineName;
+        this.name = name;
     }
 
-    public String getOnlineName() 
+    public String getName() 
     {
-        return onlineName;
+        return name;
     }
-    public void setOnlineIp(String onlineIp) 
+    public void setManageLoc(String manageLoc) 
     {
-        this.onlineIp = onlineIp;
-    }
-
-    public String getOnlineIp() 
-    {
-        return onlineIp;
-    }
-    public void setOnlineTime(Date onlineTime) 
-    {
-        this.onlineTime = onlineTime;
+        this.manageLoc = manageLoc;
     }
 
-    public Date getOnlineTime() 
+    public String getManageLoc() 
     {
-        return onlineTime;
+        return manageLoc;
     }
-    public void setFactoryNo(String factoryNo) 
+    public void setBoardSlot(String boardSlot) 
     {
-        this.factoryNo = factoryNo;
+        this.boardSlot = boardSlot;
     }
 
-    public String getFactoryNo() 
+    public String getBoardSlot() 
     {
-        return factoryNo;
+        return boardSlot;
     }
     public void setProFullName(String proFullName) 
     {
@@ -144,6 +135,15 @@ public class ProjectNetwork extends BaseEntity
     public String getLoc() 
     {
         return loc;
+    }
+    public void setExtTime(Date extTime) 
+    {
+        this.extTime = extTime;
+    }
+
+    public Date getExtTime() 
+    {
+        return extTime;
     }
     public void setRemark3(String remark3) 
     {
@@ -267,12 +267,12 @@ public class ProjectNetwork extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("onlineName", getOnlineName())
-            .append("onlineIp", getOnlineIp())
-            .append("onlineTime", getOnlineTime())
-            .append("factoryNo", getFactoryNo())
+            .append("name", getName())
+            .append("manageLoc", getManageLoc())
+            .append("boardSlot", getBoardSlot())
             .append("proFullName", getProFullName())
             .append("loc", getLoc())
+            .append("extTime", getExtTime())
             .append("remark3", getRemark3())
             .append("remark4", getRemark4())
             .append("remark5", getRemark5())

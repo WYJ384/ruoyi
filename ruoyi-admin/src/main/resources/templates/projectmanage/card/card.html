@@ -11,22 +11,22 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <p>上线设备名称：</p>
-                                <input type="text" name="onlineName"/>
+                                <p>扩容设备名称：</p>
+                                <input type="text" name="name"/>
                             </li>
                             <li>
-                                <p>上线设备IP：</p>
-                                <input type="text" name="onlineIp"/>
-                            </li>
-                            <li class="select-time">
-                                <p>设备上线时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginOnlineTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endOnlineTime]"/>
+                                <p>板卡扩容槽位：</p>
+                                <input type="text" name="boardSlot"/>
                             </li>
                             <li>
                                 <p>工程设计全称：</p>
                                 <input type="text" name="proFullName"/>
+                            </li>
+                            <li class="select-time">
+                                <p>设备厂家及型号：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginExtTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endExtTime]"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -38,16 +38,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="projectmanage:network:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="projectmanage:card:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="projectmanage:network:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="projectmanage:card:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="projectmanage:network:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="projectmanage:card:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="projectmanage:network:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="projectmanage:card:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -58,9 +58,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('projectmanage:network:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('projectmanage:network:remove')}]];
-        var prefix = ctx + "projectmanage/network";
+        var editFlag = [[${@permission.hasPermi('projectmanage:card:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('projectmanage:card:remove')}]];
+        var prefix = ctx + "projectmanage/card";
 
         $(function() {
             var options = {
@@ -69,7 +69,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "设备入网工程管理模板",
+                modalName: "板卡扩容工程管理模板",
                 columns: [{
                     checkbox: true
                 },
@@ -79,20 +79,16 @@
                     visible: false
                 },
                 {
-                    field : 'onlineName', 
-                    title : '上线设备名称'
+                    field : 'name', 
+                    title : '扩容设备名称'
                 },
                 {
-                    field : 'onlineIp', 
-                    title : '上线设备IP'
+                    field : 'manageLoc', 
+                    title : '扩容设备管理地址'
                 },
                 {
-                    field : 'onlineTime', 
-                    title : '设备上线时间'
-                },
-                {
-                    field : 'factoryNo', 
-                    title : '设备厂家及型号'
+                    field : 'boardSlot', 
+                    title : '板卡扩容槽位'
                 },
                 {
                     field : 'proFullName', 
@@ -100,7 +96,11 @@
                 },
                 {
                     field : 'loc', 
-                    title : '节点位置'
+                    title : '扩容时间'
+                },
+                {
+                    field : 'extTime', 
+                    title : '设备厂家及型号'
                 },
                 {
                     title: '操作',

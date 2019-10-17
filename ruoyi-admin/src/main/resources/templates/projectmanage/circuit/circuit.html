@@ -11,18 +11,18 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <p>上线设备名称：</p>
-                                <input type="text" name="onlineName"/>
+                                <p>扩容设备名称：</p>
+                                <input type="text" name="name"/>
                             </li>
                             <li>
-                                <p>上线设备IP：</p>
-                                <input type="text" name="onlineIp"/>
+                                <p>扩容设备IP：</p>
+                                <input type="text" name="ip"/>
                             </li>
                             <li class="select-time">
-                                <p>设备上线时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginOnlineTime]"/>
+                                <p>扩容时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
                                 <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endOnlineTime]"/>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
                             </li>
                             <li>
                                 <p>工程设计全称：</p>
@@ -38,16 +38,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="projectmanage:network:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="projectmanage:circuit:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="projectmanage:network:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="projectmanage:circuit:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="projectmanage:network:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="projectmanage:circuit:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="projectmanage:network:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="projectmanage:circuit:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -58,9 +58,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('projectmanage:network:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('projectmanage:network:remove')}]];
-        var prefix = ctx + "projectmanage/network";
+        var editFlag = [[${@permission.hasPermi('projectmanage:circuit:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('projectmanage:circuit:remove')}]];
+        var prefix = ctx + "projectmanage/circuit";
 
         $(function() {
             var options = {
@@ -79,19 +79,19 @@
                     visible: false
                 },
                 {
-                    field : 'onlineName', 
-                    title : '上线设备名称'
+                    field : 'name', 
+                    title : '扩容设备名称'
                 },
                 {
-                    field : 'onlineIp', 
-                    title : '上线设备IP'
+                    field : 'ip', 
+                    title : '扩容设备IP'
                 },
                 {
-                    field : 'onlineTime', 
-                    title : '设备上线时间'
+                    field : 'time', 
+                    title : '扩容时间'
                 },
                 {
-                    field : 'factoryNo', 
+                    field : 'port', 
                     title : '设备厂家及型号'
                 },
                 {
@@ -100,7 +100,7 @@
                 },
                 {
                     field : 'loc', 
-                    title : '节点位置'
+                    title : '扩容节点'
                 },
                 {
                     title: '操作',
