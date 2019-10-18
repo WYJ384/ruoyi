@@ -10,7 +10,7 @@ import java.util.Date;
  * 板卡扩容工程管理模板对象 project_board_card
  * 
  * @author ruoyi
- * @date 2019-10-17
+ * @date 2019-10-18
  */
 public class ProjectBoardCard extends BaseEntity
 {
@@ -35,12 +35,12 @@ public class ProjectBoardCard extends BaseEntity
     @Excel(name = "工程设计全称")
     private String proFullName;
 
-    /** 扩容时间 */
-    @Excel(name = "扩容时间")
+    /** 扩容设备节点 */
+    @Excel(name = "扩容设备节点")
     private String loc;
 
-    /** 设备厂家及型号 */
-    @Excel(name = "设备厂家及型号", width = 30, dateFormat = "yyyy-MM-dd")
+    /** 扩容时间 */
+    @Excel(name = "扩容时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date extTime;
 
     /** 扩展3 */

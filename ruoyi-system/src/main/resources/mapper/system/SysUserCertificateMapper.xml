@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysUserCertificateMapper">
+    
+    <resultMap type="SysUserCertificate" id="SysUserCertificateResult">
+        <result property="id"    column="id"    />
+        <result property="certLevel"    column="cert_level"    />
+        <result property="certType"    column="cert_type"    />
+        <result property="name"    column="name"    />
+        <result property="userName"    column="user_name"    />
+        <result property="certNo"    column="cert_no"    />
+        <result property="userId"    column="user_id"    />
+        <result property="certTime"    column="cert_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="certImg"    column="cert_img"    />
+        <result property="remark3"    column="remark3"    />
+        <result property="remark4"    column="remark4"    />
+        <result property="remark5"    column="remark5"    />
+        <result property="remark6"    column="remark6"    />
+        <result property="remark7"    column="remark7"    />
+        <result property="remark8"    column="remark8"    />
+        <result property="remark9"    column="remark9"    />
+        <result property="remark10"    column="remark10"    />
+        <result property="remark2"    column="remark2"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark1"    column="remark1"    />
+    </resultMap>
+
+    <sql id="selectSysUserCertificateVo">
+        select id, cert_level, cert_type, name, user_name, cert_no, user_id, cert_time, end_time, cert_img, remark3, remark4, remark5, remark6, remark7, remark8, remark9, remark10, remark2, create_by, create_date, update_by, update_date, remark, del_flag, remark1 from sys_user_certificate
+    </sql>
+
+    <select id="selectSysUserCertificateList" parameterType="SysUserCertificate" resultMap="SysUserCertificateResult">
+        <include refid="selectSysUserCertificateVo"/>
+        <where>  
+            <if test="certLevel != null  and certLevel != ''"> and cert_level = #{certLevel}</if>
+            <if test="certType != null  and certType != ''"> and cert_type = #{certType}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="certNo != null  and certNo != ''"> and cert_no = #{certNo}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="certTime != null "> and cert_time = #{certTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="certImg != null  and certImg != ''"> and cert_img = #{certImg}</if>
+            and del_flag=0
+        </where>
+    </select>
+    
+    <select id="selectSysUserCertificateById" parameterType="String" resultMap="SysUserCertificateResult">
+        <include refid="selectSysUserCertificateVo"/>
+        where id = #{id} and del_flag=0
+    </select>
+        
+    <insert id="insertSysUserCertificate" parameterType="SysUserCertificate">
+        insert into sys_user_certificate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">id,</if>
+            <if test="certLevel != null  and certLevel != ''">cert_level,</if>
+            <if test="certType != null  and certType != ''">cert_type,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="userName != null  and userName != ''">user_name,</if>
+            <if test="certNo != null  and certNo != ''">cert_no,</if>
+            <if test="userId != null  and userId != ''">user_id,</if>
+            <if test="certTime != null ">cert_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="certImg != null  and certImg != ''">cert_img,</if>
+            <if test="remark3 != null  and remark3 != ''">remark3,</if>
+            <if test="remark4 != null  and remark4 != ''">remark4,</if>
+            <if test="remark5 != null  and remark5 != ''">remark5,</if>
+            <if test="remark6 != null  and remark6 != ''">remark6,</if>
+            <if test="remark7 != null  and remark7 != ''">remark7,</if>
+            <if test="remark8 != null  and remark8 != ''">remark8,</if>
+            <if test="remark9 != null  and remark9 != ''">remark9,</if>
+            <if test="remark10 != null  and remark10 != ''">remark10,</if>
+            <if test="remark2 != null  and remark2 != ''">remark2,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createDate != null ">create_date,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateDate != null ">update_date,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag,</if>
+            <if test="remark1 != null  and remark1 != ''">remark1,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="certLevel != null  and certLevel != ''">#{certLevel},</if>
+            <if test="certType != null  and certType != ''">#{certType},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="userName != null  and userName != ''">#{userName},</if>
+            <if test="certNo != null  and certNo != ''">#{certNo},</if>
+            <if test="userId != null  and userId != ''">#{userId},</if>
+            <if test="certTime != null ">#{certTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="certImg != null  and certImg != ''">#{certImg},</if>
+            <if test="remark3 != null  and remark3 != ''">#{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''">#{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''">#{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''">#{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''">#{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''">#{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''">#{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''">#{remark10},</if>
+            <if test="remark2 != null  and remark2 != ''">#{remark2},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+            <if test="remark1 != null  and remark1 != ''">#{remark1},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysUserCertificate" parameterType="SysUserCertificate">
+        update sys_user_certificate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="certLevel != null  and certLevel != ''">cert_level = #{certLevel},</if>
+            <if test="certType != null  and certType != ''">cert_type = #{certType},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="userName != null  and userName != ''">user_name = #{userName},</if>
+            <if test="certNo != null  and certNo != ''">cert_no = #{certNo},</if>
+            <if test="userId != null  and userId != ''">user_id = #{userId},</if>
+            <if test="certTime != null ">cert_time = #{certTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="certImg != null  and certImg != ''">cert_img = #{certImg},</if>
+            <if test="remark3 != null  and remark3 != ''">remark3 = #{remark3},</if>
+            <if test="remark4 != null  and remark4 != ''">remark4 = #{remark4},</if>
+            <if test="remark5 != null  and remark5 != ''">remark5 = #{remark5},</if>
+            <if test="remark6 != null  and remark6 != ''">remark6 = #{remark6},</if>
+            <if test="remark7 != null  and remark7 != ''">remark7 = #{remark7},</if>
+            <if test="remark8 != null  and remark8 != ''">remark8 = #{remark8},</if>
+            <if test="remark9 != null  and remark9 != ''">remark9 = #{remark9},</if>
+            <if test="remark10 != null  and remark10 != ''">remark10 = #{remark10},</if>
+            <if test="remark2 != null  and remark2 != ''">remark2 = #{remark2},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createDate != null ">create_date = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateDate != null ">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="remark1 != null  and remark1 != ''">remark1 = #{remark1},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysUserCertificateById" parameterType="String">
+        update  sys_user_certificate set del_flag='1' where id = #{id}
+    </delete>
+
+    <delete id="deleteSysUserCertificateByIds" parameterType="String">
+        update  sys_user_certificate set del_flag='1'  where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

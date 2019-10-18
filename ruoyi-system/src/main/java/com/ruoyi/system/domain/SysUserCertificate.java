@@ -1,4 +1,4 @@
-package com.ruoyi.projectmanage.domain;
+package com.ruoyi.system.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -7,41 +7,53 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import java.util.Date;
 
 /**
- * 中继电路扩容工程管理对象 project_junction_circuit
+ * 证书管理对象 sys_user_certificate
  * 
  * @author ruoyi
  * @date 2019-10-18
  */
-public class ProjectJunctionCircuit extends BaseEntity
+public class SysUserCertificate extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 主键 */
     private String id;
 
-    /** 扩容设备名称 */
-    @Excel(name = "扩容设备名称")
+    /** 证书级别 */
+    @Excel(name = "证书级别")
+    private String certLevel;
+
+    /** 证书类型 */
+    @Excel(name = "证书类型")
+    private String certType;
+
+    /** 证书名称 */
+    @Excel(name = "证书名称")
     private String name;
 
-    /** 扩容设备IP */
-    @Excel(name = "扩容设备IP")
-    private String ip;
+    /** 姓名 */
+    @Excel(name = "姓名")
+    private String userName;
 
-    /** 扩容时间 */
-    @Excel(name = "扩容时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date time;
+    /** 证书编号 */
+    @Excel(name = "证书编号")
+    private String certNo;
 
-    /** 扩容端口及传输代号 */
-    @Excel(name = "扩容端口及传输代号")
-    private String port;
+    /** 用户ID */
+    @Excel(name = "用户ID")
+    private String userId;
 
-    /** 工程设计全称 */
-    @Excel(name = "工程设计全称")
-    private String proFullName;
+    /** 颁发日期 */
+    @Excel(name = "颁发日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date certTime;
 
-    /** 扩容节点 */
-    @Excel(name = "扩容节点")
-    private String loc;
+    /** 有效期至 */
+    @Excel(name = "有效期至", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date endTime;
+
+    /** 证书扫描件 */
+    @Excel(name = "证书扫描件")
+    private String certImg;
 
     /** 扩展3 */
     private String remark3;
@@ -91,6 +103,24 @@ public class ProjectJunctionCircuit extends BaseEntity
     {
         return id;
     }
+    public void setCertLevel(String certLevel) 
+    {
+        this.certLevel = certLevel;
+    }
+
+    public String getCertLevel() 
+    {
+        return certLevel;
+    }
+    public void setCertType(String certType) 
+    {
+        this.certType = certType;
+    }
+
+    public String getCertType() 
+    {
+        return certType;
+    }
     public void setName(String name) 
     {
         this.name = name;
@@ -100,50 +130,59 @@ public class ProjectJunctionCircuit extends BaseEntity
     {
         return name;
     }
-    public void setIp(String ip) 
+    public void setUserName(String userName) 
     {
-        this.ip = ip;
+        this.userName = userName;
     }
 
-    public String getIp() 
+    public String getUserName() 
     {
-        return ip;
+        return userName;
     }
-    public void setTime(Date time) 
+    public void setCertNo(String certNo) 
     {
-        this.time = time;
-    }
-
-    public Date getTime() 
-    {
-        return time;
-    }
-    public void setPort(String port) 
-    {
-        this.port = port;
+        this.certNo = certNo;
     }
 
-    public String getPort() 
+    public String getCertNo() 
     {
-        return port;
+        return certNo;
     }
-    public void setProFullName(String proFullName) 
+    public void setUserId(String userId) 
     {
-        this.proFullName = proFullName;
-    }
-
-    public String getProFullName() 
-    {
-        return proFullName;
-    }
-    public void setLoc(String loc) 
-    {
-        this.loc = loc;
+        this.userId = userId;
     }
 
-    public String getLoc() 
+    public String getUserId() 
     {
-        return loc;
+        return userId;
+    }
+    public void setCertTime(Date certTime) 
+    {
+        this.certTime = certTime;
+    }
+
+    public Date getCertTime() 
+    {
+        return certTime;
+    }
+    public void setEndTime(Date endTime) 
+    {
+        this.endTime = endTime;
+    }
+
+    public Date getEndTime() 
+    {
+        return endTime;
+    }
+    public void setCertImg(String certImg) 
+    {
+        this.certImg = certImg;
+    }
+
+    public String getCertImg() 
+    {
+        return certImg;
     }
     public void setRemark3(String remark3) 
     {
@@ -267,12 +306,15 @@ public class ProjectJunctionCircuit extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("certLevel", getCertLevel())
+            .append("certType", getCertType())
             .append("name", getName())
-            .append("ip", getIp())
-            .append("time", getTime())
-            .append("port", getPort())
-            .append("proFullName", getProFullName())
-            .append("loc", getLoc())
+            .append("userName", getUserName())
+            .append("certNo", getCertNo())
+            .append("userId", getUserId())
+            .append("certTime", getCertTime())
+            .append("endTime", getEndTime())
+            .append("certImg", getCertImg())
             .append("remark3", getRemark3())
             .append("remark4", getRemark4())
             .append("remark5", getRemark5())

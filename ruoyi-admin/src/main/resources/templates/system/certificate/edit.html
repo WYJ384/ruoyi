@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <head th:include="include :: header"></head>
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-certificate-edit" th:object="${sysUserCertificate}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">证书级别：</label>
+                <div class="col-sm-8">
+                    <select name="certLevel" class="form-control m-b" th:with="type=${@dict.getType('zhengshujibie')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{certLevel}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">证书类型：</label>
+                <div class="col-sm-8">
+                    <select name="certType" class="form-control m-b" th:with="type=${@dict.getType('zhengshuleixing')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{certType}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">证书名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:field="*{name}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">姓名：</label>
+                <div class="col-sm-8">
+                    <input name="userName" th:field="*{userName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">证书编号：</label>
+                <div class="col-sm-8">
+                    <textarea name="certNo" class="form-control">[[*{certNo}]]</textarea>
+                </div>
+            </div>
+<!--            <div class="form-group">    -->
+<!--                <label class="col-sm-3 control-label">用户ID：</label>-->
+<!--                <div class="col-sm-8">-->
+<!--                    <input name="userId" th:field="*{userId}" class="form-control" type="text">-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">颁发日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="certTime" th:value="${#dates.format(sysUserCertificate.certTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">有效期至：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="endTime" th:value="${#dates.format(sysUserCertificate.endTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    </div>
+                </div>
+            </div>
+<!--            <div class="form-group">-->
+<!--                <label class="col-sm-3 control-label">证书扫描件：</label>-->
+<!--                <div class="col-sm-8">-->
+<!--                    <textarea name="certImg" class="form-control">[[*{certImg}]]</textarea>-->
+<!--                </div>-->
+<!--            </div>-->
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/certificate";
+        $("#form-certificate-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-certificate-edit').serialize());
+            }
+        }
+
+        $("input[name='certTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='endTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

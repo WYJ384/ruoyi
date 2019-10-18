@@ -10,7 +10,7 @@ import java.util.Date;
  * 设备入网工程管理模板对象 project_network
  * 
  * @author ruoyi
- * @date 2019-10-17
+ * @date 2019-10-18
  */
 public class ProjectNetwork extends BaseEntity
 {
@@ -39,8 +39,8 @@ public class ProjectNetwork extends BaseEntity
     @Excel(name = "工程设计全称")
     private String proFullName;
 
-    /** 节点位置 */
-    @Excel(name = "节点位置")
+    /** 机架位置 */
+    @Excel(name = "机架位置")
     private String loc;
 
     /** 扩展3 */
