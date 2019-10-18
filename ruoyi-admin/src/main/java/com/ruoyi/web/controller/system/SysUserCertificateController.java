@@ -54,6 +54,21 @@ public class SysUserCertificateController extends BaseController
     public TableDataInfo list(SysUserCertificate sysUserCertificate)
     {
         startPage();
+        if(ShiroUtils.getSubject().hasRole("zhengshuguanliyuan")){
+
+        }else{
+            sysUserCertificate.setUserId(ShiroUtils.getUserId()+"");
+        }
+        List<SysUserCertificate> list = sysUserCertificateService.selectSysUserCertificateList(sysUserCertificate);
+        return getDataTable(list);
+    }
+    @RequiresPermissions("system:certificate:list")
+    @PostMapping("/userCert")
+    @ResponseBody
+    public TableDataInfo userCert(SysUserCertificate sysUserCertificate)
+    {
+        startPage();
+        sysUserCertificate.setUserId(ShiroUtils.getUserId()+"");
         List<SysUserCertificate> list = sysUserCertificateService.selectSysUserCertificateList(sysUserCertificate);
         return getDataTable(list);
     }
