@@ -15,21 +15,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"       column="update_by"       />
         <result property="updateTime"     column="update_time"     />
         <result property="remark"         column="remark"          />
-        <result property="read_status"    column="readStatus"      />
-        <result property="display_user"    column="displayUser"      />
+        <result property="readStatus"    column="read_status"      />
+        <result property="displayUser"    column="display_user"      />
 
 
 
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id, notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark,read_status,display_user
+        select notice_id, notice_title, notice_type, notice_content, status, create_by, create_time, update_by, update_time, remark,read_status as read_status,display_user
 		from sys_notice
     </sql>
 
     <select id="selectNoticeById" parameterType="Long" resultMap="SysNoticeResult">
         <include refid="selectNoticeVo"/>
         where notice_id = #{noticeId}
+    </select>
+
+    <select id="getUserNoticeCount" resultType="Integer" parameterType="SysNotice">
+           select count(1) from sys_notice
+        <where>
+            <if test="noticeTitle != null and noticeTitle != ''">
+                AND notice_title like concat('%', #{noticeTitle}, '%')
+            </if>
+            <if test="noticeType != null and noticeType != ''">
+                AND notice_type = #{noticeType}
+            </if>
+            <if test="readStatus != null and readStatus != ''">
+                AND read_status = #{readStatus}
+            </if>
+            <if test="readStatus != null and readStatus != ''">
+                AND read_status = #{readStatus}
+            </if>
+            <if test="displayUser != null and displayUser != ''">
+                AND display_user = #{displayUser}
+            </if>
+        </where>
     </select>
 
     <select id="selectNoticeList" parameterType="SysNotice" resultMap="SysNoticeResult">
@@ -48,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 AND read_status = #{readStatus}
             </if>
 			<if test="displayUser != null and displayUser != ''">
-				AND  find_in_set(#{displayUser},display_user)
+                AND display_user = #{displayUser}
             </if>
 		</where>
     </select>

@@ -89,7 +89,11 @@
                 <ul class="nav navbar-top-links navbar-right welcome-message">
                     <li><a href="/f/fIndexController/index#" target="_blank"> <i class="fa fa-battery-4"></i> 资源库</a></li>
                     <li><a href="/f/bbs/topic/index" > <i class="fa fa-commenting-o"></i> 论坛</a></li>
-
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info"  onclick="detail(this)">
+                            <i class="fa fa-envelope"></i>  <span class="label label-warning" th:text="${noticeCount}"> </span>
+                        </a>
+                    </li>
 
                     <li><a href="">当前在线 <span id="onlineUser"></span> 人</a></li>
 <!--                    <li><a title="使用文档" href="https://www.kancloud.cn/seanj/nocbg/content/%E4%BC%9A%E8%AE%AE%E7%B3%BB%E7%BB%9F.md" target="_blank"><i class="fa fa-question-circle"></i> 使用文档</a></li>-->
@@ -157,6 +161,7 @@
     <!--右侧部分结束-->
 </div>
 <!-- 全局js -->
+<div th:include="include :: footer"></div>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
@@ -174,11 +179,10 @@ function resetPwd() {
     var url = ctx + 'system/user/profile/resetPwd';
     $.modal.open("重置密码", url, '800', '500');
 }
-    function addGuestBook() {
-        var url = ctx + 'knowledge/guestbook/add';
-        $.modal.openFull("问题反馈", url, '800', '500');
-    }
-
+function addGuestBook() {
+    var url = ctx + 'knowledge/guestbook/add';
+    $.modal.openFull("问题反馈", url, '800', '500');
+}
 $(function () {
     $.ajax({
         url: ctx + "monitor/online" + "/getOnlineCount",
@@ -195,7 +199,94 @@ $(function () {
             $("#onlineUser").text(result.data)
         }
     });
-});
+})
+function detail(obj) {
+
+    var url =  ctx + "system/notice?readStatus=0";
+    // createMenuItem(url,"通知");
+    //href="/system/notice?readStatus=0"
+    var dataUrl=url;
+    var menuName="通知";
+    var dataIndex=1;
+
+    flag = true;
+    if (dataUrl == undefined || $.trim(dataUrl).length == 0) return false;
+
+    // 选项卡菜单已存在
+    $('.menuTab').each(function() {
+        if ($(this).data('id') == dataUrl) {
+            if (!$(this).hasClass('active')) {
+                $(this).addClass('active').siblings('.menuTab').removeClass('active');
+                scrollToTab(this);
+                // 显示tab对应的内容区
+                $('.mainContent .RuoYi_iframe').each(function() {
+                    if ($(this).data('id') == dataUrl) {
+                        $(this).show().siblings('.RuoYi_iframe').hide();
+                        return false;
+                    }
+                });
+            }
+            flag = false;
+            return false;
+        }
+    });
+
+    // 选项卡菜单不存在
+    if (flag) {
+        var str = '<a href="javascript:;" class="active menuTab" data-id="' + dataUrl + '">' + menuName + ' <i class="fa fa-times-circle"></i></a>';
+        $('.menuTab').removeClass('active');
+
+        // 添加选项卡对应的iframe
+        var str1 = '<iframe class="RuoYi_iframe" name="iframe' + dataIndex + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
+        $('.mainContent').find('iframe.RuoYi_iframe').hide().parents('.mainContent').append(str1);
+
+        $.modal.loading("数据加载中，请稍后...");
+
+        $('.mainContent iframe:visible').load(function () {
+            $.modal.closeLoading();
+        });
+
+        // 添加选项卡
+        $('.menuTabs .page-tabs-content').append(str);
+        scrollToTab($('.menuTab.active'));
+    }
+    return false;
+
+
+
+}
+//滚动到指定选项卡
+    function scrollToTab(element) {
+        var marginLeftVal = calSumWidth($(element).prevAll()),
+            marginRightVal = calSumWidth($(element).nextAll());
+        // 可视区域非tab宽度
+        var tabOuterWidth = calSumWidth($(".content-tabs").children().not(".menuTabs"));
+        //可视区域tab宽度
+        var visibleWidth = $(".content-tabs").outerWidth(true) - tabOuterWidth;
+        //实际滚动宽度
+        var scrollVal = 0;
+        if ($(".page-tabs-content").outerWidth() < visibleWidth) {
+            scrollVal = 0;
+        } else if (marginRightVal <= (visibleWidth - $(element).outerWidth(true) - $(element).next().outerWidth(true))) {
+            if ((visibleWidth - $(element).next().outerWidth(true)) > marginRightVal) {
+                scrollVal = marginLeftVal;
+                var tabElement = element;
+                while ((scrollVal - $(tabElement).outerWidth()) > ($(".page-tabs-content").outerWidth() - visibleWidth)) {
+                    scrollVal -= $(tabElement).prev().outerWidth();
+                    tabElement = $(tabElement).prev();
+                }
+            }
+        } else if (marginLeftVal > (visibleWidth - $(element).outerWidth(true) - $(element).prev().outerWidth(true))) {
+            scrollVal = marginLeftVal - $(element).prev().outerWidth(true);
+        }
+        $('.page-tabs-content').animate({
+                marginLeft: 0 - scrollVal + 'px'
+            },
+            "fast");
+    }
+
+
+
 </script>
 </body>
 </html>

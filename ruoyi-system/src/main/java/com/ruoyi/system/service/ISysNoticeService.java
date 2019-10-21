@@ -49,4 +49,12 @@ public interface ISysNoticeService
      * @return 结果
      */
     public int deleteNoticeByIds(String ids);
+
+
+    /**
+     * 按条件查询记录个数
+     * @param notice
+     * @return
+     */
+    int getUserNoticeCount(SysNotice notice);
 }

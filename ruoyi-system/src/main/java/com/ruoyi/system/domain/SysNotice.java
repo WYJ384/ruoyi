@@ -32,6 +32,7 @@ public class SysNotice extends BaseEntity
     //发布范围 0所有,1本部门,3选择
     private String displayUser;
 
+
     public String getDisplayUser() {
         return displayUser;
     }

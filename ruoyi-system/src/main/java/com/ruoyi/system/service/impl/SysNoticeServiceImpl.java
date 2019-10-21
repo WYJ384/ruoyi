@@ -79,4 +79,14 @@ public class SysNoticeServiceImpl implements ISysNoticeService
     {
         return noticeMapper.deleteNoticeByIds(Convert.toStrArray(ids));
     }
+    /**
+     * 按条件查询记录个数
+     * @param notice
+     * @return
+     */
+    @Override
+    public int getUserNoticeCount(SysNotice notice) {
+
+        return noticeMapper.getUserNoticeCount(notice);
+    }
 }

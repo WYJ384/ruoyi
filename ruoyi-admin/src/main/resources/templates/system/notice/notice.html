@@ -12,17 +12,17 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								公告标题：<input type="text" name="noticeTitle"/>
+								标题：<input type="text" name="noticeTitle"/>
 							</li>
-							<li>
-								操作人员：<input type="text" name="createBy"/>
-							</li>
-							<li>
-								公告类型：<select name="noticeType" th:with="type=${@dict.getType('sys_notice_type')}">
-									<option value="">所有</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-								</select>
-							</li>
+<!--							<li>-->
+<!--								操作人员：<input type="text" name="createBy"/>-->
+<!--							</li>-->
+<!--							<li>-->
+<!--								公告类型：<select name="noticeType" th:with="type=${@dict.getType('sys_notice_type')}">-->
+<!--									<option value="">所有</option>-->
+<!--									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+<!--								</select>-->
+<!--							</li>-->
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -33,9 +33,9 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-		        <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:notice:add">
-		            <i class="fa fa-plus"></i> 新增
-		        </a>
+<!--		        <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:notice:add">-->
+<!--		            <i class="fa fa-plus"></i> 新增-->
+<!--		        </a>-->
 <!--		        <a class="btn btn-primary btn-edit disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:notice:edit">-->
 <!--		            <i class="fa fa-edit"></i> 修改-->
 <!--		        </a>-->
@@ -54,7 +54,7 @@
         var editFlag = [[${@permission.hasPermi('system:notice:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:notice:remove')}]];
         var types = [[${@dict.getType('sys_notice_type')}]];
-        var datas = [[${@dict.getType('sys_notice_status')}]];
+        var shifouyidu = [[${@dict.getType('shifouyidu')}]];
         var prefix = ctx + "system/notice";
 
         $(function() {
@@ -63,44 +63,45 @@
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
-                modalName: "公告",
-                columns: [{
-		            checkbox: true
-		        },
+                modalName: "通知",
+                columns: [
+                // 		{
+		        //     checkbox: true
+		        // },
 				// {
 				// 	field : 'noticeId',
 				// 	title : '序号'
 				// },
 				{
 					field : 'noticeTitle', 
-					title : '公告标题' ,
+					title : '标题' ,
 					formatter: function (value, row, index) {
 						return '<a href="#" onclick="detail(\'' + row.noticeId + '\',\'' + row.noticeTitle + '\')">' + row.noticeTitle + '</a>';
 					}
 				},
-				{
-		            field: 'noticeType',
-		            title: '公告类型',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		            	return $.table.selectDictLabel(types, value);
-		            }
-		        },
 				// {
-		        //     field: 'status',
-		        //     title: '状态',
+		        //     field: 'noticeType',
+		        //     title: '类型',
 		        //     align: 'center',
 		        //     formatter: function(value, row, index) {
-		        //     	return $.table.selectDictLabel(datas, value);
+		        //     	return $.table.selectDictLabel(types, value);
 		        //     }
 		        // },
 				{
-					field : 'remark',
-					title : '创建者' 
-				},
+		            field: 'readStatus',
+		            title: '状态',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	return $.table.selectDictLabel(shifouyidu, value);
+		            }
+		        },
+				// {
+				// 	field : 'remark',
+				// 	title : '创建者'
+				// },
 				{
 		            field: 'createTime',
-		            title: '创建时间',
+		            title: '发送时间',
 		            sortable: true
 		        },
 		        {
@@ -109,7 +110,7 @@
 		            formatter: function(value, row, index) {
 		            	var actions = [];
 		            	if([[${user.userId}]]==row.createBy){
-							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.noticeId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+							// actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.editTab(\'' + row.noticeId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
 							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.noticeId + '\')"><i class="fa fa-remove"></i>删除</a>');
 						}
 						return actions.join('');

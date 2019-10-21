@@ -49,4 +49,11 @@ public interface SysNoticeMapper
      * @return 结果
      */
     public int deleteNoticeByIds(String[] noticeIds);
+
+    /**
+     * 按条件查询记录个数
+     * @param notice
+     * @return
+     */
+    int getUserNoticeCount(SysNotice notice);
 }

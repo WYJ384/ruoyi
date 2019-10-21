@@ -51,7 +51,10 @@ public class SysNoticeController extends BaseController
     @GetMapping("/view/{id}")
     public String toView(@PathVariable("id") Long id,ModelMap mmap)
     {
-        mmap.put("notice", noticeService.selectNoticeById(id));
+        SysNotice sysNotice = noticeService.selectNoticeById(id);
+        sysNotice.setReadStatus("1");
+        noticeService.updateNotice(sysNotice);
+        mmap.put("notice", sysNotice);
         return prefix + "/noticePreview";
     }
     /**
@@ -95,7 +98,14 @@ public class SysNoticeController extends BaseController
     {
         notice.setCreateBy(ShiroUtils.getUserId()+"");
         notice.setRemark(ShiroUtils.getSysUser().getUserName());
-        return toAjax(noticeService.insertNotice(notice));
+        String displayUser = notice.getDisplayUser();
+        String[] displayUsers = displayUser.split(",");
+        int i1=0;
+        for (int i = 0; i < displayUsers.length; i++) {
+             notice.setDisplayUser(displayUsers[i]);
+             i1 = noticeService.insertNotice(notice);
+        }
+        return toAjax(i1);
     }
 
     /**

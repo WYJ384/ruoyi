@@ -17,10 +17,11 @@
 <!--                        <button class="btn btn-white btn-xs" type="button">标签</button>-->
 <!--                    </div>-->
                     <div class="text-center article-title">
-                        <span class="text-muted"><i class="fa fa-clock-o"></i> <span
-                                th:text="${#dates.format(notice.createTime, 'yyyy年MM月dd日')}">2017年10月28日</span> </span>
+
                         <h1 th:text="${notice.noticeTitle}">
                         </h1>
+                        <span class="text-muted"><i class="fa fa-clock-o"></i> <span
+                                th:text="${#dates.format(notice.createTime, 'yyyy年MM月dd日')}">2017年10月28日</span> </span>
                     </div>
                     <p th:utext="${notice.noticeContent}">
                     </p>
