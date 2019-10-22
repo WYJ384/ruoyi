@@ -66,25 +66,48 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="form-group">-->
-<!--                <label class="col-sm-3 control-label">证书扫描件：</label>-->
-<!--                <div class="col-sm-8">-->
-<!--                    <textarea name="certImg" class="form-control">[[*{certImg}]]</textarea>-->
-<!--                </div>-->
-<!--            </div>-->
+            <div class="form-group">
+                <label class="col-sm-3 control-label">证书扫描件：</label>
+                <div class="col-sm-8">
+                    <textarea id="certImg" name="certImg"
+                              style="height: 260px;"  >[[*{certImg}]]</textarea>
+                </div>
+            </div>
         </form>
     </div>
+    <div class="row">
+        <div class="col-sm-offset-5 col-sm-10">
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存   </button>
+            &nbsp;
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭  </button>
+        </div>
+    </div>
     <th:block th:include="include :: footer" />
+
     <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.config.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/ueditor.all.js}"></script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
     <script type="text/javascript">
         var prefix = ctx + "system/certificate";
+        var editor=UE.getEditor('certImg', {
+            toolbars: [
+                [
+                    'simpleupload'//单图上传
+                ]
+            ]
+        });
+
+
         $("#form-certificate-edit").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-certificate-edit').serialize());
+                $.operate.saveTab(prefix + "/edit", $('#form-certificate-edit').serialize());
             }
         }
 
@@ -99,6 +122,8 @@
             minView: "month",
             autoclose: true
         });
+
+
     </script>
 </body>
 </html>
