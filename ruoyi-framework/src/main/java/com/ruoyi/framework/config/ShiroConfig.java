@@ -287,6 +287,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/forget", "anon");
         filterChainDefinitionMap.put("/genVerifyNo", "anon");
         filterChainDefinitionMap.put("/forgetReset", "anon");
+        filterChainDefinitionMap.put("/simpleJsonController/**", "anon");
+
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
