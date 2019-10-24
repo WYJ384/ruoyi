@@ -95,6 +95,7 @@ public class ExamController extends BaseController
 	public String add(ModelMap mmap)
 	{
 		Paper paper=new Paper();
+		paper.setCreateBy(ShiroUtils.getUserId()+"");
 		List<Paper> papers = paperService.selectPaperList(paper);
 		SysUser sysUser=new SysUser();
 		List<SysUser> users = userService.selectUserList(sysUser);
