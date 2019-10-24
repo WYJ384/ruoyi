@@ -51,7 +51,12 @@
             <artifactId>jodconverter-local</artifactId>
             <version>4.2.2</version>
         </dependency>
-
+<!--        增加水印-->
+<!--        <dependency>-->
+<!--            <groupId>com.itextpdf</groupId>-->
+<!--            <artifactId>itextpdf</artifactId>-->
+<!--            <version>5.5.13</version>-->
+<!--        </dependency>-->
 
         <!-- SpringBoot集成thymeleaf模板 -->
         <dependency>

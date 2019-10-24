@@ -5,6 +5,10 @@ import com.baidu.ueditor.define.AppInfo;
 import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.FileType;
 import com.baidu.ueditor.define.State;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.*;
 import com.ruoyi.common.core.text.CharsetKit;
 import com.ruoyi.web.controller.SpringUtil;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -14,12 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+
+
+
 
 public class BinaryUploader {
 
@@ -70,7 +76,6 @@ public class BinaryUploader {
 					originFileName.length() - suffix.length());
 			savePath = savePath + suffix;
 			pdfSavePath=pdfSavePath+".pdf";
-			swfSavePath=swfSavePath+".swf";
 			long maxSize = ((Long) conf.get("maxSize")).longValue();
 
 			if (!validType(suffix, (String[]) conf.get("allowFiles"))) {
@@ -79,12 +84,10 @@ public class BinaryUploader {
 
 			savePath = PathFormat.parse(savePath, originFileName);
 			pdfSavePath=PathFormat.parse(pdfSavePath, originFileName);
-			swfSavePath=PathFormat.parse(swfSavePath, originFileName);
 			//String physicalPath = (String) conf.get("rootPath") + savePath;
 			String basePath=(String) conf.get("basePath");
 			String physicalPath = basePath + savePath;
 			String pdfPhysicalPath = basePath + pdfSavePath;
-			String swfPhysicalPath = basePath + swfSavePath;
 
 			//InputStream is = fileStream.openStream();
 			InputStream is = multipartFile.getInputStream();
@@ -93,15 +96,13 @@ public class BinaryUploader {
 			is.close();
 
 			File file = new File(physicalPath);//需要转换的文件
+			BufferedOutputStream bos;
 			try {
 				//文件转化
 				DocumentConverter documentConverter = (DocumentConverter) SpringUtil.getBean(DocumentConverter.class);
 				File pdfFile = new File(pdfPhysicalPath);
-				File swfFile = new File(swfPhysicalPath);
-
 				documentConverter.convert(file).to(pdfFile).execute();
-//				Runtime r=Runtime.getRuntime();
-//				Process p=r.exec("E:\\soft\\swftools\\pdf2swf.exe "+pdfFile.getPath()+" -o "+swfFile.getPath()+" -T 9");
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -128,4 +129,7 @@ public class BinaryUploader {
 
 		return list.contains(type);
 	}
+
+
+
 }
