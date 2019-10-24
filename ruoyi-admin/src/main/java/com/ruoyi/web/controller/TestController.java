@@ -5,6 +5,7 @@ import com.ruoyi.worktask.service.IWorkTaskService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.jodconverter.DocumentConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,12 @@ public class TestController {
     @Autowired
     private
     IWorkTaskService workTaskService;
+    @Autowired
+    private HttpServletResponse response;
+    @Autowired
+    private DocumentConverter converter;
+
+
 
     @RequestMapping("/testMsg")
     @ResponseBody
@@ -53,11 +60,6 @@ public class TestController {
         return workTasks;
     }
 
-//    @Autowired
-//    private HttpServletResponse response;
-//
-//    @Resource
-//    private DocumentConverter converter;
 //    @RequestMapping("/toIndex")
 //    @ResponseBody
 //    public String toIndex(String pathName)  {
@@ -118,21 +120,21 @@ public class TestController {
 //        System.out.println("d是是是");
 //    }
 //
-//    @RequestMapping("toPdfFile")
-//    public String toPdfFile() {
-//        File file = new File("G:\\智慧校园一卡通PPT1.2.ppt");//需要转换的文件
-//        try {
-//            File newFile = new File("G:/obj-pdf");//转换之后文件生成的地址
-//            if (!newFile.exists()) {
-//                newFile.mkdirs();
-//            }
-//            //文件转化
-//            converter.convert(file).to(new File("G:/obj-pdf/hello.pdf")).execute();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "This is to pdf";
-//    }
+    @RequestMapping("toPdfFile")
+    public String toPdfFile() {
+        File file = new File("G:\\智慧校园一卡通PPT1.2.ppt");//需要转换的文件
+        try {
+            File newFile = new File("G:/obj-pdf");//转换之后文件生成的地址
+            if (!newFile.exists()) {
+                newFile.mkdirs();
+            }
+            //文件转化
+            converter.convert(file).to(new File("G:/obj-pdf/hello.pdf")).execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "This is to pdf";
+    }
 
 }

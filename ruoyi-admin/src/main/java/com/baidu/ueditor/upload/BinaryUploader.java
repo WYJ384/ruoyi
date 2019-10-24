@@ -5,11 +5,16 @@ import com.baidu.ueditor.define.AppInfo;
 import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.FileType;
 import com.baidu.ueditor.define.State;
+import com.ruoyi.common.core.text.CharsetKit;
+import com.ruoyi.web.controller.SpringUtil;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.jodconverter.DocumentConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -55,6 +60,8 @@ public class BinaryUploader {
 			}
 
 			String savePath = (String) conf.get("savePath");
+			String pdfSavePath = (String) conf.get("savePath");
+			String swfSavePath = (String) conf.get("savePath");
 			//String originFileName = fileStream.getName();
 			String originFileName = multipartFile.getOriginalFilename();
 			String suffix = FileType.getSuffixByFilename(originFileName);
@@ -62,7 +69,8 @@ public class BinaryUploader {
 			originFileName = originFileName.substring(0,
 					originFileName.length() - suffix.length());
 			savePath = savePath + suffix;
-
+			pdfSavePath=pdfSavePath+".pdf";
+			swfSavePath=swfSavePath+".swf";
 			long maxSize = ((Long) conf.get("maxSize")).longValue();
 
 			if (!validType(suffix, (String[]) conf.get("allowFiles"))) {
@@ -70,10 +78,13 @@ public class BinaryUploader {
 			}
 
 			savePath = PathFormat.parse(savePath, originFileName);
-
+			pdfSavePath=PathFormat.parse(pdfSavePath, originFileName);
+			swfSavePath=PathFormat.parse(swfSavePath, originFileName);
 			//String physicalPath = (String) conf.get("rootPath") + savePath;
 			String basePath=(String) conf.get("basePath");
 			String physicalPath = basePath + savePath;
+			String pdfPhysicalPath = basePath + pdfSavePath;
+			String swfPhysicalPath = basePath + swfSavePath;
 
 			//InputStream is = fileStream.openStream();
 			InputStream is = multipartFile.getInputStream();
@@ -81,8 +92,25 @@ public class BinaryUploader {
 					physicalPath, maxSize);
 			is.close();
 
+			File file = new File(physicalPath);//需要转换的文件
+			try {
+				//文件转化
+				DocumentConverter documentConverter = (DocumentConverter) SpringUtil.getBean(DocumentConverter.class);
+				File pdfFile = new File(pdfPhysicalPath);
+				File swfFile = new File(swfPhysicalPath);
+
+				documentConverter.convert(file).to(pdfFile).execute();
+//				Runtime r=Runtime.getRuntime();
+//				Process p=r.exec("E:\\soft\\swftools\\pdf2swf.exe "+pdfFile.getPath()+" -o "+swfFile.getPath()+" -T 9");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+
+
 			if (storageState.isSuccess()) {
-				storageState.putInfo("url", PathFormat.format(savePath));
+				suffix=".pdf";
+				storageState.putInfo("url", PathFormat.format(pdfSavePath));
 				storageState.putInfo("type", suffix);
 				storageState.putInfo("original", originFileName + suffix);
 			}
