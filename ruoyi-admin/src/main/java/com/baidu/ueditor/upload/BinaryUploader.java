@@ -5,6 +5,8 @@ import com.baidu.ueditor.define.AppInfo;
 import com.baidu.ueditor.define.BaseState;
 import com.baidu.ueditor.define.FileType;
 import com.baidu.ueditor.define.State;
+import com.ruoyi.common.utils.file.FileUtils;
+import com.ruoyi.utils.PDFUtils;
 import com.ruoyi.web.controller.SpringUtil;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.jodconverter.DocumentConverter;
@@ -64,7 +66,7 @@ public class BinaryUploader {
 
 			String savePath = (String) conf.get("savePath");
 			String pdfSavePath = (String) conf.get("savePath");
-			String swfSavePath = (String) conf.get("savePath");
+			String markPdfSavePath = (String) conf.get("savePath");
 			//String originFileName = fileStream.getName();
 			String originFileName = multipartFile.getOriginalFilename();
 			String suffix = FileType.getSuffixByFilename(originFileName);
@@ -73,6 +75,8 @@ public class BinaryUploader {
 					originFileName.length() - suffix.length());
 			savePath = savePath + suffix;
 			pdfSavePath=pdfSavePath+".pdf";
+			markPdfSavePath=markPdfSavePath+".pdf";
+
 			long maxSize = ((Long) conf.get("maxSize")).longValue();
 
 			if (!validType(suffix, (String[]) conf.get("allowFiles"))) {
@@ -81,11 +85,13 @@ public class BinaryUploader {
 
 			savePath = PathFormat.parse(savePath, originFileName);
 			pdfSavePath=PathFormat.parse(pdfSavePath, originFileName);
+			markPdfSavePath=PathFormat.parse(markPdfSavePath, originFileName);
+
 			//String physicalPath = (String) conf.get("rootPath") + savePath;
 			String basePath=(String) conf.get("basePath");
 			String physicalPath = basePath + savePath;
 			String pdfPhysicalPath = basePath + pdfSavePath;
-
+			String markPdfPhysicalPath = basePath + markPdfSavePath;
 			//InputStream is = fileStream.openStream();
 			InputStream is = multipartFile.getInputStream();
 			State storageState = StorageManager.saveFileByInputStream(is,
@@ -99,16 +105,16 @@ public class BinaryUploader {
 				DocumentConverter documentConverter = (DocumentConverter) SpringUtil.getBean(DocumentConverter.class);
 				File pdfFile = new File(pdfPhysicalPath);
 				documentConverter.convert(file).to(pdfFile).execute();
-
+				PDFUtils.addWaterMark(pdfPhysicalPath,markPdfPhysicalPath,"wwww.gsnoc.com");
+				FileUtils.deleteFile(pdfPhysicalPath);
+				FileUtils.deleteFile(physicalPath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
-
-
 			if (storageState.isSuccess()) {
 				suffix=".pdf";
-				storageState.putInfo("url", PathFormat.format(pdfSavePath));
+				storageState.putInfo("url", PathFormat.format(markPdfSavePath));
 				storageState.putInfo("type", suffix);
 				storageState.putInfo("original", originFileName + suffix);
 			}
